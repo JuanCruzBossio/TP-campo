@@ -51,7 +51,15 @@ namespace SEG
 
                         usuarioEncontrado.Rol = Convert.ToInt32(fila["rol"]);
                     }
-                    if (usuarioEncontrado.ContrasenaHasheada == usuario.ContrasenaHasheada)
+                    if (usuarioEncontrado.IntentosLogin >= 3)
+                    {
+                        new Exception("Limite de Intentos Superado");
+                    }
+                    else if (usuarioEncontrado.ContrasenaHasheada != usuario.ContrasenaHasheada)
+                    {
+                        new Exception("Usuario o contraseña Incorrecta");
+                    }
+                    else if (usuarioEncontrado.ContrasenaHasheada == usuario.ContrasenaHasheada)
                     {
                         usuarioLogueado = usuario;
                     }
@@ -61,11 +69,22 @@ namespace SEG
                 }
                 
             }
+            else
+            {
+                new Exception("Ya hay un usuario Logueado");
+            }
         }
 
         public void Logout()
         {
-            usuarioLogueado = null;
+            if (usuarioLogueado != null)
+            {
+                usuarioLogueado = null;
+            }
+            else
+            {
+                new Exception("No hay un usuario Logueado");
+            }
         }
     }
 }
