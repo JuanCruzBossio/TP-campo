@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encriptacion_62_BP.cs" />
+    <Compile Include="RegistroBitacoraServicio_62_BP.cs" />
+    <Compile Include="RegistroBitacora_62_BP.cs" />
     <Compile Include="SessionManager_62_BP.cs" />
     <Compile Include="UsuarioServicio_62_BP.cs" />
     <Compile Include="Usuario_62_BP.cs" />

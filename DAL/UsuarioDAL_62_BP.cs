@@ -53,7 +53,7 @@ namespace DAL
         public int Habilitar(SqlParameter[] parametros)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario SET baja = false WHERE id = @id";
+            string query = "UPDATE Usuario SET intentosLogin = 0 WHERE id = @id";
 
             filasAfectadas = _acceso.escribir(query, parametros);
             return filasAfectadas;
