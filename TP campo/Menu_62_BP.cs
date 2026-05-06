@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TP_campo
 {
-    public partial class Form1 : Form
+    public partial class Menu_62_BP : Form
     {
-        public Form1()
+        public Menu_62_BP()
         {
             InitializeComponent();
         }
