@@ -42,22 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encriptacion_62_BP.cs" />
-    <Compile Include="RegistroBitacoraServicio_62_BP.cs" />
     <Compile Include="RegistroBitacora_62_BP.cs" />
     <Compile Include="SessionManager_62_BP.cs" />
-    <Compile Include="UsuarioServicio_62_BP.cs" />
     <Compile Include="Usuario_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BE\BE_62_BP.csproj">
-      <Project>{e4fc869e-ac6d-4b70-ad4a-01db0ce9c408}</Project>
-      <Name>BE_62_BP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL_62_BP.csproj">
-      <Project>{7d33caab-e20a-4b2c-bb51-3ed3157c9d6e}</Project>
-      <Name>DAL_62_BP</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
