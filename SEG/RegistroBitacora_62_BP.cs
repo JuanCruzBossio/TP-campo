@@ -24,12 +24,12 @@ namespace SEG
             set { fecha = value; }
         }
 
-        private int idUsuario;
+        private int dniUsuario;
 
-        public int IdUsuario
+        public int DniUsuario
         {
-            get { return idUsuario; }
-            set { idUsuario = value; }
+            get { return dniUsuario; }
+            set { dniUsuario = value; }
         }
 
         private string mensaje;

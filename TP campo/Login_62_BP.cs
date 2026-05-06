@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
+using SEG;
 
 namespace TP_campo
 {
@@ -17,19 +18,38 @@ namespace TP_campo
         {
             InitializeComponent();
         }
-        private UsuarioBLL_62_BP _bitacoraBLL = new UsuarioBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            string nombre = textBoxNombre.Text;
-            string contrasena = textBoxContrasena.Text;
-            if (nombre != "" && contrasena != "")
+            try
             {
-                _bitacoraBLL.Login(nombre, contrasena);
+                string nombre = textBoxNombre.Text;
+                string contrasena = textBoxContrasena.Text;
+
+                if (!string.IsNullOrWhiteSpace(nombre) && !string.IsNullOrWhiteSpace(contrasena))
+                {
+                    Usuario_62_BP usuario = _usuarioBLL.Login(nombre, contrasena);
+
+                    if (usuario != null)
+                    {
+                        Menu_62_BP menu = new Menu_62_BP();
+                        menu.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario o contraseña incorrectos.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Faltan ingresar datos.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Faltan ingresar datos");
+                MessageBox.Show("Error durante el inicio de sesión: " + ex.Message);
             }
         }
     }

@@ -16,14 +16,13 @@ namespace DAL
         public int Alta(RegistroBitacora_62_BP registro)
         {
             var filasAfectadas = 0;
-            string query = "INSERT INTO Bitacora (fecha, idUsuario, mensaje, criticidad) VALUES (@Fecha, @IdUsuario, @Mensaje, @Criticidad)";
+            string query = "INSERT INTO Bitacora (fecha, dniUsuario, mensaje, criticidad) VALUES (GETDATE(), @dniUsuario, @mensaje, @criticidad)";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@Fecha", registro.Fecha),
-                new SqlParameter("@IdUsuario", registro.IdUsuario),
-                new SqlParameter("@Mensaje", registro.Mensaje),
-                new SqlParameter("@Criticidad", registro.Criticidad)
+                new SqlParameter("@dniUsuario", registro.DniUsuario),
+                new SqlParameter("@mensaje", registro.Mensaje),
+                new SqlParameter("@criticidad", registro.Criticidad)
             };
 
             filasAfectadas = _acceso.escribir(query, parametros);
@@ -33,7 +32,7 @@ namespace DAL
         public List<RegistroBitacora_62_BP> ObtenerRegistros()
         {
             List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
-            string query = "SELECT id, fecha, idUsuario, mensaje, criticidad FROM Bitacora ORDER BY fecha DESC";
+            string query = "SELECT id, fecha, dniUsuario, mensaje, criticidad FROM Bitacora ORDER BY fecha DESC";
             DataTable tabla = _acceso.leer(query, null);
 
             if (tabla != null)
@@ -44,7 +43,7 @@ namespace DAL
 
                     registro.Id = Convert.ToInt32(fila["id"]);
                     registro.Fecha = Convert.ToDateTime(fila["fecha"]);
-                    registro.IdUsuario = Convert.ToInt32(fila["idUsuario"]);
+                    registro.DniUsuario = Convert.ToInt32(fila["dniUsuario"]);
                     registro.Mensaje = fila["mensaje"].ToString();
                     registro.Criticidad = Convert.ToInt32(fila["criticidad"]);
 

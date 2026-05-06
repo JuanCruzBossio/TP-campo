@@ -17,27 +17,23 @@ namespace BLL
         public void Alta(string mensaje, int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-            registro.Fecha = DateTime.Now;
             registro.Mensaje = mensaje;
             registro.Criticidad = nivelCriticidad;
 
             if (SessionManager_62_BP.GetInstancia().UsuarioLogueado != null)
             {
-                registro.IdUsuario = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Id;
+                registro.DniUsuario = Convert.ToInt32(SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni);
             }
             else
             {
-                registro.IdUsuario = 0;
+                registro.DniUsuario = 0;
             }
 
             _bitacoraDAL.Alta(registro);
         }
         public List<RegistroBitacora_62_BP> ObtenerBitacora()
         {
-            List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
-            lista = _bitacoraDAL.ObtenerRegistros();
-
-            return lista;
+            return _bitacoraDAL.ObtenerRegistros();
         }
     }
 }

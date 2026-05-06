@@ -16,5 +16,12 @@ namespace TP_campo
         {
             InitializeComponent();
         }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UsuarioGUI_62_BP usuarioGUI = new UsuarioGUI_62_BP();
+            usuarioGUI.MdiParent = this;
+            usuarioGUI.Show();
+        }
     }
 }

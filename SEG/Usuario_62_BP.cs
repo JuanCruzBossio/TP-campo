@@ -8,45 +8,68 @@ namespace SEG
 {
     public class Usuario_62_BP
     {
-		private int id;
-
-		public int Id
-		{
-			get { return id; }
-			set { id = value; }
-		}
-
-		private string nombre;
-
-		public string Nombre
-		{
-			get { return nombre; }
-			set { nombre = value; }
-		}
-
-		private string contrasenaHasheada;
-
-		public string ContrasenaHasheada
+        private string dni;
+        public string Dni
         {
-			get { return contrasenaHasheada; }
-			set { contrasenaHasheada = value; }
-		}
+            get { return dni; }
+            set { dni = value; }
+        }
 
-		private int intentosLogin;
+        private string apellido;
+        public string Apellido
+        {
+            get { return apellido; }
+            set { apellido = value; }
+        }
 
-		public int IntentosLogin
-		{
-			get { return intentosLogin; }
-			set { intentosLogin = value; }
-		}
+        private string nombre;
+        public string Nombre
+        {
+            get { return nombre; }
+            set { nombre = value; }
+        }
 
-		private int rol;
+        private string rol;
+        public string Rol
+        {
+            get { return rol; }
+            set { rol = value; }
+        }
 
-		public int Rol
-		{
-			get { return rol; }
-			set { rol = value; }
-		}
+        private string email;
+        public string Email
+        {
+            get { return email; }
+            set { email = value; }
+        }
 
-	}
+        private string login;
+        public string Login
+        {
+            get { return login; }
+            set { login = value; }
+        }
+
+        private string contrasena;
+        public string Contrasena
+        {
+            get { return contrasena; }
+            set { contrasena = value; }
+        }
+
+        private bool bloqueo;
+        public bool Bloqueo
+        {
+            get { return bloqueo; }
+            set { bloqueo = value; }
+        }
+
+        private bool activo;
+        public bool Activo
+        {
+            get { return activo; }
+            set { activo = value; }
+        }
+    }
+
 }

@@ -12,10 +12,37 @@ namespace DAL
     public class UsuarioDAL_62_BP
     {
         private Acceso_62_BP _acceso = new Acceso_62_BP();
+        public List<Usuario_62_BP> TraerTodosUsuarios()
+        {
+            List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
+            string query = "SELECT dni, apellido, nombre, rol, email, login, contrasena, bloqueo, activo FROM Usuario";
 
+            DataTable tabla = _acceso.leer(query, null);
+
+            if (tabla != null)
+            {
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    Usuario_62_BP usuario = new Usuario_62_BP();
+
+                    usuario.Dni = fila["dni"].ToString();
+                    usuario.Apellido = fila["apellido"].ToString();
+                    usuario.Nombre = fila["nombre"].ToString();
+                    usuario.Rol = fila["rol"].ToString();
+                    usuario.Email = fila["email"].ToString();
+                    usuario.Login = fila["login"].ToString();
+                    usuario.Contrasena = fila["contrasena"].ToString();
+                    usuario.Bloqueo = Convert.ToBoolean(fila["bloqueo"]);
+                    usuario.Activo = Convert.ToBoolean(fila["activo"]);
+
+                    lista.Add(usuario);
+                }
+            }
+            return lista;
+        }
         public Usuario_62_BP BuscarUsuarioPorNombre(string nombre)
         {
-            string query = "SELECT id, nombre, contrasenaHasheada, intentosLogin, rol FROM Usuario WHERE nombre = @nombre AND baja = false";
+            string query = "SELECT dni, apellido, nombre, rol, email, login, contrasena, bloqueo, activo FROM Usuario WHERE login = @nombre";
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@nombre", nombre)
@@ -27,11 +54,15 @@ namespace DAL
                 DataRow fila = tabla.Rows[0];
                 Usuario_62_BP usuario = new Usuario_62_BP();
 
-                usuario.Id = Convert.ToInt32(fila["id"]);
+                usuario.Dni = fila["dni"].ToString();
+                usuario.Apellido = fila["apellido"].ToString();
                 usuario.Nombre = fila["nombre"].ToString();
-                usuario.ContrasenaHasheada = fila["contrasenaHasheada"].ToString();
-                usuario.IntentosLogin = Convert.ToInt32(fila["intentosLogin"]);
-                usuario.Rol = Convert.ToInt32(fila["rol"]);
+                usuario.Rol = fila["rol"].ToString();
+                usuario.Email = fila["email"].ToString();
+                usuario.Login = fila["login"].ToString();
+                usuario.Contrasena = fila["contrasena"].ToString();
+                usuario.Bloqueo = Convert.ToBoolean(fila["bloqueo"]);
+                usuario.Activo = Convert.ToBoolean(fila["activo"]);
 
                 return usuario;
             }
@@ -41,26 +72,43 @@ namespace DAL
         public int Alta(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "INSERT INTO Usuario (nombre, contrasenaHasheada, intentosLogin, rol, baja) VALUES (@nombre, @contrasenaHasheada, 0, @rol, FALSE)";
+            string query = "INSERT INTO Usuario (dni, apellido, nombre, rol, email, login, contrasena, bloqueo, activo) VALUES (@dni, @apellido, @nombre, @rol, @email, @login, @contrasena, 0, 1)";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
+                new SqlParameter("@dni", usuario.Dni),
+                new SqlParameter("@apellido", usuario.Apellido),
                 new SqlParameter("@nombre", usuario.Nombre),
-                new SqlParameter("@contrasenaHasheada", usuario.ContrasenaHasheada),
-                new SqlParameter("@rol", usuario.Rol)
+                new SqlParameter("@rol", usuario.Rol),
+                new SqlParameter("@email", usuario.Email),
+                new SqlParameter("@login", usuario.Login),
+                new SqlParameter("@contrasena", usuario.Contrasena)
             };
 
             filasAfectadas = _acceso.escribir(query, parametros);
             return filasAfectadas;
         }
-        public int BajaLogica(Usuario_62_BP usuario)
+        public int Activar(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario SET baja = TRUE WHERE id = @id";
+            string query = "UPDATE Usuario SET activo = 1 WHERE dni = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@id", usuario.Id)
+                new SqlParameter("@dni", usuario.Dni)
+            };
+
+            filasAfectadas = _acceso.escribir(query, parametros);
+            return filasAfectadas;
+        }
+        public int Desactivar(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario SET activo = 0 WHERE dni = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", usuario.Dni)
             };
 
             filasAfectadas = _acceso.escribir(query, parametros);
@@ -70,28 +118,59 @@ namespace DAL
         public int Modificar(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario SET nombre = @nombre, contrasenaHasheada = @contrasenaHasheada, rol = @rol WHERE id = @id";
+            string query = "UPDATE Usuario SET apellido = @apellido, nombre = @nombre, rol = @rol, email = @email, login = @login WHERE dni = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@id", usuario.Id),
+                new SqlParameter("@dni", usuario.Dni),
+                new SqlParameter("@apellido", usuario.Apellido),
                 new SqlParameter("@nombre", usuario.Nombre),
-                new SqlParameter("@contrasenaHasheada", usuario.ContrasenaHasheada),
-                new SqlParameter("@rol", usuario.Rol)
+                new SqlParameter("@rol", usuario.Rol),
+                new SqlParameter("@email", usuario.Email),
+                new SqlParameter("@login", usuario.Login)
             };
 
             filasAfectadas = _acceso.escribir(query, parametros);
             return filasAfectadas;
         }
 
-        public int Habilitar(Usuario_62_BP usuario)
+        public int Bloquear(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario SET intentosLogin = 0, baja = FALSE WHERE id = @id";
+            string query = "UPDATE Usuario SET bloqueo = 1 WHERE dni = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@id", usuario.Id)
+                new SqlParameter("@dni", usuario.Dni)
+            };
+
+            filasAfectadas = _acceso.escribir(query, parametros);
+            return filasAfectadas;
+        }
+
+        public int Desbloquear(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario SET bloqueo = 0 WHERE dni = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", usuario.Dni)
+            };
+
+            filasAfectadas = _acceso.escribir(query, parametros);
+            return filasAfectadas;
+        }
+
+        public int CambiarContrasena(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario SET contrasena = @contrasena WHERE dni = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", usuario.Dni),
+                new SqlParameter("@contrasena", usuario.Contrasena)
             };
 
             filasAfectadas = _acceso.escribir(query, parametros);

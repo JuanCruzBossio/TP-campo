@@ -19,35 +19,89 @@ namespace BLL
         public int Alta(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
+            usuario.Contrasena = _encriptacionSEG.EncriptarConSHA256(usuario.Nombre + usuario.Apellido);
             try
             {
                 filasAfectadas = _usuarioDAL.Alta(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Alta de Usuario", 1);
+                    _bitacoraBLL.Alta("Alta de Usuario " + usuario.Login, 1);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw;
             }
             return filasAfectadas;
         }
-        public int BajaLogica(Usuario_62_BP usuario)
+        public int Activar(Usuario_62_BP usuario)
         {
-
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.BajaLogica(usuario);
+                filasAfectadas = _usuarioDAL.Activar(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Baja Logica de Usuario", 2);
+                    _bitacoraBLL.Alta("Activación de Usuario " + usuario.Login, 2);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw;
+            }
+            return filasAfectadas;
+        }
+
+        public int Desactivar(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            try
+            {
+                filasAfectadas = _usuarioDAL.Desactivar(usuario);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL.Alta("Desactivación de Usuario " + usuario.Login, 2);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+
+        public int Bloquear(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            try
+            {
+                filasAfectadas = _usuarioDAL.Bloquear(usuario);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL.Alta("Bloqueo de Usuario " + usuario.Login, 3);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+
+        public int Desbloquear(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            try
+            {
+                filasAfectadas = _usuarioDAL.Desbloquear(usuario);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL.Alta("Desbloqueo de Usuario " + usuario.Login, 3);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             return filasAfectadas;
         }
@@ -59,33 +113,16 @@ namespace BLL
                 filasAfectadas = _usuarioDAL.Modificar(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Modificacion de Usuario", 1);
+                    _bitacoraBLL.Alta("Modificacion de Usuario " + usuario.Login, 1);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw;
             }
             return filasAfectadas;
         }
-        public int Habilitar(Usuario_62_BP usuario)
-        {
-            var filasAfectadas = 0;
-            try
-            {
-                filasAfectadas = _usuarioDAL.Habilitar(usuario);
-                if (filasAfectadas > 0)
-                {
-                    _bitacoraBLL.Alta("Habilitación de Usuario", 2);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.ToString());
-            }
-            return filasAfectadas;
-        }
-
+        
         public Usuario_62_BP Login(string nombre, string contrasena)
         {
             try
@@ -95,11 +132,14 @@ namespace BLL
                 if (usuario == null)
                     throw new Exception("Usuario no encontrado.");
 
-                if (usuario.IntentosLogin >= 3)
-                    throw new Exception("Usuario bloqueado por demasiados intentos fallidos.");
+                if (usuario.Activo == false)
+                    throw new Exception("Usuario Desactivado.");
+
+                if (usuario.Bloqueo == true)
+                    throw new Exception("Usuario Bloqueado.");
 
                 string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256(contrasena);
-                if (usuario.ContrasenaHasheada != contrasenaHasheada)
+                if (usuario.Contrasena != contrasenaHasheada)
                 {
                     //usuario.IntentosLogin ++;
                     //Modificar(usuario);
@@ -110,13 +150,13 @@ namespace BLL
 
                 SessionManager_62_BP.GetInstancia().Login(usuario);
 
-                _bitacoraBLL.Alta("Login de Usuario", 1);
+                _bitacoraBLL.Alta("Login de Usuario " + usuario.Login, 1);
 
                 return usuario;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw;
             }
         }
 
@@ -137,7 +177,19 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                throw;
+            }
+        }
+
+        public List<Usuario_62_BP> TraerTodosUsuarios()
+        {
+            try
+            {
+                return _usuarioDAL.TraerTodosUsuarios();
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
