@@ -101,8 +101,11 @@ namespace BLL
                 string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256(contrasena);
                 if (usuario.ContrasenaHasheada != contrasenaHasheada)
                 {
-                    int intentosRestantes = 3 - (usuario.IntentosLogin + 1);
-                    throw new Exception($"Contraseña incorrecta. Intentos restantes: {intentosRestantes}");
+                    //usuario.IntentosLogin ++;
+                    //Modificar(usuario);
+                    //int intentosRestantes = 3 - (usuario.IntentosLogin);
+                    //throw new Exception($"Contraseña incorrecta. Intentos restantes: {intentosRestantes}");
+                    throw new Exception("Contraseña incorrecta");
                 }
 
                 SessionManager_62_BP.GetInstancia().Login(usuario);
@@ -127,9 +130,10 @@ namespace BLL
                     throw new Exception("No hay un usuario logueado.");
                 }
 
+                SessionManager_62_BP.GetInstancia().Logout();
+
                 _bitacoraBLL.Alta("Logout de Usuario",1);
 
-                SessionManager_62_BP.GetInstancia().Logout();
             }
             catch (Exception ex)
             {
