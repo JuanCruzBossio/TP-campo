@@ -35,6 +35,8 @@ namespace TP_campo
                     {
                         Menu_62_BP menu = new Menu_62_BP();
                         menu.Show();
+                        textBoxNombre.Clear();
+                        textBoxContrasena.Clear();
                         this.Hide();
                     }
                     else

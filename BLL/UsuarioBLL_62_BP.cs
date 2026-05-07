@@ -193,5 +193,38 @@ namespace BLL
             }
         }
 
+        public int CambiarContrasena(string claveVieja, string claveNueva)
+        {
+            var filasAfectadas = 0;
+            try
+            {
+                string claveViejaHasheada = _encriptacionSEG.EncriptarConSHA256(claveVieja);
+
+                if (SessionManager_62_BP.GetInstancia().UsuarioLogueado.Contrasena != claveViejaHasheada)
+                {
+                    throw new Exception("La contraseña actual no es correcta.");
+                }
+
+                Usuario_62_BP usuario = new Usuario_62_BP
+                {
+                    Dni = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni,
+                    Contrasena = _encriptacionSEG.EncriptarConSHA256(claveNueva),
+                    Login = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Login
+                };
+                filasAfectadas = _usuarioDAL.CambiarContrasena(usuario);
+
+                if (filasAfectadas > 0)
+                {
+                    SessionManager_62_BP.GetInstancia().UsuarioLogueado.Contrasena = _encriptacionSEG.EncriptarConSHA256(claveNueva);
+                    _bitacoraBLL.Alta("Cambio de contraseña del Usuario " + usuario.Login, 3);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+
     }
 }

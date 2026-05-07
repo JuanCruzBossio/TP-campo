@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CambiarClaveGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambiarClaveGUI_62_BP.Designer.cs">
+      <DependentUpon>CambiarClaveGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="UsuarioGUI_62_BP.Designer.cs">
       <DependentUpon>UsuarioGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CambiarClaveGUI_62_BP.resx">
+      <DependentUpon>CambiarClaveGUI_62_BP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login_62_BP.resx">
       <DependentUpon>Login_62_BP.cs</DependentUpon>
     </EmbeddedResource>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL;
 
 namespace TP_campo
 {
@@ -16,12 +17,40 @@ namespace TP_campo
         {
             InitializeComponent();
         }
+        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsuarioGUI_62_BP usuarioGUI = new UsuarioGUI_62_BP();
             usuarioGUI.MdiParent = this;
             usuarioGUI.Show();
+        }
+
+        private void cambiarClaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CambiarClaveGUI_62_BP cambiarClaveGUI = new CambiarClaveGUI_62_BP();
+            cambiarClaveGUI.MdiParent = this;
+            cambiarClaveGUI.Show();
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _usuarioBLL.Logout();
+
+                MessageBox.Show("Sesión cerrada con éxito.");
+
+                Form login = Application.OpenForms["Login_62_BP"];
+
+                login.Show();
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cerrar sesión: " + ex.Message);
+            }
         }
     }
 }

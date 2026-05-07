@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using BLL;
+
+namespace TP_campo
+{
+    public partial class CambiarClaveGUI_62_BP : Form
+    {
+        public CambiarClaveGUI_62_BP()
+        {
+            InitializeComponent();
+        }
+        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
+
+        private void buttonCambiarContrasena_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string antigua = textBoxContrasenaActual.Text;
+                string nueva = textBoxContrasenaNueva.Text;
+                string repetir = textBoxRepetirContrasenaNueva.Text;
+
+                if (string.IsNullOrWhiteSpace(antigua) || string.IsNullOrWhiteSpace(nueva) || string.IsNullOrWhiteSpace(repetir))
+                {
+                    MessageBox.Show("Faltan completar datos.");
+                    return;
+                }
+
+                if (nueva != repetir)
+                {
+                    MessageBox.Show("La nueva contraseña y su repetición no coinciden.");
+                    return;
+                }
+
+                int resultado = _usuarioBLL.CambiarContrasena(antigua, nueva);
+
+                if (resultado > 0)
+                {
+                    MessageBox.Show("Contraseña actualizada con éxito.");
+
+                    textBoxContrasenaActual.Clear();
+                    textBoxContrasenaNueva.Clear();
+                    textBoxRepetirContrasenaNueva.Clear();
+
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo realizar el cambio de contraseña.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar cambiar Constraseña : " + ex.Message);
+            }
+        }
+    }
+}
