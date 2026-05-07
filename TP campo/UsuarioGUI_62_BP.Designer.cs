@@ -92,6 +92,7 @@
             this.buttonDesbloquear.TabIndex = 3;
             this.buttonDesbloquear.Text = "Desbloquear";
             this.buttonDesbloquear.UseVisualStyleBackColor = true;
+            this.buttonDesbloquear.Click += new System.EventHandler(this.buttonDesbloquear_Click);
             // 
             // buttonModificar
             // 
@@ -101,6 +102,7 @@
             this.buttonModificar.TabIndex = 4;
             this.buttonModificar.Text = "Modificar";
             this.buttonModificar.UseVisualStyleBackColor = true;
+            this.buttonModificar.Click += new System.EventHandler(this.buttonModificar_Click);
             // 
             // buttonActivar
             // 
@@ -110,7 +112,7 @@
             this.buttonActivar.TabIndex = 5;
             this.buttonActivar.Text = "Activar/Desactivar";
             this.buttonActivar.UseVisualStyleBackColor = true;
-            this.buttonActivar.Click += new System.EventHandler(this.button1_Click);
+            this.buttonActivar.Click += new System.EventHandler(this.buttonActivar_Click);
             // 
             // buttonAplicar
             // 
@@ -129,6 +131,7 @@
             this.buttonCancelar.TabIndex = 7;
             this.buttonCancelar.Text = "Cancelar";
             this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
             // 
             // buttonSalir
             // 
@@ -138,6 +141,7 @@
             this.buttonSalir.TabIndex = 8;
             this.buttonSalir.Text = "Salir";
             this.buttonSalir.UseVisualStyleBackColor = true;
+            this.buttonSalir.Click += new System.EventHandler(this.buttonSalir_Click);
             // 
             // labelDNI
             // 

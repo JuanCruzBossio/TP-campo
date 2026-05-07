@@ -20,12 +20,7 @@ namespace TP_campo
             InitializeComponent();
         }
         private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        private bool hayUsuarioSeleccionado = false;
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
             RellenarGrilla();
@@ -38,6 +33,10 @@ namespace TP_campo
         private void dataGridViewUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
+            hayUsuarioSeleccionado = true;
+            textBoxDNI.Enabled = false;
+            textBoxActivo.Enabled = false;
+            textBoxBloqueado.Enabled = false;
         }
         private void LlenarCampos(Usuario_62_BP usuario)
         {
@@ -89,6 +88,12 @@ namespace TP_campo
         {
             try
             {
+                if (hayUsuarioSeleccionado)
+                {
+                    MessageBox.Show("No puede crear un Usuario ya creado.");
+                    return;
+                }
+                
                 Usuario_62_BP nuevoUsuario = ObtenerUsuarioDeCampos();
 
                 if (nuevoUsuario != null)
@@ -99,6 +104,7 @@ namespace TP_campo
                     {
                         MessageBox.Show("Usuario creado con éxito.");
                         RellenarGrilla();
+                        LimpiarCampos();
                     }
                     else
                     {
@@ -110,6 +116,149 @@ namespace TP_campo
             {
                 MessageBox.Show("Ocurrió un error al intentar crear el usuario: " + ex.Message);
             }
+        }
+
+        private void buttonDesbloquear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!hayUsuarioSeleccionado)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario a desbloquear.");
+                    return;
+                }
+
+                if (textBoxBloqueado.Text != bool.TrueString)
+                {
+                    MessageBox.Show("El usuario seleccionado no se encuentra bloqueado.");
+                    return;
+                }
+                Usuario_62_BP usuarioADesbloquear = new Usuario_62_BP();
+                usuarioADesbloquear.Dni = textBoxDNI.Text;
+                usuarioADesbloquear.Login = textBoxLogin.Text;
+
+                int filas = _usuarioBLL.Desbloquear(usuarioADesbloquear);
+
+                if (filas > 0)
+                {
+                    MessageBox.Show("Usuario desbloqueado con éxito.");
+                    RellenarGrilla();
+                    LimpiarCampos();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo realizar el desbloqueo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al intentar desbloquear el usuario: " + ex.Message);
+            }
+        }
+
+        private void LimpiarCampos()
+        {
+            textBoxDNI.Enabled = true;
+            textBoxActivo.Enabled = true;
+            textBoxBloqueado.Enabled = true;
+            textBoxDNI.Clear();
+            textBoxApellidos.Clear();
+            textBoxNombres.Clear();
+            textBoxRol.Clear();
+            textBoxEmail.Clear();
+            textBoxLogin.Clear();
+            textBoxBloqueado.Clear();
+            textBoxActivo.Clear();
+            textBoxDNI.Focus();
+            hayUsuarioSeleccionado = false;
+        }
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
+        }
+
+        private void buttonActivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!hayUsuarioSeleccionado)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario.");
+                    return;
+                }
+
+                Usuario_62_BP usuario = new Usuario_62_BP();
+                usuario.Dni = textBoxDNI.Text;
+                usuario.Login = textBoxLogin.Text;
+
+                int filas = 0;
+                string accionRealizada = "";
+
+                if (textBoxActivo.Text == bool.TrueString)
+                {
+                    filas = _usuarioBLL.Desactivar(usuario);
+                    accionRealizada = "Desactivado";
+                }
+                else
+                {
+                    filas = _usuarioBLL.Activar(usuario);
+                    accionRealizada = "Activado";
+                }
+
+                if (filas > 0)
+                {
+                    MessageBox.Show($"Usuario {accionRealizada} con éxito.");
+                    RellenarGrilla();
+                    LimpiarCampos();
+                }
+                else
+                {
+                    MessageBox.Show($"No se pudo completar la acción: {accionRealizada}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error al intentar Activar/Desactivar el usuario: " + ex.Message);
+            }
+        }
+
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!hayUsuarioSeleccionado)
+                {
+                    MessageBox.Show("Debe seleccionar un usuario.");
+                    return;
+                }
+
+                Usuario_62_BP usuarioAModificar = ObtenerUsuarioDeCampos();
+
+                if (usuarioAModificar != null)
+                {
+                    int filas = _usuarioBLL.Modificar(usuarioAModificar);
+
+                    if (filas > 0)
+                    {
+                        MessageBox.Show("Usuario modificado con éxito.");
+                        RellenarGrilla();
+                        LimpiarCampos();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo realizar la modificacion.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar modificar: " + ex.Message);
+            }
+        }
+
+        private void buttonSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
