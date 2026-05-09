@@ -33,6 +33,7 @@
             this.textBoxNombre = new System.Windows.Forms.TextBox();
             this.textBoxContrasena = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
+            this.checkBoxPassword = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelNombre
@@ -64,6 +65,7 @@
             // 
             this.textBoxContrasena.Location = new System.Drawing.Point(146, 98);
             this.textBoxContrasena.Name = "textBoxContrasena";
+            this.textBoxContrasena.PasswordChar = '*';
             this.textBoxContrasena.Size = new System.Drawing.Size(100, 20);
             this.textBoxContrasena.TabIndex = 3;
             // 
@@ -77,11 +79,22 @@
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
+            // checkBoxPassword
+            // 
+            this.checkBoxPassword.AutoSize = true;
+            this.checkBoxPassword.Location = new System.Drawing.Point(253, 101);
+            this.checkBoxPassword.Name = "checkBoxPassword";
+            this.checkBoxPassword.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxPassword.TabIndex = 5;
+            this.checkBoxPassword.UseVisualStyleBackColor = true;
+            this.checkBoxPassword.CheckedChanged += new System.EventHandler(this.checkBoxPassword_CheckedChanged);
+            // 
             // Login_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 212);
+            this.Controls.Add(this.checkBoxPassword);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.textBoxContrasena);
             this.Controls.Add(this.textBoxNombre);
@@ -89,6 +102,7 @@
             this.Controls.Add(this.labelNombre);
             this.Name = "Login_62_BP";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Login_62_BP_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,6 +115,7 @@
         private System.Windows.Forms.TextBox textBoxNombre;
         private System.Windows.Forms.TextBox textBoxContrasena;
         private System.Windows.Forms.Button buttonLogin;
+        private System.Windows.Forms.CheckBox checkBoxPassword;
     }
 }
 

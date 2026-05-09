@@ -31,6 +31,15 @@ namespace BLL
 
             _bitacoraDAL.Alta(registro);
         }
+        public void Alta(string mensaje, int nivelCriticidad, string dni)
+        {
+            RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
+            registro.Mensaje = mensaje;
+            registro.Criticidad = nivelCriticidad;
+            registro.DniUsuario = int.Parse(dni);
+
+            _bitacoraDAL.Alta(registro);
+        }
         public List<RegistroBitacora_62_BP> ObtenerBitacora()
         {
             return _bitacoraDAL.ObtenerRegistros();

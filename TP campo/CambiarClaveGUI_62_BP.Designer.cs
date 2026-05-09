@@ -35,6 +35,9 @@
             this.textBoxContrasenaNueva = new System.Windows.Forms.TextBox();
             this.textBoxRepetirContrasenaNueva = new System.Windows.Forms.TextBox();
             this.buttonCambiarContrasena = new System.Windows.Forms.Button();
+            this.checkBoxContrasenaActual = new System.Windows.Forms.CheckBox();
+            this.checkBoxContrasenaNueva = new System.Windows.Forms.CheckBox();
+            this.checkBoxRepetirContrasenaNueva = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelContrasenaActual
@@ -68,6 +71,7 @@
             // 
             this.textBoxContrasenaActual.Location = new System.Drawing.Point(244, 49);
             this.textBoxContrasenaActual.Name = "textBoxContrasenaActual";
+            this.textBoxContrasenaActual.PasswordChar = '*';
             this.textBoxContrasenaActual.Size = new System.Drawing.Size(219, 20);
             this.textBoxContrasenaActual.TabIndex = 3;
             // 
@@ -75,6 +79,7 @@
             // 
             this.textBoxContrasenaNueva.Location = new System.Drawing.Point(244, 92);
             this.textBoxContrasenaNueva.Name = "textBoxContrasenaNueva";
+            this.textBoxContrasenaNueva.PasswordChar = '*';
             this.textBoxContrasenaNueva.Size = new System.Drawing.Size(219, 20);
             this.textBoxContrasenaNueva.TabIndex = 4;
             // 
@@ -82,6 +87,7 @@
             // 
             this.textBoxRepetirContrasenaNueva.Location = new System.Drawing.Point(244, 129);
             this.textBoxRepetirContrasenaNueva.Name = "textBoxRepetirContrasenaNueva";
+            this.textBoxRepetirContrasenaNueva.PasswordChar = '*';
             this.textBoxRepetirContrasenaNueva.Size = new System.Drawing.Size(219, 20);
             this.textBoxRepetirContrasenaNueva.TabIndex = 5;
             // 
@@ -95,11 +101,44 @@
             this.buttonCambiarContrasena.UseVisualStyleBackColor = true;
             this.buttonCambiarContrasena.Click += new System.EventHandler(this.buttonCambiarContrasena_Click);
             // 
+            // checkBoxContrasenaActual
+            // 
+            this.checkBoxContrasenaActual.AutoSize = true;
+            this.checkBoxContrasenaActual.Location = new System.Drawing.Point(481, 52);
+            this.checkBoxContrasenaActual.Name = "checkBoxContrasenaActual";
+            this.checkBoxContrasenaActual.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxContrasenaActual.TabIndex = 10;
+            this.checkBoxContrasenaActual.UseVisualStyleBackColor = true;
+            this.checkBoxContrasenaActual.CheckedChanged += new System.EventHandler(this.checkBoxContrasenaActual_CheckedChanged);
+            // 
+            // checkBoxContrasenaNueva
+            // 
+            this.checkBoxContrasenaNueva.AutoSize = true;
+            this.checkBoxContrasenaNueva.Location = new System.Drawing.Point(481, 95);
+            this.checkBoxContrasenaNueva.Name = "checkBoxContrasenaNueva";
+            this.checkBoxContrasenaNueva.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxContrasenaNueva.TabIndex = 11;
+            this.checkBoxContrasenaNueva.UseVisualStyleBackColor = true;
+            this.checkBoxContrasenaNueva.CheckedChanged += new System.EventHandler(this.checkBoxContrasenaNueva_CheckedChanged);
+            // 
+            // checkBoxRepetirContrasenaNueva
+            // 
+            this.checkBoxRepetirContrasenaNueva.AutoSize = true;
+            this.checkBoxRepetirContrasenaNueva.Location = new System.Drawing.Point(481, 135);
+            this.checkBoxRepetirContrasenaNueva.Name = "checkBoxRepetirContrasenaNueva";
+            this.checkBoxRepetirContrasenaNueva.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxRepetirContrasenaNueva.TabIndex = 12;
+            this.checkBoxRepetirContrasenaNueva.UseVisualStyleBackColor = true;
+            this.checkBoxRepetirContrasenaNueva.CheckedChanged += new System.EventHandler(this.checkBoxRepetirContrasenaNueva_CheckedChanged);
+            // 
             // CambiarClaveGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(552, 248);
+            this.Controls.Add(this.checkBoxRepetirContrasenaNueva);
+            this.Controls.Add(this.checkBoxContrasenaNueva);
+            this.Controls.Add(this.checkBoxContrasenaActual);
             this.Controls.Add(this.buttonCambiarContrasena);
             this.Controls.Add(this.textBoxRepetirContrasenaNueva);
             this.Controls.Add(this.textBoxContrasenaNueva);
@@ -123,5 +162,8 @@
         private System.Windows.Forms.TextBox textBoxContrasenaNueva;
         private System.Windows.Forms.TextBox textBoxRepetirContrasenaNueva;
         private System.Windows.Forms.Button buttonCambiarContrasena;
+        private System.Windows.Forms.CheckBox checkBoxContrasenaActual;
+        private System.Windows.Forms.CheckBox checkBoxContrasenaNueva;
+        private System.Windows.Forms.CheckBox checkBoxRepetirContrasenaNueva;
     }
 }

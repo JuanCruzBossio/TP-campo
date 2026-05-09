@@ -54,5 +54,22 @@ namespace TP_campo
                 MessageBox.Show("Error durante el inicio de sesión: " + ex.Message);
             }
         }
+
+        private void Login_62_BP_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxPassword.Checked)
+            {
+                textBoxContrasena.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxContrasena.PasswordChar = '*';
+            }
+        }
     }
 }

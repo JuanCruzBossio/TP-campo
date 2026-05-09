@@ -169,10 +169,10 @@ namespace BLL
                 if (usuarioActual == null) {
                     throw new Exception("No hay un usuario logueado.");
                 }
-
+                var dniUsuario = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni;
                 SessionManager_62_BP.GetInstancia().Logout();
 
-                _bitacoraBLL.Alta("Logout de Usuario",1);
+                _bitacoraBLL.Alta("Logout de Usuario",1, dniUsuario);
 
             }
             catch (Exception ex)

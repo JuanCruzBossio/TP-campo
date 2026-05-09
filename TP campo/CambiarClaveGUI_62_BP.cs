@@ -60,5 +60,41 @@ namespace TP_campo
                 MessageBox.Show("Error al intentar cambiar Constraseña : " + ex.Message);
             }
         }
+
+        private void checkBoxContrasenaActual_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxContrasenaActual.Checked)
+            {
+                textBoxContrasenaActual.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxContrasenaActual.PasswordChar = '*';
+            }
+        }
+
+        private void checkBoxContrasenaNueva_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxContrasenaNueva.Checked)
+            {
+                textBoxContrasenaNueva.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxContrasenaNueva.PasswordChar = '*';
+            }
+        }
+
+        private void checkBoxRepetirContrasenaNueva_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxRepetirContrasenaNueva.Checked)
+            {
+                textBoxRepetirContrasenaNueva.PasswordChar = '\0';
+            }
+            else
+            {
+                textBoxRepetirContrasenaNueva.PasswordChar = '*';
+            }
+        }
     }
 }

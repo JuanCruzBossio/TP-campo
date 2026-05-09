@@ -61,7 +61,7 @@
             this.dataGridViewUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsuarios.Location = new System.Drawing.Point(29, 33);
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
-            this.dataGridViewUsuarios.Size = new System.Drawing.Size(575, 278);
+            this.dataGridViewUsuarios.Size = new System.Drawing.Size(939, 278);
             this.dataGridViewUsuarios.TabIndex = 0;
             this.dataGridViewUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsuarios_CellContentClick);
             // 
@@ -76,7 +76,7 @@
             // 
             // buttonCrear
             // 
-            this.buttonCrear.Location = new System.Drawing.Point(654, 33);
+            this.buttonCrear.Location = new System.Drawing.Point(1024, 27);
             this.buttonCrear.Name = "buttonCrear";
             this.buttonCrear.Size = new System.Drawing.Size(111, 50);
             this.buttonCrear.TabIndex = 2;
@@ -86,7 +86,7 @@
             // 
             // buttonDesbloquear
             // 
-            this.buttonDesbloquear.Location = new System.Drawing.Point(654, 100);
+            this.buttonDesbloquear.Location = new System.Drawing.Point(1024, 94);
             this.buttonDesbloquear.Name = "buttonDesbloquear";
             this.buttonDesbloquear.Size = new System.Drawing.Size(111, 50);
             this.buttonDesbloquear.TabIndex = 3;
@@ -96,7 +96,7 @@
             // 
             // buttonModificar
             // 
-            this.buttonModificar.Location = new System.Drawing.Point(654, 172);
+            this.buttonModificar.Location = new System.Drawing.Point(1024, 166);
             this.buttonModificar.Name = "buttonModificar";
             this.buttonModificar.Size = new System.Drawing.Size(111, 50);
             this.buttonModificar.TabIndex = 4;
@@ -106,7 +106,7 @@
             // 
             // buttonActivar
             // 
-            this.buttonActivar.Location = new System.Drawing.Point(654, 246);
+            this.buttonActivar.Location = new System.Drawing.Point(1024, 240);
             this.buttonActivar.Name = "buttonActivar";
             this.buttonActivar.Size = new System.Drawing.Size(111, 50);
             this.buttonActivar.TabIndex = 5;
@@ -116,7 +116,7 @@
             // 
             // buttonAplicar
             // 
-            this.buttonAplicar.Location = new System.Drawing.Point(654, 322);
+            this.buttonAplicar.Location = new System.Drawing.Point(1024, 316);
             this.buttonAplicar.Name = "buttonAplicar";
             this.buttonAplicar.Size = new System.Drawing.Size(111, 50);
             this.buttonAplicar.TabIndex = 6;
@@ -125,7 +125,7 @@
             // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(654, 394);
+            this.buttonCancelar.Location = new System.Drawing.Point(1024, 388);
             this.buttonCancelar.Name = "buttonCancelar";
             this.buttonCancelar.Size = new System.Drawing.Size(111, 50);
             this.buttonCancelar.TabIndex = 7;
@@ -135,7 +135,7 @@
             // 
             // buttonSalir
             // 
-            this.buttonSalir.Location = new System.Drawing.Point(654, 478);
+            this.buttonSalir.Location = new System.Drawing.Point(1024, 472);
             this.buttonSalir.Name = "buttonSalir";
             this.buttonSalir.Size = new System.Drawing.Size(111, 50);
             this.buttonSalir.TabIndex = 8;
@@ -275,7 +275,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(811, 692);
+            this.ClientSize = new System.Drawing.Size(1172, 692);
             this.Controls.Add(this.textBoxActivo);
             this.Controls.Add(this.labelActivo);
             this.Controls.Add(this.textBoxBloqueado);
@@ -303,6 +303,7 @@
             this.Controls.Add(this.dataGridViewUsuarios);
             this.Name = "UsuarioGUI_62_BP";
             this.Text = "UsuarioGUI_62_BP";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.UsuarioGUI_62_BP_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).EndInit();
             this.ResumeLayout(false);
