@@ -49,10 +49,10 @@
             this.labelRol = new System.Windows.Forms.Label();
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
-            this.textBoxBloqueado = new System.Windows.Forms.TextBox();
             this.labelBloqueado = new System.Windows.Forms.Label();
-            this.textBoxActivo = new System.Windows.Forms.TextBox();
             this.labelActivo = new System.Windows.Forms.Label();
+            this.checkBoxBloqueado = new System.Windows.Forms.CheckBox();
+            this.checkBoxActivo = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -239,13 +239,6 @@
             this.labelLogin.TabIndex = 19;
             this.labelLogin.Text = "Login";
             // 
-            // textBoxBloqueado
-            // 
-            this.textBoxBloqueado.Location = new System.Drawing.Point(122, 587);
-            this.textBoxBloqueado.Name = "textBoxBloqueado";
-            this.textBoxBloqueado.Size = new System.Drawing.Size(364, 20);
-            this.textBoxBloqueado.TabIndex = 22;
-            // 
             // labelBloqueado
             // 
             this.labelBloqueado.AutoSize = true;
@@ -254,13 +247,6 @@
             this.labelBloqueado.Size = new System.Drawing.Size(58, 13);
             this.labelBloqueado.TabIndex = 21;
             this.labelBloqueado.Text = "Bloqueado";
-            // 
-            // textBoxActivo
-            // 
-            this.textBoxActivo.Location = new System.Drawing.Point(122, 626);
-            this.textBoxActivo.Name = "textBoxActivo";
-            this.textBoxActivo.Size = new System.Drawing.Size(364, 20);
-            this.textBoxActivo.TabIndex = 24;
             // 
             // labelActivo
             // 
@@ -271,14 +257,32 @@
             this.labelActivo.TabIndex = 23;
             this.labelActivo.Text = "Activo";
             // 
+            // checkBoxBloqueado
+            // 
+            this.checkBoxBloqueado.AutoSize = true;
+            this.checkBoxBloqueado.Location = new System.Drawing.Point(123, 590);
+            this.checkBoxBloqueado.Name = "checkBoxBloqueado";
+            this.checkBoxBloqueado.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxBloqueado.TabIndex = 25;
+            this.checkBoxBloqueado.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxActivo
+            // 
+            this.checkBoxActivo.AutoSize = true;
+            this.checkBoxActivo.Location = new System.Drawing.Point(122, 628);
+            this.checkBoxActivo.Name = "checkBoxActivo";
+            this.checkBoxActivo.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxActivo.TabIndex = 26;
+            this.checkBoxActivo.UseVisualStyleBackColor = true;
+            // 
             // UsuarioGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 692);
-            this.Controls.Add(this.textBoxActivo);
+            this.Controls.Add(this.checkBoxActivo);
+            this.Controls.Add(this.checkBoxBloqueado);
             this.Controls.Add(this.labelActivo);
-            this.Controls.Add(this.textBoxBloqueado);
             this.Controls.Add(this.labelBloqueado);
             this.Controls.Add(this.textBoxLogin);
             this.Controls.Add(this.labelLogin);
@@ -334,9 +338,9 @@
         private System.Windows.Forms.Label labelRol;
         private System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.Label labelLogin;
-        private System.Windows.Forms.TextBox textBoxBloqueado;
         private System.Windows.Forms.Label labelBloqueado;
-        private System.Windows.Forms.TextBox textBoxActivo;
         private System.Windows.Forms.Label labelActivo;
+        private System.Windows.Forms.CheckBox checkBoxBloqueado;
+        private System.Windows.Forms.CheckBox checkBoxActivo;
     }
 }

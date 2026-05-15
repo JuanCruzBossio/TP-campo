@@ -35,8 +35,8 @@ namespace TP_campo
             LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
             hayUsuarioSeleccionado = true;
             textBoxDNI.Enabled = false;
-            textBoxActivo.Enabled = false;
-            textBoxBloqueado.Enabled = false;
+            checkBoxActivo.Enabled = false;
+            checkBoxBloqueado.Enabled = false;
         }
         private void LlenarCampos(Usuario_62_BP usuario)
         {
@@ -49,8 +49,8 @@ namespace TP_campo
                 textBoxEmail.Text = usuario.Email;
                 textBoxLogin.Text = usuario.Login;
 
-                textBoxBloqueado.Text = usuario.Bloqueo.ToString();
-                textBoxActivo.Text = usuario.Activo.ToString();
+                checkBoxBloqueado.Checked = usuario.Bloqueo;
+                checkBoxActivo.Checked = usuario.Activo;
             }
         }
         private Usuario_62_BP ObtenerUsuarioDeCampos()
@@ -73,8 +73,8 @@ namespace TP_campo
                     Rol = textBoxRol.Text,
                     Email = textBoxEmail.Text,
                     Login = textBoxLogin.Text,
-                    Bloqueo = Convert.ToBoolean(textBoxBloqueado.Text),
-                    Activo = Convert.ToBoolean(textBoxActivo.Text)
+                    Bloqueo = checkBoxBloqueado.Checked,
+                    Activo = checkBoxActivo.Checked
                 };
             }
             catch
@@ -128,7 +128,7 @@ namespace TP_campo
                     return;
                 }
 
-                if (textBoxBloqueado.Text != bool.TrueString)
+                if (!checkBoxBloqueado.Checked)
                 {
                     MessageBox.Show("El usuario seleccionado no se encuentra bloqueado.");
                     return;
@@ -159,16 +159,16 @@ namespace TP_campo
         private void LimpiarCampos()
         {
             textBoxDNI.Enabled = true;
-            textBoxActivo.Enabled = true;
-            textBoxBloqueado.Enabled = true;
+            checkBoxActivo.Enabled = true;
+            checkBoxBloqueado.Enabled = true;
             textBoxDNI.Clear();
             textBoxApellidos.Clear();
             textBoxNombres.Clear();
             textBoxRol.Clear();
             textBoxEmail.Clear();
             textBoxLogin.Clear();
-            textBoxBloqueado.Clear();
-            textBoxActivo.Clear();
+            checkBoxBloqueado.Checked = false;
+            checkBoxActivo.Checked = true;
             textBoxDNI.Focus();
             hayUsuarioSeleccionado = false;
         }
@@ -194,7 +194,7 @@ namespace TP_campo
                 int filas = 0;
                 string accionRealizada = "";
 
-                if (textBoxActivo.Text == bool.TrueString)
+                if (checkBoxActivo.Checked)
                 {
                     filas = _usuarioBLL.Desactivar(usuario);
                     accionRealizada = "Desactivado";
