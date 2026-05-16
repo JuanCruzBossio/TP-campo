@@ -53,6 +53,10 @@
             this.labelActivo = new System.Windows.Forms.Label();
             this.checkBoxBloqueado = new System.Windows.Forms.CheckBox();
             this.checkBoxActivo = new System.Windows.Forms.CheckBox();
+            this.textBoxMensaje = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labelMensaje = new System.Windows.Forms.Label();
+            this.buttonHabilitarConsulta = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +67,7 @@
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
             this.dataGridViewUsuarios.Size = new System.Drawing.Size(939, 278);
             this.dataGridViewUsuarios.TabIndex = 0;
-            this.dataGridViewUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsuarios_CellContentClick);
+            this.dataGridViewUsuarios.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewUsuarios_CellClick);
             // 
             // labelTitulo
             // 
@@ -122,6 +126,7 @@
             this.buttonAplicar.TabIndex = 6;
             this.buttonAplicar.Text = "Aplicar";
             this.buttonAplicar.UseVisualStyleBackColor = true;
+            this.buttonAplicar.Click += new System.EventHandler(this.buttonAplicar_Click);
             // 
             // buttonCancelar
             // 
@@ -275,11 +280,50 @@
             this.checkBoxActivo.TabIndex = 26;
             this.checkBoxActivo.UseVisualStyleBackColor = true;
             // 
+            // textBoxMensaje
+            // 
+            this.textBoxMensaje.Location = new System.Drawing.Point(656, 358);
+            this.textBoxMensaje.Name = "textBoxMensaje";
+            this.textBoxMensaje.Size = new System.Drawing.Size(312, 20);
+            this.textBoxMensaje.TabIndex = 27;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "label1";
+            // 
+            // labelMensaje
+            // 
+            this.labelMensaje.AutoSize = true;
+            this.labelMensaje.Location = new System.Drawing.Point(653, 339);
+            this.labelMensaje.Name = "labelMensaje";
+            this.labelMensaje.Size = new System.Drawing.Size(50, 13);
+            this.labelMensaje.TabIndex = 29;
+            this.labelMensaje.Text = "Mensaje:";
+            // 
+            // buttonHabilitarConsulta
+            // 
+            this.buttonHabilitarConsulta.Location = new System.Drawing.Point(511, 339);
+            this.buttonHabilitarConsulta.Name = "buttonHabilitarConsulta";
+            this.buttonHabilitarConsulta.Size = new System.Drawing.Size(111, 50);
+            this.buttonHabilitarConsulta.TabIndex = 30;
+            this.buttonHabilitarConsulta.Text = "Habilitar Consulta";
+            this.buttonHabilitarConsulta.UseVisualStyleBackColor = true;
+            this.buttonHabilitarConsulta.Click += new System.EventHandler(this.buttonHabilitarConsulta_Click);
+            // 
             // UsuarioGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 692);
+            this.Controls.Add(this.buttonHabilitarConsulta);
+            this.Controls.Add(this.labelMensaje);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxMensaje);
             this.Controls.Add(this.checkBoxActivo);
             this.Controls.Add(this.checkBoxBloqueado);
             this.Controls.Add(this.labelActivo);
@@ -342,5 +386,9 @@
         private System.Windows.Forms.Label labelActivo;
         private System.Windows.Forms.CheckBox checkBoxBloqueado;
         private System.Windows.Forms.CheckBox checkBoxActivo;
+        private System.Windows.Forms.TextBox textBoxMensaje;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelMensaje;
+        private System.Windows.Forms.Button buttonHabilitarConsulta;
     }
 }

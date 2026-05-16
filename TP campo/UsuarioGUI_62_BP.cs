@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using BLL;
 using SEG;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -21,22 +23,52 @@ namespace TP_campo
         }
         private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
         private bool hayUsuarioSeleccionado = false;
+
+        private List<Usuario_62_BP> _listaUsuarios = new List<Usuario_62_BP>();
+
+        //Modos Posibles:
+        // 0 - Inicial - Mensaje: ""
+        // 1 - Consulta - Mensaje: "Modo Consulta"
+        // 2 - Crear  - Mensaje: "Modo Crear"
+        // 3 - Desbloquear  - Mensaje: "Modo Desbloquear"
+        // 4 - Modificar  - Mensaje: "Modo Modificar"
+        // 5 - Activar/Desactivar  - Mensaje: "Modo Activar/Desactivar"
+        private int modoActual = 0;
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
             RellenarGrilla();
+            CambiarModo(0);
+        }
+        private void setButtons(bool valor)
+        {
+            buttonAplicar.Enabled = valor;
+            buttonCancelar.Enabled = valor;
+        }
+        private void setTextBoxs(bool valor)
+        {
+            textBoxDNI.Enabled = valor;
+            textBoxApellidos.Enabled = valor;
+            textBoxNombres.Enabled = valor;
+            textBoxEmail.Enabled = valor;
+            textBoxRol.Enabled = valor;
+            textBoxLogin.Enabled = valor;
+            checkBoxBloqueado.Enabled = valor;
+            checkBoxActivo.Enabled = valor;
         }
         private void RellenarGrilla()
         {
-            this.dataGridViewUsuarios.DataSource = _usuarioBLL.TraerTodosUsuarios();
+            _listaUsuarios = _usuarioBLL.TraerTodosUsuarios();
+            this.dataGridViewUsuarios.DataSource = _listaUsuarios;
         }
 
-        private void dataGridViewUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
-            hayUsuarioSeleccionado = true;
-            textBoxDNI.Enabled = false;
-            checkBoxActivo.Enabled = false;
-            checkBoxBloqueado.Enabled = false;
+            if (modoActual >= 3)
+            {
+                LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
+                hayUsuarioSeleccionado = true;
+                textBoxDNI.Enabled = false;
+            }
         }
         private void LlenarCampos(Usuario_62_BP usuario)
         {
@@ -86,14 +118,12 @@ namespace TP_campo
 
         private void buttonCrear_Click(object sender, EventArgs e)
         {
+            CambiarModo(2);
+        }
+        public void crearUsuario()
+        {
             try
             {
-                if (hayUsuarioSeleccionado)
-                {
-                    MessageBox.Show("No puede crear un Usuario ya creado.");
-                    return;
-                }
-                
                 Usuario_62_BP nuevoUsuario = ObtenerUsuarioDeCampos();
 
                 if (nuevoUsuario != null)
@@ -117,8 +147,11 @@ namespace TP_campo
                 MessageBox.Show("Ocurrió un error al intentar crear el usuario: " + ex.Message);
             }
         }
-
         private void buttonDesbloquear_Click(object sender, EventArgs e)
+        {
+            CambiarModo(3);
+        }
+        private void desbloquearUsuario()
         {
             try
             {
@@ -174,10 +207,14 @@ namespace TP_campo
         }
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            LimpiarCampos();
+            CambiarModo(0);
         }
 
         private void buttonActivar_Click(object sender, EventArgs e)
+        {
+            CambiarModo(5);
+        }
+        private void activarUsuario()
         {
             try
             {
@@ -221,10 +258,13 @@ namespace TP_campo
                 MessageBox.Show("Ocurrió un error al intentar Activar/Desactivar el usuario: " + ex.Message);
             }
         }
-
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            try
+            CambiarModo(4);
+        }
+        private void modificarUsuario()
+        {
+           try
             {
                 if (!hayUsuarioSeleccionado)
                 {
@@ -255,10 +295,108 @@ namespace TP_campo
                 MessageBox.Show("Error al intentar modificar: " + ex.Message);
             }
         }
-
         private void buttonSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonHabilitarConsulta_Click(object sender, EventArgs e)
+        {
+            CambiarModo(1);
+        }
+        private void CambiarModo(int modo)
+        {
+            RellenarGrilla();
+            LimpiarCampos();
+            switch (modo) {
+                case 1:
+                    setButtons(true);
+                    setTextBoxs(true);
+                    textBoxMensaje.Text = "Modo Consulta";
+                    break;
+                case 2:
+                    setButtons(true);
+                    setTextBoxs(true);
+                    textBoxMensaje.Text = "Modo Crear";
+                    break;
+                case 3:
+                    setButtons(true);
+                    setTextBoxs(false);
+                    textBoxMensaje.Text = "Modo Desbloquear";
+                    break;
+                case 4:
+                    setButtons(true);
+                    setTextBoxs(true);
+                    textBoxMensaje.Text = "Modo Modificar";
+                    break;
+                case 5:
+                    setButtons(true);
+                    setTextBoxs(false);
+                    textBoxMensaje.Text = "Modo Activar/Desactivar";
+                    break;
+                case 0:
+                    LimpiarCampos();
+                    setButtons(false);
+                    setTextBoxs(false);
+                    textBoxMensaje.Text = "";
+                    break;
+                default:
+                    LimpiarCampos();
+                    setButtons(false);
+                    setTextBoxs(false);
+                    textBoxMensaje.Text = "";
+                    break;
+            }
+            modoActual = modo;
+        }
+        private void filtrarUsuarios()
+        {
+             var listafiltrada = _listaUsuarios.Where(
+                u =>
+                (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni.Contains(textBoxDNI.Text)) &&
+                (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido.Contains(textBoxApellidos.Text)) &&
+                (string.IsNullOrEmpty(textBoxNombres.Text) || u.Nombre.Contains(textBoxNombres.Text)) &&
+                (string.IsNullOrEmpty(textBoxRol.Text) || u.Rol.Contains(textBoxRol.Text)) &&
+                (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email.Contains(textBoxEmail.Text)) &&
+                (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login.Contains(textBoxLogin.Text)) &&
+                (u.Bloqueo == checkBoxBloqueado.Checked) &&
+                (u.Activo == checkBoxActivo.Checked)
+            ).ToList();
+            if (listafiltrada.Count > 0)
+            {
+                this.dataGridViewUsuarios.DataSource = listafiltrada;
+            }
+            else
+            {
+                MessageBox.Show("No hay Usuarios que cumplan con los filtros");
+            }
+            
+        }
+        private void buttonAplicar_Click(object sender, EventArgs e)
+        {
+            switch (modoActual){
+                case 1:
+                    filtrarUsuarios();
+                    break;
+                case 2:
+                    crearUsuario();
+                    break;
+                case 3:
+                    desbloquearUsuario();
+                    break;
+                case 4:
+                    modificarUsuario();
+                    break;
+                case 5:
+                    activarUsuario();
+                    break;
+                case 0:
+                    break;
+                default:
+                    break;
+            }
+            RellenarGrilla();
+            LimpiarCampos();
         }
     }
 }
