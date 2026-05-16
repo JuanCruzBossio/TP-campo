@@ -63,11 +63,14 @@ namespace TP_campo
 
         private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (modoActual >= 3)
+            if (e.RowIndex >= 0)
             {
                 LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
                 hayUsuarioSeleccionado = true;
-                textBoxDNI.Enabled = false;
+                if (modoActual == 4)
+                {
+                    textBoxDNI.Enabled = false;
+                }
             }
         }
         private void LlenarCampos(Usuario_62_BP usuario)
@@ -133,8 +136,6 @@ namespace TP_campo
                     if (resultado > 0)
                     {
                         MessageBox.Show("Usuario creado con éxito.");
-                        RellenarGrilla();
-                        LimpiarCampos();
                     }
                     else
                     {
@@ -149,7 +150,13 @@ namespace TP_campo
         }
         private void buttonDesbloquear_Click(object sender, EventArgs e)
         {
-            CambiarModo(3);
+            if (hayUsuarioSeleccionado)
+            {
+                CambiarModo(3);
+            }
+            else {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
         }
         private void desbloquearUsuario()
         {
@@ -175,8 +182,6 @@ namespace TP_campo
                 if (filas > 0)
                 {
                     MessageBox.Show("Usuario desbloqueado con éxito.");
-                    RellenarGrilla();
-                    LimpiarCampos();
                 }
                 else
                 {
@@ -212,7 +217,14 @@ namespace TP_campo
 
         private void buttonActivar_Click(object sender, EventArgs e)
         {
-            CambiarModo(5);
+            if (hayUsuarioSeleccionado)
+            {
+                CambiarModo(5);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
         }
         private void activarUsuario()
         {
@@ -245,8 +257,6 @@ namespace TP_campo
                 if (filas > 0)
                 {
                     MessageBox.Show($"Usuario {accionRealizada} con éxito.");
-                    RellenarGrilla();
-                    LimpiarCampos();
                 }
                 else
                 {
@@ -260,11 +270,18 @@ namespace TP_campo
         }
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            CambiarModo(4);
+            if (hayUsuarioSeleccionado)
+            {
+                CambiarModo(4);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
         }
         private void modificarUsuario()
         {
-           try
+            try
             {
                 if (!hayUsuarioSeleccionado)
                 {
@@ -281,8 +298,6 @@ namespace TP_campo
                     if (filas > 0)
                     {
                         MessageBox.Show("Usuario modificado con éxito.");
-                        RellenarGrilla();
-                        LimpiarCampos();
                     }
                     else
                     {
@@ -306,15 +321,19 @@ namespace TP_campo
         }
         private void CambiarModo(int modo)
         {
-            RellenarGrilla();
-            LimpiarCampos();
-            switch (modo) {
+            modoActual = modo;
+            switch (modo)
+            {
                 case 1:
+                    LimpiarCampos();
                     setButtons(true);
                     setTextBoxs(true);
+                    checkBoxBloqueado.Enabled = false;
+                    checkBoxActivo.Enabled = false;
                     textBoxMensaje.Text = "Modo Consulta";
                     break;
                 case 2:
+                    LimpiarCampos();
                     setButtons(true);
                     setTextBoxs(true);
                     textBoxMensaje.Text = "Modo Crear";
@@ -327,6 +346,7 @@ namespace TP_campo
                 case 4:
                     setButtons(true);
                     setTextBoxs(true);
+                    textBoxDNI.Enabled = false;
                     textBoxMensaje.Text = "Modo Modificar";
                     break;
                 case 5:
@@ -347,20 +367,17 @@ namespace TP_campo
                     textBoxMensaje.Text = "";
                     break;
             }
-            modoActual = modo;
         }
         private void filtrarUsuarios()
         {
-             var listafiltrada = _listaUsuarios.Where(
-                u =>
-                (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni.Contains(textBoxDNI.Text)) &&
-                (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido.Contains(textBoxApellidos.Text)) &&
-                (string.IsNullOrEmpty(textBoxNombres.Text) || u.Nombre.Contains(textBoxNombres.Text)) &&
-                (string.IsNullOrEmpty(textBoxRol.Text) || u.Rol.Contains(textBoxRol.Text)) &&
-                (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email.Contains(textBoxEmail.Text)) &&
-                (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login.Contains(textBoxLogin.Text)) &&
-                (u.Bloqueo == checkBoxBloqueado.Checked) &&
-                (u.Activo == checkBoxActivo.Checked)
+            var listafiltrada = _listaUsuarios.Where(
+               u =>
+               (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni.Contains(textBoxDNI.Text)) &&
+               (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido.Contains(textBoxApellidos.Text)) &&
+               (string.IsNullOrEmpty(textBoxNombres.Text) || u.Nombre.Contains(textBoxNombres.Text)) &&
+               (string.IsNullOrEmpty(textBoxRol.Text) || u.Rol.Contains(textBoxRol.Text)) &&
+               (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email.Contains(textBoxEmail.Text)) &&
+               (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login.Contains(textBoxLogin.Text))
             ).ToList();
             if (listafiltrada.Count > 0)
             {
@@ -370,14 +387,15 @@ namespace TP_campo
             {
                 MessageBox.Show("No hay Usuarios que cumplan con los filtros");
             }
-            
+
         }
         private void buttonAplicar_Click(object sender, EventArgs e)
         {
-            switch (modoActual){
+            switch (modoActual)
+            {
                 case 1:
                     filtrarUsuarios();
-                    break;
+                    return;
                 case 2:
                     crearUsuario();
                     break;
@@ -396,7 +414,7 @@ namespace TP_campo
                     break;
             }
             RellenarGrilla();
-            LimpiarCampos();
+            CambiarModo(0);
         }
     }
 }
