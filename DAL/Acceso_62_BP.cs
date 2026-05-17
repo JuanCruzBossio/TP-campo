@@ -6,31 +6,31 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
-namespace DAL
+namespace DAL_62_BP
 {
     public class Acceso_62_BP
     {
-        SqlConnection conexion = new SqlConnection(@"Data Source=.;Initial Catalog=TP Campo;Integrated Security=True");
+        SqlConnection conexion_62_BP = new SqlConnection(@"Data Source=.;Initial Catalog=TP_Campo_62_BP;Integrated Security=True;");
 
-        public void abrir()
+        public void abrir_62_BP()
         {
-            conexion.Open();
+            conexion_62_BP.Open();
         }
 
-        public void cerrar()
+        public void cerrar_62_BP()
         {
-            conexion.Close();
+            conexion_62_BP.Close();
         }
 
-        public DataTable leer(string query, SqlParameter[] parametros)
+        public DataTable leer_62_BP(string query, SqlParameter[] parametros)
         {
             DataTable tabla = new DataTable();
-            abrir();
-            SqlTransaction transaccion = conexion.BeginTransaction();
+            abrir_62_BP();
+            SqlTransaction transaccion = conexion_62_BP.BeginTransaction();
 
             try
             {
-                SqlCommand comando = new SqlCommand(query, conexion);
+                SqlCommand comando = new SqlCommand(query, conexion_62_BP);
                 comando.Transaction = transaccion;
                 comando.CommandType = CommandType.Text;
 
@@ -54,20 +54,20 @@ namespace DAL
             }
             finally
             {
-                cerrar();
+                cerrar_62_BP();
             }
 
             return tabla;
         }
-        public int escribir(string query, SqlParameter[] parametros)
+        public int escribir_62_BP(string query, SqlParameter[] parametros)
         {
             int filasAfectadas = 0;
-            abrir();
-            SqlTransaction transaccion = conexion.BeginTransaction();
+            abrir_62_BP();
+            SqlTransaction transaccion = conexion_62_BP.BeginTransaction();
 
             try
             {
-                SqlCommand comando = new SqlCommand(query, conexion);
+                SqlCommand comando = new SqlCommand(query, conexion_62_BP);
                 comando.Transaction = transaccion;
                 comando.CommandType = CommandType.Text;
 
@@ -87,7 +87,7 @@ namespace DAL
             }
             finally
             {
-                cerrar();
+                cerrar_62_BP();
             }
 
             return filasAfectadas;
