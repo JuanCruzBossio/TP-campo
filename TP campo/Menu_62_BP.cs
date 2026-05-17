@@ -52,5 +52,12 @@ namespace TP_campo
                 MessageBox.Show("Error al cerrar sesión: " + ex.Message);
             }
         }
+
+        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            Bitacora_62_BP bitacoraForm = new Bitacora_62_BP();
+            bitacoraForm.MdiParent = this;
+            bitacoraForm.Show();        
+        }
     }
 }
