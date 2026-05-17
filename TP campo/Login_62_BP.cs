@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using BLL_62_BP;
 using SEG_62_BP;
 
-namespace TP_campo
+namespace TP_campo_62_BP
 {//Prueba de commit
     public partial class Login_62_BP : Form
     {

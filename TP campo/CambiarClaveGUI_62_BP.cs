@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
 
-namespace TP_campo
+namespace TP_campo_62_BP
 {
     public partial class CambiarClaveGUI_62_BP : Form
     {

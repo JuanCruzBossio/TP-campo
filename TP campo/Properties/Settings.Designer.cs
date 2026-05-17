@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TP_campo.Properties
+namespace TP_campo_62_BP.Properties
 {
 
 

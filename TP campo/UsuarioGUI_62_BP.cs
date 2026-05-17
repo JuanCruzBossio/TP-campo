@@ -13,7 +13,7 @@ using BLL_62_BP;
 using SEG_62_BP;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace TP_campo
+namespace TP_campo_62_BP
 {
     public partial class UsuarioGUI_62_BP : Form
     {

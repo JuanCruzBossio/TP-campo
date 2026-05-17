@@ -1,4 +1,4 @@
-﻿namespace TP_campo
+﻿namespace TP_campo_62_BP
 {
     partial class CambiarClaveGUI_62_BP
     {

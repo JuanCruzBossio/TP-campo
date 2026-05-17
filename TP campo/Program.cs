@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TP_campo
+namespace TP_campo_62_BP
 {
     internal static class Program
     {
