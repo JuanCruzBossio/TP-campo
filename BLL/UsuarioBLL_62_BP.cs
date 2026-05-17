@@ -132,9 +132,25 @@ namespace BLL_62_BP
                     _bitacoraBLL.AltaBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                throw;
+                if (ex.Number == 2627 || ex.Number == 2601)
+                {
+                    string error = ex.Message.ToLower();
+
+                    if (error.Contains("login_62_BP"))
+                    {
+                        throw new Exception("Ya existe un usuario con ese Login.");
+                    }
+
+                    if (error.Contains("login_62_BP"))
+                    {
+                        throw new Exception("Ya existe un usuario con ese DNI.");
+                    }
+
+                    throw new Exception("Error al modificar Datos");
+                    throw;
+                }
             }
             return filasAfectadas;
         }
