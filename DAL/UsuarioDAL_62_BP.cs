@@ -44,7 +44,7 @@ namespace DAL_62_BP
             string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login AND contrasena_62_BP = @contrasena";
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@nombre", login),
+                new SqlParameter("@login", login),
                 new SqlParameter("@contrasena", contrasena)
             };
 
