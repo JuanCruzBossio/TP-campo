@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelNombre = new System.Windows.Forms.Label();
+            this.labelLogin = new System.Windows.Forms.Label();
             this.labelContrasena = new System.Windows.Forms.Label();
-            this.textBoxNombre = new System.Windows.Forms.TextBox();
+            this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.textBoxContrasena = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.checkBoxPassword = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // labelNombre
+            // labelLogin
             // 
-            this.labelNombre.AutoSize = true;
-            this.labelNombre.Location = new System.Drawing.Point(77, 60);
-            this.labelNombre.Name = "labelNombre";
-            this.labelNombre.Size = new System.Drawing.Size(44, 13);
-            this.labelNombre.TabIndex = 0;
-            this.labelNombre.Text = "Nombre";
+            this.labelLogin.AutoSize = true;
+            this.labelLogin.Location = new System.Drawing.Point(77, 60);
+            this.labelLogin.Name = "labelLogin";
+            this.labelLogin.Size = new System.Drawing.Size(44, 13);
+            this.labelLogin.TabIndex = 0;
+            this.labelLogin.Text = "Nombre";
             // 
             // labelContrasena
             // 
@@ -54,12 +54,12 @@
             this.labelContrasena.TabIndex = 1;
             this.labelContrasena.Text = "Contraseña";
             // 
-            // textBoxNombre
+            // textBoxLogin
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(146, 60);
-            this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(100, 20);
-            this.textBoxNombre.TabIndex = 2;
+            this.textBoxLogin.Location = new System.Drawing.Point(146, 60);
+            this.textBoxLogin.Name = "textBoxLogin";
+            this.textBoxLogin.Size = new System.Drawing.Size(100, 20);
+            this.textBoxLogin.TabIndex = 2;
             // 
             // textBoxContrasena
             // 
@@ -97,9 +97,9 @@
             this.Controls.Add(this.checkBoxPassword);
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.textBoxContrasena);
-            this.Controls.Add(this.textBoxNombre);
+            this.Controls.Add(this.textBoxLogin);
             this.Controls.Add(this.labelContrasena);
-            this.Controls.Add(this.labelNombre);
+            this.Controls.Add(this.labelLogin);
             this.Name = "Login_62_BP";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Login_62_BP_Load);
@@ -110,9 +110,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelNombre;
+        private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.Label labelContrasena;
-        private System.Windows.Forms.TextBox textBoxNombre;
+        private System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.TextBox textBoxContrasena;
         private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.CheckBox checkBoxPassword;

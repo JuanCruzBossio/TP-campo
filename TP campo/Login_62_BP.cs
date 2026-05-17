@@ -24,18 +24,18 @@ namespace TP_campo_62_BP
         {
             try
             {
-                string nombre = textBoxNombre.Text;
+                string login = textBoxLogin.Text;
                 string contrasena = textBoxContrasena.Text;
 
-                if (!string.IsNullOrWhiteSpace(nombre) && !string.IsNullOrWhiteSpace(contrasena))
+                if (!string.IsNullOrWhiteSpace(login) && !string.IsNullOrWhiteSpace(contrasena))
                 {
-                    Usuario_62_BP usuario = _usuarioBLL_62_BP.Login_62_BP(nombre, contrasena);
+                    Usuario_62_BP usuario = _usuarioBLL_62_BP.Login_62_BP(login, contrasena);
 
                     if (usuario != null)
                     {
                         Menu_62_BP menu = new Menu_62_BP();
                         menu.Show();
-                        textBoxNombre.Clear();
+                        textBoxLogin.Clear();
                         textBoxContrasena.Clear();
                         this.Hide();
                     }

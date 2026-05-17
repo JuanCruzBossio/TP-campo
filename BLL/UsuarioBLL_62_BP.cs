@@ -174,14 +174,16 @@ namespace BLL_62_BP
             return persona;
         }
 
-        public Usuario_62_BP Login_62_BP(string nombre, string contrasena)
+        public Usuario_62_BP Login_62_BP(string login, string contrasena)
         {
             try
             {
-                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorNombre_62_BP(nombre);
+                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(contrasena);
+
+                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLoginYContrasena_62_BP(login, contrasenaHasheada);
 
                 if (usuario == null)
-                    throw new Exception("Usuario no encontrado.");
+                    throw new Exception("Usuario o contraseña incorrectos.");
 
                 if (usuario.Activo_62_BP == false)
                     throw new Exception("Usuario Desactivado.");
@@ -189,23 +191,13 @@ namespace BLL_62_BP
                 if (usuario.Bloqueo_62_BP == true)
                     throw new Exception("Usuario Bloqueado.");
 
-                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(contrasena);
-                if (usuario.Contrasena_62_BP != contrasenaHasheada)
-                {
-                    //usuario.IntentosLogin ++;
-                    //Modificar(usuario);
-                    //int intentosRestantes = 3 - (usuario.IntentosLogin);
-                    //throw new Exception($"Contraseña incorrecta. Intentos restantes: {intentosRestantes}");
-                    throw new Exception("Contraseña incorrecta");
-                }
-
                 SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
 
                 _bitacoraBLL.AltaBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
 
                 return usuario;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

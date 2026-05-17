@@ -39,12 +39,13 @@ namespace DAL_62_BP
             }
             return lista;
         }
-        public Usuario_62_BP BuscarUsuarioPorNombre_62_BP(string nombre)
+        public Usuario_62_BP BuscarUsuarioPorLoginYContrasena_62_BP(string login, string contrasena)
         {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @nombre";
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login AND contrasena_62_BP = @contrasena";
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@nombre", nombre)
+                new SqlParameter("@nombre", login),
+                new SqlParameter("@contrasena", contrasena)
             };
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
