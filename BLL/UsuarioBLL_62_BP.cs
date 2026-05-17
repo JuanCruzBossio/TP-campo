@@ -138,7 +138,26 @@ namespace BLL
             }
             return filasAfectadas;
         }
-        
+
+        public Usuario_62_BP Buscar_por_DNI(string dni)
+        {
+            Usuario_62_BP persona = null;
+            try
+            {
+                persona = _usuarioDAL.BuscarUsuarioPorDNI(dni);
+                if (persona != null)
+                {
+                    //_bitacoraBLL.Alta("Se busco usuario por DNI " + dni, 4);
+                    //No consideramos acorde mantener un registro de la busqueda de usuario
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return persona;
+        }
+
         public Usuario_62_BP Login(string nombre, string contrasena)
         {
             try

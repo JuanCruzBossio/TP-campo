@@ -53,11 +53,15 @@
             // 
             // dgv_bitacora
             // 
+            this.dgv_bitacora.AllowUserToAddRows = false;
+            this.dgv_bitacora.AllowUserToDeleteRows = false;
             this.dgv_bitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_bitacora.Location = new System.Drawing.Point(29, 27);
             this.dgv_bitacora.Name = "dgv_bitacora";
+            this.dgv_bitacora.ReadOnly = true;
             this.dgv_bitacora.Size = new System.Drawing.Size(746, 268);
             this.dgv_bitacora.TabIndex = 0;
+            this.dgv_bitacora.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_bitacora_CellClick);
             // 
             // lbl_login
             // 

@@ -69,6 +69,35 @@ namespace DAL
             return null;
         }
 
+        public Usuario_62_BP BuscarUsuarioPorDNI(string dni)
+        {
+            string query = "SELECT dni, apellido, nombre, rol, email, login, contrasena, bloqueo, activo FROM Usuario WHERE dni = @dni";
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", dni)
+            };
+
+            DataTable tabla = _acceso.leer(query, parametros);
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                DataRow fila = tabla.Rows[0];
+                Usuario_62_BP usuario = new Usuario_62_BP();
+
+                usuario.Dni = fila["dni"].ToString();
+                usuario.Apellido = fila["apellido"].ToString();
+                usuario.Nombre = fila["nombre"].ToString();
+                usuario.Rol = fila["rol"].ToString();
+                usuario.Email = fila["email"].ToString();
+                usuario.Login = fila["login"].ToString();
+                usuario.Contrasena = fila["contrasena"].ToString();
+                usuario.Bloqueo = Convert.ToBoolean(fila["bloqueo"]);
+                usuario.Activo = Convert.ToBoolean(fila["activo"]);
+
+                return usuario;
+            }
+            return null;
+        }
+
         public int Alta(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
