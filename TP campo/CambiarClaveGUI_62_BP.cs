@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
+using BLL_62_BP;
 
 namespace TP_campo
 {
@@ -39,7 +39,7 @@ namespace TP_campo
                     return;
                 }
 
-                int resultado = _usuarioBLL.CambiarContrasena(antigua, nueva);
+                int resultado = _usuarioBLL.CambiarContrasena_62_BP(antigua, nueva);
 
                 if (resultado > 0)
                 {

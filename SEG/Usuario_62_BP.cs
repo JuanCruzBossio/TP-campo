@@ -4,71 +4,71 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SEG
+namespace SEG_62_BP
 {
     public class Usuario_62_BP
     {
-        private string dni;
-        public string Dni
+        private string dni_62_BP;
+        public string Dni_62_BP
         {
-            get { return dni; }
-            set { dni = value; }
+            get { return dni_62_BP; }
+            set { dni_62_BP = value; }
         }
 
-        private string apellido;
-        public string Apellido
+        private string apellido_62_BP;
+        public string Apellido_62_BP
         {
-            get { return apellido; }
-            set { apellido = value; }
+            get { return apellido_62_BP; }
+            set { apellido_62_BP = value; }
         }
 
-        private string nombre;
-        public string Nombre
+        private string nombre_62_BP;
+        public string Nombre_62_BP
         {
-            get { return nombre; }
-            set { nombre = value; }
+            get { return nombre_62_BP; }
+            set { nombre_62_BP = value; }
         }
 
-        private string rol;
-        public string Rol
+        private string rol_62_BP;
+        public string Rol_62_BP
         {
-            get { return rol; }
-            set { rol = value; }
+            get { return rol_62_BP; }
+            set { rol_62_BP = value; }
         }
 
-        private string email;
-        public string Email
+        private string email_62_BP;
+        public string Email_62_BP
         {
-            get { return email; }
-            set { email = value; }
+            get { return email_62_BP; }
+            set { email_62_BP = value; }
         }
 
-        private string login;
-        public string Login
+        private string login_62_BP;
+        public string Login_62_BP
         {
-            get { return login; }
-            set { login = value; }
+            get { return login_62_BP; }
+            set { login_62_BP = value; }
         }
 
-        private string contrasena;
-        public string Contrasena
+        private string contrasena_62_BP;
+        public string Contrasena_62_BP
         {
-            get { return contrasena; }
-            set { contrasena = value; }
+            get { return contrasena_62_BP; }
+            set { contrasena_62_BP = value; }
         }
 
-        private bool bloqueo;
-        public bool Bloqueo
+        private bool bloqueo_62_BP;
+        public bool Bloqueo_62_BP
         {
-            get { return bloqueo; }
-            set { bloqueo = value; }
+            get { return bloqueo_62_BP; }
+            set { bloqueo_62_BP = value; }
         }
 
-        private bool activo;
-        public bool Activo
+        private bool activo_62_BP;
+        public bool Activo_62_BP
         {
-            get { return activo; }
-            set { activo = value; }
+            get { return activo_62_BP; }
+            set { activo_62_BP = value; }
         }
     }
 

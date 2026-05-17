@@ -6,43 +6,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL_62_BP;
-using SEG;
+using SEG_62_BP;
 
-namespace BLL
+namespace BLL_62_BP
 {
     public class BitacoraBLL_62_BP
     {
         private BitacoraDAL_62_BP _bitacoraDAL = new BitacoraDAL_62_BP();
 
-        public void Alta(string mensaje, int nivelCriticidad)
+        public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-            registro.Mensaje = mensaje;
-            registro.Criticidad = nivelCriticidad;
+            registro.Mensaje_62_BP = mensaje;
+            registro.Criticidad_62_BP = nivelCriticidad;
 
-            if (SessionManager_62_BP.GetInstancia().UsuarioLogueado != null)
+            if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
             {
-                registro.DniUsuario = Convert.ToInt32(SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni);
+                registro.DniUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP;
             }
             else
             {
-                registro.DniUsuario = 0;
+                registro.DniUsuario_62_BP = "0";
             }
 
-            _bitacoraDAL.Alta(registro);
+            _bitacoraDAL.AltaBitacora_62_BP(registro);
         }
-        public void Alta(string mensaje, int nivelCriticidad, string dni)
+        public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-            registro.Mensaje = mensaje;
-            registro.Criticidad = nivelCriticidad;
-            registro.DniUsuario = int.Parse(dni);
+            registro.Mensaje_62_BP = mensaje;
+            registro.Criticidad_62_BP = nivelCriticidad;
+            registro.DniUsuario_62_BP = dni;
 
-            _bitacoraDAL.Alta(registro);
+            _bitacoraDAL.AltaBitacora_62_BP(registro);
         }
-        public List<RegistroBitacora_62_BP> ObtenerBitacora()
+        public List<RegistroBitacora_62_BP> ObtenerBitacora_62_BP()
         {
-            return _bitacoraDAL.ObtenerRegistros();
+            return _bitacoraDAL.ObtenerRegistros_62_BP();
         }
     }
 }

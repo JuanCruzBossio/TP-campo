@@ -4,48 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SEG
+namespace SEG_62_BP
 {
     public class RegistroBitacora_62_BP
     {
-        private int id;
+        private int id_62_BP;
 
-        public int Id
+        public int Id_62_BP
         {
-            get { return id; }
-            set { id = value; }
+            get { return id_62_BP; }
+            set { id_62_BP = value; }
         }
 
-        private DateTime fecha;
+        private DateTime fecha_62_BP;
 
-        public DateTime Fecha
+        public DateTime Fecha_62_BP
         {
-            get { return fecha; }
-            set { fecha = value; }
+            get { return fecha_62_BP; }
+            set { fecha_62_BP = value; }
         }
 
-        private int dniUsuario;
+        private string dniUsuario_62_BP;
 
-        public int DniUsuario
+        public string DniUsuario_62_BP
         {
-            get { return dniUsuario; }
-            set { dniUsuario = value; }
+            get { return dniUsuario_62_BP; }
+            set { dniUsuario_62_BP = value; }
         }
 
-        private string mensaje;
+        private string mensaje_62_BP;
 
-        public string Mensaje
+        public string Mensaje_62_BP
         {
-            get { return mensaje; }
-            set { mensaje = value; }
+            get { return mensaje_62_BP; }
+            set { mensaje_62_BP = value; }
         }
 
-        private int criticidad;
+        private int criticidad_62_BP;
 
-        public int Criticidad
+        public int Criticidad_62_BP
         {
-            get { return criticidad; }
-            set { criticidad = value; }
+            get { return criticidad_62_BP; }
+            set { criticidad_62_BP = value; }
         }
     }
 }

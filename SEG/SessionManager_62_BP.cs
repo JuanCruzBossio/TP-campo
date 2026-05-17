@@ -6,42 +6,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SEG
+namespace SEG_62_BP
 {
     public class SessionManager_62_BP
     {
         private SessionManager_62_BP() { }
-        private static SessionManager_62_BP instancia;
+        private static SessionManager_62_BP instancia_62_BP;
         private static readonly object _lock = new object();
 
-        public static SessionManager_62_BP GetInstancia()
+        public static SessionManager_62_BP GetInstancia_62_BP()
         {
-            if (instancia == null)
+            if (instancia_62_BP == null)
             {
                 lock (_lock)
                 {
-                    if (instancia == null)
+                    if (instancia_62_BP == null)
                     {
-                        instancia = new SessionManager_62_BP();
+                        instancia_62_BP = new SessionManager_62_BP();
                     }
                 }
             }
-            return instancia;
+            return instancia_62_BP;
         }
 
-        private Usuario_62_BP usuarioLogueado;
+        private Usuario_62_BP usuarioLogueado_62_BP;
 
-		public Usuario_62_BP UsuarioLogueado
+		public Usuario_62_BP UsuarioLogueado_62_BP
         {
-			get { return usuarioLogueado; }
-			private set { usuarioLogueado = value; }
+			get { return usuarioLogueado_62_BP; }
+			private set { usuarioLogueado_62_BP = value; }
 		}
 
-        public void Login(Usuario_62_BP usuario)
+        public void Login_62_BP(Usuario_62_BP usuario)
         {
-            if (usuarioLogueado == null)
+            if (usuarioLogueado_62_BP == null)
             {
-                usuarioLogueado = usuario;
+                usuarioLogueado_62_BP = usuario;
             }
             else
             {
@@ -49,11 +49,11 @@ namespace SEG
             }
         }
 
-        public void Logout()
+        public void Logout_62_BP()
         {
-            if (usuarioLogueado != null)
+            if (usuarioLogueado_62_BP != null)
             {
-                usuarioLogueado = null;
+                usuarioLogueado_62_BP = null;
             }
             else
             {

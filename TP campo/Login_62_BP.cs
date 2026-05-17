@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using SEG;
+using BLL_62_BP;
+using SEG_62_BP;
 
 namespace TP_campo
 {//Prueba de commit
@@ -29,7 +29,7 @@ namespace TP_campo
 
                 if (!string.IsNullOrWhiteSpace(nombre) && !string.IsNullOrWhiteSpace(contrasena))
                 {
-                    Usuario_62_BP usuario = _usuarioBLL.Login(nombre, contrasena);
+                    Usuario_62_BP usuario = _usuarioBLL.Login_62_BP(nombre, contrasena);
 
                     if (usuario != null)
                     {

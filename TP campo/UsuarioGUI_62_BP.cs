@@ -9,8 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using BLL;
-using SEG;
+using BLL_62_BP;
+using SEG_62_BP;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TP_campo
@@ -36,8 +36,8 @@ namespace TP_campo
         private int modoActual = 0;
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
-            RellenarGrilla();
-            CambiarModo(0);
+            RellenarGrilla_62_BP();
+            CambiarModo_62_BP(0);
         }
         private void setButtons(bool valor)
         {
@@ -55,9 +55,9 @@ namespace TP_campo
             checkBoxBloqueado.Enabled = valor;
             checkBoxActivo.Enabled = valor;
         }
-        private void RellenarGrilla()
+        private void RellenarGrilla_62_BP()
         {
-            _listaUsuarios = _usuarioBLL.TraerTodosUsuarios();
+            _listaUsuarios = _usuarioBLL.TraerTodosUsuarios_62_BP();
             this.dataGridViewUsuarios.DataSource = _listaUsuarios;
         }
 
@@ -65,7 +65,7 @@ namespace TP_campo
         {
             if (e.RowIndex >= 0)
             {
-                LlenarCampos((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
+                LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
                 hayUsuarioSeleccionado = true;
                 if (modoActual == 4)
                 {
@@ -73,22 +73,22 @@ namespace TP_campo
                 }
             }
         }
-        private void LlenarCampos(Usuario_62_BP usuario)
+        private void LlenarCampos_62_BP(Usuario_62_BP usuario)
         {
             if (usuario != null)
             {
-                textBoxDNI.Text = usuario.Dni;
-                textBoxApellidos.Text = usuario.Apellido;
-                textBoxNombres.Text = usuario.Nombre;
-                textBoxRol.Text = usuario.Rol;
-                textBoxEmail.Text = usuario.Email;
-                textBoxLogin.Text = usuario.Login;
+                textBoxDNI.Text = usuario.Dni_62_BP;
+                textBoxApellidos.Text = usuario.Apellido_62_BP;
+                textBoxNombres.Text = usuario.Nombre_62_BP;
+                textBoxRol.Text = usuario.Rol_62_BP;
+                textBoxEmail.Text = usuario.Email_62_BP;
+                textBoxLogin.Text = usuario.Login_62_BP;
 
-                checkBoxBloqueado.Checked = usuario.Bloqueo;
-                checkBoxActivo.Checked = usuario.Activo;
+                checkBoxBloqueado.Checked = usuario.Bloqueo_62_BP;
+                checkBoxActivo.Checked = usuario.Activo_62_BP;
             }
         }
-        private Usuario_62_BP ObtenerUsuarioDeCampos()
+        private Usuario_62_BP ValidarUsuario_62_BP()
         {
             if (string.IsNullOrWhiteSpace(textBoxDNI.Text) || string.IsNullOrWhiteSpace(textBoxApellidos.Text) ||
                 string.IsNullOrWhiteSpace(textBoxNombres.Text) || string.IsNullOrWhiteSpace(textBoxRol.Text) ||
@@ -102,14 +102,14 @@ namespace TP_campo
             {
                 return new Usuario_62_BP
                 {
-                    Dni = textBoxDNI.Text,
-                    Apellido = textBoxApellidos.Text,
-                    Nombre = textBoxNombres.Text,
-                    Rol = textBoxRol.Text,
-                    Email = textBoxEmail.Text,
-                    Login = textBoxLogin.Text,
-                    Bloqueo = checkBoxBloqueado.Checked,
-                    Activo = checkBoxActivo.Checked
+                    Dni_62_BP = textBoxDNI.Text,
+                    Apellido_62_BP = textBoxApellidos.Text,
+                    Nombre_62_BP = textBoxNombres.Text,
+                    Rol_62_BP = textBoxRol.Text,
+                    Email_62_BP = textBoxEmail.Text,
+                    Login_62_BP = textBoxLogin.Text,
+                    Bloqueo_62_BP = checkBoxBloqueado.Checked,
+                    Activo_62_BP = checkBoxActivo.Checked
                 };
             }
             catch
@@ -121,17 +121,17 @@ namespace TP_campo
 
         private void buttonCrear_Click(object sender, EventArgs e)
         {
-            CambiarModo(2);
+            CambiarModo_62_BP(2);
         }
-        public bool crearUsuario()
+        public bool crearUsuario_62_BP()
         {
             try
             {
-                Usuario_62_BP nuevoUsuario = ObtenerUsuarioDeCampos();
+                Usuario_62_BP nuevoUsuario = ValidarUsuario_62_BP();
 
                 if (nuevoUsuario != null)
                 {
-                    int resultado = _usuarioBLL.Alta(nuevoUsuario);
+                    int resultado = _usuarioBLL.Alta_62_BP(nuevoUsuario);
 
                     if (resultado > 0)
                     {
@@ -154,13 +154,13 @@ namespace TP_campo
         {
             if (hayUsuarioSeleccionado)
             {
-                CambiarModo(3);
+                CambiarModo_62_BP(3);
             }
             else {
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private bool desbloquearUsuario()
+        private bool desbloquearUsuario_62_BP()
         {
             try
             {
@@ -176,10 +176,10 @@ namespace TP_campo
                     return false;
                 }
                 Usuario_62_BP usuarioADesbloquear = new Usuario_62_BP();
-                usuarioADesbloquear.Dni = textBoxDNI.Text;
-                usuarioADesbloquear.Login = textBoxLogin.Text;
+                usuarioADesbloquear.Dni_62_BP = textBoxDNI.Text;
+                usuarioADesbloquear.Login_62_BP = textBoxLogin.Text;
 
-                int filas = _usuarioBLL.Desbloquear(usuarioADesbloquear);
+                int filas = _usuarioBLL.Desbloquear_62_BP(usuarioADesbloquear);
 
                 if (filas > 0)
                 {
@@ -198,7 +198,7 @@ namespace TP_campo
             return false;
         }
 
-        private void LimpiarCampos()
+        private void LimpiarCampos_62_BP()
         {
             textBoxDNI.Enabled = true;
             checkBoxActivo.Enabled = true;
@@ -216,21 +216,21 @@ namespace TP_campo
         }
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            CambiarModo(0);
+            CambiarModo_62_BP(0);
         }
 
         private void buttonActivar_Click(object sender, EventArgs e)
         {
             if (hayUsuarioSeleccionado)
             {
-                CambiarModo(5);
+                CambiarModo_62_BP(5);
             }
             else
             {
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private bool activarUsuario()
+        private bool activarUsuario_62_BP()
         {
             try
             {
@@ -241,20 +241,20 @@ namespace TP_campo
                 }
 
                 Usuario_62_BP usuario = new Usuario_62_BP();
-                usuario.Dni = textBoxDNI.Text;
-                usuario.Login = textBoxLogin.Text;
+                usuario.Dni_62_BP = textBoxDNI.Text;
+                usuario.Login_62_BP = textBoxLogin.Text;
 
                 int filas = 0;
                 string accionRealizada = "";
 
                 if (checkBoxActivo.Checked)
                 {
-                    filas = _usuarioBLL.Desactivar(usuario);
+                    filas = _usuarioBLL.Desactivar_62_BP(usuario);
                     accionRealizada = "Desactivado";
                 }
                 else
                 {
-                    filas = _usuarioBLL.Activar(usuario);
+                    filas = _usuarioBLL.Activar_62_BP(usuario);
                     accionRealizada = "Activado";
                 }
 
@@ -278,14 +278,14 @@ namespace TP_campo
         {
             if (hayUsuarioSeleccionado)
             {
-                CambiarModo(4);
+                CambiarModo_62_BP(4);
             }
             else
             {
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private bool modificarUsuario()
+        private bool modificarUsuario_62_BP()
         {
             try
             {
@@ -295,11 +295,11 @@ namespace TP_campo
                     return false;
                 }
 
-                Usuario_62_BP usuarioAModificar = ObtenerUsuarioDeCampos();
+                Usuario_62_BP usuarioAModificar = ValidarUsuario_62_BP();
 
                 if (usuarioAModificar != null)
                 {
-                    int filas = _usuarioBLL.Modificar(usuarioAModificar);
+                    int filas = _usuarioBLL.Modificar_62_BP(usuarioAModificar);
 
                     if (filas > 0)
                     {
@@ -325,15 +325,15 @@ namespace TP_campo
 
         private void buttonHabilitarConsulta_Click(object sender, EventArgs e)
         {
-            CambiarModo(1);
+            CambiarModo_62_BP(1);
         }
-        private void CambiarModo(int modo)
+        private void CambiarModo_62_BP(int modo)
         {
             modoActual = modo;
             switch (modo)
             {
                 case 1:
-                    LimpiarCampos();
+                    LimpiarCampos_62_BP();
                     setButtons(true);
                     setTextBoxs(true);
                     checkBoxBloqueado.Enabled = false;
@@ -341,7 +341,7 @@ namespace TP_campo
                     textBoxMensaje.Text = "Modo Consulta";
                     break;
                 case 2:
-                    LimpiarCampos();
+                    LimpiarCampos_62_BP();
                     setButtons(true);
                     setTextBoxs(true);
                     textBoxMensaje.Text = "Modo Crear";
@@ -363,29 +363,29 @@ namespace TP_campo
                     textBoxMensaje.Text = "Modo Activar/Desactivar";
                     break;
                 case 0:
-                    LimpiarCampos();
+                    LimpiarCampos_62_BP();
                     setButtons(false);
                     setTextBoxs(false);
                     textBoxMensaje.Text = "";
                     break;
                 default:
-                    LimpiarCampos();
+                    LimpiarCampos_62_BP();
                     setButtons(false);
                     setTextBoxs(false);
                     textBoxMensaje.Text = "";
                     break;
             }
         }
-        private void filtrarUsuarios()
+        private void filtrarUsuarios_62_BP()
         {
             var listafiltrada = _listaUsuarios.Where(
                u =>
-               (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni.Contains(textBoxDNI.Text)) &&
-               (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido.Contains(textBoxApellidos.Text)) &&
-               (string.IsNullOrEmpty(textBoxNombres.Text) || u.Nombre.Contains(textBoxNombres.Text)) &&
-               (string.IsNullOrEmpty(textBoxRol.Text) || u.Rol.Contains(textBoxRol.Text)) &&
-               (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email.Contains(textBoxEmail.Text)) &&
-               (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login.Contains(textBoxLogin.Text))
+               (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni_62_BP.Contains(textBoxDNI.Text)) &&
+               (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido_62_BP.Contains(textBoxApellidos.Text)) &&
+               (string.IsNullOrEmpty(textBoxNombres.Text) || u.Nombre_62_BP.Contains(textBoxNombres.Text)) &&
+               (string.IsNullOrEmpty(textBoxRol.Text) || u.Rol_62_BP.Contains(textBoxRol.Text)) &&
+               (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email_62_BP.Contains(textBoxEmail.Text)) &&
+               (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login_62_BP.Contains(textBoxLogin.Text))
             ).ToList();
             if (listafiltrada.Count > 0)
             {
@@ -404,33 +404,33 @@ namespace TP_campo
             switch (modoActual)
             {
                 case 1:
-                    filtrarUsuarios();
+                    filtrarUsuarios_62_BP();
                     return;
 
                 case 2:
-                    operacionExitosa = crearUsuario();
+                    operacionExitosa = crearUsuario_62_BP();
                     break;
 
                 case 3:
-                    operacionExitosa = desbloquearUsuario();
+                    operacionExitosa = desbloquearUsuario_62_BP();
                     operacionExitosa = true;
                     break;
 
                 case 4:
-                    operacionExitosa = modificarUsuario();
+                    operacionExitosa = modificarUsuario_62_BP();
                     operacionExitosa = true;
                     break;
 
                 case 5:
-                    operacionExitosa = activarUsuario();
+                    operacionExitosa = activarUsuario_62_BP();
                     operacionExitosa = true;
                     break;
             }
 
             if (operacionExitosa)
             {
-                RellenarGrilla();
-                CambiarModo(0);
+                RellenarGrilla_62_BP();
+                CambiarModo_62_BP(0);
             }
         }
     }

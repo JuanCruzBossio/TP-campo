@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
+using BLL_62_BP;
 
 namespace TP_campo
 {
@@ -37,7 +37,7 @@ namespace TP_campo
         {
             try
             {
-                _usuarioBLL.Logout();
+                _usuarioBLL.Logout_62_BP();
 
                 MessageBox.Show("Sesión cerrada con éxito.");
 

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL_62_BP;
-using SEG;
+using SEG_62_BP;
 
-namespace BLL
+namespace BLL_62_BP
 {
     public class UsuarioBLL_62_BP
     {
@@ -16,16 +16,16 @@ namespace BLL
         private UsuarioDAL_62_BP _usuarioDAL = new UsuarioDAL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL = new BitacoraBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
-        public int Alta(Usuario_62_BP usuario)
+        public int Alta_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            usuario.Contrasena = _encriptacionSEG.EncriptarConSHA256(usuario.Nombre + usuario.Apellido);
+            usuario.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.Nombre_62_BP + usuario.Apellido_62_BP);
             try
             {
-                filasAfectadas = _usuarioDAL.Alta(usuario);
+                filasAfectadas = _usuarioDAL.Alta_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Alta de Usuario " + usuario.Login, 1);
+                    _bitacoraBLL.AltaBitacora_62_BP("Alta de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (SqlException ex)
@@ -34,12 +34,12 @@ namespace BLL
                 {
                     string error = ex.Message.ToLower();
 
-                    if (error.Contains("login"))
+                    if (error.Contains("login_62_BP"))
                     {
                         throw new Exception("Ya existe un usuario con ese Login.");
                     }
 
-                    if (error.Contains("usuario"))
+                    if (error.Contains("login_62_BP"))
                     {
                         throw new Exception("Ya existe un usuario con ese DNI.");
                     }
@@ -50,15 +50,15 @@ namespace BLL
             }
             return filasAfectadas;
         }
-        public int Activar(Usuario_62_BP usuario)
+        public int Activar_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.Activar(usuario);
+                filasAfectadas = _usuarioDAL.Activar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Activación de Usuario " + usuario.Login, 2);
+                    _bitacoraBLL.AltaBitacora_62_BP("Activación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -68,15 +68,15 @@ namespace BLL
             return filasAfectadas;
         }
 
-        public int Desactivar(Usuario_62_BP usuario)
+        public int Desactivar_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.Desactivar(usuario);
+                filasAfectadas = _usuarioDAL.Desactivar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Desactivación de Usuario " + usuario.Login, 2);
+                    _bitacoraBLL.AltaBitacora_62_BP("Desactivación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -86,15 +86,15 @@ namespace BLL
             return filasAfectadas;
         }
 
-        public int Bloquear(Usuario_62_BP usuario)
+        public int Bloquear_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.Bloquear(usuario);
+                filasAfectadas = _usuarioDAL.Bloquear_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Bloqueo de Usuario " + usuario.Login, 3);
+                    _bitacoraBLL.AltaBitacora_62_BP("Bloqueo de Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)
@@ -104,15 +104,15 @@ namespace BLL
             return filasAfectadas;
         }
 
-        public int Desbloquear(Usuario_62_BP usuario)
+        public int Desbloquear_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.Desbloquear(usuario);
+                filasAfectadas = _usuarioDAL.Desbloquear_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Desbloqueo de Usuario " + usuario.Login, 3);
+                    _bitacoraBLL.AltaBitacora_62_BP("Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)
@@ -121,15 +121,15 @@ namespace BLL
             }
             return filasAfectadas;
         }
-        public int Modificar(Usuario_62_BP usuario)
+        public int Modificar_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
             try
             {
-                filasAfectadas = _usuarioDAL.Modificar(usuario);
+                filasAfectadas = _usuarioDAL.Modificar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.Alta("Modificacion de Usuario " + usuario.Login, 1);
+                    _bitacoraBLL.AltaBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (Exception ex)
@@ -139,12 +139,12 @@ namespace BLL
             return filasAfectadas;
         }
 
-        public Usuario_62_BP Buscar_por_DNI(string dni)
+        public Usuario_62_BP Buscar_por_DNI_62_BP(string dni)
         {
             Usuario_62_BP persona = null;
             try
             {
-                persona = _usuarioDAL.BuscarUsuarioPorDNI(dni);
+                persona = _usuarioDAL.BuscarUsuarioPorDNI_62_BP(dni);
                 if (persona != null)
                 {
                     //_bitacoraBLL.Alta("Se busco usuario por DNI " + dni, 4);
@@ -158,23 +158,23 @@ namespace BLL
             return persona;
         }
 
-        public Usuario_62_BP Login(string nombre, string contrasena)
+        public Usuario_62_BP Login_62_BP(string nombre, string contrasena)
         {
             try
             {
-                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorNombre(nombre);
+                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorNombre_62_BP(nombre);
 
                 if (usuario == null)
                     throw new Exception("Usuario no encontrado.");
 
-                if (usuario.Activo == false)
+                if (usuario.Activo_62_BP == false)
                     throw new Exception("Usuario Desactivado.");
 
-                if (usuario.Bloqueo == true)
+                if (usuario.Bloqueo_62_BP == true)
                     throw new Exception("Usuario Bloqueado.");
 
-                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256(contrasena);
-                if (usuario.Contrasena != contrasenaHasheada)
+                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(contrasena);
+                if (usuario.Contrasena_62_BP != contrasenaHasheada)
                 {
                     //usuario.IntentosLogin ++;
                     //Modificar(usuario);
@@ -183,9 +183,9 @@ namespace BLL
                     throw new Exception("Contraseña incorrecta");
                 }
 
-                SessionManager_62_BP.GetInstancia().Login(usuario);
+                SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
 
-                _bitacoraBLL.Alta("Login de Usuario " + usuario.Login, 1);
+                _bitacoraBLL.AltaBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
 
                 return usuario;
             }
@@ -195,19 +195,19 @@ namespace BLL
             }
         }
 
-        public void Logout()
+        public void Logout_62_BP()
         {
             try
             {
-                Usuario_62_BP usuarioActual = SessionManager_62_BP.GetInstancia().UsuarioLogueado;
+                Usuario_62_BP usuarioActual = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP;
 
                 if (usuarioActual == null) {
                     throw new Exception("No hay un usuario logueado.");
                 }
-                var dniUsuario = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni;
-                SessionManager_62_BP.GetInstancia().Logout();
+                var dniUsuario = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP;
+                SessionManager_62_BP.GetInstancia_62_BP().Logout_62_BP();
 
-                _bitacoraBLL.Alta("Logout de Usuario",1, dniUsuario);
+                _bitacoraBLL.AltaBitacora_62_BP("Logout de Usuario",1, dniUsuario);
 
             }
             catch (Exception ex)
@@ -216,11 +216,11 @@ namespace BLL
             }
         }
 
-        public List<Usuario_62_BP> TraerTodosUsuarios()
+        public List<Usuario_62_BP> TraerTodosUsuarios_62_BP()
         {
             try
             {
-                return _usuarioDAL.TraerTodosUsuarios();
+                return _usuarioDAL.TraerTodosUsuarios_62_BP();
             }
             catch (Exception ex)
             {
@@ -228,30 +228,30 @@ namespace BLL
             }
         }
 
-        public int CambiarContrasena(string claveVieja, string claveNueva)
+        public int CambiarContrasena_62_BP(string claveVieja, string claveNueva)
         {
             var filasAfectadas = 0;
             try
             {
-                string claveViejaHasheada = _encriptacionSEG.EncriptarConSHA256(claveVieja);
+                string claveViejaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(claveVieja);
 
-                if (SessionManager_62_BP.GetInstancia().UsuarioLogueado.Contrasena != claveViejaHasheada)
+                if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP != claveViejaHasheada)
                 {
                     throw new Exception("La contraseña actual no es correcta.");
                 }
 
                 Usuario_62_BP usuario = new Usuario_62_BP
                 {
-                    Dni = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Dni,
-                    Contrasena = _encriptacionSEG.EncriptarConSHA256(claveNueva),
-                    Login = SessionManager_62_BP.GetInstancia().UsuarioLogueado.Login
+                    Dni_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP,
+                    Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(claveNueva),
+                    Login_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Login_62_BP
                 };
-                filasAfectadas = _usuarioDAL.CambiarContrasena(usuario);
+                filasAfectadas = _usuarioDAL.CambiarContrasena_62_BP(usuario);
 
                 if (filasAfectadas > 0)
                 {
-                    SessionManager_62_BP.GetInstancia().UsuarioLogueado.Contrasena = _encriptacionSEG.EncriptarConSHA256(claveNueva);
-                    _bitacoraBLL.Alta("Cambio de contraseña del Usuario " + usuario.Login, 3);
+                    SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(claveNueva);
+                    _bitacoraBLL.AltaBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)

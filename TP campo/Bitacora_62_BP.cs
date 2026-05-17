@@ -7,15 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using SEG;
+using BLL_62_BP;
+using SEG_62_BP;
 
 namespace TP_campo
 {
     public partial class Bitacora_62_BP: Form
     {
 
-        BitacoraBLL_62_BP bitacoraBLL = new BLL.BitacoraBLL_62_BP();
+        BitacoraBLL_62_BP bitacoraBLL = new BitacoraBLL_62_BP();
         List<RegistroBitacora_62_BP> todos = new List<RegistroBitacora_62_BP>();
         UsuarioBLL_62_BP usuarioBLL = new UsuarioBLL_62_BP(); 
 
@@ -26,18 +26,17 @@ namespace TP_campo
 
         private void Bitacora_62_BP_Load(object sender, EventArgs e)
         {
-            todos = bitacoraBLL.ObtenerBitacora();            
+            todos = bitacoraBLL.ObtenerBitacora_62_BP();            
             List<RegistroBitacora_62_BP> ultimos3Dias = todos
-                .Where(r => r.Fecha >= DateTime.Now.AddDays(-3))
+                .Where(r => r.Fecha_62_BP >= DateTime.Now.AddDays(-3))
                 .ToList();
             dgv_bitacora.DataSource = ultimos3Dias;
 
             if (ultimos3Dias.Count > 0)
             {
-                usuarioBLL.Buscar_por_DNI(ultimos3Dias[0].DniUsuario.ToString());
-                Usuario_62_BP usuario = usuarioBLL.Buscar_por_DNI(ultimos3Dias[0].DniUsuario.ToString());
-                txt_nombre.Text = usuario.Nombre; 
-                txt_apellido.Text = usuario.Apellido;
+                Usuario_62_BP usuario = usuarioBLL.Buscar_por_DNI_62_BP(ultimos3Dias[0].DniUsuario_62_BP);
+                txt_nombre.Text = usuario.Nombre_62_BP; 
+                txt_apellido.Text = usuario.Apellido_62_BP;
             }
             else
             {
@@ -53,9 +52,9 @@ namespace TP_campo
             
             if (dgv_bitacora.CurrentRow != null && dgv_bitacora.CurrentRow.DataBoundItem is RegistroBitacora_62_BP registro)
             {
-                Usuario_62_BP usuario = usuarioBLL.Buscar_por_DNI(registro.DniUsuario.ToString());
-                txt_nombre.Text = usuario.Nombre;
-                txt_apellido.Text = usuario.Apellido;
+                Usuario_62_BP usuario = usuarioBLL.Buscar_por_DNI_62_BP(registro.DniUsuario_62_BP);
+                txt_nombre.Text = usuario.Nombre_62_BP;
+                txt_apellido.Text = usuario.Apellido_62_BP;
             }
         }
     }

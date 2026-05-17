@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-namespace SEG
+namespace SEG_62_BP
 {
     public class Encriptacion_62_BP
     {
-        public string EncriptarConSHA256(string textoOriginal)
+        public string EncriptarConSHA256_62_BP(string textoOriginal)
         {
             string textoHasheado = "";
             SHA256 hasher = SHA256.Create();
@@ -18,7 +18,7 @@ namespace SEG
             return textoHasheado;
         }
 
-        public string EncriptarConAES(string clave, string textoOriginal)
+        public string EncriptarConAES_62_BP(string clave, string textoOriginal)
         {
             string textoHasheado = "";
             var aes = Aes.Create();
@@ -33,7 +33,7 @@ namespace SEG
             textoHasheado = Convert.ToBase64String(encrypted);
             return textoHasheado;
         }
-        public string DesencriptarConAES(string clave, string textoHasheado)
+        public string DesencriptarConAES_62_BP(string clave, string textoHasheado)
         {
             string textoOriginal = "";
             var aes = Aes.Create();
