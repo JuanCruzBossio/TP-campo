@@ -123,7 +123,7 @@ namespace TP_campo
         {
             CambiarModo(2);
         }
-        public void crearUsuario()
+        public bool crearUsuario()
         {
             try
             {
@@ -136,6 +136,7 @@ namespace TP_campo
                     if (resultado > 0)
                     {
                         MessageBox.Show("Usuario creado con éxito.");
+                        return true;
                     }
                     else
                     {
@@ -147,6 +148,7 @@ namespace TP_campo
             {
                 MessageBox.Show("Ocurrió un error al intentar crear el usuario: " + ex.Message);
             }
+            return false;
         }
         private void buttonDesbloquear_Click(object sender, EventArgs e)
         {
@@ -158,20 +160,20 @@ namespace TP_campo
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private void desbloquearUsuario()
+        private bool desbloquearUsuario()
         {
             try
             {
                 if (!hayUsuarioSeleccionado)
                 {
                     MessageBox.Show("Debe seleccionar un usuario a desbloquear.");
-                    return;
+                    return false;
                 }
 
                 if (!checkBoxBloqueado.Checked)
                 {
                     MessageBox.Show("El usuario seleccionado no se encuentra bloqueado.");
-                    return;
+                    return false;
                 }
                 Usuario_62_BP usuarioADesbloquear = new Usuario_62_BP();
                 usuarioADesbloquear.Dni = textBoxDNI.Text;
@@ -182,6 +184,7 @@ namespace TP_campo
                 if (filas > 0)
                 {
                     MessageBox.Show("Usuario desbloqueado con éxito.");
+                    return true;
                 }
                 else
                 {
@@ -192,6 +195,7 @@ namespace TP_campo
             {
                 MessageBox.Show("Ocurrió un error al intentar desbloquear el usuario: " + ex.Message);
             }
+            return false;
         }
 
         private void LimpiarCampos()
@@ -226,14 +230,14 @@ namespace TP_campo
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private void activarUsuario()
+        private bool activarUsuario()
         {
             try
             {
                 if (!hayUsuarioSeleccionado)
                 {
                     MessageBox.Show("Debe seleccionar un usuario.");
-                    return;
+                    return false;
                 }
 
                 Usuario_62_BP usuario = new Usuario_62_BP();
@@ -257,6 +261,7 @@ namespace TP_campo
                 if (filas > 0)
                 {
                     MessageBox.Show($"Usuario {accionRealizada} con éxito.");
+                    return true;
                 }
                 else
                 {
@@ -267,6 +272,7 @@ namespace TP_campo
             {
                 MessageBox.Show("Ocurrió un error al intentar Activar/Desactivar el usuario: " + ex.Message);
             }
+            return false;
         }
         private void buttonModificar_Click(object sender, EventArgs e)
         {
@@ -279,14 +285,14 @@ namespace TP_campo
                 MessageBox.Show("Debe seleccionar un usuario.");
             }
         }
-        private void modificarUsuario()
+        private bool modificarUsuario()
         {
             try
             {
                 if (!hayUsuarioSeleccionado)
                 {
                     MessageBox.Show("Debe seleccionar un usuario.");
-                    return;
+                    return false;
                 }
 
                 Usuario_62_BP usuarioAModificar = ObtenerUsuarioDeCampos();
@@ -298,6 +304,7 @@ namespace TP_campo
                     if (filas > 0)
                     {
                         MessageBox.Show("Usuario modificado con éxito.");
+                        return true;
                     }
                     else
                     {
@@ -309,6 +316,7 @@ namespace TP_campo
             {
                 MessageBox.Show("Error al intentar modificar: " + ex.Message);
             }
+            return false;
         }
         private void buttonSalir_Click(object sender, EventArgs e)
         {
@@ -391,30 +399,39 @@ namespace TP_campo
         }
         private void buttonAplicar_Click(object sender, EventArgs e)
         {
+            bool operacionExitosa = false;
+
             switch (modoActual)
             {
                 case 1:
                     filtrarUsuarios();
                     return;
+
                 case 2:
-                    crearUsuario();
+                    operacionExitosa = crearUsuario();
                     break;
+
                 case 3:
-                    desbloquearUsuario();
+                    operacionExitosa = desbloquearUsuario();
+                    operacionExitosa = true;
                     break;
+
                 case 4:
-                    modificarUsuario();
+                    operacionExitosa = modificarUsuario();
+                    operacionExitosa = true;
                     break;
+
                 case 5:
-                    activarUsuario();
-                    break;
-                case 0:
-                    break;
-                default:
+                    operacionExitosa = activarUsuario();
+                    operacionExitosa = true;
                     break;
             }
-            RellenarGrilla();
-            CambiarModo(0);
+
+            if (operacionExitosa)
+            {
+                RellenarGrilla();
+                CambiarModo(0);
+            }
         }
     }
 }

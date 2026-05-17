@@ -28,9 +28,25 @@ namespace BLL
                     _bitacoraBLL.Alta("Alta de Usuario " + usuario.Login, 1);
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                throw;
+                if (ex.Number == 2627 || ex.Number == 2601)
+                {
+                    string error = ex.Message.ToLower();
+
+                    if (error.Contains("login"))
+                    {
+                        throw new Exception("Ya existe un usuario con ese Login.");
+                    }
+
+                    if (error.Contains("usuario"))
+                    {
+                        throw new Exception("Ya existe un usuario con ese DNI.");
+                    }
+
+                    throw new Exception("Ya existe un usuario con los datos ingresados.");
+                    throw;
+                }
             }
             return filasAfectadas;
         }
