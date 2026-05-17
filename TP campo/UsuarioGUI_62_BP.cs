@@ -21,10 +21,10 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
-        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
-        private bool hayUsuarioSeleccionado = false;
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
+        private bool hayUsuarioSeleccionado_62_BP = false;
 
-        private List<Usuario_62_BP> _listaUsuarios = new List<Usuario_62_BP>();
+        private List<Usuario_62_BP> _listaUsuarios_62_BP = new List<Usuario_62_BP>();
 
         //Modos Posibles:
         // 0 - Inicial - Mensaje: ""
@@ -33,7 +33,7 @@ namespace TP_campo_62_BP
         // 3 - Desbloquear  - Mensaje: "Modo Desbloquear"
         // 4 - Modificar  - Mensaje: "Modo Modificar"
         // 5 - Activar/Desactivar  - Mensaje: "Modo Activar/Desactivar"
-        private int modoActual = 0;
+        private int modoActual_62_BP = 0;
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
             RellenarGrilla_62_BP();
@@ -57,8 +57,8 @@ namespace TP_campo_62_BP
         }
         private void RellenarGrilla_62_BP()
         {
-            _listaUsuarios = _usuarioBLL.TraerTodosUsuarios_62_BP();
-            this.dataGridViewUsuarios.DataSource = _listaUsuarios;
+            _listaUsuarios_62_BP = _usuarioBLL_62_BP.TraerTodosUsuarios_62_BP();
+            this.dataGridViewUsuarios.DataSource = _listaUsuarios_62_BP;
         }
 
         private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -66,8 +66,8 @@ namespace TP_campo_62_BP
             if (e.RowIndex >= 0)
             {
                 LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
-                hayUsuarioSeleccionado = true;
-                if (modoActual == 4)
+                hayUsuarioSeleccionado_62_BP = true;
+                if (modoActual_62_BP == 4)
                 {
                     textBoxDNI.Enabled = false;
                 }
@@ -131,7 +131,7 @@ namespace TP_campo_62_BP
 
                 if (nuevoUsuario != null)
                 {
-                    int resultado = _usuarioBLL.Alta_62_BP(nuevoUsuario);
+                    int resultado = _usuarioBLL_62_BP.Alta_62_BP(nuevoUsuario);
 
                     if (resultado > 0)
                     {
@@ -152,7 +152,7 @@ namespace TP_campo_62_BP
         }
         private void buttonDesbloquear_Click(object sender, EventArgs e)
         {
-            if (hayUsuarioSeleccionado)
+            if (hayUsuarioSeleccionado_62_BP)
             {
                 CambiarModo_62_BP(3);
             }
@@ -164,7 +164,7 @@ namespace TP_campo_62_BP
         {
             try
             {
-                if (!hayUsuarioSeleccionado)
+                if (!hayUsuarioSeleccionado_62_BP)
                 {
                     MessageBox.Show("Debe seleccionar un usuario a desbloquear.");
                     return false;
@@ -179,7 +179,7 @@ namespace TP_campo_62_BP
                 usuarioADesbloquear.Dni_62_BP = textBoxDNI.Text;
                 usuarioADesbloquear.Login_62_BP = textBoxLogin.Text;
 
-                int filas = _usuarioBLL.Desbloquear_62_BP(usuarioADesbloquear);
+                int filas = _usuarioBLL_62_BP.Desbloquear_62_BP(usuarioADesbloquear);
 
                 if (filas > 0)
                 {
@@ -212,7 +212,7 @@ namespace TP_campo_62_BP
             checkBoxBloqueado.Checked = false;
             checkBoxActivo.Checked = true;
             textBoxDNI.Focus();
-            hayUsuarioSeleccionado = false;
+            hayUsuarioSeleccionado_62_BP = false;
         }
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
@@ -221,7 +221,7 @@ namespace TP_campo_62_BP
 
         private void buttonActivar_Click(object sender, EventArgs e)
         {
-            if (hayUsuarioSeleccionado)
+            if (hayUsuarioSeleccionado_62_BP)
             {
                 CambiarModo_62_BP(5);
             }
@@ -234,7 +234,7 @@ namespace TP_campo_62_BP
         {
             try
             {
-                if (!hayUsuarioSeleccionado)
+                if (!hayUsuarioSeleccionado_62_BP)
                 {
                     MessageBox.Show("Debe seleccionar un usuario.");
                     return false;
@@ -249,12 +249,12 @@ namespace TP_campo_62_BP
 
                 if (checkBoxActivo.Checked)
                 {
-                    filas = _usuarioBLL.Desactivar_62_BP(usuario);
+                    filas = _usuarioBLL_62_BP.Desactivar_62_BP(usuario);
                     accionRealizada = "Desactivado";
                 }
                 else
                 {
-                    filas = _usuarioBLL.Activar_62_BP(usuario);
+                    filas = _usuarioBLL_62_BP.Activar_62_BP(usuario);
                     accionRealizada = "Activado";
                 }
 
@@ -276,7 +276,7 @@ namespace TP_campo_62_BP
         }
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            if (hayUsuarioSeleccionado)
+            if (hayUsuarioSeleccionado_62_BP)
             {
                 CambiarModo_62_BP(4);
             }
@@ -289,7 +289,7 @@ namespace TP_campo_62_BP
         {
             try
             {
-                if (!hayUsuarioSeleccionado)
+                if (!hayUsuarioSeleccionado_62_BP)
                 {
                     MessageBox.Show("Debe seleccionar un usuario.");
                     return false;
@@ -299,7 +299,7 @@ namespace TP_campo_62_BP
 
                 if (usuarioAModificar != null)
                 {
-                    int filas = _usuarioBLL.Modificar_62_BP(usuarioAModificar);
+                    int filas = _usuarioBLL_62_BP.Modificar_62_BP(usuarioAModificar);
 
                     if (filas > 0)
                     {
@@ -329,7 +329,7 @@ namespace TP_campo_62_BP
         }
         private void CambiarModo_62_BP(int modo)
         {
-            modoActual = modo;
+            modoActual_62_BP = modo;
             switch (modo)
             {
                 case 1:
@@ -378,7 +378,7 @@ namespace TP_campo_62_BP
         }
         private void filtrarUsuarios_62_BP()
         {
-            var listafiltrada = _listaUsuarios.Where(
+            var listafiltrada = _listaUsuarios_62_BP.Where(
                u =>
                (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni_62_BP.Contains(textBoxDNI.Text)) &&
                (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido_62_BP.Contains(textBoxApellidos.Text)) &&
@@ -401,7 +401,7 @@ namespace TP_campo_62_BP
         {
             bool operacionExitosa = false;
 
-            switch (modoActual)
+            switch (modoActual_62_BP)
             {
                 case 1:
                     filtrarUsuarios_62_BP();

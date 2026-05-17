@@ -18,7 +18,7 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
-        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -29,7 +29,7 @@ namespace TP_campo_62_BP
 
                 if (!string.IsNullOrWhiteSpace(nombre) && !string.IsNullOrWhiteSpace(contrasena))
                 {
-                    Usuario_62_BP usuario = _usuarioBLL.Login_62_BP(nombre, contrasena);
+                    Usuario_62_BP usuario = _usuarioBLL_62_BP.Login_62_BP(nombre, contrasena);
 
                     if (usuario != null)
                     {

@@ -17,7 +17,7 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
-        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -37,7 +37,7 @@ namespace TP_campo_62_BP
         {
             try
             {
-                _usuarioBLL.Logout_62_BP();
+                _usuarioBLL_62_BP.Logout_62_BP();
 
                 MessageBox.Show("Sesión cerrada con éxito.");
 

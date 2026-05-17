@@ -17,7 +17,7 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
-        private UsuarioBLL_62_BP _usuarioBLL = new UsuarioBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         private void buttonCambiarContrasena_Click(object sender, EventArgs e)
         {
@@ -39,7 +39,7 @@ namespace TP_campo_62_BP
                     return;
                 }
 
-                int resultado = _usuarioBLL.CambiarContrasena_62_BP(antigua, nueva);
+                int resultado = _usuarioBLL_62_BP.CambiarContrasena_62_BP(antigua, nueva);
 
                 if (resultado > 0)
                 {
