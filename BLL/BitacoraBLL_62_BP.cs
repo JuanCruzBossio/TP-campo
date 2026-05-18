@@ -44,5 +44,59 @@ namespace BLL_62_BP
         {
             return _bitacoraDAL.ObtenerRegistros_62_BP();
         }
+        public List<RegistroBitacora_62_BP> FiltrarBitacora_62_BP(
+        string fechaIni, string fechaFin, string login, string modulo, string evento, string criticidad, out string error)
+        {
+            error = string.Empty;
+            DateTime fechaInicioParsed = DateTime.MinValue, fechaFinParsed = DateTime.MinValue;
+            int criticidadParsed = 0;
+
+            if (!string.IsNullOrWhiteSpace(fechaIni) && !DateTime.TryParse(fechaIni, out fechaInicioParsed))
+            {
+                error = "La fecha de inicio es inválida.";
+                return null;
+            }
+            if (!string.IsNullOrWhiteSpace(fechaFin) && !DateTime.TryParse(fechaFin, out fechaFinParsed))
+            {
+                error = "La fecha de fin es inválida.";
+                return null;
+            }
+            if (!string.IsNullOrWhiteSpace(fechaIni) && !string.IsNullOrWhiteSpace(fechaFin) && fechaInicioParsed > fechaFinParsed)
+            {
+                error = "La fecha de inicio no puede ser mayor que la fecha de fin.";
+                return null;
+            }
+            if (!string.IsNullOrWhiteSpace(criticidad))
+            {
+                if (!int.TryParse(criticidad, out criticidadParsed) || criticidadParsed < 1 || criticidadParsed > 5)
+                {
+                    error = "La criticidad debe ser un número entre 1 y 5.";
+                    return null;
+                }
+            }
+
+            var resultados = _bitacoraDAL.FiltrarRegistros_62_BP(
+                string.IsNullOrWhiteSpace(fechaIni) ? (DateTime?)null : fechaInicioParsed,
+                string.IsNullOrWhiteSpace(fechaFin) ? (DateTime?)null : fechaFinParsed,
+                login,
+                modulo,
+                evento,
+                string.IsNullOrWhiteSpace(criticidad) ? (int?)null : criticidadParsed
+            );
+
+            if (resultados == null || resultados.Count == 0)
+            {
+                error = "No se encontraron registros con los filtros aplicados.";
+                return null;
+            }
+
+            return resultados;
+        }
+
+        public void ExportarBitacoraAPDF(List<RegistroBitacora_62_BP> registros, string rutaArchivo)
+        {
+            _bitacoraDAL.ExportarBitacoraAPDF(registros, rutaArchivo);
+        }
+
     }
 }

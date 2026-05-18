@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SEG_62_BP;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Xml.Linq;
 
 namespace DAL_62_BP
 {
@@ -52,5 +56,91 @@ namespace DAL_62_BP
             }
             return lista;
         }
+
+        public List<RegistroBitacora_62_BP> FiltrarRegistros_62_BP(
+        DateTime? fechaIni, DateTime? fechaFin, string login, string modulo, string evento, int? criticidad)
+        {
+            List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            StringBuilder query = new StringBuilder("SELECT * FROM Bitacora_62_BP WHERE 1=1");
+
+            if (fechaIni.HasValue)
+            {
+                query.Append(" AND Fecha_62_BP >= @fechaIni");
+                parametros.Add(new SqlParameter("@fechaIni", fechaIni.Value));
+            }
+            if (fechaFin.HasValue)
+            {
+                query.Append(" AND Fecha_62_BP <= @fechaFin");
+                parametros.Add(new SqlParameter("@fechaFin", fechaFin.Value));
+            }
+            if (!string.IsNullOrWhiteSpace(login))
+            {
+                query.Append(" AND DniUsuario_62_BP = @login");
+                parametros.Add(new SqlParameter("@login", login));
+            }
+            // El filtro de modulo NO se usa
+            if (!string.IsNullOrWhiteSpace(evento))
+            {
+                query.Append(" AND Mensaje_62_BP LIKE @evento");
+                parametros.Add(new SqlParameter("@evento", "%" + evento + "%"));
+            }
+            if (criticidad.HasValue)
+            {
+                query.Append(" AND Criticidad_62_BP = @criticidad");
+                parametros.Add(new SqlParameter("@criticidad", criticidad.Value));
+            }
+
+            DataTable dt = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+            foreach (DataRow row in dt.Rows)
+            {
+                lista.Add(new RegistroBitacora_62_BP
+                {
+                    Id_62_BP = Convert.ToInt32(row["Id_62_BP"]),
+                    Fecha_62_BP = Convert.ToDateTime(row["Fecha_62_BP"]),
+                    DniUsuario_62_BP = row["DniUsuario_62_BP"].ToString(),
+                    Mensaje_62_BP = row["Mensaje_62_BP"].ToString(),
+                    Criticidad_62_BP = Convert.ToInt32(row["Criticidad_62_BP"])
+                });
+            }
+            return lista;
+        }
+
+        public void ExportarBitacoraAPDF(List<RegistroBitacora_62_BP> registros, string rutaArchivo)
+        {
+            Document doc = new Document(PageSize.A4);
+            try
+            {
+                PdfWriter.GetInstance(doc, new FileStream(rutaArchivo, FileMode.Create));
+                doc.Open();
+
+                doc.Add(new Paragraph("Bitácora - Exportación"));
+                doc.Add(new Paragraph(" "));
+
+                PdfPTable tabla = new PdfPTable(5);
+                tabla.WidthPercentage = 100;
+                tabla.AddCell("ID");
+                tabla.AddCell("Fecha");
+                tabla.AddCell("DNI Usuario");
+                tabla.AddCell("Mensaje");
+                tabla.AddCell("Criticidad");
+
+                foreach (var reg in registros)
+                {
+                    tabla.AddCell(reg.Id_62_BP.ToString());
+                    tabla.AddCell(reg.Fecha_62_BP.ToString("yyyy-MM-dd HH:mm:ss"));
+                    tabla.AddCell(reg.DniUsuario_62_BP);
+                    tabla.AddCell(reg.Mensaje_62_BP);
+                    tabla.AddCell(reg.Criticidad_62_BP.ToString());
+                }
+
+                doc.Add(tabla);
+            }
+            finally
+            {
+                doc.Close();
+            }
+        }
+
     }
 }

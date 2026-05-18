@@ -35,10 +35,6 @@
             this.lbl_evento = new System.Windows.Forms.Label();
             this.lbl_fecha_fin = new System.Windows.Forms.Label();
             this.lbl_criticidad = new System.Windows.Forms.Label();
-            this.txt_login = new System.Windows.Forms.TextBox();
-            this.txt_modulo = new System.Windows.Forms.TextBox();
-            this.txt_evento = new System.Windows.Forms.TextBox();
-            this.txt_criticidad = new System.Windows.Forms.TextBox();
             this.btn_limpiar = new System.Windows.Forms.Button();
             this.btn_aplicar = new System.Windows.Forms.Button();
             this.btn_imprimir = new System.Windows.Forms.Button();
@@ -48,6 +44,10 @@
             this.txt_apellido = new System.Windows.Forms.TextBox();
             this.dtp_fecha_ini = new System.Windows.Forms.DateTimePicker();
             this.dtp_fecha_fin = new System.Windows.Forms.DateTimePicker();
+            this.cmb_evento = new System.Windows.Forms.ComboBox();
+            this.cmb_criticidad = new System.Windows.Forms.ComboBox();
+            this.cmb_login = new System.Windows.Forms.ComboBox();
+            this.cmb_modulo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +84,7 @@
             // lbl_fecha_ini
             // 
             this.lbl_fecha_ini.AutoSize = true;
-            this.lbl_fecha_ini.Location = new System.Drawing.Point(324, 409);
+            this.lbl_fecha_ini.Location = new System.Drawing.Point(302, 409);
             this.lbl_fecha_ini.Name = "lbl_fecha_ini";
             this.lbl_fecha_ini.Size = new System.Drawing.Size(62, 13);
             this.lbl_fecha_ini.TabIndex = 3;
@@ -93,7 +93,7 @@
             // lbl_evento
             // 
             this.lbl_evento.AutoSize = true;
-            this.lbl_evento.Location = new System.Drawing.Point(338, 457);
+            this.lbl_evento.Location = new System.Drawing.Point(316, 457);
             this.lbl_evento.Name = "lbl_evento";
             this.lbl_evento.Size = new System.Drawing.Size(54, 13);
             this.lbl_evento.TabIndex = 4;
@@ -102,7 +102,7 @@
             // lbl_fecha_fin
             // 
             this.lbl_fecha_fin.AutoSize = true;
-            this.lbl_fecha_fin.Location = new System.Drawing.Point(558, 409);
+            this.lbl_fecha_fin.Location = new System.Drawing.Point(536, 409);
             this.lbl_fecha_fin.Name = "lbl_fecha_fin";
             this.lbl_fecha_fin.Size = new System.Drawing.Size(65, 13);
             this.lbl_fecha_fin.TabIndex = 5;
@@ -111,39 +111,11 @@
             // lbl_criticidad
             // 
             this.lbl_criticidad.AutoSize = true;
-            this.lbl_criticidad.Location = new System.Drawing.Point(552, 457);
+            this.lbl_criticidad.Location = new System.Drawing.Point(530, 457);
             this.lbl_criticidad.Name = "lbl_criticidad";
             this.lbl_criticidad.Size = new System.Drawing.Size(71, 13);
             this.lbl_criticidad.TabIndex = 6;
             this.lbl_criticidad.Text = "CRITICIDAD:";
-            // 
-            // txt_login
-            // 
-            this.txt_login.Location = new System.Drawing.Point(124, 406);
-            this.txt_login.Name = "txt_login";
-            this.txt_login.Size = new System.Drawing.Size(100, 20);
-            this.txt_login.TabIndex = 7;
-            // 
-            // txt_modulo
-            // 
-            this.txt_modulo.Location = new System.Drawing.Point(124, 454);
-            this.txt_modulo.Name = "txt_modulo";
-            this.txt_modulo.Size = new System.Drawing.Size(100, 20);
-            this.txt_modulo.TabIndex = 10;
-            // 
-            // txt_evento
-            // 
-            this.txt_evento.Location = new System.Drawing.Point(392, 454);
-            this.txt_evento.Name = "txt_evento";
-            this.txt_evento.Size = new System.Drawing.Size(100, 20);
-            this.txt_evento.TabIndex = 11;
-            // 
-            // txt_criticidad
-            // 
-            this.txt_criticidad.Location = new System.Drawing.Point(629, 454);
-            this.txt_criticidad.Name = "txt_criticidad";
-            this.txt_criticidad.Size = new System.Drawing.Size(100, 20);
-            this.txt_criticidad.TabIndex = 12;
             // 
             // btn_limpiar
             // 
@@ -163,6 +135,7 @@
             this.btn_aplicar.TabIndex = 14;
             this.btn_aplicar.Text = "Aplicar";
             this.btn_aplicar.UseVisualStyleBackColor = true;
+            this.btn_aplicar.Click += new System.EventHandler(this.btn_aplicar_Click);
             // 
             // btn_imprimir
             // 
@@ -172,6 +145,7 @@
             this.btn_imprimir.TabIndex = 15;
             this.btn_imprimir.Text = "Imprimir";
             this.btn_imprimir.UseVisualStyleBackColor = true;
+            this.btn_imprimir.Click += new System.EventHandler(this.btn_imprimir_Click);
             // 
             // lbl_nombre
             // 
@@ -210,7 +184,7 @@
             // dtp_fecha_ini
             // 
             this.dtp_fecha_ini.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_fecha_ini.Location = new System.Drawing.Point(392, 406);
+            this.dtp_fecha_ini.Location = new System.Drawing.Point(370, 406);
             this.dtp_fecha_ini.Name = "dtp_fecha_ini";
             this.dtp_fecha_ini.Size = new System.Drawing.Size(100, 20);
             this.dtp_fecha_ini.TabIndex = 20;
@@ -219,17 +193,75 @@
             // dtp_fecha_fin
             // 
             this.dtp_fecha_fin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_fecha_fin.Location = new System.Drawing.Point(629, 406);
+            this.dtp_fecha_fin.Location = new System.Drawing.Point(607, 406);
             this.dtp_fecha_fin.Name = "dtp_fecha_fin";
             this.dtp_fecha_fin.Size = new System.Drawing.Size(100, 20);
             this.dtp_fecha_fin.TabIndex = 21;
             this.dtp_fecha_fin.Value = new System.DateTime(2026, 5, 18, 0, 0, 0, 0);
+            // 
+            // cmb_evento
+            // 
+            this.cmb_evento.FormattingEnabled = true;
+            this.cmb_evento.Items.AddRange(new object[] {
+            "",
+            "Logout",
+            "Login",
+            "Crear Usuario",
+            "Cambiar Clave",
+            "Registrar Cliente",
+            "Generar Carrito"});
+            this.cmb_evento.Location = new System.Drawing.Point(370, 454);
+            this.cmb_evento.Name = "cmb_evento";
+            this.cmb_evento.Size = new System.Drawing.Size(100, 21);
+            this.cmb_evento.TabIndex = 24;
+            // 
+            // cmb_criticidad
+            // 
+            this.cmb_criticidad.FormattingEnabled = true;
+            this.cmb_criticidad.Items.AddRange(new object[] {
+            "",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cmb_criticidad.Location = new System.Drawing.Point(607, 454);
+            this.cmb_criticidad.Name = "cmb_criticidad";
+            this.cmb_criticidad.Size = new System.Drawing.Size(100, 21);
+            this.cmb_criticidad.TabIndex = 25;
+            // 
+            // cmb_login
+            // 
+            this.cmb_login.FormattingEnabled = true;
+            this.cmb_login.Location = new System.Drawing.Point(121, 406);
+            this.cmb_login.Name = "cmb_login";
+            this.cmb_login.Size = new System.Drawing.Size(100, 21);
+            this.cmb_login.TabIndex = 26;
+            // 
+            // cmb_modulo
+            // 
+            this.cmb_modulo.FormattingEnabled = true;
+            this.cmb_modulo.Items.AddRange(new object[] {
+            "",
+            "Usuario",
+            "Ventas",
+            "Compras",
+            "Maestro",
+            "Perfiles"});
+            this.cmb_modulo.Location = new System.Drawing.Point(121, 454);
+            this.cmb_modulo.Name = "cmb_modulo";
+            this.cmb_modulo.Size = new System.Drawing.Size(100, 21);
+            this.cmb_modulo.TabIndex = 27;
             // 
             // Bitacora_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 583);
+            this.Controls.Add(this.cmb_modulo);
+            this.Controls.Add(this.cmb_login);
+            this.Controls.Add(this.cmb_criticidad);
+            this.Controls.Add(this.cmb_evento);
             this.Controls.Add(this.dtp_fecha_fin);
             this.Controls.Add(this.dtp_fecha_ini);
             this.Controls.Add(this.txt_apellido);
@@ -239,10 +271,6 @@
             this.Controls.Add(this.btn_imprimir);
             this.Controls.Add(this.btn_aplicar);
             this.Controls.Add(this.btn_limpiar);
-            this.Controls.Add(this.txt_criticidad);
-            this.Controls.Add(this.txt_evento);
-            this.Controls.Add(this.txt_modulo);
-            this.Controls.Add(this.txt_login);
             this.Controls.Add(this.lbl_criticidad);
             this.Controls.Add(this.lbl_fecha_fin);
             this.Controls.Add(this.lbl_evento);
@@ -268,10 +296,6 @@
         private System.Windows.Forms.Label lbl_evento;
         private System.Windows.Forms.Label lbl_fecha_fin;
         private System.Windows.Forms.Label lbl_criticidad;
-        private System.Windows.Forms.TextBox txt_login;
-        private System.Windows.Forms.TextBox txt_modulo;
-        private System.Windows.Forms.TextBox txt_evento;
-        private System.Windows.Forms.TextBox txt_criticidad;
         private System.Windows.Forms.Button btn_limpiar;
         private System.Windows.Forms.Button btn_aplicar;
         private System.Windows.Forms.Button btn_imprimir;
@@ -281,5 +305,9 @@
         private System.Windows.Forms.TextBox txt_apellido;
         private System.Windows.Forms.DateTimePicker dtp_fecha_ini;
         private System.Windows.Forms.DateTimePicker dtp_fecha_fin;
+        private System.Windows.Forms.ComboBox cmb_evento;
+        private System.Windows.Forms.ComboBox cmb_criticidad;
+        private System.Windows.Forms.ComboBox cmb_login;
+        private System.Windows.Forms.ComboBox cmb_modulo;
     }
 }

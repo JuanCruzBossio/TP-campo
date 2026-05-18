@@ -22,6 +22,41 @@ namespace DAL_62_BP
             conexion_62_BP.Close();
         }
 
+        
+        public int escribir_62_BP(string query, SqlParameter[] parametros)
+        {
+            int filasAfectadas = 0;
+            abrir_62_BP();
+            SqlTransaction transaccion = conexion_62_BP.BeginTransaction();
+
+            try
+            {
+                SqlCommand comando = new SqlCommand(query, conexion_62_BP);
+                comando.Transaction = transaccion;
+                comando.CommandType = CommandType.Text;
+
+                if (parametros != null && parametros.Length > 0)
+                {
+                    comando.Parameters.AddRange(parametros);
+                }
+
+                filasAfectadas = comando.ExecuteNonQuery();
+
+                transaccion.Commit();
+            }
+            catch (Exception)
+            {
+                transaccion.Rollback();
+                throw;
+            }
+            finally
+            {
+                cerrar_62_BP();
+            }
+
+            return filasAfectadas;
+        }
+
         public DataTable leer_62_BP(string query, SqlParameter[] parametros)
         {
             DataTable tabla = new DataTable();
@@ -59,38 +94,8 @@ namespace DAL_62_BP
 
             return tabla;
         }
-        public int escribir_62_BP(string query, SqlParameter[] parametros)
-        {
-            int filasAfectadas = 0;
-            abrir_62_BP();
-            SqlTransaction transaccion = conexion_62_BP.BeginTransaction();
 
-            try
-            {
-                SqlCommand comando = new SqlCommand(query, conexion_62_BP);
-                comando.Transaction = transaccion;
-                comando.CommandType = CommandType.Text;
 
-                if (parametros != null && parametros.Length > 0)
-                {
-                    comando.Parameters.AddRange(parametros);
-                }
 
-                filasAfectadas = comando.ExecuteNonQuery();
-
-                transaccion.Commit();
-            }
-            catch (Exception)
-            {
-                transaccion.Rollback();
-                throw;
-            }
-            finally
-            {
-                cerrar_62_BP();
-            }
-
-            return filasAfectadas;
-        }
     }
 }
