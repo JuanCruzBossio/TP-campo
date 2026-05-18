@@ -24,6 +24,23 @@ namespace TP_campo_62_BP
             InitializeComponent();
         }
 
+        private void Limpiar()
+        {
+            txt_apellido.Clear();
+            txt_nombre.Clear();
+            txt_criticidad.Clear();
+            txt_evento.Clear();
+            txt_modulo.Clear();
+            txt_criticidad.Clear();
+            txt_login.Clear();
+        }
+
+        private void LimpiarDTP()
+        {
+            dtp_fecha_ini.Value = DateTime.Now;
+            dtp_fecha_fin.Value = DateTime.Now;
+        }
+
         private void Bitacora_62_BP_Load(object sender, EventArgs e)
         {
             todos_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();            
@@ -45,7 +62,7 @@ namespace TP_campo_62_BP
             }
 
 
-        }
+        }        
 
         private void dgv_bitacora_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -56,6 +73,44 @@ namespace TP_campo_62_BP
                 txt_nombre.Text = usuario.Nombre_62_BP;
                 txt_apellido.Text = usuario.Apellido_62_BP;
             }
+        }
+
+        private void btn_limpiar_Click(object sender, EventArgs e)
+        {
+            Limpiar();
+            LimpiarDTP();
+
+
+            todos_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
+            List<RegistroBitacora_62_BP> ultimos3Dias = todos_62_BP
+                .Where(r => r.Fecha_62_BP >= DateTime.Now.AddDays(-3))
+                .ToList();
+            dgv_bitacora.DataSource = ultimos3Dias;
+
+            if (ultimos3Dias.Count > 0)
+            {
+                Usuario_62_BP usuario = usuarioBLL_62_BP.Buscar_por_DNI_62_BP(ultimos3Dias[0].DniUsuario_62_BP);
+                txt_nombre.Text = usuario.Nombre_62_BP;
+                txt_apellido.Text = usuario.Apellido_62_BP;
+            }
+            else
+            {
+                txt_nombre.Text = "";
+                txt_apellido.Text = "";
+            }
+
+            //if (dtp_fecha_fin.Value < dtp_fecha_ini.Value)
+            //{
+               // MessageBox.Show("La fecha final no puede ser menor que la inicial");
+               // return;
+            //}
+
+           // else
+
+            //{
+                
+
+           // }
         }
     }
 }

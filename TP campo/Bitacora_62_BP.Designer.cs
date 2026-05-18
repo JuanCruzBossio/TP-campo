@@ -36,8 +36,6 @@
             this.lbl_fecha_fin = new System.Windows.Forms.Label();
             this.lbl_criticidad = new System.Windows.Forms.Label();
             this.txt_login = new System.Windows.Forms.TextBox();
-            this.txt_fecha_ini = new System.Windows.Forms.TextBox();
-            this.txt_fecha_fin = new System.Windows.Forms.TextBox();
             this.txt_modulo = new System.Windows.Forms.TextBox();
             this.txt_evento = new System.Windows.Forms.TextBox();
             this.txt_criticidad = new System.Windows.Forms.TextBox();
@@ -48,6 +46,8 @@
             this.lbl_apellido = new System.Windows.Forms.Label();
             this.txt_nombre = new System.Windows.Forms.TextBox();
             this.txt_apellido = new System.Windows.Forms.TextBox();
+            this.dtp_fecha_ini = new System.Windows.Forms.DateTimePicker();
+            this.dtp_fecha_fin = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bitacora)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,20 +124,6 @@
             this.txt_login.Size = new System.Drawing.Size(100, 20);
             this.txt_login.TabIndex = 7;
             // 
-            // txt_fecha_ini
-            // 
-            this.txt_fecha_ini.Location = new System.Drawing.Point(392, 406);
-            this.txt_fecha_ini.Name = "txt_fecha_ini";
-            this.txt_fecha_ini.Size = new System.Drawing.Size(100, 20);
-            this.txt_fecha_ini.TabIndex = 8;
-            // 
-            // txt_fecha_fin
-            // 
-            this.txt_fecha_fin.Location = new System.Drawing.Point(629, 406);
-            this.txt_fecha_fin.Name = "txt_fecha_fin";
-            this.txt_fecha_fin.Size = new System.Drawing.Size(100, 20);
-            this.txt_fecha_fin.TabIndex = 9;
-            // 
             // txt_modulo
             // 
             this.txt_modulo.Location = new System.Drawing.Point(124, 454);
@@ -167,6 +153,7 @@
             this.btn_limpiar.TabIndex = 13;
             this.btn_limpiar.Text = "Limpiar";
             this.btn_limpiar.UseVisualStyleBackColor = true;
+            this.btn_limpiar.Click += new System.EventHandler(this.btn_limpiar_Click);
             // 
             // btn_aplicar
             // 
@@ -220,11 +207,31 @@
             this.txt_apellido.Size = new System.Drawing.Size(100, 20);
             this.txt_apellido.TabIndex = 19;
             // 
+            // dtp_fecha_ini
+            // 
+            this.dtp_fecha_ini.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_fecha_ini.Location = new System.Drawing.Point(392, 406);
+            this.dtp_fecha_ini.Name = "dtp_fecha_ini";
+            this.dtp_fecha_ini.Size = new System.Drawing.Size(100, 20);
+            this.dtp_fecha_ini.TabIndex = 20;
+            this.dtp_fecha_ini.Value = new System.DateTime(2026, 5, 18, 0, 0, 0, 0);
+            // 
+            // dtp_fecha_fin
+            // 
+            this.dtp_fecha_fin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_fecha_fin.Location = new System.Drawing.Point(629, 406);
+            this.dtp_fecha_fin.Name = "dtp_fecha_fin";
+            this.dtp_fecha_fin.Size = new System.Drawing.Size(100, 20);
+            this.dtp_fecha_fin.TabIndex = 21;
+            this.dtp_fecha_fin.Value = new System.DateTime(2026, 5, 18, 0, 0, 0, 0);
+            // 
             // Bitacora_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 583);
+            this.Controls.Add(this.dtp_fecha_fin);
+            this.Controls.Add(this.dtp_fecha_ini);
             this.Controls.Add(this.txt_apellido);
             this.Controls.Add(this.txt_nombre);
             this.Controls.Add(this.lbl_apellido);
@@ -235,8 +242,6 @@
             this.Controls.Add(this.txt_criticidad);
             this.Controls.Add(this.txt_evento);
             this.Controls.Add(this.txt_modulo);
-            this.Controls.Add(this.txt_fecha_fin);
-            this.Controls.Add(this.txt_fecha_ini);
             this.Controls.Add(this.txt_login);
             this.Controls.Add(this.lbl_criticidad);
             this.Controls.Add(this.lbl_fecha_fin);
@@ -264,8 +269,6 @@
         private System.Windows.Forms.Label lbl_fecha_fin;
         private System.Windows.Forms.Label lbl_criticidad;
         private System.Windows.Forms.TextBox txt_login;
-        private System.Windows.Forms.TextBox txt_fecha_ini;
-        private System.Windows.Forms.TextBox txt_fecha_fin;
         private System.Windows.Forms.TextBox txt_modulo;
         private System.Windows.Forms.TextBox txt_evento;
         private System.Windows.Forms.TextBox txt_criticidad;
@@ -276,5 +279,7 @@
         private System.Windows.Forms.Label lbl_apellido;
         private System.Windows.Forms.TextBox txt_nombre;
         private System.Windows.Forms.TextBox txt_apellido;
+        private System.Windows.Forms.DateTimePicker dtp_fecha_ini;
+        private System.Windows.Forms.DateTimePicker dtp_fecha_fin;
     }
 }
