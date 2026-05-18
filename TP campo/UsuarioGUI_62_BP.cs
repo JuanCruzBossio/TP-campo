@@ -25,6 +25,7 @@ namespace TP_campo_62_BP
         private bool hayUsuarioSeleccionado_62_BP = false;
 
         private List<Usuario_62_BP> _listaUsuarios_62_BP = new List<Usuario_62_BP>();
+        private List<Usuario_62_BP> _listaFiltrada_62_BP = new List<Usuario_62_BP>();
 
         //Modos Posibles:
         // 0 - Inicial - Mensaje: ""
@@ -36,6 +37,7 @@ namespace TP_campo_62_BP
         private int modoActual_62_BP = 0;
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
+            radioButtonActivos.Checked = true;
             RellenarGrilla_62_BP();
             CambiarModo_62_BP(0);
         }
@@ -58,9 +60,24 @@ namespace TP_campo_62_BP
         private void RellenarGrilla_62_BP()
         {
             _listaUsuarios_62_BP = _usuarioBLL_62_BP.TraerTodosUsuarios_62_BP();
-            this.dataGridViewUsuarios.DataSource = _listaUsuarios_62_BP;
-        }
+            _listaFiltrada_62_BP = _listaUsuarios_62_BP;
 
+            ActualizarGrilla_62_BP();
+        }
+        private void ActualizarGrilla_62_BP()
+        {
+            List<Usuario_62_BP> listaMostrar = _listaFiltrada_62_BP;
+
+            if (radioButtonActivos.Checked)
+            {
+                listaMostrar = listaMostrar
+                    .Where(u => u.Activo_62_BP)
+                    .ToList();
+            }
+
+            dataGridViewUsuarios.DataSource = null;
+            dataGridViewUsuarios.DataSource = listaMostrar;
+        }
         private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -378,7 +395,7 @@ namespace TP_campo_62_BP
         }
         private void filtrarUsuarios_62_BP()
         {
-            var listafiltrada = _listaUsuarios_62_BP.Where(
+            _listaFiltrada_62_BP = _listaUsuarios_62_BP.Where(
                u =>
                (string.IsNullOrEmpty(textBoxDNI.Text) || u.Dni_62_BP.Contains(textBoxDNI.Text)) &&
                (string.IsNullOrEmpty(textBoxApellidos.Text) || u.Apellido_62_BP.Contains(textBoxApellidos.Text)) &&
@@ -387,15 +404,15 @@ namespace TP_campo_62_BP
                (string.IsNullOrEmpty(textBoxEmail.Text) || u.Email_62_BP.Contains(textBoxEmail.Text)) &&
                (string.IsNullOrEmpty(textBoxLogin.Text) || u.Login_62_BP.Contains(textBoxLogin.Text))
             ).ToList();
-            if (listafiltrada.Count > 0)
+
+            if (_listaFiltrada_62_BP.Count > 0)
             {
-                this.dataGridViewUsuarios.DataSource = listafiltrada;
+                ActualizarGrilla_62_BP();
             }
             else
             {
                 MessageBox.Show("No hay Usuarios que cumplan con los filtros");
             }
-
         }
         private void buttonAplicar_Click(object sender, EventArgs e)
         {
@@ -432,6 +449,15 @@ namespace TP_campo_62_BP
                 RellenarGrilla_62_BP();
                 CambiarModo_62_BP(0);
             }
+        }
+        private void radioButtonActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarGrilla_62_BP();
+        }
+
+        private void radioButtonTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarGrilla_62_BP();
         }
     }
 }

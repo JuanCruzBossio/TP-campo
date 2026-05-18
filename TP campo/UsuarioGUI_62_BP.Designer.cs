@@ -56,6 +56,8 @@
             this.textBoxMensaje = new System.Windows.Forms.TextBox();
             this.labelMensaje = new System.Windows.Forms.Label();
             this.buttonHabilitarConsulta = new System.Windows.Forms.Button();
+            this.radioButtonActivos = new System.Windows.Forms.RadioButton();
+            this.radioButtonTodos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -305,11 +307,37 @@
             this.buttonHabilitarConsulta.UseVisualStyleBackColor = true;
             this.buttonHabilitarConsulta.Click += new System.EventHandler(this.buttonHabilitarConsulta_Click);
             // 
+            // radioButtonActivos
+            // 
+            this.radioButtonActivos.AutoSize = true;
+            this.radioButtonActivos.Location = new System.Drawing.Point(286, 10);
+            this.radioButtonActivos.Name = "radioButtonActivos";
+            this.radioButtonActivos.Size = new System.Drawing.Size(60, 17);
+            this.radioButtonActivos.TabIndex = 31;
+            this.radioButtonActivos.TabStop = true;
+            this.radioButtonActivos.Text = "Activos";
+            this.radioButtonActivos.UseVisualStyleBackColor = true;
+            this.radioButtonActivos.CheckedChanged += new System.EventHandler(this.radioButtonActivos_CheckedChanged);
+            // 
+            // radioButtonTodos
+            // 
+            this.radioButtonTodos.AutoSize = true;
+            this.radioButtonTodos.Location = new System.Drawing.Point(413, 10);
+            this.radioButtonTodos.Name = "radioButtonTodos";
+            this.radioButtonTodos.Size = new System.Drawing.Size(55, 17);
+            this.radioButtonTodos.TabIndex = 32;
+            this.radioButtonTodos.TabStop = true;
+            this.radioButtonTodos.Text = "Todos";
+            this.radioButtonTodos.UseVisualStyleBackColor = true;
+            this.radioButtonTodos.CheckedChanged += new System.EventHandler(this.radioButtonTodos_CheckedChanged);
+            // 
             // UsuarioGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 692);
+            this.Controls.Add(this.radioButtonTodos);
+            this.Controls.Add(this.radioButtonActivos);
             this.Controls.Add(this.buttonHabilitarConsulta);
             this.Controls.Add(this.labelMensaje);
             this.Controls.Add(this.textBoxMensaje);
@@ -378,5 +406,7 @@
         private System.Windows.Forms.TextBox textBoxMensaje;
         private System.Windows.Forms.Label labelMensaje;
         private System.Windows.Forms.Button buttonHabilitarConsulta;
+        private System.Windows.Forms.RadioButton radioButtonActivos;
+        private System.Windows.Forms.RadioButton radioButtonTodos;
     }
 }
