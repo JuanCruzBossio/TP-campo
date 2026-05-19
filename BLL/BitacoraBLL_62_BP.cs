@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,11 +14,11 @@ namespace BLL_62_BP
     public class BitacoraBLL_62_BP
     {
         private BitacoraDAL_62_BP _bitacoraDAL = new BitacoraDAL_62_BP();
-
+        private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
+        private string _claveAES_62_BP = "Admin123Admin123";
         public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-            registro.Mensaje_62_BP = mensaje;
             registro.Criticidad_62_BP = nivelCriticidad;
 
             if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
@@ -28,21 +29,27 @@ namespace BLL_62_BP
             {
                 registro.DniUsuario_62_BP = "0";
             }
-
+            registro.Mensaje_62_BP = _encriptacionSEG.EncriptarConAES_62_BP(_claveAES_62_BP, mensaje);
             _bitacoraDAL.AltaBitacora_62_BP(registro);
         }
         public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-            registro.Mensaje_62_BP = mensaje;
             registro.Criticidad_62_BP = nivelCriticidad;
             registro.DniUsuario_62_BP = dni;
-
+            registro.Mensaje_62_BP = _encriptacionSEG.EncriptarConAES_62_BP(_claveAES_62_BP, mensaje);
             _bitacoraDAL.AltaBitacora_62_BP(registro);
         }
         public List<RegistroBitacora_62_BP> ObtenerBitacora_62_BP()
         {
-            return _bitacoraDAL.ObtenerRegistros_62_BP();
+            List<RegistroBitacora_62_BP> lista = _bitacoraDAL.ObtenerRegistros_62_BP();
+
+            foreach (RegistroBitacora_62_BP reg in lista)
+            {
+                reg.Mensaje_62_BP = _encriptacionSEG.DesencriptarConAES_62_BP(_claveAES_62_BP, reg.Mensaje_62_BP);
+            }
+
+            return lista;
         }
         public List<RegistroBitacora_62_BP> FiltrarBitacora_62_BP(
         string fechaIni, string fechaFin, string login, string modulo, string evento, string criticidad, out string error)
@@ -89,7 +96,10 @@ namespace BLL_62_BP
                 error = "No se encontraron registros con los filtros aplicados.";
                 return null;
             }
-
+            foreach (RegistroBitacora_62_BP reg in resultados)
+            {
+                reg.Mensaje_62_BP = _encriptacionSEG.DesencriptarConAES_62_BP(_claveAES_62_BP, reg.Mensaje_62_BP);
+            }
             return resultados;
         }
 
