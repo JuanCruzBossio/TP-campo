@@ -97,6 +97,34 @@ namespace DAL_62_BP
             }
             return null;
         }
+        public Usuario_62_BP BuscarUsuarioPorLogin_62_BP(string login)
+        {
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login";
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@login", login)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                DataRow fila = tabla.Rows[0];
+                Usuario_62_BP usuario = new Usuario_62_BP();
+
+                usuario.Dni_62_BP = fila["dni_62_BP"].ToString();
+                usuario.Apellido_62_BP = fila["apellido_62_BP"].ToString();
+                usuario.Nombre_62_BP = fila["nombre_62_BP"].ToString();
+                usuario.Rol_62_BP = fila["rol_62_BP"].ToString();
+                usuario.Email_62_BP = fila["email_62_BP"].ToString();
+                usuario.Login_62_BP = fila["login_62_BP"].ToString();
+                usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
+                usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
+                usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
+
+                return usuario;
+            }
+            return null;
+        }
 
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
@@ -163,14 +191,14 @@ namespace DAL_62_BP
             return filasAfectadas;
         }
 
-        public int Bloquear_62_BP(Usuario_62_BP usuario)
+        public int Bloquear_62_BP(string login)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 1 WHERE dni_62_BP = @dni";
+            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 1 WHERE login_62_BP = @login";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@dni", usuario.Dni_62_BP)
+                new SqlParameter("@login", login)
             };
 
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
@@ -180,11 +208,12 @@ namespace DAL_62_BP
         public int Desbloquear_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 0 WHERE dni_62_BP = @dni";
+            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 0 , contrasena_62_BP = @contrasena WHERE dni_62_BP = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@dni", usuario.Dni_62_BP)
+                new SqlParameter("@dni", usuario.Dni_62_BP),
+                new SqlParameter("@contrasena", usuario.Contrasena_62_BP)
             };
 
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);

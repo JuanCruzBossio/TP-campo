@@ -200,9 +200,7 @@ namespace TP_campo_62_BP
                     MessageBox.Show("El usuario seleccionado no se encuentra bloqueado.");
                     return false;
                 }
-                Usuario_62_BP usuarioADesbloquear = new Usuario_62_BP();
-                usuarioADesbloquear.Dni_62_BP = textBoxDNI.Text;
-                usuarioADesbloquear.Login_62_BP = textBoxLogin.Text;
+                Usuario_62_BP usuarioADesbloquear = ValidarUsuario_62_BP();
 
                 int filas = _usuarioBLL_62_BP.Desbloquear_62_BP(usuarioADesbloquear);
 
