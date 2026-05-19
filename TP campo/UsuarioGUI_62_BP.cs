@@ -40,6 +40,13 @@ namespace TP_campo_62_BP
             radioButtonActivos.Checked = true;
             RellenarGrilla_62_BP();
             CambiarModo_62_BP(0);
+            hayUsuarioSeleccionado_62_BP = false;
+            buttonCrear.Enabled = true;
+            buttonDesbloquear.Enabled = false;
+            buttonModificar.Enabled = false;
+            buttonActivar.Enabled = false;
+            dataGridViewUsuarios.Columns["Contrasena_62_BP"].Visible = false;
+            dataGridViewUsuarios.ReadOnly = true;
         }
         private void setButtons(bool valor)
         {
@@ -61,7 +68,7 @@ namespace TP_campo_62_BP
         {
             _listaUsuarios_62_BP = _usuarioBLL_62_BP.TraerTodosUsuarios_62_BP();
             _listaFiltrada_62_BP = _listaUsuarios_62_BP;
-
+            labelCantidadUsuarios.Text = "Cantidad de Usuarios: " + _listaUsuarios_62_BP.Count();
             ActualizarGrilla_62_BP();
         }
         private void ActualizarGrilla_62_BP()
@@ -84,10 +91,9 @@ namespace TP_campo_62_BP
             {
                 LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
                 hayUsuarioSeleccionado_62_BP = true;
-                if (modoActual_62_BP == 4)
-                {
-                    textBoxDNI.Enabled = false;
-                }
+                buttonDesbloquear.Enabled = true;
+                buttonModificar.Enabled = true;
+                buttonActivar.Enabled = true;
             }
         }
         private void LlenarCampos_62_BP(Usuario_62_BP usuario)
@@ -347,6 +353,10 @@ namespace TP_campo_62_BP
         private void CambiarModo_62_BP(int modo)
         {
             modoActual_62_BP = modo;
+            buttonCrear.Enabled = false;
+            buttonDesbloquear.Enabled = false;
+            buttonModificar.Enabled = false;
+            buttonActivar.Enabled = false;
             switch (modo)
             {
                 case 1:
@@ -361,28 +371,33 @@ namespace TP_campo_62_BP
                     LimpiarCampos_62_BP();
                     setButtons(true);
                     setTextBoxs(true);
+                    buttonCrear.Enabled = true;
                     textBoxMensaje.Text = "Modo Crear";
                     break;
                 case 3:
                     setButtons(true);
                     setTextBoxs(false);
+                    buttonDesbloquear.Enabled = true;
                     textBoxMensaje.Text = "Modo Desbloquear";
                     break;
                 case 4:
                     setButtons(true);
                     setTextBoxs(true);
                     textBoxDNI.Enabled = false;
+                    buttonModificar.Enabled = true;
                     textBoxMensaje.Text = "Modo Modificar";
                     break;
                 case 5:
                     setButtons(true);
                     setTextBoxs(false);
+                    buttonActivar.Enabled = true;
                     textBoxMensaje.Text = "Modo Activar/Desactivar";
                     break;
                 case 0:
                     LimpiarCampos_62_BP();
                     setButtons(false);
                     setTextBoxs(false);
+                    buttonCrear.Enabled = true;
                     textBoxMensaje.Text = "";
                     break;
                 default:

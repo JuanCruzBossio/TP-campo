@@ -58,6 +58,7 @@
             this.buttonHabilitarConsulta = new System.Windows.Forms.Button();
             this.radioButtonActivos = new System.Windows.Forms.RadioButton();
             this.radioButtonTodos = new System.Windows.Forms.RadioButton();
+            this.labelCantidadUsuarios = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -331,11 +332,21 @@
             this.radioButtonTodos.UseVisualStyleBackColor = true;
             this.radioButtonTodos.CheckedChanged += new System.EventHandler(this.radioButtonTodos_CheckedChanged);
             // 
+            // labelCantidadUsuarios
+            // 
+            this.labelCantidadUsuarios.AutoSize = true;
+            this.labelCantidadUsuarios.Location = new System.Drawing.Point(840, 10);
+            this.labelCantidadUsuarios.Name = "labelCantidadUsuarios";
+            this.labelCantidadUsuarios.Size = new System.Drawing.Size(114, 13);
+            this.labelCantidadUsuarios.TabIndex = 33;
+            this.labelCantidadUsuarios.Text = "Cantidad de Usuarios: ";
+            // 
             // UsuarioGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 692);
+            this.Controls.Add(this.labelCantidadUsuarios);
             this.Controls.Add(this.radioButtonTodos);
             this.Controls.Add(this.radioButtonActivos);
             this.Controls.Add(this.buttonHabilitarConsulta);
@@ -408,5 +419,6 @@
         private System.Windows.Forms.Button buttonHabilitarConsulta;
         private System.Windows.Forms.RadioButton radioButtonActivos;
         private System.Windows.Forms.RadioButton radioButtonTodos;
+        private System.Windows.Forms.Label labelCantidadUsuarios;
     }
 }
