@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
+using SEG_62_BP;
 
 namespace TP_campo_62_BP
 {
@@ -18,7 +19,7 @@ namespace TP_campo_62_BP
             InitializeComponent();
         }
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
-
+        private string _nombreUsuario_62_BP = "";
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsuarioGUI_62_BP usuarioGUI = new UsuarioGUI_62_BP();
@@ -65,6 +66,12 @@ namespace TP_campo_62_BP
             Login_62_BP LoginForm = new Login_62_BP();
             LoginForm.MdiParent = this;
             LoginForm.Show();
+        }
+
+        private void Menu_62_BP_Load(object sender, EventArgs e)
+        {
+            _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
+            labelNombre.Text = "Usuario Logueado: "+ _nombreUsuario_62_BP;
         }
     }
 }
