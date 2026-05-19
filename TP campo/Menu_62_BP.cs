@@ -70,7 +70,7 @@ namespace TP_campo_62_BP
 
         private void Menu_62_BP_Load(object sender, EventArgs e)
         {
-            _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
+            _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + " "+ SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
             labelNombre.Text = "Usuario Logueado: "+ _nombreUsuario_62_BP;
         }
     }

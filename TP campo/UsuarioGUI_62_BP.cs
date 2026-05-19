@@ -84,6 +84,8 @@ namespace TP_campo_62_BP
 
             dataGridViewUsuarios.DataSource = null;
             dataGridViewUsuarios.DataSource = listaMostrar;
+            dataGridViewUsuarios.Columns["Contrasena_62_BP"].Visible = false;
+            dataGridViewUsuarios.ReadOnly = true;
         }
         private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
