@@ -59,5 +59,12 @@ namespace TP_campo_62_BP
             bitacoraForm.MdiParent = this;
             bitacoraForm.Show();        
         }
+
+        private void reLoginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Login_62_BP LoginForm = new Login_62_BP();
+            LoginForm.MdiParent = this;
+            LoginForm.Show();
+        }
     }
 }

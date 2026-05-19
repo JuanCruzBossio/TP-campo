@@ -88,39 +88,39 @@
             // usuariosToolStripMenuItem
             // 
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.usuariosToolStripMenuItem.Text = "Usuarios";
             this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
             // perfilesToolStripMenuItem
             // 
             this.perfilesToolStripMenuItem.Name = "perfilesToolStripMenuItem";
-            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.perfilesToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.perfilesToolStripMenuItem.Text = "Perfiles";
             // 
             // backupToolStripMenuItem
             // 
             this.backupToolStripMenuItem.Name = "backupToolStripMenuItem";
-            this.backupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.backupToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.backupToolStripMenuItem.Text = "Backup";
             // 
             // restoreToolStripMenuItem
             // 
             this.restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.restoreToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.restoreToolStripMenuItem.Text = "Restore";
             // 
             // bitacoraToolStripMenuItem
             // 
             this.bitacoraToolStripMenuItem.Name = "bitacoraToolStripMenuItem";
-            this.bitacoraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bitacoraToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.bitacoraToolStripMenuItem.Text = "Bitacora";
             this.bitacoraToolStripMenuItem.Click += new System.EventHandler(this.bitacoraToolStripMenuItem_Click);
             // 
             // digitoVerificadorToolStripMenuItem
             // 
             this.digitoVerificadorToolStripMenuItem.Name = "digitoVerificadorToolStripMenuItem";
-            this.digitoVerificadorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.digitoVerificadorToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.digitoVerificadorToolStripMenuItem.Text = "Digito Verificador";
             // 
             // maestrosToolStripMenuItem
@@ -172,27 +172,28 @@
             // reLoginToolStripMenuItem
             // 
             this.reLoginToolStripMenuItem.Name = "reLoginToolStripMenuItem";
-            this.reLoginToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.reLoginToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.reLoginToolStripMenuItem.Text = "Re-Login";
+            this.reLoginToolStripMenuItem.Click += new System.EventHandler(this.reLoginToolStripMenuItem_Click);
             // 
             // cambiarClaveToolStripMenuItem
             // 
             this.cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cambiarClaveToolStripMenuItem.Text = "Cambiar Clave";
             this.cambiarClaveToolStripMenuItem.Click += new System.EventHandler(this.cambiarClaveToolStripMenuItem_Click);
             // 
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // cambiarIdiomaToolStripMenuItem
             // 
             this.cambiarIdiomaToolStripMenuItem.Name = "cambiarIdiomaToolStripMenuItem";
-            this.cambiarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.cambiarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cambiarIdiomaToolStripMenuItem.Text = "Cambiar Idioma";
             // 
             // ventasToolStripMenuItem
