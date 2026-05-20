@@ -40,7 +40,7 @@ namespace BLL_62_BP
                         throw new Exception("Ya existe un usuario con ese Login.");
                     }
 
-                    if (error.Contains("login_62_BP"))
+                    if (error.Contains("dni_62_BP"))
                     {
                         throw new Exception("Ya existe un usuario con ese DNI.");
                     }
@@ -92,10 +92,12 @@ namespace BLL_62_BP
             var filasAfectadas = 0;
             try
             {
+
                 filasAfectadas = _usuarioDAL.Bloquear_62_BP(login);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Bloqueo de Usuario " + login, 3);
+                    Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
+                    _bitacoraBLL.AltaBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
                 }
             }
             catch (Exception ex)
@@ -145,7 +147,7 @@ namespace BLL_62_BP
                         throw new Exception("Ya existe un usuario con ese Login.");
                     }
 
-                    if (error.Contains("login_62_BP"))
+                    if (error.Contains("dni_62_BP"))
                     {
                         throw new Exception("Ya existe un usuario con ese DNI.");
                     }
@@ -267,17 +269,13 @@ namespace BLL_62_BP
                     throw new Exception("La contraseña actual no es correcta.");
                 }
 
-                Usuario_62_BP usuario = new Usuario_62_BP
-                {
-                    Dni_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP,
-                    Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(claveNueva),
-                    Login_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Login_62_BP
-                };
+                Usuario_62_BP usuario = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP;
+                usuario.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(claveNueva);
                 filasAfectadas = _usuarioDAL.CambiarContrasena_62_BP(usuario);
 
                 if (filasAfectadas > 0)
                 {
-                    SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(claveNueva);
+                    SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = usuario.Contrasena_62_BP;
                     _bitacoraBLL.AltaBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
                 }
             }
