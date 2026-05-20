@@ -32,13 +32,16 @@ namespace TP_campo_62_BP
                     MessageBox.Show("Faltan completar datos.");
                     return;
                 }
-
                 if (nueva != repetir)
                 {
                     MessageBox.Show("La nueva contraseña y su repetición no coinciden.");
                     return;
                 }
-
+                if (nueva == antigua)
+                {
+                    MessageBox.Show("La nueva contraseña no puede ser igual a la anterior.");
+                    return;
+                }
                 int resultado = _usuarioBLL_62_BP.CambiarContrasena_62_BP(antigua, nueva);
 
                 if (resultado > 0)
