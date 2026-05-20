@@ -51,7 +51,23 @@ namespace TP_campo_62_BP
                     textBoxContrasenaActual.Clear();
                     textBoxContrasenaNueva.Clear();
                     textBoxRepetirContrasenaNueva.Clear();
+                    _usuarioBLL_62_BP.Logout_62_BP();
+                    Form menu = Application.OpenForms["Menu_62_BP"];
 
+                    if (menu != null)
+                    {
+                        menu.Close();
+                    }
+
+                    Form login = Application.OpenForms["Login_62_BP"];
+
+                    if (login != null)
+                    {
+                        login.Show();
+                    }
+
+                    login.Show();
+                    this.Close();
                 }
                 else
                 {

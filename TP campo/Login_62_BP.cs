@@ -33,11 +33,23 @@ namespace TP_campo_62_BP
 
                     if (usuario != null)
                     {
-                        Menu_62_BP menu = new Menu_62_BP();
-                        menu.Show();
                         textBoxLogin.Clear();
                         textBoxContrasena.Clear();
-                        this.Hide();
+                        checkBoxPassword.Checked = false;
+                        textBoxContrasena.PasswordChar = '*';
+                        if (usuario.ForzarContrasenaNueva_62_BP)
+                        {
+                            CambiarClaveGUI_62_BP cambiarClaveGUI = new CambiarClaveGUI_62_BP();
+                            cambiarClaveGUI.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            Menu_62_BP menu = new Menu_62_BP();
+                            menu.Show();
+                            this.Hide();
+                        }
+                        
                     }
                     else
                     {

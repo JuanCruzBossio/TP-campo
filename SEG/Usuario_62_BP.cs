@@ -76,6 +76,12 @@ namespace SEG_62_BP
             get { return intentosLogin_62_BP; }
             set { intentosLogin_62_BP = value; }
         }
+        private bool forzarContrasenaNueva_62_BP;
+        public bool ForzarContrasenaNueva_62_BP
+        {
+            get { return forzarContrasenaNueva_62_BP; }
+            set { forzarContrasenaNueva_62_BP = value; }
+        }
     }
 
 }
