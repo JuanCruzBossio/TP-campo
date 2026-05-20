@@ -14,7 +14,7 @@ namespace DAL_62_BP
         public List<Usuario_62_BP> TraerTodosUsuarios_62_BP()
         {
             List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP";
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP FROM Usuario_62_BP";
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
 
@@ -33,6 +33,7 @@ namespace DAL_62_BP
                     usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
                     usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
                     usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
+                    usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
 
                     lista.Add(usuario);
                 }
@@ -41,7 +42,7 @@ namespace DAL_62_BP
         }
         public Usuario_62_BP BuscarUsuarioPorLoginYContrasena_62_BP(string login, string contrasena)
         {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login AND contrasena_62_BP = @contrasena";
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login AND contrasena_62_BP = @contrasena";
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@login", login),
@@ -63,7 +64,7 @@ namespace DAL_62_BP
                 usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
                 usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
                 usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-
+                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
                 return usuario;
             }
             return null;
@@ -71,7 +72,7 @@ namespace DAL_62_BP
 
         public Usuario_62_BP BuscarUsuarioPorDNI_62_BP(string dni)
         {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE dni_62_BP = @dni";
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP FROM Usuario_62_BP WHERE dni_62_BP = @dni";
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@dni", dni)
@@ -92,14 +93,14 @@ namespace DAL_62_BP
                 usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
                 usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
                 usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-
+                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
                 return usuario;
             }
             return null;
         }
         public Usuario_62_BP BuscarUsuarioPorLogin_62_BP(string login)
         {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login";
+            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login";
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@login", login)
@@ -120,7 +121,7 @@ namespace DAL_62_BP
                 usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
                 usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
                 usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-
+                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
                 return usuario;
             }
             return null;
@@ -208,7 +209,7 @@ namespace DAL_62_BP
         public int Desbloquear_62_BP(Usuario_62_BP usuario)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 0 , contrasena_62_BP = @contrasena WHERE dni_62_BP = @dni";
+            string query = "UPDATE Usuario_62_BP SET bloqueo_62_BP = 0 , contrasena_62_BP = @contrasena , intentosLogin_62_BP = 0 WHERE dni_62_BP = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -229,6 +230,21 @@ namespace DAL_62_BP
             {
                 new SqlParameter("@dni", usuario.Dni_62_BP),
                 new SqlParameter("@contrasena", usuario.Contrasena_62_BP)
+            };
+
+            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            return filasAfectadas;
+        }
+
+        public int GuardarIntentosLogin_62_BP(Usuario_62_BP usuario)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario_62_BP SET intentosLogin_62_BP = @intentos WHERE dni_62_BP = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", usuario.Dni_62_BP),
+                new SqlParameter("@intentos", usuario.IntentosLogin_62_BP)
             };
 
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);

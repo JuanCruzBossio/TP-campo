@@ -70,6 +70,12 @@ namespace SEG_62_BP
             get { return activo_62_BP; }
             set { activo_62_BP = value; }
         }
+        private int intentosLogin_62_BP;
+        public int IntentosLogin_62_BP
+        {
+            get { return intentosLogin_62_BP; }
+            set { intentosLogin_62_BP = value; }
+        }
     }
 
 }
