@@ -180,49 +180,49 @@ namespace BLL_62_BP
         public Usuario_62_BP Login_62_BP(string login, string contrasena)
         {
             try
-            {   
-                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(contrasena);
-                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLoginYContrasena_62_BP(login, contrasenaHasheada);
-                
+            {
+                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
+
                 if (usuario == null)
                 {
-                    Usuario_62_BP usuarioEncontrado = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
-                    if (usuarioEncontrado == null) {
-                        throw new Exception("Usuario no registrado.");
-                    }
-                    else{
-                        usuarioEncontrado.IntentosLogin_62_BP++;
-                        _usuarioDAL.GuardarIntentosLogin_62_BP(usuarioEncontrado);
-                        if (usuarioEncontrado.IntentosLogin_62_BP >= 3 && !usuarioEncontrado.Bloqueo_62_BP)
-                        {
-                            var filasAfectadas = Bloquear_62_BP(login);
-                            if (filasAfectadas > 0)
-                            {
-                                throw new Exception("Usuario Bloqueado por intentos de Login incorrectos.");
-                            }
-                        }
-                    }
-                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario " + usuario.Login_62_BP, 1);
-                    throw new Exception("Usuario o contraseña incorrectos.");
+                    throw new Exception("Usuario no registrado.");
                 }
-                
-                if (usuario.Activo_62_BP == false)
+                if (!usuario.Activo_62_BP)
                 {
-                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Desactivado" + usuario.Login_62_BP, 1);
                     throw new Exception("Usuario Desactivado.");
                 }
-                
-                if (usuario.Bloqueo_62_BP == true)
+                if (usuario.Bloqueo_62_BP)
                 {
-                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Bloqueado" + usuario.Login_62_BP, 1);
                     throw new Exception("Usuario Bloqueado.");
                 }
-                usuario.IntentosLogin_62_BP = 0;
-                _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
-                SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
-                _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
-                
-                return usuario;
+                string contrasenaHasheada = _encriptacionSEG.EncriptarConSHA256_62_BP(contrasena);
+
+                if (usuario.Contrasena_62_BP == contrasenaHasheada)
+                {
+                    if (usuario.IntentosLogin_62_BP > 0)
+                    {
+                        usuario.IntentosLogin_62_BP = 0;
+                        _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
+                    }
+
+                    SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
+
+                    return usuario;
+                }
+                else
+                {
+                    usuario.IntentosLogin_62_BP++;
+
+                    if (usuario.IntentosLogin_62_BP >= 3)
+                    {
+                        Bloquear_62_BP(login);
+                        throw new Exception("Usuario Bloqueado por intentos de Login incorrectos.");
+                    }
+
+                    _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
+                    throw new Exception("Usuario o contraseña incorrectos.");
+                }
             }
             catch (Exception)
             {
