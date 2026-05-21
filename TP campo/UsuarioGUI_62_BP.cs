@@ -21,8 +21,8 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
+        //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
-        private bool hayUsuarioSeleccionado_62_BP = false;
 
         private List<Usuario_62_BP> _listaUsuarios_62_BP = new List<Usuario_62_BP>();
         private List<Usuario_62_BP> _listaFiltrada_62_BP = new List<Usuario_62_BP>();
@@ -35,6 +35,9 @@ namespace TP_campo_62_BP
         // 4 - Modificar  - Mensaje: "Modo Modificar"
         // 5 - Activar/Desactivar  - Mensaje: "Modo Activar/Desactivar"
         private int modoActual_62_BP = 0;
+        private bool hayUsuarioSeleccionado_62_BP = false;
+
+        //Eventos
         private void UsuarioGUI_62_BP_Load(object sender, EventArgs e)
         {
             radioButtonActivos.Checked = true;
@@ -48,6 +51,113 @@ namespace TP_campo_62_BP
             dataGridViewUsuarios.Columns["Contrasena_62_BP"].Visible = false;
             dataGridViewUsuarios.ReadOnly = true;
         }
+
+        private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
+                hayUsuarioSeleccionado_62_BP = true;
+                buttonDesbloquear.Enabled = true;
+                buttonModificar.Enabled = true;
+                buttonActivar.Enabled = true;
+            }
+        }
+        private void buttonSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void radioButtonActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarGrilla_62_BP();
+        }
+
+        private void radioButtonTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarGrilla_62_BP();
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            CambiarModo_62_BP(0);
+        }
+
+        private void buttonHabilitarConsulta_Click(object sender, EventArgs e)
+        {
+            CambiarModo_62_BP(1);
+        }
+        private void buttonCrear_Click(object sender, EventArgs e)
+        {
+            CambiarModo_62_BP(2);
+        }
+        private void buttonDesbloquear_Click(object sender, EventArgs e)
+        {
+            if (hayUsuarioSeleccionado_62_BP)
+            {
+                CambiarModo_62_BP(3);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
+        }
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+            if (hayUsuarioSeleccionado_62_BP)
+            {
+                CambiarModo_62_BP(4);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
+        }
+        private void buttonActivar_Click(object sender, EventArgs e)
+        {
+            if (hayUsuarioSeleccionado_62_BP)
+            {
+                CambiarModo_62_BP(5);
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un usuario.");
+            }
+        }
+        private void buttonAplicar_Click(object sender, EventArgs e)
+        {
+            bool operacionExitosa = false;
+
+            switch (modoActual_62_BP)
+            {
+                case 1:
+                    filtrarUsuarios_62_BP();
+                    return;
+
+                case 2:
+                    operacionExitosa = crearUsuario_62_BP();
+                    break;
+
+                case 3:
+                    operacionExitosa = desbloquearUsuario_62_BP();
+                    break;
+
+                case 4:
+                    operacionExitosa = modificarUsuario_62_BP();
+                    break;
+
+                case 5:
+                    operacionExitosa = activarUsuario_62_BP();
+                    break;
+            }
+
+            if (operacionExitosa)
+            {
+                RellenarGrilla_62_BP();
+                CambiarModo_62_BP(0);
+            }
+        }
+
+        //Funciones:
         private void setButtons(bool valor)
         {
             buttonAplicar.Enabled = valor;
@@ -86,17 +196,6 @@ namespace TP_campo_62_BP
             dataGridViewUsuarios.DataSource = listaMostrar;
             dataGridViewUsuarios.Columns["Contrasena_62_BP"].Visible = false;
             dataGridViewUsuarios.ReadOnly = true;
-        }
-        private void dataGridViewUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
-                hayUsuarioSeleccionado_62_BP = true;
-                buttonDesbloquear.Enabled = true;
-                buttonModificar.Enabled = true;
-                buttonActivar.Enabled = true;
-            }
         }
         private void LlenarCampos_62_BP(Usuario_62_BP usuario)
         {
@@ -144,10 +243,6 @@ namespace TP_campo_62_BP
             }
         }
 
-        private void buttonCrear_Click(object sender, EventArgs e)
-        {
-            CambiarModo_62_BP(2);
-        }
         public bool crearUsuario_62_BP()
         {
             try
@@ -174,16 +269,6 @@ namespace TP_campo_62_BP
                 MessageBox.Show("Ocurrió un error al intentar crear el usuario: " + ex.Message);
             }
             return false;
-        }
-        private void buttonDesbloquear_Click(object sender, EventArgs e)
-        {
-            if (hayUsuarioSeleccionado_62_BP)
-            {
-                CambiarModo_62_BP(3);
-            }
-            else {
-                MessageBox.Show("Debe seleccionar un usuario.");
-            }
         }
         private bool desbloquearUsuario_62_BP()
         {
@@ -237,22 +322,7 @@ namespace TP_campo_62_BP
             textBoxDNI.Focus();
             hayUsuarioSeleccionado_62_BP = false;
         }
-        private void buttonCancelar_Click(object sender, EventArgs e)
-        {
-            CambiarModo_62_BP(0);
-        }
 
-        private void buttonActivar_Click(object sender, EventArgs e)
-        {
-            if (hayUsuarioSeleccionado_62_BP)
-            {
-                CambiarModo_62_BP(5);
-            }
-            else
-            {
-                MessageBox.Show("Debe seleccionar un usuario.");
-            }
-        }
         private bool activarUsuario_62_BP()
         {
             try
@@ -297,17 +367,6 @@ namespace TP_campo_62_BP
             }
             return false;
         }
-        private void buttonModificar_Click(object sender, EventArgs e)
-        {
-            if (hayUsuarioSeleccionado_62_BP)
-            {
-                CambiarModo_62_BP(4);
-            }
-            else
-            {
-                MessageBox.Show("Debe seleccionar un usuario.");
-            }
-        }
         private bool modificarUsuario_62_BP()
         {
             try
@@ -341,19 +400,11 @@ namespace TP_campo_62_BP
             }
             return false;
         }
-        private void buttonSalir_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
-        private void buttonHabilitarConsulta_Click(object sender, EventArgs e)
-        {
-            CambiarModo_62_BP(1);
-        }
         private void CambiarModo_62_BP(int modo)
         {
             modoActual_62_BP = modo;
-            buttonCrear.Enabled = false;
+            buttonCrear.Enabled = true;
             buttonDesbloquear.Enabled = false;
             buttonModificar.Enabled = false;
             buttonActivar.Enabled = false;
@@ -371,42 +422,43 @@ namespace TP_campo_62_BP
                     LimpiarCampos_62_BP();
                     setButtons(true);
                     setTextBoxs(true);
-                    buttonCrear.Enabled = true;
+                    buttonCrear.Enabled = false;
+                    checkBoxBloqueado.Enabled = false;
                     textBoxMensaje.Text = "Modo Crear";
                     break;
                 case 3:
                     setButtons(true);
                     setTextBoxs(false);
-                    buttonDesbloquear.Enabled = true;
                     textBoxMensaje.Text = "Modo Desbloquear";
                     break;
                 case 4:
                     setButtons(true);
                     setTextBoxs(true);
                     textBoxDNI.Enabled = false;
-                    buttonModificar.Enabled = true;
+                    checkBoxBloqueado.Enabled = false;
                     textBoxMensaje.Text = "Modo Modificar";
                     break;
                 case 5:
                     setButtons(true);
                     setTextBoxs(false);
-                    buttonActivar.Enabled = true;
                     textBoxMensaje.Text = "Modo Activar/Desactivar";
                     break;
                 case 0:
                     LimpiarCampos_62_BP();
+                    RellenarGrilla_62_BP();
                     setButtons(false);
                     setTextBoxs(false);
-                    buttonCrear.Enabled = true;
                     textBoxMensaje.Text = "";
                     break;
                 default:
                     LimpiarCampos_62_BP();
+                    RellenarGrilla_62_BP();
                     setButtons(false);
                     setTextBoxs(false);
                     textBoxMensaje.Text = "";
                     break;
             }
+            buttonCancelar.Enabled = true;
         }
         private void filtrarUsuarios_62_BP()
         {
@@ -428,51 +480,6 @@ namespace TP_campo_62_BP
             {
                 MessageBox.Show("No hay Usuarios que cumplan con los filtros");
             }
-        }
-        private void buttonAplicar_Click(object sender, EventArgs e)
-        {
-            bool operacionExitosa = false;
-
-            switch (modoActual_62_BP)
-            {
-                case 1:
-                    filtrarUsuarios_62_BP();
-                    return;
-
-                case 2:
-                    operacionExitosa = crearUsuario_62_BP();
-                    break;
-
-                case 3:
-                    operacionExitosa = desbloquearUsuario_62_BP();
-                    operacionExitosa = true;
-                    break;
-
-                case 4:
-                    operacionExitosa = modificarUsuario_62_BP();
-                    operacionExitosa = true;
-                    break;
-
-                case 5:
-                    operacionExitosa = activarUsuario_62_BP();
-                    operacionExitosa = true;
-                    break;
-            }
-
-            if (operacionExitosa)
-            {
-                RellenarGrilla_62_BP();
-                CambiarModo_62_BP(0);
-            }
-        }
-        private void radioButtonActivos_CheckedChanged(object sender, EventArgs e)
-        {
-            ActualizarGrilla_62_BP();
-        }
-
-        private void radioButtonTodos_CheckedChanged(object sender, EventArgs e)
-        {
-            ActualizarGrilla_62_BP();
         }
     }
 }
