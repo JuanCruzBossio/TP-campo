@@ -25,7 +25,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Alta_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Alta de Usuario " + usuario.Login_62_BP, 1);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Alta de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (SqlException ex)
@@ -58,7 +58,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Activar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Activación de Usuario " + usuario.Login_62_BP, 2);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Activación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Desactivar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Desactivación de Usuario " + usuario.Login_62_BP, 2);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Desactivación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
-                    _bitacoraBLL.AltaBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
                 }
             }
             catch (Exception ex)
@@ -115,7 +115,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Desbloquear_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)
@@ -132,7 +132,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Modificar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL.AltaBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (SqlException ex)
@@ -202,25 +202,25 @@ namespace BLL_62_BP
                             }
                         }
                     }
-                    //_bitacoraBLL.AltaBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario " + usuario.Login_62_BP, 1);
+                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario " + usuario.Login_62_BP, 1);
                     throw new Exception("Usuario o contraseña incorrectos.");
                 }
                 
                 if (usuario.Activo_62_BP == false)
                 {
-                    //_bitacoraBLL.AltaBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Desactivado" + usuario.Login_62_BP, 1);
+                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Desactivado" + usuario.Login_62_BP, 1);
                     throw new Exception("Usuario Desactivado.");
                 }
                 
                 if (usuario.Bloqueo_62_BP == true)
                 {
-                    //_bitacoraBLL.AltaBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Bloqueado" + usuario.Login_62_BP, 1);
+                    //_bitacoraBLL.RegistrarBitacora_62_BP("Intento "+ _intentosLogin +" de Login de Usuario Bloqueado" + usuario.Login_62_BP, 1);
                     throw new Exception("Usuario Bloqueado.");
                 }
                 usuario.IntentosLogin_62_BP = 0;
                 _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
                 SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
-                _bitacoraBLL.AltaBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
+                _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
                 
                 return usuario;
             }
@@ -242,7 +242,7 @@ namespace BLL_62_BP
                 var dniUsuario = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP;
                 SessionManager_62_BP.GetInstancia_62_BP().Logout_62_BP();
 
-                _bitacoraBLL.AltaBitacora_62_BP("Logout de Usuario",1, dniUsuario);
+                _bitacoraBLL.RegistrarBitacora_62_BP("Logout de Usuario",1, dniUsuario);
 
             }
             catch (Exception ex)
@@ -282,7 +282,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = usuario.Contrasena_62_BP;
-                    _bitacoraBLL.AltaBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)

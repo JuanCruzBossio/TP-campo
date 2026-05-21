@@ -17,7 +17,7 @@ namespace DAL_62_BP
     {
         private Acceso_62_BP _acceso_62_BP = new Acceso_62_BP();
 
-        public int AltaBitacora_62_BP(RegistroBitacora_62_BP registro)
+        public int RegistrarBitacora_62_BP(RegistroBitacora_62_BP registro)
         {
             var filasAfectadas = 0;
             string query = "INSERT INTO Bitacora_62_BP (fecha_62_BP, dniUsuario_62_BP, mensaje_62_BP, criticidad_62_BP) VALUES (GETDATE(), @dniUsuario, @mensaje, @criticidad)";

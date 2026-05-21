@@ -16,7 +16,7 @@ namespace BLL_62_BP
         private BitacoraDAL_62_BP _bitacoraDAL = new BitacoraDAL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         private string _claveAES_62_BP = "Admin123Admin123";
-        public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad)
+        public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
@@ -30,15 +30,15 @@ namespace BLL_62_BP
                 registro.DniUsuario_62_BP = "0";
             }
             registro.Mensaje_62_BP = _encriptacionSEG.EncriptarConAES_62_BP(_claveAES_62_BP, mensaje);
-            _bitacoraDAL.AltaBitacora_62_BP(registro);
+            _bitacoraDAL.RegistrarBitacora_62_BP(registro);
         }
-        public void AltaBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
+        public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
             registro.DniUsuario_62_BP = dni;
             registro.Mensaje_62_BP = _encriptacionSEG.EncriptarConAES_62_BP(_claveAES_62_BP, mensaje);
-            _bitacoraDAL.AltaBitacora_62_BP(registro);
+            _bitacoraDAL.RegistrarBitacora_62_BP(registro);
         }
         public List<RegistroBitacora_62_BP> ObtenerBitacora_62_BP()
         {
