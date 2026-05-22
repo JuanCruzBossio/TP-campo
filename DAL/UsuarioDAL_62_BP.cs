@@ -11,6 +11,50 @@ namespace DAL_62_BP
     public class UsuarioDAL_62_BP
     {
         private Acceso_62_BP _acceso_62_BP = new Acceso_62_BP();
+        public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null)
+        {
+            StringBuilder query = new StringBuilder("SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE 1=1");
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (!string.IsNullOrEmpty(dni))
+            {
+                query.Append(" AND dni_62_BP = @dni");
+                parametros.Add(new SqlParameter("@dni", dni));
+            }
+            if (!string.IsNullOrEmpty(login))
+            {
+                query.Append(" AND login_62_BP = @login");
+                parametros.Add(new SqlParameter("@login", login));
+            }
+            if (!string.IsNullOrEmpty(contrasena))
+            {
+                query.Append(" AND contrasena_62_BP = @contrasena");
+                parametros.Add(new SqlParameter("@contrasena", contrasena));
+            }
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                DataRow fila = tabla.Rows[0];
+                Usuario_62_BP usuario = new Usuario_62_BP();
+
+                usuario.Dni_62_BP = fila["dni_62_BP"].ToString();
+                usuario.Apellido_62_BP = fila["apellido_62_BP"].ToString();
+                usuario.Nombre_62_BP = fila["nombre_62_BP"].ToString();
+                usuario.Rol_62_BP = fila["rol_62_BP"].ToString();
+                usuario.Email_62_BP = fila["email_62_BP"].ToString();
+                usuario.Login_62_BP = fila["login_62_BP"].ToString();
+                usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
+                usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
+                usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
+                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
+                usuario.ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]);
+
+                return usuario;
+            }
+            return null;
+        }
         public List<Usuario_62_BP> TraerTodosUsuarios_62_BP()
         {
             List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
@@ -40,98 +84,6 @@ namespace DAL_62_BP
                 }
             }
             return lista;
-        }
-        public Usuario_62_BP BuscarUsuarioPorLoginYContrasena_62_BP(string login, string contrasena)
-        {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE login_62_BP = @login AND contrasena_62_BP = @contrasena";
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@login", login),
-                new SqlParameter("@contrasena", contrasena)
-            };
-
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
-            if (tabla != null && tabla.Rows.Count > 0)
-            {
-                DataRow fila = tabla.Rows[0];
-                Usuario_62_BP usuario = new Usuario_62_BP();
-
-                usuario.Dni_62_BP = fila["dni_62_BP"].ToString();
-                usuario.Apellido_62_BP = fila["apellido_62_BP"].ToString();
-                usuario.Nombre_62_BP = fila["nombre_62_BP"].ToString();
-                usuario.Rol_62_BP = fila["rol_62_BP"].ToString();
-                usuario.Email_62_BP = fila["email_62_BP"].ToString();
-                usuario.Login_62_BP = fila["login_62_BP"].ToString();
-                usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
-                usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
-                usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
-                usuario.ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]);
-
-                return usuario;
-            }
-            return null;
-        }
-
-        public Usuario_62_BP BuscarUsuarioPorDNI_62_BP(string dni)
-        {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP  FROM Usuario_62_BP WHERE dni_62_BP = @dni";
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@dni", dni)
-            };
-
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
-            if (tabla != null && tabla.Rows.Count > 0)
-            {
-                DataRow fila = tabla.Rows[0];
-                Usuario_62_BP usuario = new Usuario_62_BP();
-
-                usuario.Dni_62_BP = fila["dni_62_BP"].ToString();
-                usuario.Apellido_62_BP = fila["apellido_62_BP"].ToString();
-                usuario.Nombre_62_BP = fila["nombre_62_BP"].ToString();
-                usuario.Rol_62_BP = fila["rol_62_BP"].ToString();
-                usuario.Email_62_BP = fila["email_62_BP"].ToString();
-                usuario.Login_62_BP = fila["login_62_BP"].ToString();
-                usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
-                usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
-                usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
-                usuario.ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]);
-
-                return usuario;
-            }
-            return null;
-        }
-        public Usuario_62_BP BuscarUsuarioPorLogin_62_BP(string login)
-        {
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, rol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP  FROM Usuario_62_BP WHERE login_62_BP = @login";
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@login", login)
-            };
-
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
-            if (tabla != null && tabla.Rows.Count > 0)
-            {
-                DataRow fila = tabla.Rows[0];
-                Usuario_62_BP usuario = new Usuario_62_BP();
-
-                usuario.Dni_62_BP = fila["dni_62_BP"].ToString();
-                usuario.Apellido_62_BP = fila["apellido_62_BP"].ToString();
-                usuario.Nombre_62_BP = fila["nombre_62_BP"].ToString();
-                usuario.Rol_62_BP = fila["rol_62_BP"].ToString();
-                usuario.Email_62_BP = fila["email_62_BP"].ToString();
-                usuario.Login_62_BP = fila["login_62_BP"].ToString();
-                usuario.Contrasena_62_BP = fila["contrasena_62_BP"].ToString();
-                usuario.Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]);
-                usuario.Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]);
-                usuario.IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]);
-                usuario.ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]);
-
-                return usuario;
-            }
-            return null;
         }
 
         public int Alta_62_BP(Usuario_62_BP usuario)

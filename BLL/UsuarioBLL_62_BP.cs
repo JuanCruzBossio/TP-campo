@@ -95,7 +95,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Bloquear_62_BP(login);
                 if (filasAfectadas > 0)
                 {
-                    Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
+                    Usuario_62_BP usuario = _usuarioDAL.BuscarUsuario_62_BP(login: login);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
                 }
             }
@@ -163,7 +163,7 @@ namespace BLL_62_BP
             Usuario_62_BP persona = null;
             try
             {
-                persona = _usuarioDAL.BuscarUsuarioPorDNI_62_BP(dni);
+                persona = _usuarioDAL.BuscarUsuario_62_BP(dni: dni);
                 if (persona != null)
                 {
                     //_bitacoraBLL.Alta("Se busco usuario por DNI " + dni, 4);
@@ -181,7 +181,7 @@ namespace BLL_62_BP
         {
             try
             {
-                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuarioPorLogin_62_BP(login);
+                Usuario_62_BP usuario = _usuarioDAL.BuscarUsuario_62_BP(login: login);
 
                 if (usuario == null)
                 {
