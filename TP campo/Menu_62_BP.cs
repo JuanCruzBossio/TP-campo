@@ -18,8 +18,11 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
+        //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
         private string _nombreUsuario_62_BP = "";
+
+        //Eventos
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsuarioGUI_62_BP usuarioGUI = new UsuarioGUI_62_BP();

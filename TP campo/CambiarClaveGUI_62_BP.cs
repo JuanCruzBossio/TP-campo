@@ -17,8 +17,11 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
         }
+
+        //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
+        //Eventos
         private void buttonCambiarContrasena_Click(object sender, EventArgs e)
         {
             try

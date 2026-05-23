@@ -16,31 +16,16 @@ namespace TP_campo_62_BP
     public partial class Bitacora_62_BP : Form
     {
 
-        BitacoraBLL_62_BP bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
-        List<RegistroBitacora_62_BP> listaRegistrosBitacora_62_BP = new List<RegistroBitacora_62_BP>();
-        UsuarioBLL_62_BP usuarioBLL_62_BP = new UsuarioBLL_62_BP();
-
         public Bitacora_62_BP()
         {
             InitializeComponent();
         }
-
-        private void Limpiar()
-        {
-            txt_apellido.Clear();
-            txt_nombre.Clear();
-            cmb_criticidad.SelectedIndex = -1;
-            cmb_evento.SelectedIndex = -1;
-            cmb_modulo.SelectedIndex = -1;
-            cmb_login.SelectedIndex = -1;
-        }
-
-        private void LimpiarDTP()
-        {
-            dtp_fecha_ini.Value = DateTime.Now;
-            dtp_fecha_fin.Value = DateTime.Now;
-        }
-
+        //Variables
+        BitacoraBLL_62_BP bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        List<RegistroBitacora_62_BP> listaRegistrosBitacora_62_BP = new List<RegistroBitacora_62_BP>();
+        UsuarioBLL_62_BP usuarioBLL_62_BP = new UsuarioBLL_62_BP();
+        
+        //Eventos
         private void Bitacora_62_BP_Load(object sender, EventArgs e)
         {
             dtp_fecha_fin.Value = DateTime.Now;
@@ -84,9 +69,6 @@ namespace TP_campo_62_BP
             public string Value { get; set; }
             public override string ToString() { return Text; }
         }
-
-
-
 
         private void dgv_bitacora_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -166,6 +148,21 @@ namespace TP_campo_62_BP
 
             MessageBox.Show($"Archivo PDF generado en:\n{archivo}", "Exportación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-    
+        //Funciones
+        private void Limpiar()
+        {
+            txt_apellido.Clear();
+            txt_nombre.Clear();
+            cmb_criticidad.SelectedIndex = -1;
+            cmb_evento.SelectedIndex = -1;
+            cmb_modulo.SelectedIndex = -1;
+            cmb_login.SelectedIndex = -1;
+        }
+
+        private void LimpiarDTP()
+        {
+            dtp_fecha_ini.Value = DateTime.Now;
+            dtp_fecha_fin.Value = DateTime.Now;
+        }
     }
 }
