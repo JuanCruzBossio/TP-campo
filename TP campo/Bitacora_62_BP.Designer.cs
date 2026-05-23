@@ -197,7 +197,7 @@
             this.dtp_fecha_fin.Name = "dtp_fecha_fin";
             this.dtp_fecha_fin.Size = new System.Drawing.Size(100, 20);
             this.dtp_fecha_fin.TabIndex = 21;
-            this.dtp_fecha_fin.Value = new System.DateTime(2026, 5, 18, 0, 0, 0, 0);
+            this.dtp_fecha_fin.Value = new System.DateTime(2026, 5, 22, 21, 20, 35, 0);
             // 
             // cmb_evento
             // 

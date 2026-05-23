@@ -17,7 +17,7 @@ namespace TP_campo_62_BP
     {
 
         BitacoraBLL_62_BP bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
-        List<RegistroBitacora_62_BP> todos_62_BP = new List<RegistroBitacora_62_BP>();
+        List<RegistroBitacora_62_BP> listaRegistrosBitacora_62_BP = new List<RegistroBitacora_62_BP>();
         UsuarioBLL_62_BP usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         public Bitacora_62_BP()
@@ -43,9 +43,11 @@ namespace TP_campo_62_BP
 
         private void Bitacora_62_BP_Load(object sender, EventArgs e)
         {
-            todos_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
-            List<RegistroBitacora_62_BP> ultimos3Dias = todos_62_BP
-                .Where(r => r.Fecha_62_BP >= DateTime.Now.AddDays(-3))
+            dtp_fecha_fin.Value = DateTime.Now;
+            dtp_fecha_ini.Value = dtp_fecha_fin.Value.AddDays(-3);
+            listaRegistrosBitacora_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
+            List<RegistroBitacora_62_BP> ultimos3Dias = listaRegistrosBitacora_62_BP
+                .Where(r => r.Fecha_62_BP >= dtp_fecha_ini.Value)
                 .ToList();
             dgv_bitacora.DataSource = ultimos3Dias;
 
@@ -103,8 +105,8 @@ namespace TP_campo_62_BP
             LimpiarDTP();
 
 
-            todos_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
-            List<RegistroBitacora_62_BP> ultimos3Dias = todos_62_BP
+            listaRegistrosBitacora_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
+            List<RegistroBitacora_62_BP> ultimos3Dias = listaRegistrosBitacora_62_BP
                 .Where(r => r.Fecha_62_BP >= DateTime.Now.AddDays(-3))
                 .ToList();
             dgv_bitacora.DataSource = ultimos3Dias;

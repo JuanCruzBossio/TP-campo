@@ -16,7 +16,17 @@ namespace DAL_62_BP
     public class BitacoraDAL_62_BP
     {
         private Acceso_62_BP _acceso_62_BP = new Acceso_62_BP();
-
+        private RegistroBitacora_62_BP MapearRegistro(DataRow fila)
+        {
+            return new RegistroBitacora_62_BP
+            {
+                Id_62_BP = Convert.ToInt32(fila["id_62_BP"]),
+                Fecha_62_BP = Convert.ToDateTime(fila["fecha_62_BP"]),
+                DniUsuario_62_BP = fila["dniUsuario_62_BP"].ToString(),
+                Mensaje_62_BP = fila["mensaje_62_BP"].ToString(),
+                Criticidad_62_BP = Convert.ToInt32(fila["criticidad_62_BP"])
+            };
+        }
         public int RegistrarBitacora_62_BP(RegistroBitacora_62_BP registro)
         {
             var filasAfectadas = 0;
@@ -32,37 +42,13 @@ namespace DAL_62_BP
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
             return filasAfectadas;
         }
-
-        public List<RegistroBitacora_62_BP> ObtenerRegistros_62_BP()
-        {
-            List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
-            string query = "SELECT id_62_BP, fecha_62_BP, dniUsuario_62_BP, mensaje_62_BP, criticidad_62_BP FROM Bitacora_62_BP ORDER BY fecha_62_BP DESC";
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
-
-            if (tabla != null)
-            {
-                foreach (DataRow fila in tabla.Rows)
-                {
-                    RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
-
-                    registro.Id_62_BP = Convert.ToInt32(fila["id_62_BP"]);
-                    registro.Fecha_62_BP = Convert.ToDateTime(fila["fecha_62_BP"]);
-                    registro.DniUsuario_62_BP = fila["dniUsuario_62_BP"].ToString();
-                    registro.Mensaje_62_BP = fila["mensaje_62_BP"].ToString();
-                    registro.Criticidad_62_BP = Convert.ToInt32(fila["criticidad_62_BP"]);
-
-                    lista.Add(registro);
-                }
-            }
-            return lista;
-        }
-
-        public List<RegistroBitacora_62_BP> FiltrarRegistros_62_BP(
-        DateTime? fechaIni, DateTime? fechaFin, string login, string modulo, string evento, int? criticidad)
+      
+        public List<RegistroBitacora_62_BP> ObtenerRegistros_62_BP(
+            DateTime? fechaIni = null, DateTime? fechaFin = null, string login = null, string modulo = null, string evento = null, int? criticidad = null)
         {
             List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            StringBuilder query = new StringBuilder("SELECT * FROM Bitacora_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_62_BP, fecha_62_BP, dniUsuario_62_BP, mensaje_62_BP, criticidad_62_BP FROM Bitacora_62_BP WHERE 1=1");
 
             if (fechaIni.HasValue)
             {
@@ -91,21 +77,19 @@ namespace DAL_62_BP
                 parametros.Add(new SqlParameter("@criticidad", criticidad.Value));
             }
 
-            DataTable dt = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
-            foreach (DataRow row in dt.Rows)
+            query.Append(" ORDER BY fecha_62_BP DESC");
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+
+            if (tabla != null)
             {
-                lista.Add(new RegistroBitacora_62_BP
+                foreach (DataRow fila in tabla.Rows)
                 {
-                    Id_62_BP = Convert.ToInt32(row["Id_62_BP"]),
-                    Fecha_62_BP = Convert.ToDateTime(row["Fecha_62_BP"]),
-                    DniUsuario_62_BP = row["DniUsuario_62_BP"].ToString(),
-                    Mensaje_62_BP = row["Mensaje_62_BP"].ToString(),
-                    Criticidad_62_BP = Convert.ToInt32(row["Criticidad_62_BP"])
-                });
+                    lista.Add(MapearRegistro(fila));
+                }
             }
             return lista;
         }
-
         public void ExportarBitacoraAPDF(List<RegistroBitacora_62_BP> registros, string rutaArchivo)
         {
             Document doc = new Document(PageSize.A4);

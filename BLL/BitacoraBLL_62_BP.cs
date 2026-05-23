@@ -82,13 +82,13 @@ namespace BLL_62_BP
                 }
             }
 
-            var resultados = _bitacoraDAL.FiltrarRegistros_62_BP(
-                string.IsNullOrWhiteSpace(fechaIni) ? (DateTime?)null : fechaInicioParsed,
-                string.IsNullOrWhiteSpace(fechaFin) ? (DateTime?)null : fechaFinParsed,
-                login,
-                modulo,
-                evento,
-                string.IsNullOrWhiteSpace(criticidad) ? (int?)null : criticidadParsed
+            var resultados = _bitacoraDAL.ObtenerRegistros_62_BP(
+                fechaIni: string.IsNullOrWhiteSpace(fechaIni) ? (DateTime?)null : fechaInicioParsed,
+                fechaFin: string.IsNullOrWhiteSpace(fechaFin) ? (DateTime?)null : fechaFinParsed,
+                login: string.IsNullOrWhiteSpace(login) ? null: login,
+                modulo: string.IsNullOrWhiteSpace(modulo) ? null: modulo,
+                evento: string.IsNullOrWhiteSpace(evento) ? null: evento,
+                criticidad: string.IsNullOrWhiteSpace(criticidad) ? (int?)null : criticidadParsed
             );
 
             if (resultados == null || resultados.Count == 0)
