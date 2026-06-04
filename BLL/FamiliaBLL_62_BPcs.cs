@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using BLL_62_BP;
@@ -21,12 +23,23 @@ namespace BLL
 
             try
             {
-                filasAfectadas = _familiaDAL_62_BP.Alta_62_BP(familia);
+                int id  = _familiaDAL_62_BP.Alta_62_BP(familia);
 
-                if (filasAfectadas > 0)
-                {
+                if (id == 0)
+                    throw new Exception("No se pudo obtener el ID de la familia.");
+                
+                foreach (var hijo in familia.Hijos_62_BP)
+                    {
+                        if (hijo is Familia_62_BP familiaHija)
+                        {
+                            AgregarFamilia_62_BP(id, familiaHija.Id_62_BP);
+                        }
+                        else if (hijo is Patente_62_BP patente)
+                        {
+                            AgregarPatente_62_BP(id, patente.Id_62_BP);
+                        }
+                    }
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Familia " + familia.Nombre_62_BP, 1);
-                }
             }
             catch
             {
@@ -39,21 +52,30 @@ namespace BLL
         public int Modificar_62_BP(Familia_62_BP familia)
         {
             int filasAfectadas = 0;
-
             try
             {
                 filasAfectadas = _familiaDAL_62_BP.Modificar_62_BP(familia);
 
-                if (filasAfectadas > 0)
+                _familiaDAL_62_BP.BorrarRelacionesFamiliaPatente_62_BP(familia.Id_62_BP);
+                _familiaDAL_62_BP.BorrarRelacionesFamiliaFamilia_62_BP(familia.Id_62_BP);
+
+                foreach (var hijo in familia.Hijos_62_BP)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Familia " + familia.Nombre_62_BP, 2);
+                    if (hijo is Familia_62_BP fam)
+                        AgregarFamilia_62_BP(familia.Id_62_BP, fam.Id_62_BP);
+
+                    else if (hijo is Patente_62_BP pat)
+                        AgregarPatente_62_BP(familia.Id_62_BP, pat.Id_62_BP);
                 }
+
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Familia " + familia.Nombre_62_BP, 2);
+
+                return 1;
             }
             catch
             {
                 throw new Exception("No se pudo modificar la familia.");
             }
-
             return filasAfectadas;
         }
 
@@ -63,16 +85,23 @@ namespace BLL
 
             try
             {
-                filasAfectadas = _familiaDAL_62_BP.Baja_62_BP(familia.Id_62_BP);
+                _familiaDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(familia.Id_62_BP);
+
+                _familiaDAL_62_BP.BorrarRelacionesFamiliaPatente_62_BP(familia.Id_62_BP);
+
+                _familiaDAL_62_BP.BorrarRelacionesFamiliaFamilia_62_BP(familia.Id_62_BP);
+
+                filasAfectadas =_familiaDAL_62_BP.Baja_62_BP(familia.Id_62_BP);
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Familia " + familia.Nombre_62_BP, 3);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Familia " + familia.Nombre_62_BP,3);
                 }
             }
             catch
             {
-                throw new Exception("No se pudo eliminar la familia.");
+                throw new Exception(
+                    "No se pudo Borrar la familia.");
             }
 
             return filasAfectadas;
@@ -258,5 +287,6 @@ namespace BLL
 
             return filasAfectadas;
         }
+
     }
 }

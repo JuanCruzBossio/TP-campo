@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
 using SEG_62_BP;
+using TP_campo;
 
 namespace TP_campo_62_BP
 {
@@ -75,6 +76,13 @@ namespace TP_campo_62_BP
         {
             _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + " "+ SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
             labelNombre.Text = "Usuario Logueado: "+ _nombreUsuario_62_BP;
+        }
+
+        private void familiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FamiliaGUI_62_BP FamiliaForm = new FamiliaGUI_62_BP();
+            FamiliaForm.MdiParent = this;
+            FamiliaForm.Show();
         }
     }
 }

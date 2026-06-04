@@ -25,14 +25,15 @@ namespace DAL
 
         public int Alta_62_BP(Familia_62_BP familia)
         {
-            string query = "INSERT INTO Familia_62_BP (Nombre_62_BP) VALUES (@nombre)";
-
+            int id = 0;
+            string query = "INSERT INTO Familia_62_BP (Nombre_62_BP)VALUES (@nombre);SELECT SCOPE_IDENTITY();";
             SqlParameter[] parametros =
             {
                 new SqlParameter("@nombre", familia.Nombre_62_BP)
             };
-
-            return _acceso_62_BP.escribir_62_BP(query, parametros);
+            object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
+            id = Convert.ToInt32(Convert.ToDecimal(resultado));
+            return id;
         }
 
         public int Modificar_62_BP(Familia_62_BP familia)
@@ -203,6 +204,40 @@ namespace DAL
             }
 
             return lista;
+        }
+
+        public int BorrarRelacionesFamiliaFamilia_62_BP(int idFamilia)
+        {
+            string query = "DELETE FROM FamiliaFamilia_62_BP WHERE IdFamiliaPadre_62_BP = @idFamilia OR IdFamiliaHija_62_BP = @idFamilia";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idFamilia", idFamilia),
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+        public int BorrarRelacionesFamiliaPatente_62_BP(int idFamilia)
+        {
+            string query = "DELETE FROM FamiliaPatente_62_BP WHERE IdFamilia_62_BP = @idFamilia";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idFamilia", idFamilia),
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+        public int BorrarRelacionesRolFamilia_62_BP(int idFamilia)
+        {
+            string query = "DELETE FROM RolFamilia_62_BP WHERE IdFamilia_62_BP = @idFamilia";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idFamilia", idFamilia)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
     }
 }

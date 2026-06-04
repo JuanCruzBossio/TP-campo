@@ -57,6 +57,46 @@ namespace DAL_62_BP
             return filasAfectadas;
         }
 
+        public object escalar_62_BP(string query, SqlParameter[] parametros)
+        {
+            object resultado = null;
+
+            abrir_62_BP();
+
+            SqlTransaction transaccion =
+                conexion_62_BP.BeginTransaction();
+
+            try
+            {
+                SqlCommand comando =
+                    new SqlCommand(query, conexion_62_BP);
+
+                comando.Transaction = transaccion;
+                comando.CommandType = CommandType.Text;
+
+                if (parametros != null &&
+                    parametros.Length > 0)
+                {
+                    comando.Parameters.AddRange(parametros);
+                }
+
+                resultado = comando.ExecuteScalar();
+
+                transaccion.Commit();
+            }
+            catch (Exception)
+            {
+                transaccion.Rollback();
+                throw;
+            }
+            finally
+            {
+                cerrar_62_BP();
+            }
+
+            return resultado;
+        }
+
         public DataTable leer_62_BP(string query, SqlParameter[] parametros)
         {
             DataTable tabla = new DataTable();
