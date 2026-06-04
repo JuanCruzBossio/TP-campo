@@ -45,7 +45,6 @@
             this.labelNombres = new System.Windows.Forms.Label();
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.labelEmail = new System.Windows.Forms.Label();
-            this.textBoxRol = new System.Windows.Forms.TextBox();
             this.labelRol = new System.Windows.Forms.Label();
             this.textBoxLogin = new System.Windows.Forms.TextBox();
             this.labelLogin = new System.Windows.Forms.Label();
@@ -59,6 +58,7 @@
             this.radioButtonActivos = new System.Windows.Forms.RadioButton();
             this.radioButtonTodos = new System.Windows.Forms.RadioButton();
             this.labelCantidadUsuarios = new System.Windows.Forms.Label();
+            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -214,13 +214,6 @@
             this.labelEmail.TabIndex = 15;
             this.labelEmail.Text = "Email";
             // 
-            // textBoxRol
-            // 
-            this.textBoxRol.Location = new System.Drawing.Point(122, 508);
-            this.textBoxRol.Name = "textBoxRol";
-            this.textBoxRol.Size = new System.Drawing.Size(364, 20);
-            this.textBoxRol.TabIndex = 18;
-            // 
             // labelRol
             // 
             this.labelRol.AutoSize = true;
@@ -341,11 +334,20 @@
             this.labelCantidadUsuarios.TabIndex = 33;
             this.labelCantidadUsuarios.Text = "Cantidad de Usuarios: ";
             // 
+            // comboBoxRol
+            // 
+            this.comboBoxRol.FormattingEnabled = true;
+            this.comboBoxRol.Location = new System.Drawing.Point(123, 511);
+            this.comboBoxRol.Name = "comboBoxRol";
+            this.comboBoxRol.Size = new System.Drawing.Size(363, 21);
+            this.comboBoxRol.TabIndex = 34;
+            // 
             // UsuarioGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1172, 692);
+            this.Controls.Add(this.comboBoxRol);
             this.Controls.Add(this.labelCantidadUsuarios);
             this.Controls.Add(this.radioButtonTodos);
             this.Controls.Add(this.radioButtonActivos);
@@ -358,7 +360,6 @@
             this.Controls.Add(this.labelBloqueado);
             this.Controls.Add(this.textBoxLogin);
             this.Controls.Add(this.labelLogin);
-            this.Controls.Add(this.textBoxRol);
             this.Controls.Add(this.labelRol);
             this.Controls.Add(this.textBoxEmail);
             this.Controls.Add(this.labelEmail);
@@ -406,7 +407,6 @@
         private System.Windows.Forms.Label labelNombres;
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Label labelEmail;
-        private System.Windows.Forms.TextBox textBoxRol;
         private System.Windows.Forms.Label labelRol;
         private System.Windows.Forms.TextBox textBoxLogin;
         private System.Windows.Forms.Label labelLogin;
@@ -420,5 +420,6 @@
         private System.Windows.Forms.RadioButton radioButtonActivos;
         private System.Windows.Forms.RadioButton radioButtonTodos;
         private System.Windows.Forms.Label labelCantidadUsuarios;
+        private System.Windows.Forms.ComboBox comboBoxRol;
     }
 }

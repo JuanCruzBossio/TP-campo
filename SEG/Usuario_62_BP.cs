@@ -29,11 +29,11 @@ namespace SEG_62_BP
             set { nombre_62_BP = value; }
         }
 
-        private string rol_62_BP;
-        public string Rol_62_BP
+        private int idRol_62_BP;
+        public int IdRol_62_BP
         {
-            get { return rol_62_BP; }
-            set { rol_62_BP = value; }
+            get { return idRol_62_BP; }
+            set { idRol_62_BP = value; }
         }
 
         private string email_62_BP;
