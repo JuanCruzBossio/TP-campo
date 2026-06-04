@@ -90,41 +90,7 @@ namespace DAL_62_BP
             }
             return lista;
         }
-        public void ExportarBitacoraAPDF(List<RegistroBitacora_62_BP> registros, string rutaArchivo)
-        {
-            Document doc = new Document(PageSize.A4);
-            try
-            {
-                PdfWriter.GetInstance(doc, new FileStream(rutaArchivo, FileMode.Create));
-                doc.Open();
-
-                doc.Add(new Paragraph("Bitácora - Exportación"));
-                doc.Add(new Paragraph(" "));
-
-                PdfPTable tabla = new PdfPTable(5);
-                tabla.WidthPercentage = 100;
-                tabla.AddCell("ID");
-                tabla.AddCell("Fecha");
-                tabla.AddCell("DNI Usuario");
-                tabla.AddCell("Mensaje");
-                tabla.AddCell("Criticidad");
-
-                foreach (var reg in registros)
-                {
-                    tabla.AddCell(reg.Id_62_BP.ToString());
-                    tabla.AddCell(reg.Fecha_62_BP.ToString("yyyy-MM-dd HH:mm:ss"));
-                    tabla.AddCell(reg.DniUsuario_62_BP);
-                    tabla.AddCell(reg.Mensaje_62_BP);
-                    tabla.AddCell(reg.Criticidad_62_BP.ToString());
-                }
-
-                doc.Add(tabla);
-            }
-            finally
-            {
-                doc.Close();
-            }
-        }
+        
 
     }
 }

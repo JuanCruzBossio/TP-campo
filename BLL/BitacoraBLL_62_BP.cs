@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DAL_62_BP;
 using SEG_62_BP;
-
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 namespace BLL_62_BP
 {
     public class BitacoraBLL_62_BP
@@ -93,7 +96,38 @@ namespace BLL_62_BP
 
         public void ExportarBitacoraAPDF(List<RegistroBitacora_62_BP> registros, string rutaArchivo)
         {
-            _bitacoraDAL.ExportarBitacoraAPDF(registros, rutaArchivo);
+            Document doc = new Document(PageSize.A4);
+            try
+            {
+                PdfWriter.GetInstance(doc, new FileStream(rutaArchivo, FileMode.Create));
+                doc.Open();
+
+                doc.Add(new Paragraph("Bitácora - Exportación"));
+                doc.Add(new Paragraph(" "));
+
+                PdfPTable tabla = new PdfPTable(5);
+                tabla.WidthPercentage = 100;
+                tabla.AddCell("ID");
+                tabla.AddCell("Fecha");
+                tabla.AddCell("DNI Usuario");
+                tabla.AddCell("Mensaje");
+                tabla.AddCell("Criticidad");
+
+                foreach (var reg in registros)
+                {
+                    tabla.AddCell(reg.Id_62_BP.ToString());
+                    tabla.AddCell(reg.Fecha_62_BP.ToString("yyyy-MM-dd HH:mm:ss"));
+                    tabla.AddCell(reg.DniUsuario_62_BP);
+                    tabla.AddCell(reg.Mensaje_62_BP);
+                    tabla.AddCell(reg.Criticidad_62_BP.ToString());
+                }
+
+                doc.Add(tabla);
+            }
+            finally
+            {
+                doc.Close();
+            }
         }
 
     }
