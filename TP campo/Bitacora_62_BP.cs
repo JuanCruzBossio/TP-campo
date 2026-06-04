@@ -138,15 +138,19 @@ namespace TP_campo_62_BP
                 MessageBox.Show("No hay datos para exportar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            string carpeta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Exportaciones");
-            if (!Directory.Exists(carpeta))
-                Directory.CreateDirectory(carpeta);
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "Archivo XML (*.xml)|*.xml";
+            dlg.Title = "Guardar XML";
+            dlg.FileName = $"Bitacora_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
 
-            string archivo = Path.Combine(carpeta, $"Bitacora_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+            if (dlg.ShowDialog() != DialogResult.OK)
+                return;
 
-            bitacoraBLL_62_BP.ExportarBitacoraAPDF(registros, archivo);
+            string ruta = dlg.FileName;
 
-            MessageBox.Show($"Archivo PDF generado en:\n{archivo}", "Exportación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            bitacoraBLL_62_BP.ExportarBitacoraAPDF(registros, ruta);
+
+            MessageBox.Show($"Archivo PDF generado en:\n{ruta}", "Exportación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         //Funciones
         private void Limpiar()

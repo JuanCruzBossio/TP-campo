@@ -18,7 +18,7 @@ namespace BLL_62_BP
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
-
+            registro.Mensaje_62_BP = mensaje;
             if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
             {
                 registro.DniUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP;
@@ -34,6 +34,8 @@ namespace BLL_62_BP
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
             registro.DniUsuario_62_BP = dni;
+            registro.Mensaje_62_BP = mensaje;
+
             _bitacoraDAL.RegistrarBitacora_62_BP(registro);
         }
         public List<RegistroBitacora_62_BP> ObtenerBitacora_62_BP()
