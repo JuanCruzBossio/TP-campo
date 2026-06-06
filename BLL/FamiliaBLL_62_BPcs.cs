@@ -69,8 +69,6 @@ namespace BLL
                 }
 
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Familia " + familia.Nombre_62_BP, 2);
-
-                return 1;
             }
             catch
             {

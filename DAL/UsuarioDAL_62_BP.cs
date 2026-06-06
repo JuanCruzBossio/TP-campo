@@ -29,7 +29,7 @@ namespace DAL_62_BP
                 ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"])
             };
         }
-        public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null)
+        public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
         {
             StringBuilder query = new StringBuilder("SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, idRol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE 1=1");
             List<SqlParameter> parametros = new List<SqlParameter>();
@@ -49,6 +49,11 @@ namespace DAL_62_BP
                 query.Append(" AND contrasena_62_BP = @contrasena");
                 parametros.Add(new SqlParameter("@contrasena", contrasena));
             }
+            if (idRol != null)
+            {
+                query.Append(" AND idRol = @idRol");
+                parametros.Add(new SqlParameter("@idRol", idRol));
+            }
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
 
@@ -57,6 +62,44 @@ namespace DAL_62_BP
                 return MapearUsuario(tabla.Rows[0]);
             }
             return null;
+        }
+        public List<Usuario_62_BP> BuscarUsuarios_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
+        {
+            StringBuilder query = new StringBuilder("SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, idRol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE 1=1");
+            List<SqlParameter> parametros = new List<SqlParameter>();
+            List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
+            
+            if (!string.IsNullOrEmpty(dni))
+            {
+                query.Append(" AND dni_62_BP = @dni");
+                parametros.Add(new SqlParameter("@dni", dni));
+            }
+            if (!string.IsNullOrEmpty(login))
+            {
+                query.Append(" AND login_62_BP = @login");
+                parametros.Add(new SqlParameter("@login", login));
+            }
+            if (!string.IsNullOrEmpty(contrasena))
+            {
+                query.Append(" AND contrasena_62_BP = @contrasena");
+                parametros.Add(new SqlParameter("@contrasena", contrasena));
+            }
+            if (idRol != null)
+            {
+                query.Append(" AND idRol = @idRol");
+                parametros.Add(new SqlParameter("@idRol", idRol));
+            }
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+
+            if (tabla != null)
+            {
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    lista.Add(MapearUsuario(fila));
+                }
+            }
+            return lista;
         }
         public List<Usuario_62_BP> TraerTodosUsuarios_62_BP()
         {

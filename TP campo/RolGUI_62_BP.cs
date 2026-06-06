@@ -13,47 +13,52 @@ using SEG.Permisos_62_BP;
 
 namespace TP_campo
 {
-    public partial class FamiliaGUI_62_BP : Form
+    public partial class RolGUI_62_BP : Form
     {
-        public FamiliaGUI_62_BP()
+        public RolGUI_62_BP()
         {
             InitializeComponent();
         }
         //Variables
         FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
         PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
+        RolBLL_62_BP _rolBLL_62_BP = new RolBLL_62_BP();
         List<Patente_62_BP> _listaTodasPatentes_62_BP = new List<Patente_62_BP>();
-        List<Familia_62_BP> _listaTodasFamilias_62_BP = new List<Familia_62_BP>(); 
+        List<Familia_62_BP> _listaTodasFamilias_62_BP = new List<Familia_62_BP>();
+        List<Rol_62_BP> _listaTodosRoles_62_BP = new List<Rol_62_BP>();
         List<ComponentePermiso_62_BP> _permisosSeleccionados = new List<ComponentePermiso_62_BP>();
         List<ComponentePermiso_62_BP> _permisosDisponibles = new List<ComponentePermiso_62_BP>();
         List<Patente_62_BP> _patentesSeleccionadas = new List<Patente_62_BP>();
-        Familia_62_BP familiaEnEdicion_62_BP = new Familia_62_BP();
+        Rol_62_BP _rolEnEdicion_62_BP = new Rol_62_BP();
+
         //Modos Posibles:
         // 0 - Inicial
         // 1 - Crear
         // 2 - Modificar
         // 3 - Borrar
         private int modoActual_62_BP = 0;
-
-        //Eventos
-        private void FamiliaGUI_62_BP_Load(object sender, EventArgs e)
+        private void RolGUI_62_BP_Load(object sender, EventArgs e)
         {
             dataGridViewFamiliasYPatentes.ReadOnly = true;
             dataGridViewFamiliaNueva.ReadOnly = true;
             dataGridViewPatentesSeleccionadaas.ReadOnly = true;
+            dataGridViewRoles.ReadOnly = true;
             dataGridViewFamiliasYPatentes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewFamiliasYPatentes.MultiSelect = false;
             dataGridViewPatentesSeleccionadaas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewPatentesSeleccionadaas.MultiSelect = false;
+            dataGridViewRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewRoles.MultiSelect = false;
             _listaTodasFamilias_62_BP =  _familiaBLL_62_BP.BuscarFamilias_62_BP();
 
             _listaTodasPatentes_62_BP = _patenteBLL_62_BP.BuscarPatentes_62_BP();
 
+            _listaTodosRoles_62_BP = _rolBLL_62_BP.BuscarRoles_62_BP();
+            ActualizarGrillaRoles();
             ActualizarGrillas();
 
             CambiarModo_62_BP(0);
         }
-
         private void buttonQuitar_Click(object sender, EventArgs e)
         {
             if (dataGridViewFamiliaNueva.CurrentRow == null)
@@ -71,21 +76,21 @@ namespace TP_campo
             switch (modoActual_62_BP)
             {
                 case 1:
-                    operacionExitosa = crearFamilia_62_BP();
+                    operacionExitosa = crearRol_62_BP();
                     break;
 
                 case 2:
-                    operacionExitosa = modificarFamilia_62_BP();
+                    operacionExitosa = modificarRol_62_BP();
                     break;
 
                 case 3:
-                    operacionExitosa = borrarFamilia_62_BP();
+                    operacionExitosa = borrarRol_62_BP();
                     break;
             }
 
             if (operacionExitosa)
             {
-                familiaEnEdicion_62_BP = null;
+                _rolEnEdicion_62_BP = null;
                 _permisosSeleccionados.Clear();
                 RecargarDatos_62_BP();
 
@@ -95,7 +100,7 @@ namespace TP_campo
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {
-            familiaEnEdicion_62_BP = null;
+            _rolEnEdicion_62_BP = null;
 
             textBoxNombre.Clear();
 
@@ -107,30 +112,30 @@ namespace TP_campo
             CambiarModo_62_BP(0);
         }
 
+
         private void buttonCrear_Click(object sender, EventArgs e)
         {
-            familiaEnEdicion_62_BP = null;
+            _rolEnEdicion_62_BP = null;
 
             CambiarModo_62_BP(1);
         }
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            Familia_62_BP familiaSeleccionada =
-                ObtenerFamiliaSeleccionada_62_BP();
+            Rol_62_BP rolSeleccionado = ObtenerRolSeleccionado_62_BP();
 
-            if (familiaSeleccionada == null)
+            if (rolSeleccionado == null)
             {
                 MessageBox.Show(
-                    "Debe seleccionar una familia.");
+                    "Debe seleccionar un Rol.");
                 return;
             }
 
-            familiaEnEdicion_62_BP = familiaSeleccionada;
+            _rolEnEdicion_62_BP = rolSeleccionado;
 
-            textBoxNombre.Text = familiaSeleccionada.Nombre_62_BP;
+            textBoxNombre.Text = rolSeleccionado.Nombre_62_BP;
 
-            _permisosSeleccionados = new List<ComponentePermiso_62_BP>(familiaSeleccionada.Hijos_62_BP);
+            _permisosSeleccionados = new List<ComponentePermiso_62_BP>(rolSeleccionado.Permisos_62_BP);
             dataGridViewFamiliasYPatentes.ClearSelection();
             dataGridViewFamiliasYPatentes.CurrentCell = null;
             ActualizarGrillas();
@@ -140,40 +145,48 @@ namespace TP_campo
 
         private void buttonBaja_Click(object sender, EventArgs e)
         {
-            Familia_62_BP familiaSeleccionada =
-                ObtenerFamiliaSeleccionada_62_BP();
+            Rol_62_BP rolSeleccionado = ObtenerRolSeleccionado_62_BP();
 
-            if (familiaSeleccionada == null)
+            if (rolSeleccionado == null)
             {
                 MessageBox.Show(
-                    "Debe seleccionar una familia.");
+                    "Debe seleccionar un Rol.");
                 return;
             }
 
-            familiaEnEdicion_62_BP = familiaSeleccionada;
+            _rolEnEdicion_62_BP = rolSeleccionado;
 
-            textBoxNombre.Text =
-                familiaSeleccionada.Nombre_62_BP;
+            textBoxNombre.Text = rolSeleccionado.Nombre_62_BP;
 
-            _permisosSeleccionados =
-                new List<ComponentePermiso_62_BP>(
-                    familiaSeleccionada.Hijos_62_BP);
+            _permisosSeleccionados = new List<ComponentePermiso_62_BP>(rolSeleccionado.Permisos_62_BP);
             dataGridViewFamiliasYPatentes.ClearSelection();
             dataGridViewFamiliasYPatentes.CurrentCell = null;
             ActualizarGrillas();
 
             CambiarModo_62_BP(3);
         }
-        private void dataGridViewFamiliasYPatentes_SelectionChanged(object sender, EventArgs e)
+        private void dataGridViewRoles_SelectionChanged(object sender, EventArgs e)
         {
             if (modoActual_62_BP != 0)
                 return;
 
-            bool hayFamilia =
-                ObtenerFamiliaSeleccionada_62_BP() != null;
+            Rol_62_BP rol = ObtenerRolSeleccionado_62_BP();
 
-            buttonModificar.Enabled = hayFamilia;
-            buttonBaja.Enabled = hayFamilia;
+            bool hayRol = rol != null;
+
+            buttonModificar.Enabled = hayRol;
+            buttonBaja.Enabled = hayRol;
+
+            if (!hayRol)
+            {
+                _permisosSeleccionados.Clear();
+                ActualizarGrillas();
+                return;
+            }
+
+            _permisosSeleccionados =  new List<ComponentePermiso_62_BP>(rol.Permisos_62_BP);
+
+            ActualizarGrillas();
         }
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
@@ -198,6 +211,7 @@ namespace TP_campo
             buttonAgregar.Enabled = false;
             buttonQuitar.Enabled = false;
             dataGridViewFamiliasYPatentes.ClearSelection();
+            dataGridViewRoles.ClearSelection();
             switch (modo)
             {
                 case 0: // Inicial
@@ -255,12 +269,24 @@ namespace TP_campo
 
             return null;
         }
+        private Rol_62_BP ObtenerRolSeleccionado_62_BP()
+        {
+            if (dataGridViewRoles.SelectedRows.Count == 0)
+                return null;
+
+            Rol_62_BP rol = (Rol_62_BP)dataGridViewRoles.CurrentRow.DataBoundItem;
+
+
+            return rol;
+        }
         private void RecargarDatos_62_BP()
         {
+            _listaTodosRoles_62_BP = _rolBLL_62_BP.BuscarRoles_62_BP();
+
             _listaTodasFamilias_62_BP = _familiaBLL_62_BP.BuscarFamilias_62_BP();
 
             _listaTodasPatentes_62_BP = _patenteBLL_62_BP.BuscarPatentes_62_BP();
-
+            ActualizarGrillaRoles();
             ActualizarGrillas();
         }
         private void ActualizarGrillas()
@@ -272,13 +298,13 @@ namespace TP_campo
             foreach (Familia_62_BP familia in _listaTodasFamilias_62_BP)
             {
                 bool seleccionada = false;
-                if (familiaEnEdicion_62_BP != null && familia.Id_62_BP == familiaEnEdicion_62_BP.Id_62_BP)
+                if (_rolEnEdicion_62_BP != null && familia.Id_62_BP == _rolEnEdicion_62_BP.Id_62_BP)
                 {
                     continue;
                 }
                 foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
                 {
-                    if (SonIguales_62_BP( permiso, familia))
+                    if (SonIguales_62_BP(permiso, familia))
                     {
                         seleccionada = true;
                         break;
@@ -325,6 +351,13 @@ namespace TP_campo
             dataGridViewFamiliasYPatentes.Columns["Id_62_BP"].Visible = false;
             dataGridViewPatentesSeleccionadaas.Columns["Id_62_BP"].Visible = false;
             dataGridViewFamiliaNueva.Columns["Id_62_BP"].Visible = false;
+            
+        }
+        private void ActualizarGrillaRoles()
+        {
+            dataGridViewRoles.DataSource = null;
+            dataGridViewRoles.DataSource = _listaTodosRoles_62_BP;
+            dataGridViewRoles.Columns["Id_62_BP"].Visible = false;
         }
 
         private List<int> ObtenerPatentesCubiertas()
@@ -405,114 +438,100 @@ namespace TP_campo
         }
 
 
-        private bool SonIguales_62_BP( ComponentePermiso_62_BP a, ComponentePermiso_62_BP b)
+        private bool SonIguales_62_BP(ComponentePermiso_62_BP a, ComponentePermiso_62_BP b)
         {
             return a.GetType() == b.GetType()
                 && a.Id_62_BP == b.Id_62_BP;
         }
-        private bool crearFamilia_62_BP()
+        private bool crearRol_62_BP()
         {
             try
             {
-                Familia_62_BP familia = new Familia_62_BP();
+                Rol_62_BP rol = new Rol_62_BP();
 
-                familia.Nombre_62_BP = textBoxNombre.Text;
+                rol.Nombre_62_BP = textBoxNombre.Text;
                 foreach (var permiso in _permisosSeleccionados)
                 {
-                    familia.Agregar_62_BP(permiso);
+                    rol.Agregar_62_BP(permiso);
                 }
-                int filas = _familiaBLL_62_BP.Alta_62_BP(familia);
+                int filas = _rolBLL_62_BP.Alta_62_BP(rol);
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia creada con éxito.");
+                    MessageBox.Show("Rol creado con éxito.");
 
                     return true;
                 }
-
-                MessageBox.Show(
-                    "No se pudo crear la familia.");
+                MessageBox.Show( "No se pudo crear el rol.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Error al intentar crear: "
-                    + ex.Message);
+                    "Error al intentar crear: " + ex.Message);
             }
 
             return false;
         }
-        private bool modificarFamilia_62_BP()
+        private bool modificarRol_62_BP()
         {
             try
             {
-                if (familiaEnEdicion_62_BP == null)
+                if (_rolEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show(
-                        "Debe seleccionar una familia.");
+                    MessageBox.Show( "Debe seleccionar un rol.");
 
                     return false;
                 }
 
-                familiaEnEdicion_62_BP.Nombre_62_BP = textBoxNombre.Text;
-                familiaEnEdicion_62_BP.Hijos_62_BP.Clear();
+                _rolEnEdicion_62_BP.Nombre_62_BP = textBoxNombre.Text;
+                _rolEnEdicion_62_BP.Permisos_62_BP.Clear();
                 foreach (var permiso in _permisosSeleccionados)
                 {
-                    familiaEnEdicion_62_BP.Agregar_62_BP(permiso);
+                    _rolEnEdicion_62_BP.Agregar_62_BP(permiso);
                 }
-                int filas =_familiaBLL_62_BP.Modificar_62_BP(familiaEnEdicion_62_BP);
+                int filas = _rolBLL_62_BP.Modificar_62_BP(_rolEnEdicion_62_BP);
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia modificada con éxito.");
+                    MessageBox.Show( "Rol modificado con éxito.");
 
                     return true;
                 }
 
-                MessageBox.Show(
-                    "No se pudo modificar la familia.");
+                MessageBox.Show( "No se pudo modificar el Rol.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar modificar: "
-                    + ex.Message);
+                MessageBox.Show( "Error al intentar modificar: " + ex.Message);
             }
 
             return false;
         }
-        private bool borrarFamilia_62_BP()
+        private bool borrarRol_62_BP()
         {
             try
             {
-                if (familiaEnEdicion_62_BP == null)
+                if (_rolEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show(
-                        "Debe seleccionar una familia.");
+                    MessageBox.Show( "Debe seleccionar un Rol.");
 
                     return false;
                 }
 
-                int filas = _familiaBLL_62_BP.Baja_62_BP( familiaEnEdicion_62_BP);
+                int filas = _rolBLL_62_BP.Baja_62_BP(_rolEnEdicion_62_BP);
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia eliminada con éxito.");
+                    MessageBox.Show( "Rol eliminado con éxito.");
 
                     return true;
                 }
 
-                MessageBox.Show(
-                    "No se pudo eliminar la familia.");
+                MessageBox.Show( "No se pudo eliminar el Rol.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar eliminar: "
-                    + ex.Message);
+                MessageBox.Show( "Error al intentar eliminar: "+ ex.Message);
             }
 
             return false;

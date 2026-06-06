@@ -84,5 +84,12 @@ namespace TP_campo_62_BP
             FamiliaForm.MdiParent = this;
             FamiliaForm.Show();
         }
+
+        private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RolGUI_62_BP RolForm = new RolGUI_62_BP();
+            RolForm.MdiParent = this;
+            RolForm.Show();
+        }
     }
 }

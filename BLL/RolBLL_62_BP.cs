@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 using BLL_62_BP;
 using DAL;
 using SEG.Permisos_62_BP;
+using SEG_62_BP;
 
 namespace BLL
 {
     public class RolBLL_62_BP
     {
         private RolDAL_62_BP _rolDAL_62_BP = new RolDAL_62_BP();
-        private FamiliaBLL_62_BP familiaBLL_62_BP = new FamiliaBLL_62_BP();
+        private FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
@@ -23,12 +25,28 @@ namespace BLL
 
             try
             {
-                filasAfectadas = _rolDAL_62_BP.Alta_62_BP(rol);
+                int id = _rolDAL_62_BP.Alta_62_BP(rol);
 
-                if (filasAfectadas > 0)
-                {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Rol " + rol.Nombre_62_BP, 1);
+                if (id == 0) {
+
+                    throw new Exception("No se pudo obtener el ID del rol.");
                 }
+
+                foreach (var hijo in rol.Permisos_62_BP)
+                {
+                    if (hijo is Familia_62_BP familia)
+                    {
+                        AgregarFamilia_62_BP(id, familia.Id_62_BP);
+                    }
+                    else if (hijo is Patente_62_BP patente)
+                    {
+                        AgregarPatente_62_BP(id, patente.Id_62_BP);
+                    }
+                }
+
+                filasAfectadas = 1;
+
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Rol " + rol.Nombre_62_BP, 1);
             }
             catch
             {
@@ -46,10 +64,21 @@ namespace BLL
             {
                 filasAfectadas = _rolDAL_62_BP.Modificar_62_BP(rol);
 
-                if (filasAfectadas > 0)
+                _rolDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(rol.Id_62_BP);
+                _rolDAL_62_BP.BorrarRelacionesRolPatente_62_BP(rol.Id_62_BP);
+
+                foreach (var hijo in rol.Permisos_62_BP)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Rol " + rol.Nombre_62_BP, 2);
+                    if (hijo is Familia_62_BP familia) {
+                        AgregarFamilia_62_BP(rol.Id_62_BP, familia.Id_62_BP);
+                    }
+
+                    else if (hijo is Patente_62_BP patente) {
+                        AgregarPatente_62_BP(rol.Id_62_BP, patente.Id_62_BP);
+                    }
                 }
+
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Rol " + rol.Nombre_62_BP, 2);
             }
             catch
             {
@@ -65,6 +94,19 @@ namespace BLL
 
             try
             {
+                List<Usuario_62_BP> usuarios = _usuarioBLL_62_BP.BuscarUsuarios_por_Rol_62_BP(rol.Id_62_BP);
+
+                if (usuarios.Count > 0)
+                {
+                    string nombresUsuarios = string.Join(", ", usuarios.Select(u => u.Login_62_BP));
+
+                    throw new Exception("El rol tiene los usuarios asignados: " + nombresUsuarios);
+                }
+
+                _rolDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(rol.Id_62_BP);
+
+                _rolDAL_62_BP.BorrarRelacionesRolPatente_62_BP(rol.Id_62_BP);
+
                 filasAfectadas = _rolDAL_62_BP.Baja_62_BP(rol.Id_62_BP);
 
                 if (filasAfectadas > 0)
@@ -109,19 +151,19 @@ namespace BLL
                     {
                         foreach (Patente_62_BP patente in patentes)
                         {
-                            rol.AgregarPermiso_62_BP(patente);
+                            rol.Agregar_62_BP(patente);
                         }
                     }
-                    List<Familia_62_BP> familiasHijas = familiaBLL_62_BP.BuscarFamiliasPorRol_62_BP(id);
+                    List<Familia_62_BP> familiasHijas = _familiaBLL_62_BP.BuscarFamiliasPorRol_62_BP(id);
                     if (familiasHijas != null)
                     {
                         foreach (Familia_62_BP familiaHija in familiasHijas)
                         {
-                            Familia_62_BP familiaHijaCompleta = familiaBLL_62_BP.BuscarFamilia_62_BP(familiaHija.Id_62_BP, null);
+                            Familia_62_BP familiaHijaCompleta = _familiaBLL_62_BP.BuscarFamilia_62_BP(familiaHija.Id_62_BP, null);
 
                             if (familiaHijaCompleta != null)
                             {
-                                rol.AgregarPermiso_62_BP(familiaHijaCompleta);
+                                rol.Agregar_62_BP(familiaHijaCompleta);
                             }
                         }
                     }

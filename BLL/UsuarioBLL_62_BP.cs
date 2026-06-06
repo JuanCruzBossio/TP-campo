@@ -291,6 +291,23 @@ namespace BLL_62_BP
             }
             return filasAfectadas;
         }
-
+        public List<Usuario_62_BP> BuscarUsuarios_por_Rol_62_BP(int idRol)
+        {
+            List<Usuario_62_BP> personas = null;
+            try
+            {
+                personas = _usuarioDAL.BuscarUsuarios_62_BP(idRol: idRol);
+                if (personas != null)
+                {
+                    //_bitacoraBLL.Alta("Se busco usuario por idRol " + idRol, 4);
+                    //No consideramos acorde mantener un registro de la busqueda de usuario
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return personas;
+        }
     }
 }

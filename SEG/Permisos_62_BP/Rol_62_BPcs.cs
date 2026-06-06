@@ -7,12 +7,8 @@ using SEG.Permisos;
 
 namespace SEG.Permisos_62_BP
 {
-    public class Rol_62_BP
+    public class Rol_62_BP : ComponentePermiso_62_BP
     {
-        public int Id_62_BP { get; set; }
-
-        public string Nombre_62_BP { get; set; }
-
         public List<ComponentePermiso_62_BP> Permisos_62_BP { get; set; }
 
         public Rol_62_BP()
@@ -20,14 +16,19 @@ namespace SEG.Permisos_62_BP
             Permisos_62_BP = new List<ComponentePermiso_62_BP>();
         }
 
-        public void AgregarPermiso_62_BP(ComponentePermiso_62_BP permiso)
+        public override void Agregar_62_BP(ComponentePermiso_62_BP componente)
         {
-            Permisos_62_BP.Add(permiso);
+            Permisos_62_BP.Add(componente);
         }
 
-        public void QuitarPermiso_62_BP(ComponentePermiso_62_BP permiso)
+        public override void Quitar_62_BP(ComponentePermiso_62_BP componente)
         {
-            Permisos_62_BP.Remove(permiso);
+            Permisos_62_BP.Remove(componente);
+        }
+
+        public override ComponentePermiso_62_BP ObtenerHijo_62_BP(int indice)
+        {
+            return Permisos_62_BP[indice];
         }
     }
 }
