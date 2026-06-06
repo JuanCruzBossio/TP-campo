@@ -76,6 +76,7 @@ namespace TP_campo_62_BP
         {
             _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + " "+ SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
             labelNombre.Text = "Usuario Logueado: "+ _nombreUsuario_62_BP;
+            AplicarPermisos_62_BP();
         }
 
         private void familiasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -90,6 +91,47 @@ namespace TP_campo_62_BP
             RolGUI_62_BP RolForm = new RolGUI_62_BP();
             RolForm.MdiParent = this;
             RolForm.Show();
+        }
+        private void AplicarPermisos_62_BP()
+        {
+            SessionManager_62_BP session = SessionManager_62_BP.GetInstancia_62_BP();
+
+            usuariosToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(1) ||
+                session.TienePermiso_62_BP(2) ||
+                session.TienePermiso_62_BP(3) ||
+                session.TienePermiso_62_BP(4);
+
+            rolesToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(5) ||
+                session.TienePermiso_62_BP(6) ||
+                session.TienePermiso_62_BP(7);
+
+            familiasToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(8) ||
+                session.TienePermiso_62_BP(9) ||
+                session.TienePermiso_62_BP(10);
+
+            backupToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(11);
+
+            restoreToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(12);
+
+            bitacoraToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(13);
+
+            digitoVerificadorToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(14);
+
+            reLoginToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(15);
+
+            cambiarClaveToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(16);
+
+            cambiarIdiomaToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(17);
         }
     }
 }

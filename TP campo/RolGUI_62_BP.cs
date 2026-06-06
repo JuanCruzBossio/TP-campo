@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL;
 using SEG.Permisos;
 using SEG.Permisos_62_BP;
+using SEG_62_BP;
 
 namespace TP_campo
 {
@@ -174,8 +175,8 @@ namespace TP_campo
 
             bool hayRol = rol != null;
 
-            buttonModificar.Enabled = hayRol;
-            buttonBaja.Enabled = hayRol;
+            buttonModificar.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(7) && hayRol;
+            buttonBaja.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(6) && hayRol;
 
             if (!hayRol)
             {
@@ -215,7 +216,7 @@ namespace TP_campo
             switch (modo)
             {
                 case 0: // Inicial
-                    buttonCrear.Enabled = true;
+                    buttonCrear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(5);
                     break;
 
                 case 1: // Crear
@@ -238,10 +239,11 @@ namespace TP_campo
                     textBoxNombre.Enabled = true;
                     buttonAgregar.Enabled = true;
                     buttonQuitar.Enabled = true;
-
+                    
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
+                    textBoxNombre.Text = _rolEnEdicion_62_BP.Nombre_62_BP ?? "";
                     textBoxMensaje.Text = "Modo Modificar";
 
                     break;
@@ -249,7 +251,7 @@ namespace TP_campo
 
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
-
+                    textBoxNombre.Text = _rolEnEdicion_62_BP.Nombre_62_BP ?? "";
                     textBoxMensaje.Text = "Modo Borrar";
 
                     break;

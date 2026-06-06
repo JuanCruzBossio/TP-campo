@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL;
 using SEG.Permisos;
 using SEG.Permisos_62_BP;
+using SEG_62_BP;
 
 namespace TP_campo
 {
@@ -172,8 +173,8 @@ namespace TP_campo
             bool hayFamilia =
                 ObtenerFamiliaSeleccionada_62_BP() != null;
 
-            buttonModificar.Enabled = hayFamilia;
-            buttonBaja.Enabled = hayFamilia;
+            buttonModificar.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(10)  && hayFamilia;
+            buttonBaja.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(9) && hayFamilia;
         }
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
@@ -201,7 +202,7 @@ namespace TP_campo
             switch (modo)
             {
                 case 0: // Inicial
-                    buttonCrear.Enabled = true;
+                    buttonCrear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(8);
                     break;
 
                 case 1: // Crear
@@ -214,7 +215,7 @@ namespace TP_campo
                     buttonQuitar.Enabled = true;
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
-
+                    
                     textBoxMensaje.Text = "Modo Crear";
 
                     break;
@@ -228,6 +229,7 @@ namespace TP_campo
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
+                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP ?? "";
                     textBoxMensaje.Text = "Modo Modificar";
 
                     break;
@@ -236,6 +238,7 @@ namespace TP_campo
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
+                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP ?? "";
                     textBoxMensaje.Text = "Modo Borrar";
 
                     break;

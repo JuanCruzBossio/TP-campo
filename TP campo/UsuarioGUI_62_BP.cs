@@ -29,6 +29,7 @@ namespace TP_campo_62_BP
         private List<Usuario_62_BP> _listaUsuarios_62_BP = new List<Usuario_62_BP>();
         private List<Usuario_62_BP> _listaFiltrada_62_BP = new List<Usuario_62_BP>();
         private List<Rol_62_BP> _listaRol_62_BP = new List<Rol_62_BP>();
+
         //Modos Posibles:
         // 0 - Inicial - Mensaje: ""
         // 1 - Consulta - Mensaje: "Modo Consulta"
@@ -47,7 +48,7 @@ namespace TP_campo_62_BP
             RellenarGrilla_62_BP();
             CambiarModo_62_BP(0);
             hayUsuarioSeleccionado_62_BP = false;
-            buttonCrear.Enabled = true;
+            buttonCrear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(1);
             buttonDesbloquear.Enabled = false;
             buttonModificar.Enabled = false;
             buttonActivar.Enabled = false;
@@ -61,9 +62,9 @@ namespace TP_campo_62_BP
             {
                 LlenarCampos_62_BP((Usuario_62_BP)dataGridViewUsuarios.Rows[e.RowIndex].DataBoundItem);
                 hayUsuarioSeleccionado_62_BP = true;
-                buttonDesbloquear.Enabled = true;
-                buttonModificar.Enabled = true;
-                buttonActivar.Enabled = true;
+                buttonDesbloquear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(2);
+                buttonModificar.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(3);
+                buttonActivar.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(4);
             }
         }
         private void buttonSalir_Click(object sender, EventArgs e)
@@ -417,7 +418,7 @@ namespace TP_campo_62_BP
         private void CambiarModo_62_BP(int modo)
         {
             modoActual_62_BP = modo;
-            buttonCrear.Enabled = true;
+            buttonCrear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(1);
             buttonDesbloquear.Enabled = false;
             buttonModificar.Enabled = false;
             buttonActivar.Enabled = false;
