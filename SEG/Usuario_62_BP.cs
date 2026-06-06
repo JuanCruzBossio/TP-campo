@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SEG.Permisos_62_BP;
 
 namespace SEG_62_BP
 {
@@ -34,6 +35,12 @@ namespace SEG_62_BP
         {
             get { return idRol_62_BP; }
             set { idRol_62_BP = value; }
+        }
+        private Rol_62_BP rol_62_BP;
+        public Rol_62_BP Rol_62_BP
+        {
+            get { return rol_62_BP; }
+            set { rol_62_BP = value; }
         }
 
         private string email_62_BP;

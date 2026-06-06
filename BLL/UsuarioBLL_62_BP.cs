@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL;
 using DAL_62_BP;
 using SEG_62_BP;
 
@@ -14,6 +15,7 @@ namespace BLL_62_BP
     {
 
         private UsuarioDAL_62_BP _usuarioDAL = new UsuarioDAL_62_BP();
+        private RolBLL_62_BP _rolBLL = new RolBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL = new BitacoraBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         public int Alta_62_BP(Usuario_62_BP usuario)
@@ -204,7 +206,7 @@ namespace BLL_62_BP
                         usuario.IntentosLogin_62_BP = 0;
                         _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
                     }
-
+                    usuario.Rol_62_BP = _rolBLL.BuscarRol_62_BP(usuario.IdRol_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
 

@@ -15,7 +15,6 @@ namespace BLL
         private RolDAL_62_BP _rolDAL_62_BP = new RolDAL_62_BP();
         private FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
-        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
@@ -94,13 +93,11 @@ namespace BLL
 
             try
             {
-                List<Usuario_62_BP> usuarios = _usuarioBLL_62_BP.BuscarUsuarios_por_Rol_62_BP(rol.Id_62_BP);
+                bool usuariosAsignados = _rolDAL_62_BP.TieneUsuariosAsignados_62_BP(rol.Id_62_BP);
 
-                if (usuarios.Count > 0)
+                if (usuariosAsignados)
                 {
-                    string nombresUsuarios = string.Join(", ", usuarios.Select(u => u.Login_62_BP));
-
-                    throw new Exception("El rol tiene los usuarios asignados: " + nombresUsuarios);
+                    throw new Exception("El rol tiene  usuarios asignados.");
                 }
 
                 _rolDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(rol.Id_62_BP);

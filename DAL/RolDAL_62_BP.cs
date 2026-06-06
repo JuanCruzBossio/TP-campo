@@ -181,5 +181,21 @@ namespace DAL
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
+        public bool TieneUsuariosAsignados_62_BP(int idRol)
+        {
+            string query = "SELECT IdRol_62_BP FROM Usuario_62_BP where idRol = @idRol";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idRol", idRol),
+            };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+
+            if (tabla.Rows.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
