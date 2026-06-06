@@ -26,6 +26,7 @@ namespace TP_campo
         List<Familia_62_BP> _listaTodasFamilias_62_BP = new List<Familia_62_BP>(); 
         List<ComponentePermiso_62_BP> _permisosSeleccionados = new List<ComponentePermiso_62_BP>();
         List<ComponentePermiso_62_BP> _permisosDisponibles = new List<ComponentePermiso_62_BP>();
+        List<Patente_62_BP> _patentesSeleccionadas = new List<Patente_62_BP>();
         Familia_62_BP familiaEnEdicion_62_BP = new Familia_62_BP();
         //Modos Posibles:
         // 0 - Inicial
@@ -33,63 +34,193 @@ namespace TP_campo
         // 2 - Modificar
         // 3 - Borrar
         private int modoActual_62_BP = 0;
+
         //Eventos
         private void FamiliaGUI_62_BP_Load(object sender, EventArgs e)
         {
-            _listaTodasFamilias_62_BP =
-                _familiaBLL_62_BP.BuscarFamilias_62_BP();
+            dataGridViewFamiliasYPatentes.ReadOnly = true;
+            dataGridViewFamiliaNueva.ReadOnly = true;
+            dataGridViewPatentesSeleccionadaas.ReadOnly = true;
+            dataGridViewFamiliasYPatentes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewFamiliasYPatentes.MultiSelect = false;
+            dataGridViewPatentesSeleccionadaas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewPatentesSeleccionadaas.MultiSelect = false;
+            _listaTodasFamilias_62_BP =  _familiaBLL_62_BP.BuscarFamilias_62_BP();
 
-            _listaTodasPatentes_62_BP =
-                _patenteBLL_62_BP.BuscarPatentes_62_BP();
+            _listaTodasPatentes_62_BP = _patenteBLL_62_BP.BuscarPatentes_62_BP();
 
             ActualizarGrillas();
 
             CambiarModo_62_BP(0);
         }
 
+        private void buttonQuitar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewFamiliaNueva.CurrentRow == null)
+                return;
 
+            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliaNueva.CurrentRow.DataBoundItem;
+
+            QuitarPermiso(permiso);
+        }
+
+        private void buttonAplicar_Click(object sender, EventArgs e)
+        {
+            bool operacionExitosa = false;
+
+            switch (modoActual_62_BP)
+            {
+                case 1:
+                    operacionExitosa = crearFamilia_62_BP();
+                    break;
+
+                case 2:
+                    operacionExitosa = modificarFamilia_62_BP();
+                    break;
+
+                case 3:
+                    operacionExitosa = borrarFamilia_62_BP();
+                    break;
+            }
+
+            if (operacionExitosa)
+            {
+                familiaEnEdicion_62_BP = null;
+                _permisosSeleccionados.Clear();
+                RecargarDatos_62_BP();
+
+                CambiarModo_62_BP(0);
+            }
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            familiaEnEdicion_62_BP = null;
+
+            textBoxNombre.Clear();
+
+            _permisosSeleccionados.Clear();
+
+
+            RecargarDatos_62_BP();
+
+            CambiarModo_62_BP(0);
+        }
+
+        private void dataGridViewFamiliaNueva_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliaNueva.Rows[e.RowIndex].DataBoundItem;
+
+            QuitarPermiso(permiso);
+        }
+
+        private void buttonCrear_Click(object sender, EventArgs e)
+        {
+            familiaEnEdicion_62_BP = null;
+
+            CambiarModo_62_BP(1);
+        }
+
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+            Familia_62_BP familiaSeleccionada =
+                ObtenerFamiliaSeleccionada_62_BP();
+
+            if (familiaSeleccionada == null)
+            {
+                MessageBox.Show(
+                    "Debe seleccionar una familia.");
+                return;
+            }
+
+            familiaEnEdicion_62_BP = familiaSeleccionada;
+
+            textBoxNombre.Text = familiaSeleccionada.Nombre_62_BP;
+
+            _permisosSeleccionados = new List<ComponentePermiso_62_BP>(familiaSeleccionada.Hijos_62_BP);
+            dataGridViewFamiliasYPatentes.ClearSelection();
+            dataGridViewFamiliasYPatentes.CurrentCell = null;
+            ActualizarGrillas();
+
+            CambiarModo_62_BP(2);
+        }
+
+        private void buttonBaja_Click(object sender, EventArgs e)
+        {
+            Familia_62_BP familiaSeleccionada =
+                ObtenerFamiliaSeleccionada_62_BP();
+
+            if (familiaSeleccionada == null)
+            {
+                MessageBox.Show(
+                    "Debe seleccionar una familia.");
+                return;
+            }
+
+            familiaEnEdicion_62_BP = familiaSeleccionada;
+
+            textBoxNombre.Text =
+                familiaSeleccionada.Nombre_62_BP;
+
+            _permisosSeleccionados =
+                new List<ComponentePermiso_62_BP>(
+                    familiaSeleccionada.Hijos_62_BP);
+            dataGridViewFamiliasYPatentes.ClearSelection();
+            dataGridViewFamiliasYPatentes.CurrentCell = null;
+            ActualizarGrillas();
+
+            CambiarModo_62_BP(3);
+        }
+        private void dataGridViewFamiliasYPatentes_SelectionChanged(object sender, EventArgs e)
+        {
+            if (modoActual_62_BP != 0)
+                return;
+
+            bool hayFamilia =
+                ObtenerFamiliaSeleccionada_62_BP() != null;
+
+            buttonModificar.Enabled = hayFamilia;
+            buttonBaja.Enabled = hayFamilia;
+        }
+        private void buttonAgregar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewFamiliasYPatentes.CurrentRow == null)
+                return;
+
+            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliasYPatentes.CurrentRow.DataBoundItem;
+
+            AgregarPermiso(permiso);
+        }
         //Funciones:
         private void CambiarModo_62_BP(int modo)
         {
             modoActual_62_BP = modo;
+            textBoxNombre.Enabled = false;
+            textBoxMensaje.Text = "";
+            buttonCrear.Enabled = false;
+            buttonModificar.Enabled = false;
 
+            buttonBaja.Enabled = false;
+            buttonAgregar.Enabled = false;
+            buttonQuitar.Enabled = false;
+            dataGridViewFamiliasYPatentes.ClearSelection();
             switch (modo)
             {
                 case 0: // Inicial
-                    
-                    textBoxNombre.Enabled = false;
-
                     buttonCrear.Enabled = true;
-                    buttonModificar.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
-                    buttonBaja.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
-                    buttonAgregar.Enabled = false;
-                    buttonQuitar.Enabled = false;
-
-                    buttonAplicar.Enabled = false;
-                    buttonCancelar.Enabled = false;
-
-                    textBoxMensaje.Text = "";
-
                     break;
 
                 case 1: // Crear
 
-                    textBoxNombre.Clear();
                     textBoxNombre.Enabled = true;
-
                     _permisosSeleccionados.Clear();
                     ActualizarGrillas();
 
-                    buttonCrear.Enabled = false;
-                    buttonModificar.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
-                    buttonBaja.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
                     buttonAgregar.Enabled = true;
                     buttonQuitar.Enabled = true;
-
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
@@ -100,12 +231,6 @@ namespace TP_campo
                 case 2: // Modificar
 
                     textBoxNombre.Enabled = true;
-
-                    buttonCrear.Enabled = false;
-                    buttonModificar.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
-                    buttonBaja.Enabled = ObtenerFamiliaSeleccionada_62_BP() != null;
-
                     buttonAgregar.Enabled = true;
                     buttonQuitar.Enabled = true;
 
@@ -117,15 +242,6 @@ namespace TP_campo
                     break;
                 case 3: // Borrar
 
-                    textBoxNombre.Enabled = false;
-
-                    buttonCrear.Enabled = false;
-                    buttonModificar.Enabled = false;
-                    buttonBaja.Enabled = false;
-
-                    buttonAgregar.Enabled = false;
-                    buttonQuitar.Enabled = false;
-
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
@@ -136,14 +252,10 @@ namespace TP_campo
         }
         private Familia_62_BP ObtenerFamiliaSeleccionada_62_BP()
         {
-            if (dataGridViewFamiliasYPatentes.CurrentRow == null)
+            if (dataGridViewFamiliasYPatentes.SelectedRows.Count == 0)
                 return null;
 
-            ComponentePermiso_62_BP componente =
-                (ComponentePermiso_62_BP)
-                dataGridViewFamiliasYPatentes
-                .CurrentRow
-                .DataBoundItem;
+            ComponentePermiso_62_BP componente = (ComponentePermiso_62_BP)dataGridViewFamiliasYPatentes.CurrentRow.DataBoundItem;
 
             if (componente is Familia_62_BP familia)
             {
@@ -165,11 +277,14 @@ namespace TP_campo
             List<int> patentesCubiertas = ObtenerPatentesCubiertas();
 
             _permisosDisponibles.Clear();
-
+            _patentesSeleccionadas.Clear();
             foreach (Familia_62_BP familia in _listaTodasFamilias_62_BP)
             {
                 bool seleccionada = false;
-
+                if (familiaEnEdicion_62_BP != null && familia.Id_62_BP == familiaEnEdicion_62_BP.Id_62_BP)
+                {
+                    continue;
+                }
                 foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
                 {
                     if (SonIguales_62_BP( permiso, familia))
@@ -188,7 +303,10 @@ namespace TP_campo
             foreach (Patente_62_BP patente in _listaTodasPatentes_62_BP)
             {
                 bool seleccionada = false;
-
+                if (patentesCubiertas.Contains(patente.Id_62_BP))
+                {
+                    _patentesSeleccionadas.Add(patente);
+                }
                 foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
                 {
                     if (SonIguales_62_BP(permiso, patente))
@@ -198,8 +316,7 @@ namespace TP_campo
                     }
                 }
 
-                if (!seleccionada &&
-                    !patentesCubiertas.Contains(patente.Id_62_BP))
+                if (!seleccionada && !patentesCubiertas.Contains(patente.Id_62_BP))
                 {
                     _permisosDisponibles.Add(patente);
                 }
@@ -210,6 +327,9 @@ namespace TP_campo
 
             dataGridViewFamiliaNueva.DataSource = null;
             dataGridViewFamiliaNueva.DataSource = _permisosSeleccionados;
+
+            dataGridViewPatentesSeleccionadaas.DataSource = null;
+            dataGridViewPatentesSeleccionadaas.DataSource = _patentesSeleccionadas;
         }
 
         private List<int> ObtenerPatentesCubiertas()
@@ -260,6 +380,16 @@ namespace TP_campo
             if (!existe)
             {
                 _permisosSeleccionados.Add(permiso);
+
+                if (permiso is Familia_62_BP familia)
+                {
+                    List<int> patentesFamilia = new List<int>();
+                    ObtenerPatentesRecursivas(familia, patentesFamilia);
+
+                    _permisosSeleccionados.RemoveAll(p =>
+                        p is Patente_62_BP patente &&
+                        patentesFamilia.Contains(patente.Id_62_BP));
+                }
             }
 
             ActualizarGrillas();
@@ -280,147 +410,10 @@ namespace TP_campo
         }
 
 
-        private void dataGridViewFamiliaNueva_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliaNueva.Rows[e.RowIndex].DataBoundItem;
-
-            QuitarPermiso(permiso);
-        }
-
-        private void buttonCrear_Click(object sender, EventArgs e)
-        {
-            familiaEnEdicion_62_BP = null;
-
-            CambiarModo_62_BP(1);
-        }
-
-        private void buttonModificar_Click(object sender, EventArgs e)
-        {
-            Familia_62_BP familiaSeleccionada =
-                ObtenerFamiliaSeleccionada_62_BP();
-
-            if (familiaSeleccionada == null)
-            {
-                MessageBox.Show(
-                    "Debe seleccionar una familia.");
-                return;
-            }
-
-            familiaEnEdicion_62_BP = familiaSeleccionada;
-
-            textBoxNombre.Text = familiaSeleccionada.Nombre_62_BP;
-
-            _permisosSeleccionados = new List<ComponentePermiso_62_BP>(familiaSeleccionada.Hijos_62_BP);
-
-            ActualizarGrillas();
-
-            CambiarModo_62_BP(2);
-        }
-
-        private void buttonBaja_Click(object sender, EventArgs e)
-        {
-            Familia_62_BP familiaSeleccionada =
-                ObtenerFamiliaSeleccionada_62_BP();
-
-            if (familiaSeleccionada == null)
-            {
-                MessageBox.Show(
-                    "Debe seleccionar una familia.");
-                return;
-            }
-
-            familiaEnEdicion_62_BP = familiaSeleccionada;
-
-            textBoxNombre.Text =
-                familiaSeleccionada.Nombre_62_BP;
-
-            _permisosSeleccionados =
-                new List<ComponentePermiso_62_BP>(
-                    familiaSeleccionada.Hijos_62_BP);
-
-            ActualizarGrillas();
-
-            CambiarModo_62_BP(3);
-        }
-        private void dataGridViewFamiliasYPatentes_SelectionChanged(object sender, EventArgs e)
-        {
-            if (modoActual_62_BP != 0)
-                return;
-
-            bool hayFamilia =
-                ObtenerFamiliaSeleccionada_62_BP() != null;
-
-            buttonModificar.Enabled = hayFamilia;
-            buttonBaja.Enabled = hayFamilia;
-        }
-        private void buttonAgregar_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewFamiliasYPatentes.CurrentRow == null)
-                return;
-
-            ComponentePermiso_62_BP permiso =(ComponentePermiso_62_BP)dataGridViewFamiliasYPatentes.CurrentRow.DataBoundItem;
-
-            AgregarPermiso(permiso);
-        }
         private bool SonIguales_62_BP( ComponentePermiso_62_BP a, ComponentePermiso_62_BP b)
         {
             return a.GetType() == b.GetType()
                 && a.Id_62_BP == b.Id_62_BP;
-        }
-        private void buttonQuitar_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewFamiliaNueva.CurrentRow == null)
-                return;
-
-            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliaNueva.CurrentRow.DataBoundItem;
-
-            QuitarPermiso(permiso);
-        }
-
-        private void buttonAplicar_Click(object sender, EventArgs e)
-        {
-            bool operacionExitosa = false;
-
-            switch (modoActual_62_BP)
-            {
-                case 1:
-                    operacionExitosa = crearFamilia_62_BP();
-                    break;
-
-                case 2:
-                    operacionExitosa = modificarFamilia_62_BP();
-                    break;
-
-                case 3:
-                    operacionExitosa = borrarFamilia_62_BP();
-                    break;
-            }
-
-            if (operacionExitosa)
-            {
-                familiaEnEdicion_62_BP = null;
-                _permisosSeleccionados.Clear();
-                RecargarDatos_62_BP();
-                
-                CambiarModo_62_BP(0);
-            }
-        }
-
-        private void buttonCancelar_Click(object sender, EventArgs e)
-        {
-            familiaEnEdicion_62_BP = null;
-
-            textBoxNombre.Clear();
-
-            _permisosSeleccionados.Clear();
-
-
-            RecargarDatos_62_BP();
-
-            CambiarModo_62_BP(0);
         }
         private bool crearFamilia_62_BP()
         {

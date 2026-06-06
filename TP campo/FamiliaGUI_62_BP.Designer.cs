@@ -41,8 +41,13 @@
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.textBoxMensaje = new System.Windows.Forms.TextBox();
             this.labelMensaje = new System.Windows.Forms.Label();
+            this.labelFamiliasYPatentesDisponibles = new System.Windows.Forms.Label();
+            this.labelFamiliasYPatentesSeleccionadas = new System.Windows.Forms.Label();
+            this.dataGridViewPatentesSeleccionadaas = new System.Windows.Forms.DataGridView();
+            this.labelPatentesSeleccionadas = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliaNueva)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliasYPatentes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPatentesSeleccionadaas)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewFamiliaNueva
@@ -164,11 +169,50 @@
             this.labelMensaje.TabIndex = 11;
             this.labelMensaje.Text = "Mensaje";
             // 
+            // labelFamiliasYPatentesDisponibles
+            // 
+            this.labelFamiliasYPatentesDisponibles.AutoSize = true;
+            this.labelFamiliasYPatentesDisponibles.Location = new System.Drawing.Point(570, 30);
+            this.labelFamiliasYPatentesDisponibles.Name = "labelFamiliasYPatentesDisponibles";
+            this.labelFamiliasYPatentesDisponibles.Size = new System.Drawing.Size(154, 13);
+            this.labelFamiliasYPatentesDisponibles.TabIndex = 13;
+            this.labelFamiliasYPatentesDisponibles.Text = "Familias /Patentes Disponibles:";
+            // 
+            // labelFamiliasYPatentesSeleccionadas
+            // 
+            this.labelFamiliasYPatentesSeleccionadas.AutoSize = true;
+            this.labelFamiliasYPatentesSeleccionadas.Location = new System.Drawing.Point(9, 9);
+            this.labelFamiliasYPatentesSeleccionadas.Name = "labelFamiliasYPatentesSeleccionadas";
+            this.labelFamiliasYPatentesSeleccionadas.Size = new System.Drawing.Size(170, 13);
+            this.labelFamiliasYPatentesSeleccionadas.TabIndex = 14;
+            this.labelFamiliasYPatentesSeleccionadas.Text = "Familias /Patentes Seleccionadas:";
+            // 
+            // dataGridViewPatentesSeleccionadaas
+            // 
+            this.dataGridViewPatentesSeleccionadaas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewPatentesSeleccionadaas.Location = new System.Drawing.Point(12, 529);
+            this.dataGridViewPatentesSeleccionadaas.Name = "dataGridViewPatentesSeleccionadaas";
+            this.dataGridViewPatentesSeleccionadaas.Size = new System.Drawing.Size(439, 234);
+            this.dataGridViewPatentesSeleccionadaas.TabIndex = 15;
+            // 
+            // labelPatentesSeleccionadas
+            // 
+            this.labelPatentesSeleccionadas.AutoSize = true;
+            this.labelPatentesSeleccionadas.Location = new System.Drawing.Point(12, 510);
+            this.labelPatentesSeleccionadas.Name = "labelPatentesSeleccionadas";
+            this.labelPatentesSeleccionadas.Size = new System.Drawing.Size(125, 13);
+            this.labelPatentesSeleccionadas.TabIndex = 16;
+            this.labelPatentesSeleccionadas.Text = "Patentes Seleccionadas:";
+            // 
             // FamiliaGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1144, 775);
+            this.Controls.Add(this.labelPatentesSeleccionadas);
+            this.Controls.Add(this.dataGridViewPatentesSeleccionadaas);
+            this.Controls.Add(this.labelFamiliasYPatentesSeleccionadas);
+            this.Controls.Add(this.labelFamiliasYPatentesDisponibles);
             this.Controls.Add(this.textBoxMensaje);
             this.Controls.Add(this.labelMensaje);
             this.Controls.Add(this.buttonCancelar);
@@ -187,6 +231,7 @@
             this.Load += new System.EventHandler(this.FamiliaGUI_62_BP_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliaNueva)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliasYPatentes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPatentesSeleccionadaas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +252,9 @@
         private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.TextBox textBoxMensaje;
         private System.Windows.Forms.Label labelMensaje;
+        private System.Windows.Forms.Label labelFamiliasYPatentesDisponibles;
+        private System.Windows.Forms.Label labelFamiliasYPatentesSeleccionadas;
+        private System.Windows.Forms.DataGridView dataGridViewPatentesSeleccionadaas;
+        private System.Windows.Forms.Label labelPatentesSeleccionadas;
     }
 }
