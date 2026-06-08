@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
@@ -15,18 +16,20 @@ namespace BLL_62_BP
     {
 
         private UsuarioDAL_62_BP _usuarioDAL = new UsuarioDAL_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
         private RolBLL_62_BP _rolBLL = new RolBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL = new BitacoraBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
-            var filasAfectadas = 0;
+            var dni = 0;
             usuario.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.Nombre_62_BP + usuario.Apellido_62_BP);
             try
             {
-                filasAfectadas = _usuarioDAL.Alta_62_BP(usuario);
-                if (filasAfectadas > 0)
+                dni = _usuarioDAL.Alta_62_BP(usuario);
+                if (dni > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(dni.ToString());
                     _bitacoraBLL.RegistrarBitacora_62_BP("Alta de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
@@ -50,7 +53,7 @@ namespace BLL_62_BP
                     throw;
                 }
             }
-            return filasAfectadas;
+            return dni;
         }
         public int Activar_62_BP(Usuario_62_BP usuario)
         {
@@ -60,6 +63,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Activar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Activación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
@@ -78,6 +82,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Desactivar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Desactivación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
@@ -98,6 +103,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     Usuario_62_BP usuario = _usuarioDAL.BuscarUsuario_62_BP(login: login);
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
                 }
             }
@@ -117,6 +123,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Desbloquear_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
                 }
             }
@@ -134,6 +141,7 @@ namespace BLL_62_BP
                 filasAfectadas = _usuarioDAL.Modificar_62_BP(usuario);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
@@ -205,6 +213,7 @@ namespace BLL_62_BP
                     {
                         usuario.IntentosLogin_62_BP = 0;
                         _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
+                        ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     }
                     usuario.Rol_62_BP = _rolBLL.BuscarRol_62_BP(usuario.IdRol_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
@@ -223,6 +232,7 @@ namespace BLL_62_BP
                     }
 
                     _usuarioDAL.GuardarIntentosLogin_62_BP(usuario);
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     throw new Exception("Usuario o contraseña incorrectos.");
                 }
             }
@@ -283,6 +293,7 @@ namespace BLL_62_BP
 
                 if (filasAfectadas > 0)
                 {
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = usuario.Contrasena_62_BP;
                     _bitacoraBLL.RegistrarBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
                 }
@@ -293,23 +304,47 @@ namespace BLL_62_BP
             }
             return filasAfectadas;
         }
-        public List<Usuario_62_BP> BuscarUsuarios_por_Rol_62_BP(int idRol)
+        public int ActualizarUsuarioDVH_62_BP(string dni)
         {
-            List<Usuario_62_BP> personas = null;
+            int filasAfectadas = 0;
+            Usuario_62_BP usuario = null;
             try
             {
-                personas = _usuarioDAL.BuscarUsuarios_62_BP(idRol: idRol);
-                if (personas != null)
+                usuario = _usuarioDAL.BuscarUsuario_62_BP(dni: dni);
+                if (usuario != null)
                 {
-                    //_bitacoraBLL.Alta("Se busco usuario por idRol " + idRol, 4);
-                    //No consideramos acorde mantener un registro de la busqueda de usuario
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.ObtenerCadenaDVH_62_BP());
+                    filasAfectadas = _usuarioDAL.ActualizarDVH_62_BP(dni, dvh);
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Usuario_62_BP");
                 }
             }
             catch (Exception ex)
             {
                 throw;
             }
-            return personas;
+            return filasAfectadas;
+        }
+        public int RecalcularUsuariosDVH_62_BP()
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                List<Usuario_62_BP> usuarios = _usuarioDAL.BuscarUsuarios_62_BP();
+                if (usuarios != null)
+                {
+                    foreach (var usuario in usuarios)
+                    {
+                        string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.ObtenerCadenaDVH_62_BP());
+                        _usuarioDAL.ActualizarDVH_62_BP(usuario.Dni_62_BP, dvh);
+                        filasAfectadas++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
         }
     }
 }

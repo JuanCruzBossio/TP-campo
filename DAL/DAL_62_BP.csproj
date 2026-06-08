@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Acceso_62_BP.cs" />
     <Compile Include="BitacoraDAL_62_BP.cs" />
+    <Compile Include="DigitoVerificadorDAL_62_BP.cs" />
     <Compile Include="FamiliaDAL_62_BP.cs" />
     <Compile Include="PatenteDAL_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,11 +12,17 @@ using DAL_62_BP;
 using SEG_62_BP;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using DAL;
+using SEG.Permisos_62_BP;
+using BLL;
 namespace BLL_62_BP
 {
     public class BitacoraBLL_62_BP
     {
         private BitacoraDAL_62_BP _bitacoraDAL = new BitacoraDAL_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
+
         public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
@@ -30,7 +36,8 @@ namespace BLL_62_BP
             {
                 registro.DniUsuario_62_BP = "0";
             }
-            _bitacoraDAL.RegistrarBitacora_62_BP(registro);
+            int id = _bitacoraDAL.RegistrarBitacora_62_BP(registro);
+            ActualizarBitacoraDVH_62_BP(id);
         }
         public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
         {
@@ -39,7 +46,8 @@ namespace BLL_62_BP
             registro.DniUsuario_62_BP = dni;
             registro.Mensaje_62_BP = mensaje;
 
-            _bitacoraDAL.RegistrarBitacora_62_BP(registro);
+            int id = _bitacoraDAL.RegistrarBitacora_62_BP(registro);
+            ActualizarBitacoraDVH_62_BP(id);
         }
         public List<RegistroBitacora_62_BP> ObtenerBitacora_62_BP()
         {
@@ -128,6 +136,48 @@ namespace BLL_62_BP
             {
                 doc.Close();
             }
+        }
+        public int ActualizarBitacoraDVH_62_BP(int id)
+        {
+            int filasAfectadas = 0;
+            RegistroBitacora_62_BP bitacora = null;
+            try
+            {
+                bitacora = _bitacoraDAL.ObtenerRegistro_62_BP( id);
+                if (bitacora != null)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(bitacora.ObtenerCadenaDVH_62_BP());
+                    filasAfectadas = _bitacoraDAL.ActualizarDVH_62_BP(id, dvh);
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Bitacora_62_BP");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+        public int RecalcularBitacorasDVH_62_BP()
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                List<RegistroBitacora_62_BP> registros = _bitacoraDAL.ObtenerRegistros_62_BP();
+                if (registros != null)
+                {
+                    foreach (var registro in registros)
+                    {
+                        string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(registro.ObtenerCadenaDVH_62_BP());
+                        _bitacoraDAL.ActualizarDVH_62_BP(registro.Id_62_BP, dvh);
+                        filasAfectadas++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
         }
 
     }

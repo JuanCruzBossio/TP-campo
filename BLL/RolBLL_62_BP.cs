@@ -15,6 +15,8 @@ namespace BLL
         private RolDAL_62_BP _rolDAL_62_BP = new RolDAL_62_BP();
         private FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
 
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
@@ -44,7 +46,7 @@ namespace BLL
                 }
 
                 filasAfectadas = 1;
-
+                ActualizarRolDVH_62_BP(id);
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Rol " + rol.Nombre_62_BP, 1);
             }
             catch
@@ -62,7 +64,10 @@ namespace BLL
             try
             {
                 filasAfectadas = _rolDAL_62_BP.Modificar_62_BP(rol);
-
+                if (filasAfectadas > 0)
+                {
+                    ActualizarRolDVH_62_BP(rol.Id_62_BP);
+                }
                 _rolDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(rol.Id_62_BP);
                 _rolDAL_62_BP.BorrarRelacionesRolPatente_62_BP(rol.Id_62_BP);
 
@@ -281,6 +286,48 @@ namespace BLL
                 throw new Exception("No se pudo quitar la familia del rol.");
             }
 
+            return filasAfectadas;
+        }
+        public int ActualizarRolDVH_62_BP(int id)
+        {
+            int filasAfectadas = 0;
+            Rol_62_BP rol = null;
+            try
+            {
+                rol = _rolDAL_62_BP.BuscarRol_62_BP(id: id);
+                if (rol != null)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(rol.ObtenerCadenaDVH_62_BP());
+                    filasAfectadas = _rolDAL_62_BP.ActualizarDVH_62_BP(id, dvh);
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+        public int RecalcularRolesDVH_62_BP()
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                List<Rol_62_BP> roles = _rolDAL_62_BP.BuscarRoles_62_BP();
+                if (roles != null)
+                {
+                    foreach (var rol in roles)
+                    {
+                        string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(rol.ObtenerCadenaDVH_62_BP());
+                        _rolDAL_62_BP.ActualizarDVH_62_BP(rol.Id_62_BP, dvh);
+                        filasAfectadas++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             return filasAfectadas;
         }
     }

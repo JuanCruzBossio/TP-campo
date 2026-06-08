@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SEG;
 
 namespace SEG_62_BP
 {
-    public class RegistroBitacora_62_BP
+    public class RegistroBitacora_62_BP: IDigitoVerificadorHorizontal_62_BP
     {
         private int id_62_BP;
 
@@ -46,6 +47,15 @@ namespace SEG_62_BP
         {
             get { return criticidad_62_BP; }
             set { criticidad_62_BP = value; }
+        }
+
+        public string ObtenerCadenaDVH_62_BP()
+        {
+            return Id_62_BP.ToString() +
+                   Fecha_62_BP.ToString() +
+                   DniUsuario_62_BP +
+                   Mensaje_62_BP +
+                   Criticidad_62_BP.ToString();
         }
     }
 }

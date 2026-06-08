@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using BLL_62_BP;
 using DAL;
 using SEG.Permisos_62_BP;
+using SEG_62_BP;
 
 namespace BLL
 {
@@ -16,6 +17,8 @@ namespace BLL
         private FamiliaDAL_62_BP _familiaDAL_62_BP = new FamiliaDAL_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
 
         public int Alta_62_BP(Familia_62_BP familia)
         {
@@ -39,7 +42,8 @@ namespace BLL
                             AgregarPatente_62_BP(id, patente.Id_62_BP);
                         }
                     }
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Familia " + familia.Nombre_62_BP, 1);
+                ActualizarFamiliaDVH_62_BP(id);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Familia " + familia.Nombre_62_BP, 1);
             }
             catch
             {
@@ -55,7 +59,10 @@ namespace BLL
             try
             {
                 filasAfectadas = _familiaDAL_62_BP.Modificar_62_BP(familia);
-
+                if (filasAfectadas > 0)
+                {
+                    ActualizarFamiliaDVH_62_BP(familia.Id_62_BP);
+                }
                 _familiaDAL_62_BP.BorrarRelacionesFamiliaPatente_62_BP(familia.Id_62_BP);
                 _familiaDAL_62_BP.BorrarRelacionesFamiliaFamilia_62_BP(familia.Id_62_BP);
 
@@ -67,7 +74,6 @@ namespace BLL
                     else if (hijo is Patente_62_BP pat)
                         AgregarPatente_62_BP(familia.Id_62_BP, pat.Id_62_BP);
                 }
-
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Familia " + familia.Nombre_62_BP, 2);
             }
             catch
@@ -285,6 +291,47 @@ namespace BLL
 
             return filasAfectadas;
         }
-
+        public int ActualizarFamiliaDVH_62_BP(int id)
+        {
+            int filasAfectadas = 0;
+            Familia_62_BP familia = null;
+            try
+            {
+                familia = _familiaDAL_62_BP.BuscarFamilia_62_BP(id: id);
+                if (familia != null)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(familia.ObtenerCadenaDVH_62_BP());
+                    filasAfectadas = _familiaDAL_62_BP.ActualizarDVH_62_BP(id, dvh);
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Familia_62_BP");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+        public int RecalcularFamiliasDVH_62_BP()
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                List<Familia_62_BP> familias = _familiaDAL_62_BP.BuscarFamilias_62_BP();
+                if (familias != null)
+                {
+                    foreach (var familia in familias)
+                    {
+                        string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(familia.ObtenerCadenaDVH_62_BP());
+                        _familiaDAL_62_BP.ActualizarDVH_62_BP(familia.Id_62_BP, dvh);
+                        filasAfectadas++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
     }
 }

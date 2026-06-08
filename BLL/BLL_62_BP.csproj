@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraBLL_62_BP.cs" />
+    <Compile Include="DigitoVerificadorBLL_62_BP.cs" />
     <Compile Include="FamiliaBLL_62_BPcs.cs" />
     <Compile Include="PatenteBLL_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

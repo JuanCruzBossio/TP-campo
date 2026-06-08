@@ -239,5 +239,19 @@ namespace DAL
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
+        public int ActualizarDVH_62_BP(int id, string DVH_62_BP)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Familia_62_BP SET DVH_62_BP = @dvh WHERE IdFamilia_62_BP = @id";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@id", id),
+                new SqlParameter("@dvh", DVH_62_BP)
+            };
+
+            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            return filasAfectadas;
+        }
     }
 }

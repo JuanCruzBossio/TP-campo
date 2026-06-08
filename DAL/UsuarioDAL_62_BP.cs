@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using SEG.Permisos_62_BP;
@@ -31,7 +32,7 @@ namespace DAL_62_BP
         }
         public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
         {
-            StringBuilder query = new StringBuilder("SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, idRol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT * FROM Usuario_62_BP WHERE 1=1");
             List<SqlParameter> parametros = new List<SqlParameter>();
 
             if (!string.IsNullOrEmpty(dni))
@@ -65,7 +66,7 @@ namespace DAL_62_BP
         }
         public List<Usuario_62_BP> BuscarUsuarios_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
         {
-            StringBuilder query = new StringBuilder("SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, idRol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP FROM Usuario_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT * FROM Usuario_62_BP WHERE 1=1");
             List<SqlParameter> parametros = new List<SqlParameter>();
             List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
             
@@ -104,7 +105,7 @@ namespace DAL_62_BP
         public List<Usuario_62_BP> TraerTodosUsuarios_62_BP()
         {
             List<Usuario_62_BP> lista = new List<Usuario_62_BP>();
-            string query = "SELECT dni_62_BP, apellido_62_BP, nombre_62_BP, idRol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, intentosLogin_62_BP, ForzarContrasenaNueva_62_BP  FROM Usuario_62_BP";
+            string query = "SELECT *  FROM Usuario_62_BP";
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
 
@@ -120,8 +121,8 @@ namespace DAL_62_BP
 
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
-            var filasAfectadas = 0;
-            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1)";
+            var dni = 0;
+            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1);SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -134,8 +135,9 @@ namespace DAL_62_BP
                 new SqlParameter("@contrasena", usuario.Contrasena_62_BP)
             };
 
-            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
-            return filasAfectadas;
+            object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
+            dni = Convert.ToInt32(Convert.ToDecimal(resultado));
+            return dni;
         }
         public int Activar_62_BP(Usuario_62_BP usuario)
         {
@@ -236,6 +238,20 @@ namespace DAL_62_BP
             {
                 new SqlParameter("@dni", usuario.Dni_62_BP),
                 new SqlParameter("@intentos", usuario.IntentosLogin_62_BP)
+            };
+
+            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            return filasAfectadas;
+        }
+        public int ActualizarDVH_62_BP(string dni, string DVH_62_BP)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario_62_BP SET DVH_62_BP = @dvh WHERE dni_62_BP = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", dni),
+                new SqlParameter("@dvh", DVH_62_BP)
             };
 
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);

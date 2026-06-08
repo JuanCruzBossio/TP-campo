@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SEG;
 using SEG.Permisos_62_BP;
 
 namespace SEG_62_BP
 {
-    public class Usuario_62_BP
+    public class Usuario_62_BP : IDigitoVerificadorHorizontal_62_BP
     {
         private string dni_62_BP;
         public string Dni_62_BP
@@ -88,6 +89,21 @@ namespace SEG_62_BP
         {
             get { return forzarContrasenaNueva_62_BP; }
             set { forzarContrasenaNueva_62_BP = value; }
+        }
+
+        public string ObtenerCadenaDVH_62_BP()
+        {
+            return Dni_62_BP +
+                   Apellido_62_BP +
+                   Nombre_62_BP +
+                   IdRol_62_BP.ToString() +
+                   Email_62_BP +
+                   Login_62_BP +
+                   Contrasena_62_BP +
+                   Bloqueo_62_BP.ToString() +
+                   Activo_62_BP.ToString() +
+                   IntentosLogin_62_BP.ToString() +
+                   ForzarContrasenaNueva_62_BP.ToString();
         }
     }
 

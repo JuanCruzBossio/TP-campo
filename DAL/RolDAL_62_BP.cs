@@ -26,7 +26,7 @@ namespace DAL
         public int Alta_62_BP(Rol_62_BP rol)
         {
             int id = 0;
-            string query = "INSERT INTO Rol_62_BP (Nombre_62_BP) VALUES (@nombre)SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Rol_62_BP (Nombre_62_BP) VALUES (@nombre);SELECT SCOPE_IDENTITY();";
             SqlParameter[] parametros =
             {
                 new SqlParameter("@nombre", rol.Nombre_62_BP)
@@ -196,6 +196,20 @@ namespace DAL
             }
 
             return false;
+        }
+        public int ActualizarDVH_62_BP(int id, string DVH_62_BP)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Rol_62_BP SET DVH_62_BP = @dvh WHERE IdRol_62_BP = @id";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@id", id),
+                new SqlParameter("@dvh", DVH_62_BP)
+            };
+
+            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            return filasAfectadas;
         }
     }
 }
