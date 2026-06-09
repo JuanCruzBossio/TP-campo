@@ -41,10 +41,6 @@ namespace BLL
             {
                 lista = _patenteDAL_62_BP.BuscarPatentes_62_BP();
 
-                if (lista == null)
-                {
-                    lista = new List<Patente_62_BP>();
-                }
             }
             catch (Exception)
             {
@@ -134,6 +130,27 @@ namespace BLL
                 throw;
             }
             return filasAfectadas;
+        }
+        public List<Patente_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<Patente_62_BP> errores = new List<Patente_62_BP>();
+            try
+            {
+                List<Patente_62_BP> lista = BuscarPatentes_62_BP();
+                foreach (var patente in lista)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(patente.ObtenerCadenaDVH_62_BP());
+                    if (dvh != _patenteDAL_62_BP.BuscarDVH_62_BP(patente.Id_62_BP))
+                    {
+                        errores.Add(patente);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al revisar Datos DVH Patentes.");
+            }
+            return errores;
         }
     }
 }

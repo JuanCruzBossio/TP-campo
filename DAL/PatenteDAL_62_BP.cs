@@ -132,5 +132,23 @@ namespace DAL
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
             return filasAfectadas;
         }
+        public string BuscarDVH_62_BP(int id)
+        {
+            var dvh = "";
+            string query = "SELECT *  FROM Patente_62_BP WHERE IdPatente_62_BP = @id";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@id", id)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                dvh = tabla.Rows[0]["DVH_62_BP"].ToString();
+            }
+            return dvh;
+        }
     }
 }

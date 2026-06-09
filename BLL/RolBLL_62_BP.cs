@@ -330,5 +330,26 @@ namespace BLL
             }
             return filasAfectadas;
         }
+        public List<Rol_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<Rol_62_BP> errores = new List<Rol_62_BP>();
+            try
+            {
+                List<Rol_62_BP> lista = _rolDAL_62_BP.BuscarRoles_62_BP();
+                foreach (var rol in lista)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(rol.ObtenerCadenaDVH_62_BP());
+                    if (dvh != _rolDAL_62_BP.BuscarDVH_62_BP(rol.Id_62_BP))
+                    {
+                        errores.Add(rol);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al revisar Datos DVH Roles.");
+            }
+            return errores;
+        }
     }
 }

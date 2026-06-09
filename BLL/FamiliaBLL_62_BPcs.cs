@@ -333,5 +333,26 @@ namespace BLL
             }
             return filasAfectadas;
         }
+        public List<Familia_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<Familia_62_BP> errores = new List<Familia_62_BP>();
+            try
+            {
+                List<Familia_62_BP> lista = BuscarFamilias_62_BP();
+                foreach (var familia in lista)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(familia.ObtenerCadenaDVH_62_BP());
+                    if (dvh != _familiaDAL_62_BP.BuscarDVH_62_BP(familia.Id_62_BP))
+                    {
+                        errores.Add(familia);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al revisar Datos DVH Familias.");
+            }
+            return errores;
+        }
     }
 }

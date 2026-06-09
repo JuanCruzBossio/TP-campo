@@ -257,5 +257,23 @@ namespace DAL_62_BP
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
             return filasAfectadas;
         }
+        public string BuscarDVH_62_BP(string dni)
+        {
+            var dvh = "";
+            string query = "SELECT *  FROM Usuario_62_BP WHERE dni_62_BP = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", dni)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                dvh = tabla.Rows[0]["DVH_62_BP"].ToString();
+            }
+            return dvh;
+        }
     }
 }

@@ -7,7 +7,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using BLL;
+using DAL;
 using DAL_62_BP;
+using SEG;
 using SEG_62_BP;
 
 namespace BLL_62_BP
@@ -345,6 +347,27 @@ namespace BLL_62_BP
                 throw;
             }
             return filasAfectadas;
+        }
+        public List<Usuario_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<Usuario_62_BP> errores = new List<Usuario_62_BP>();
+            try
+            {
+                List<Usuario_62_BP> lista = TraerTodosUsuarios_62_BP();
+                foreach (var usuario in lista)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.ObtenerCadenaDVH_62_BP());
+                    if (dvh != _usuarioDAL.BuscarDVH_62_BP(usuario.Dni_62_BP))
+                    {
+                        errores.Add(usuario);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al revisar Datos DVH Usuarios.");
+            }
+            return errores;
         }
     }
 }

@@ -179,6 +179,26 @@ namespace BLL_62_BP
             }
             return filasAfectadas;
         }
-
+        public List<RegistroBitacora_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<RegistroBitacora_62_BP> errores = new List<RegistroBitacora_62_BP>();
+            try
+            {
+                List<RegistroBitacora_62_BP> lista = ObtenerBitacora_62_BP();
+                foreach (var registro in lista)
+                {
+                    string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(registro.ObtenerCadenaDVH_62_BP());
+                    if (dvh != _bitacoraDAL.BuscarDVH_62_BP(registro.Id_62_BP))
+                    {
+                        errores.Add(registro);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al revisar Datos DVH Patentes.");
+            }
+            return errores;
+        }
     }
 }

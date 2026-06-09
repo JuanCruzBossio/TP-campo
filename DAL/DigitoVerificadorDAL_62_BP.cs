@@ -52,9 +52,9 @@ namespace DAL
 
             if (table != null && table.Rows.Count > 0)
             {
-                return MapearDVV(table.Rows[0]);
+                dvv = MapearDVV(table.Rows[0]);
             }
-            return null;
+            return dvv;
         }
 
         public int AltaDVV_62_BP(string tabla, string dvv)
