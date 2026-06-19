@@ -127,5 +127,26 @@ namespace TP_campo
             comboBoxTablas.DataSource = _listaDVV_62_BP;
             comboBoxTablas.DisplayMember = "Tabla_62_BP";
         }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            _usuarioBLL_62_BP.Logout_62_BP();
+            Form menu = Application.OpenForms["Menu_62_BP"];
+
+            if (menu != null)
+            {
+                menu.Close();
+            }
+
+            Form login = Application.OpenForms["Login_62_BP"];
+
+            if (login != null)
+            {
+                login.Show();
+            }
+
+            login.Show();
+            this.Close();
+        }
     }
 }

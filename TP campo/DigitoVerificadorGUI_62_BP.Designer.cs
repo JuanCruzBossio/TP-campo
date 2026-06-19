@@ -34,6 +34,7 @@
             this.dataGridViewErrores = new System.Windows.Forms.DataGridView();
             this.buttonRevisarDVV = new System.Windows.Forms.Button();
             this.buttonRecalcular = new System.Windows.Forms.Button();
+            this.buttonLogout = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewErrores)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             this.dataGridViewErrores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewErrores.Location = new System.Drawing.Point(63, 116);
             this.dataGridViewErrores.Name = "dataGridViewErrores";
-            this.dataGridViewErrores.Size = new System.Drawing.Size(692, 150);
+            this.dataGridViewErrores.Size = new System.Drawing.Size(692, 212);
             this.dataGridViewErrores.TabIndex = 3;
             // 
             // buttonRevisarDVV
@@ -84,7 +85,7 @@
             // 
             // buttonRecalcular
             // 
-            this.buttonRecalcular.Location = new System.Drawing.Point(552, 28);
+            this.buttonRecalcular.Location = new System.Drawing.Point(519, 28);
             this.buttonRecalcular.Name = "buttonRecalcular";
             this.buttonRecalcular.Size = new System.Drawing.Size(95, 45);
             this.buttonRecalcular.TabIndex = 5;
@@ -92,11 +93,22 @@
             this.buttonRecalcular.UseVisualStyleBackColor = true;
             this.buttonRecalcular.Click += new System.EventHandler(this.buttonRecalcular_Click);
             // 
+            // buttonLogout
+            // 
+            this.buttonLogout.Location = new System.Drawing.Point(644, 28);
+            this.buttonLogout.Name = "buttonLogout";
+            this.buttonLogout.Size = new System.Drawing.Size(95, 45);
+            this.buttonLogout.TabIndex = 6;
+            this.buttonLogout.Text = "Logout";
+            this.buttonLogout.UseVisualStyleBackColor = true;
+            this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
+            // 
             // DigitoVerificadorGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 392);
+            this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.buttonRecalcular);
             this.Controls.Add(this.buttonRevisarDVV);
             this.Controls.Add(this.dataGridViewErrores);
@@ -120,5 +132,6 @@
         private System.Windows.Forms.DataGridView dataGridViewErrores;
         private System.Windows.Forms.Button buttonRevisarDVV;
         private System.Windows.Forms.Button buttonRecalcular;
+        private System.Windows.Forms.Button buttonLogout;
     }
 }
