@@ -59,6 +59,7 @@ namespace TP_campo_62_BP
                                 MessageBox.Show(mensaje);
                                 DigitoVerificadorGUI_62_BP DigitoVerificadorForm = new DigitoVerificadorGUI_62_BP();
                                 DigitoVerificadorForm.Show();
+                                this.Hide();
                             }
                             else
                             {
