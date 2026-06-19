@@ -325,6 +325,7 @@ namespace BLL
                         _familiaDAL_62_BP.ActualizarDVH_62_BP(familia.Id_62_BP, dvh);
                         filasAfectadas++;
                     }
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Familia_62_BP");
                 }
             }
             catch (Exception ex)

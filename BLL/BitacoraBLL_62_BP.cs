@@ -171,6 +171,7 @@ namespace BLL_62_BP
                         _bitacoraDAL.ActualizarDVH_62_BP(registro.Id_62_BP, dvh);
                         filasAfectadas++;
                     }
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Bitacora_62_BP");
                 }
             }
             catch (Exception ex)
@@ -196,7 +197,7 @@ namespace BLL_62_BP
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al revisar Datos DVH Patentes.");
+                throw new Exception("Error al revisar Datos DVH Bitacora.");
             }
             return errores;
         }

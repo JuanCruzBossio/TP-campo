@@ -340,6 +340,7 @@ namespace BLL_62_BP
                         _usuarioDAL.ActualizarDVH_62_BP(usuario.Dni_62_BP, dvh);
                         filasAfectadas++;
                     }
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Usuario_62_BP");
                 }
             }
             catch (Exception ex)

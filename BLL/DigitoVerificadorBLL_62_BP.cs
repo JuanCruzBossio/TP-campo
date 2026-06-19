@@ -81,7 +81,7 @@ namespace BLL
             }
             return dvv;
         }
-        public List<DigitoVerificadorVertical_62_BP> BuscarErrorDVV_62_BP()
+        public List<DigitoVerificadorVertical_62_BP> BuscarErroresDVV_62_BP()
         {
             List<DigitoVerificadorVertical_62_BP> errores = new List<DigitoVerificadorVertical_62_BP>();
             try
@@ -100,6 +100,19 @@ namespace BLL
                 throw new Exception("No se pudo Revisar tablas DVV.");
             }
             return errores;
+        }
+        public List<DigitoVerificadorVertical_62_BP> BuscarDVVs_62_BP()
+        {
+            List<DigitoVerificadorVertical_62_BP> lista = new List<DigitoVerificadorVertical_62_BP>();
+            try
+            {
+                lista = _digitoVerificadorDAL_62_BP.BuscarDVV_62_BP();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo Buscar tablas DVV.");
+            }
+            return lista;
         }
     }
 }

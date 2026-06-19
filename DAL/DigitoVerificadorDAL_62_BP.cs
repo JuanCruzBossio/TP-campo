@@ -26,7 +26,7 @@ namespace DAL
         public List<DigitoVerificadorVertical_62_BP> BuscarDVV_62_BP()
         {
             string query = "SELECT * FROM DigitoVerificadorVertical_62_BP";
-            List<DigitoVerificadorVertical_62_BP> listaDVV = null;
+            List<DigitoVerificadorVertical_62_BP> listaDVV = new List<DigitoVerificadorVertical_62_BP>();
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
 
@@ -42,7 +42,7 @@ namespace DAL
         public DigitoVerificadorVertical_62_BP BuscarDVV_62_BP(string tabla)
         {
             string query = "SELECT * FROM DigitoVerificadorVertical_62_BP WHERE tabla_62_BP = @tabla";
-            DigitoVerificadorVertical_62_BP dvv = null;
+            DigitoVerificadorVertical_62_BP dvv = new DigitoVerificadorVertical_62_BP();
             SqlParameter[] parametros =
             {
                 new SqlParameter("@tabla", tabla)

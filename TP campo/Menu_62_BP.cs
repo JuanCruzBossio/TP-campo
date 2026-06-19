@@ -133,5 +133,12 @@ namespace TP_campo_62_BP
             cambiarIdiomaToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(17);
         }
+
+        private void digitoVerificadorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DigitoVerificadorGUI_62_BP DigitoVerificadorForm = new DigitoVerificadorGUI_62_BP();
+            DigitoVerificadorForm.MdiParent = this;
+            DigitoVerificadorForm.Show();
+        }
     }
 }

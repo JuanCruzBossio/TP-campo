@@ -322,6 +322,7 @@ namespace BLL
                         _rolDAL_62_BP.ActualizarDVH_62_BP(rol.Id_62_BP, dvh);
                         filasAfectadas++;
                     }
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
                 }
             }
             catch (Exception ex)

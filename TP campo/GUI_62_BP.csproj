@@ -64,6 +64,12 @@
     <Compile Include="CambiarClaveGUI_62_BP.Designer.cs">
       <DependentUpon>CambiarClaveGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="DigitoVerificadorGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DigitoVerificadorGUI_62_BP.Designer.cs">
+      <DependentUpon>DigitoVerificadorGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="FamiliaGUI_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambiarClaveGUI_62_BP.resx">
       <DependentUpon>CambiarClaveGUI_62_BP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DigitoVerificadorGUI_62_BP.resx">
+      <DependentUpon>DigitoVerificadorGUI_62_BP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FamiliaGUI_62_BP.resx">
       <DependentUpon>FamiliaGUI_62_BP.cs</DependentUpon>

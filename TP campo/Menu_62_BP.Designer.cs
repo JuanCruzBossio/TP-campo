@@ -107,14 +107,14 @@
             // rolesToolStripMenuItem
             // 
             this.rolesToolStripMenuItem.Name = "rolesToolStripMenuItem";
-            this.rolesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rolesToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.rolesToolStripMenuItem.Text = "Roles";
             this.rolesToolStripMenuItem.Click += new System.EventHandler(this.rolesToolStripMenuItem_Click);
             // 
             // familiasToolStripMenuItem
             // 
             this.familiasToolStripMenuItem.Name = "familiasToolStripMenuItem";
-            this.familiasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.familiasToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.familiasToolStripMenuItem.Text = "Familias";
             this.familiasToolStripMenuItem.Click += new System.EventHandler(this.familiasToolStripMenuItem_Click);
             // 
@@ -142,6 +142,7 @@
             this.digitoVerificadorToolStripMenuItem.Name = "digitoVerificadorToolStripMenuItem";
             this.digitoVerificadorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.digitoVerificadorToolStripMenuItem.Text = "Digito Verificador";
+            this.digitoVerificadorToolStripMenuItem.Click += new System.EventHandler(this.digitoVerificadorToolStripMenuItem_Click);
             // 
             // maestrosToolStripMenuItem
             // 
