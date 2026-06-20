@@ -115,9 +115,6 @@ namespace TP_campo_62_BP
             backupToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(11);
 
-            restoreToolStripMenuItem.Enabled =
-                session.TienePermiso_62_BP(12);
-
             bitacoraToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(13);
 
@@ -139,6 +136,13 @@ namespace TP_campo_62_BP
             DigitoVerificadorGUI_62_BP DigitoVerificadorForm = new DigitoVerificadorGUI_62_BP();
             DigitoVerificadorForm.MdiParent = this;
             DigitoVerificadorForm.Show();
+        }
+
+        private void backupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BackupRestoreGUI_62_BP BackupRestoreForm = new BackupRestoreGUI_62_BP();
+            BackupRestoreForm.MdiParent = this;
+            BackupRestoreForm.Show();
         }
     }
 }

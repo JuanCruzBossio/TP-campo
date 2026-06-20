@@ -135,7 +135,29 @@ namespace DAL_62_BP
             return tabla;
         }
 
+        public int ejecutarScript_62_BP(string query)
+        {
+            int filasAfectadas = 0;
 
+            abrir_62_BP();
+
+            try
+            {
+                SqlCommand comando =
+                    new SqlCommand(query, conexion_62_BP);
+
+                comando.CommandType = CommandType.Text;
+
+                filasAfectadas =
+                    comando.ExecuteNonQuery();
+            }
+            finally
+            {
+                cerrar_62_BP();
+            }
+
+            return filasAfectadas;
+        }
 
     }
 }

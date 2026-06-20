@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupRestoreGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BackupRestoreGUI_62_BP.Designer.cs">
+      <DependentUpon>BackupRestoreGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bitacora_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <Compile Include="UsuarioGUI_62_BP.Designer.cs">
       <DependentUpon>UsuarioGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BackupRestoreGUI_62_BP.resx">
+      <DependentUpon>BackupRestoreGUI_62_BP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Bitacora_62_BP.resx">
       <DependentUpon>Bitacora_62_BP.cs</DependentUpon>
     </EmbeddedResource>
