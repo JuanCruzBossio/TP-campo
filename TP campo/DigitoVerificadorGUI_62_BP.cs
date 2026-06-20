@@ -44,6 +44,7 @@ namespace TP_campo
             }
             else {
                 dataGridViewErrores.DataSource = null;
+                MessageBox.Show("NO se detectaron errores la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
             }
         }
 
@@ -60,25 +61,36 @@ namespace TP_campo
         //Funciones:
         public void LlenarTablaErrores()
         {
+            object datosTabla = null;
             switch (_dvvSeleccionado_62_BP.Tabla_62_BP)
             {
                 case "Bitacora_62_BP":
-                    dataGridViewErrores.DataSource = _bitacoraBLL_62_BP.BuscarErrorDVH_62_BP();
+                    datosTabla = _bitacoraBLL_62_BP.BuscarErrorDVH_62_BP();
                     break;
                 case "Familia_62_BP":
-                    dataGridViewErrores.DataSource = _familiaBLL_62_BP.BuscarErrorDVH_62_BP();
+                    datosTabla = _familiaBLL_62_BP.BuscarErrorDVH_62_BP();
                     break;
                 case "Patente_62_BP":
-                    dataGridViewErrores.DataSource = _patenteBLL_62_BP.BuscarErrorDVH_62_BP();
+                    datosTabla = _patenteBLL_62_BP.BuscarErrorDVH_62_BP();
                     break;
                 case "Rol_62_BP":
-                    dataGridViewErrores.DataSource = _rolBLL_62_BP.BuscarErrorDVH_62_BP();
+                    datosTabla = _rolBLL_62_BP.BuscarErrorDVH_62_BP();
                     break;
                 case "Usuario_62_BP":
-                    dataGridViewErrores.DataSource = _usuarioBLL_62_BP.BuscarErrorDVH_62_BP();
+                    datosTabla = _usuarioBLL_62_BP.BuscarErrorDVH_62_BP();
                     break;
             }
-            MessageBox.Show("Se detectaron errores en los siguientes Registros de la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+            
+
+            if (datosTabla != null && ((System.Collections.IList)datosTabla).Count > 0)
+            {
+                dataGridViewErrores.DataSource = datosTabla;
+                MessageBox.Show("Se detectaron errores en los siguientes Registros de la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+            }
+            else
+            {
+                MessageBox.Show("Se detectó al menos un Registro eliminado en la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+            }
         }
         public bool RecalcularDigitosVerificadores()
         {
@@ -146,6 +158,13 @@ namespace TP_campo
             }
 
             login.Show();
+            this.Close();
+        }
+
+        private void buttonBackupRestore_Click(object sender, EventArgs e)
+        {
+            BackupRestoreGUI_62_BP BackupRestoreForm = new BackupRestoreGUI_62_BP();
+            BackupRestoreForm.Show();
             this.Close();
         }
     }

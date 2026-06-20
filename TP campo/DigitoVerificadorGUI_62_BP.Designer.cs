@@ -35,6 +35,7 @@
             this.buttonRevisarDVV = new System.Windows.Forms.Button();
             this.buttonRecalcular = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
+            this.buttonBackupRestore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewErrores)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +76,7 @@
             // 
             // buttonRevisarDVV
             // 
-            this.buttonRevisarDVV.Location = new System.Drawing.Point(377, 28);
+            this.buttonRevisarDVV.Location = new System.Drawing.Point(349, 28);
             this.buttonRevisarDVV.Name = "buttonRevisarDVV";
             this.buttonRevisarDVV.Size = new System.Drawing.Size(95, 45);
             this.buttonRevisarDVV.TabIndex = 4;
@@ -85,7 +86,7 @@
             // 
             // buttonRecalcular
             // 
-            this.buttonRecalcular.Location = new System.Drawing.Point(519, 28);
+            this.buttonRecalcular.Location = new System.Drawing.Point(450, 28);
             this.buttonRecalcular.Name = "buttonRecalcular";
             this.buttonRecalcular.Size = new System.Drawing.Size(95, 45);
             this.buttonRecalcular.TabIndex = 5;
@@ -95,7 +96,7 @@
             // 
             // buttonLogout
             // 
-            this.buttonLogout.Location = new System.Drawing.Point(644, 28);
+            this.buttonLogout.Location = new System.Drawing.Point(720, 28);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(95, 45);
             this.buttonLogout.TabIndex = 6;
@@ -103,11 +104,22 @@
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
+            // buttonBackupRestore
+            // 
+            this.buttonBackupRestore.Location = new System.Drawing.Point(610, 28);
+            this.buttonBackupRestore.Name = "buttonBackupRestore";
+            this.buttonBackupRestore.Size = new System.Drawing.Size(95, 45);
+            this.buttonBackupRestore.TabIndex = 7;
+            this.buttonBackupRestore.Text = "Backup/Restore";
+            this.buttonBackupRestore.UseVisualStyleBackColor = true;
+            this.buttonBackupRestore.Click += new System.EventHandler(this.buttonBackupRestore_Click);
+            // 
             // DigitoVerificadorGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(761, 392);
+            this.ClientSize = new System.Drawing.Size(818, 392);
+            this.Controls.Add(this.buttonBackupRestore);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.buttonRecalcular);
             this.Controls.Add(this.buttonRevisarDVV);
@@ -133,5 +145,6 @@
         private System.Windows.Forms.Button buttonRevisarDVV;
         private System.Windows.Forms.Button buttonRecalcular;
         private System.Windows.Forms.Button buttonLogout;
+        private System.Windows.Forms.Button buttonBackupRestore;
     }
 }
