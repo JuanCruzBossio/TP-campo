@@ -82,6 +82,12 @@
     <Compile Include="FamiliaGUI_62_BP.Designer.cs">
       <DependentUpon>FamiliaGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="CambiarIdiomaGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CambiarIdiomaGUI_62_BP.Designer.cs">
+      <DependentUpon>CambiarIdiomaGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CambiarClaveGUI_62_BP.resx">
       <DependentUpon>CambiarClaveGUI_62_BP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CambiarIdiomaGUI_62_BP.resx">
+      <DependentUpon>CambiarIdiomaGUI_62_BP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DigitoVerificadorGUI_62_BP.resx">
       <DependentUpon>DigitoVerificadorGUI_62_BP.cs</DependentUpon>
