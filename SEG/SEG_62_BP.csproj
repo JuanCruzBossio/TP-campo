@@ -44,6 +44,8 @@
     <Compile Include="DigitoVerificadorHorizontal_62_BP.cs" />
     <Compile Include="DigitoVerificadorVertical_62_BP.cs" />
     <Compile Include="Encriptacion_62_BP.cs" />
+    <Compile Include="Observer_62_BP\Idioma_62_BP.cs" />
+    <Compile Include="Observer_62_BP\IObserverIdioma_62_BP.cs" />
     <Compile Include="Permisos_62_BP\ComponentePermiso_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Familia_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Patente_62_BP.cs" />
