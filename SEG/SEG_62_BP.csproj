@@ -45,12 +45,13 @@
     <Compile Include="DigitoVerificadorVertical_62_BP.cs" />
     <Compile Include="Encriptacion_62_BP.cs" />
     <Compile Include="Observer_62_BP\Idioma_62_BP.cs" />
-    <Compile Include="Observer_62_BP\IObserverIdioma_62_BP.cs" />
+    <Compile Include="Observer_62_BP\IObservadorIdioma_62_BP.cs" />
     <Compile Include="Permisos_62_BP\ComponentePermiso_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Familia_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Patente_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Rol_62_BPcs.cs" />
     <Compile Include="RegistroBitacora_62_BP.cs" />
+    <Compile Include="Singleton\Sesion_62_BP.cs" />
     <Compile Include="SessionManager_62_BP.cs" />
     <Compile Include="Usuario_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
