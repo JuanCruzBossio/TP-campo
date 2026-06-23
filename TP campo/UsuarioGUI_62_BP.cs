@@ -209,6 +209,7 @@ namespace TP_campo_62_BP
             dataGridViewUsuarios.DataSource = listaMostrar;
             dataGridViewUsuarios.Columns["Contrasena_62_BP"].Visible = false;
             dataGridViewUsuarios.ReadOnly = true;
+            ActualizarIdioma_62_BP(SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP);
         }
         private void LlenarCampos_62_BP(Usuario_62_BP usuario)
         {
