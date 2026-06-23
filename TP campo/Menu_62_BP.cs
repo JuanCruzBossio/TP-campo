@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
 using SEG_62_BP;
-using IdiomaObserver_62_BP = SEG_62_BP.Observer.Idioma_62_BP;
 using TP_campo;
 
 namespace TP_campo_62_BP
@@ -83,7 +82,7 @@ namespace TP_campo_62_BP
         }
 
 
-        protected override void TraducirFormulario_62_BP(IdiomaObserver_62_BP idioma_62_BP)
+        protected override void TraducirFormulario_62_BP(SEG_62_BP.Observer.Idioma_62_BP idioma_62_BP)
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
             ActualizarTextoUsuarioLogueado_62_BP();

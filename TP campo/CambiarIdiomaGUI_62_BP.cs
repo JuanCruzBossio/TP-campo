@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
 using SEG_62_BP;
-using IdiomaObserver_62_BP = SEG_62_BP.Observer.Idioma_62_BP;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -35,7 +34,7 @@ namespace TP_campo
             {
                 txt_idioma_actual.ReadOnly = true;
 
-                IdiomaObserver_62_BP idiomaActual_62_BP =
+                SEG_62_BP.Observer.Idioma_62_BP idiomaActual_62_BP =
                     SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP;
 
                 txt_idioma_actual.Text = idiomaActual_62_BP != null
@@ -63,7 +62,7 @@ namespace TP_campo
                 }
 
                 string codigoIdioma_62_BP = cmb_idioma.SelectedItem.ToString();
-                IdiomaObserver_62_BP idiomaActual_62_BP =
+                SEG_62_BP.Observer.Idioma_62_BP idiomaActual_62_BP =
                     SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP;
 
                 if (idiomaActual_62_BP != null &&
@@ -73,7 +72,7 @@ namespace TP_campo
                     return;
                 }
 
-                IdiomaObserver_62_BP idioma_62_BP = _idiomaBLL_62_BP.CargarIdioma_62_BP(codigoIdioma_62_BP);
+                SEG_62_BP.Observer.Idioma_62_BP idioma_62_BP = _idiomaBLL_62_BP.CargarIdioma_62_BP(codigoIdioma_62_BP);
 
                 SessionManager_62_BP.GetInstancia_62_BP().CambiarIdioma_62_BP(idioma_62_BP);
 
