@@ -229,7 +229,8 @@ namespace TP_campo_62_BP
         }
         private Usuario_62_BP ValidarUsuario_62_BP()
         {
-            if (string.IsNullOrWhiteSpace(textBoxDNI.Text) || string.IsNullOrWhiteSpace(textBoxApellidos.Text) ||
+            if (string.IsNullOrWhiteSpace(textBoxDNI.Text) || !int.TryParse(textBoxDNI.Text, out int dni) ||
+                dni <= 0 || string.IsNullOrWhiteSpace(textBoxApellidos.Text) ||
                 string.IsNullOrWhiteSpace(textBoxNombres.Text) || comboBoxRol.SelectedIndex == -1 ||
                 string.IsNullOrWhiteSpace(textBoxEmail.Text) || string.IsNullOrWhiteSpace(textBoxLogin.Text))
             {

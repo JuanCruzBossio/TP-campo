@@ -122,7 +122,7 @@ namespace DAL_62_BP
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
             var dni = 0;
-            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1);";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -135,8 +135,8 @@ namespace DAL_62_BP
                 new SqlParameter("@contrasena", usuario.Contrasena_62_BP)
             };
 
-            object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
-            dni = Convert.ToInt32(Convert.ToDecimal(resultado));
+            int filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            dni = int.Parse(usuario.Dni_62_BP);
             return dni;
         }
         public int Activar_62_BP(Usuario_62_BP usuario)
