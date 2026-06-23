@@ -11,10 +11,11 @@ using BLL;
 using SEG.Permisos;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class RolGUI_62_BP : Form
+    public partial class RolGUI_62_BP : LocalizableForm_62_BP
     {
         public RolGUI_62_BP()
         {
@@ -127,8 +128,7 @@ namespace TP_campo
 
             if (rolSeleccionado == null)
             {
-                MessageBox.Show(
-                    "Debe seleccionar un Rol.");
+                MostrarMensaje_62_BP("msg_rol_debe_seleccionar", "Debe seleccionar un Rol.");
                 return;
             }
 
@@ -150,8 +150,7 @@ namespace TP_campo
 
             if (rolSeleccionado == null)
             {
-                MessageBox.Show(
-                    "Debe seleccionar un Rol.");
+                MostrarMensaje_62_BP("msg_rol_debe_seleccionar", "Debe seleccionar un Rol.");
                 return;
             }
 
@@ -460,16 +459,15 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show("Rol creado con éxito.");
+                    MostrarMensaje_62_BP("msg_rol_creado", "Rol creado con exito.");
 
                     return true;
                 }
-                MessageBox.Show( "No se pudo crear el rol.");
+                MostrarMensaje_62_BP("msg_rol_crear_error", "No se pudo crear el rol.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar crear: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_crear_error_detalle", "Error al intentar crear: {0}", ex.Message));
             }
 
             return false;
@@ -480,7 +478,7 @@ namespace TP_campo
             {
                 if (_rolEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show( "Debe seleccionar un rol.");
+                    MostrarMensaje_62_BP("msg_rol_debe_seleccionar", "Debe seleccionar un rol.");
 
                     return false;
                 }
@@ -495,16 +493,16 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show( "Rol modificado con éxito.");
+                    MostrarMensaje_62_BP("msg_rol_modificado", "Rol modificado con exito.");
 
                     return true;
                 }
 
-                MessageBox.Show( "No se pudo modificar el Rol.");
+                MostrarMensaje_62_BP("msg_rol_modificar_error", "No se pudo modificar el Rol.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show( "Error al intentar modificar: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", ex.Message));
             }
 
             return false;
@@ -515,7 +513,7 @@ namespace TP_campo
             {
                 if (_rolEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show( "Debe seleccionar un Rol.");
+                    MostrarMensaje_62_BP("msg_rol_debe_seleccionar", "Debe seleccionar un Rol.");
 
                     return false;
                 }
@@ -524,16 +522,16 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show( "Rol eliminado con éxito.");
+                    MostrarMensaje_62_BP("msg_rol_eliminado", "Rol eliminado con exito.");
 
                     return true;
                 }
 
-                MessageBox.Show( "No se pudo eliminar el Rol.");
+                MostrarMensaje_62_BP("msg_rol_eliminar_error", "No se pudo eliminar el Rol.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show( "Error al intentar eliminar: "+ ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_eliminar_error_detalle", "Error al intentar eliminar: {0}", ex.Message));
             }
 
             return false;

@@ -76,6 +76,7 @@
             this.btn_cambiar_idioma.TabIndex = 4;
             this.btn_cambiar_idioma.Text = "Cambiar Idioma";
             this.btn_cambiar_idioma.UseVisualStyleBackColor = true;
+            this.btn_cambiar_idioma.Click += new System.EventHandler(this.btn_cambiar_idioma_Click_1);
             // 
             // CambiarIdiomaGUI_62_BP
             // 

@@ -14,8 +14,8 @@ using SEG_62_BP;
 using TP_campo;
 
 namespace TP_campo_62_BP
-{//Prueba de commit
-    public partial class Login_62_BP : Form
+{
+    public partial class Login_62_BP : LocalizableForm_62_BP
     {
         public Login_62_BP()
         {
@@ -49,7 +49,9 @@ namespace TP_campo_62_BP
                         {
                             if (usuario.IdRol_62_BP == 1)
                             {
-                                string mensaje = "Se detectaron errores de integridad en la(s) siguiente(s) tabla(s):\n";
+                                string mensaje = Texto_62_BP(
+                                    "msg_login_integridad_tablas",
+                                    "Se detectaron errores de integridad en la(s) siguiente(s) tabla(s):\n");
 
                                 foreach (DigitoVerificadorVertical_62_BP dvv in listaErrores)
                                 {
@@ -63,7 +65,7 @@ namespace TP_campo_62_BP
                             }
                             else
                             {
-                                MessageBox.Show("No es posible iniciar sesión en este momento. Por favor, comuníquese con un administrador del sistema.");
+                                MostrarMensaje_62_BP("msg_login_integridad_no_admin", "No es posible iniciar sesion en este momento. Por favor, comuniquese con un administrador del sistema.");
                             }
                         }
                         else
@@ -84,17 +86,17 @@ namespace TP_campo_62_BP
                     }
                     else
                     {
-                        MessageBox.Show("Usuario o contraseña incorrectos.");
+                        MostrarMensaje_62_BP("msg_login_credenciales_invalidas", "Usuario o contrasena incorrectos.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Faltan ingresar datos.");
+                    MostrarMensaje_62_BP("msg_login_faltan_datos", "Faltan ingresar datos.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error durante el inicio de sesión: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_login_error_detalle", "Error durante el inicio de sesion: {0}", ex.Message));
             }
         }
 

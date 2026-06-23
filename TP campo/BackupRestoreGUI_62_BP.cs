@@ -11,10 +11,11 @@ using System.Windows.Forms;
 using BLL;
 using BLL_62_BP;
 using SEG_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class BackupRestoreGUI_62_BP : Form
+    public partial class BackupRestoreGUI_62_BP : LocalizableForm_62_BP
     {
         public BackupRestoreGUI_62_BP()
         {
@@ -82,7 +83,7 @@ namespace TP_campo
         {
             if (string.IsNullOrWhiteSpace(textBoxRuta.Text))
             {
-                MessageBox.Show("Debe seleccionar una ruta.");
+                MostrarMensaje_62_BP("msg_backup_ruta_obligatoria", "Debe seleccionar una ruta.");
                 return false;
             }
 
@@ -90,19 +91,19 @@ namespace TP_campo
 
             if (string.IsNullOrWhiteSpace(directorio))
             {
-                MessageBox.Show("Debe seleccionar una carpeta válida.");
+                MostrarMensaje_62_BP("msg_backup_carpeta_valida", "Debe seleccionar una carpeta valida.");
                 return false;
             }
 
             if (!Directory.Exists(directorio))
             {
-                MessageBox.Show("La carpeta seleccionada no existe.");
+                MostrarMensaje_62_BP("msg_backup_carpeta_no_existe", "La carpeta seleccionada no existe.");
                 return false;
             }
 
             if (!string.Equals(Path.GetExtension(textBoxRuta.Text),".bak",StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("El archivo debe tener extensión .bak.");
+                MostrarMensaje_62_BP("msg_backup_extension_bak", "El archivo debe tener extension .bak.");
                 return false;
             }
 
@@ -112,13 +113,13 @@ namespace TP_campo
         {
             if (string.IsNullOrWhiteSpace(textBoxRuta.Text))
             {
-                MessageBox.Show("Debe seleccionar un archivo de Backup.");
+                MostrarMensaje_62_BP("msg_restore_archivo_obligatorio", "Debe seleccionar un archivo de Backup.");
                 return false;
             }
 
             if (!File.Exists(textBoxRuta.Text))
             {
-                MessageBox.Show("El archivo seleccionado no existe.");
+                MostrarMensaje_62_BP("msg_restore_archivo_no_existe", "El archivo seleccionado no existe.");
                 return false;
             }
 
@@ -127,7 +128,7 @@ namespace TP_campo
                 ".bak",
                 StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Debe seleccionar un archivo con extensión .bak.");
+                MostrarMensaje_62_BP("msg_restore_extension_bak", "Debe seleccionar un archivo con extension .bak.");
                 return false;
             }
 
@@ -144,18 +145,18 @@ namespace TP_campo
 
                     if (resultado > 0)
                     {
-                        MessageBox.Show("Backup creado con éxito.");
+                        MostrarMensaje_62_BP("msg_backup_exito", "Backup creado con exito.");
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo realizar el Backup.");
+                        MostrarMensaje_62_BP("msg_backup_error", "No se pudo realizar el Backup.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar realizar el Backup: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_backup_error_detalle", "Ocurrio un error al intentar realizar el Backup: {0}", ex.Message));
             }
             return false;
         }
@@ -170,18 +171,18 @@ namespace TP_campo
 
                     if (resultado > 0)
                     {
-                        MessageBox.Show("Restore realizado con éxito.");
+                        MostrarMensaje_62_BP("msg_restore_exito", "Restore realizado con exito.");
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo realizar el Restore.");
+                        MostrarMensaje_62_BP("msg_restore_error", "No se pudo realizar el Restore.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar realizar el Restore: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_restore_error_detalle", "Ocurrio un error al intentar realizar el Restore: {0}", ex.Message));
             }
             return false;
         }

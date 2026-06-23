@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_62_BP;
 using SEG_62_BP;
+using IdiomaObserver_62_BP = SEG_62_BP.Observer.Idioma_62_BP;
 using TP_campo;
 
 namespace TP_campo_62_BP
 {
-    public partial class Menu_62_BP : Form
+
+    public partial class Menu_62_BP : LocalizableForm_62_BP
     {
         public Menu_62_BP()
         {
             InitializeComponent();
+            cambiarIdiomaToolStripMenuItem.Click += cambiarIdiomaToolStripMenuItem_Click;
         }
         //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
@@ -44,7 +47,7 @@ namespace TP_campo_62_BP
             {
                 _usuarioBLL_62_BP.Logout_62_BP();
 
-                MessageBox.Show("Sesión cerrada con éxito.");
+                MostrarMensaje_62_BP("msg_logout_exito", "Sesion cerrada con exito.");
 
                 Form login = Application.OpenForms["Login_62_BP"];
 
@@ -54,7 +57,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cerrar sesión: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_logout_error_detalle", "Error al cerrar sesion: {0}", ex.Message));
             }
         }
 
@@ -75,8 +78,26 @@ namespace TP_campo_62_BP
         private void Menu_62_BP_Load(object sender, EventArgs e)
         {
             _nombreUsuario_62_BP = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Nombre_62_BP + " "+ SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Apellido_62_BP;
-            labelNombre.Text = "Usuario Logueado: "+ _nombreUsuario_62_BP;
+            ActualizarTextoUsuarioLogueado_62_BP();
             AplicarPermisos_62_BP();
+        }
+
+
+        protected override void TraducirFormulario_62_BP(IdiomaObserver_62_BP idioma_62_BP)
+        {
+            base.TraducirFormulario_62_BP(idioma_62_BP);
+            ActualizarTextoUsuarioLogueado_62_BP();
+        }
+
+        private void ActualizarTextoUsuarioLogueado_62_BP()
+        {
+            if (string.IsNullOrWhiteSpace(_nombreUsuario_62_BP))
+            {
+                labelNombre.Text = string.Empty;
+                return;
+            }
+
+            labelNombre.Text = Texto_62_BP("label_usuario_logueado", "Usuario Logueado:") + " " + _nombreUsuario_62_BP;
         }
 
         private void familiasToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,6 +164,14 @@ namespace TP_campo_62_BP
             BackupRestoreGUI_62_BP BackupRestoreForm = new BackupRestoreGUI_62_BP();
             BackupRestoreForm.MdiParent = this;
             BackupRestoreForm.Show();
+        }
+
+
+        private void cambiarIdiomaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CambiarIdiomaGUI_62_BP cambiarIdiomaForm = new CambiarIdiomaGUI_62_BP();
+            cambiarIdiomaForm.MdiParent = this;
+            cambiarIdiomaForm.Show();
         }
     }
 }

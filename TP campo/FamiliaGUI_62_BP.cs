@@ -11,10 +11,12 @@ using BLL;
 using SEG.Permisos;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class FamiliaGUI_62_BP : Form
+
+    public partial class FamiliaGUI_62_BP : LocalizableForm_62_BP
     {
         public FamiliaGUI_62_BP()
         {
@@ -122,8 +124,7 @@ namespace TP_campo
 
             if (familiaSeleccionada == null)
             {
-                MessageBox.Show(
-                    "Debe seleccionar una familia.");
+                MostrarMensaje_62_BP("msg_familia_debe_seleccionar", "Debe seleccionar una familia.");
                 return;
             }
 
@@ -146,8 +147,7 @@ namespace TP_campo
 
             if (familiaSeleccionada == null)
             {
-                MessageBox.Show(
-                    "Debe seleccionar una familia.");
+                MostrarMensaje_62_BP("msg_familia_debe_seleccionar", "Debe seleccionar una familia.");
                 return;
             }
 
@@ -428,20 +428,16 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia creada con éxito.");
+                    MostrarMensaje_62_BP("msg_familia_creada", "Familia creada con exito.");
 
                     return true;
                 }
 
-                MessageBox.Show(
-                    "No se pudo crear la familia.");
+                MostrarMensaje_62_BP("msg_familia_crear_error", "No se pudo crear la familia.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar crear: "
-                    + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_crear_error_detalle", "Error al intentar crear: {0}", ex.Message));
             }
 
             return false;
@@ -452,8 +448,7 @@ namespace TP_campo
             {
                 if (familiaEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show(
-                        "Debe seleccionar una familia.");
+                    MostrarMensaje_62_BP("msg_familia_debe_seleccionar", "Debe seleccionar una familia.");
 
                     return false;
                 }
@@ -468,20 +463,16 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia modificada con éxito.");
+                    MostrarMensaje_62_BP("msg_familia_modificada", "Familia modificada con exito.");
 
                     return true;
                 }
 
-                MessageBox.Show(
-                    "No se pudo modificar la familia.");
+                MostrarMensaje_62_BP("msg_familia_modificar_error", "No se pudo modificar la familia.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar modificar: "
-                    + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", ex.Message));
             }
 
             return false;
@@ -492,8 +483,7 @@ namespace TP_campo
             {
                 if (familiaEnEdicion_62_BP == null)
                 {
-                    MessageBox.Show(
-                        "Debe seleccionar una familia.");
+                    MostrarMensaje_62_BP("msg_familia_debe_seleccionar", "Debe seleccionar una familia.");
 
                     return false;
                 }
@@ -502,20 +492,16 @@ namespace TP_campo
 
                 if (filas > 0)
                 {
-                    MessageBox.Show(
-                        "Familia eliminada con éxito.");
+                    MostrarMensaje_62_BP("msg_familia_eliminada", "Familia eliminada con exito.");
 
                     return true;
                 }
 
-                MessageBox.Show(
-                    "No se pudo eliminar la familia.");
+                MostrarMensaje_62_BP("msg_familia_eliminar_error", "No se pudo eliminar la familia.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error al intentar eliminar: "
-                    + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_eliminar_error_detalle", "Error al intentar eliminar: {0}", ex.Message));
             }
 
             return false;

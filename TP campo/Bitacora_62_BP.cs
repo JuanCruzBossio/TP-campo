@@ -13,7 +13,7 @@ using SEG_62_BP;
 
 namespace TP_campo_62_BP
 {
-    public partial class Bitacora_62_BP : Form
+    public partial class Bitacora_62_BP : LocalizableForm_62_BP
     {
 
         public Bitacora_62_BP()
@@ -122,7 +122,7 @@ namespace TP_campo_62_BP
 
             if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(error, Texto_62_BP("titulo_error", "Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dgv_bitacora.DataSource = null;
                 return;
             }
@@ -135,7 +135,7 @@ namespace TP_campo_62_BP
             var registros = dgv_bitacora.DataSource as List<RegistroBitacora_62_BP>;
             if (registros == null || registros.Count == 0)
             {
-                MessageBox.Show("No hay datos para exportar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MostrarMensaje_62_BP("msg_exportar_sin_datos", "No hay datos para exportar.", "titulo_informacion", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             SaveFileDialog dlg = new SaveFileDialog();
@@ -150,7 +150,11 @@ namespace TP_campo_62_BP
 
             bitacoraBLL_62_BP.ExportarBitacoraAPDF(registros, ruta);
 
-            MessageBox.Show($"Archivo PDF generado en:\n{ruta}", "Exportación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                TextoFormato_62_BP("msg_exportar_pdf_generado", "Archivo PDF generado en:\n{0}", ruta),
+                Texto_62_BP("titulo_exportacion_exitosa", "Exportacion exitosa"),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
         //Funciones
         private void Limpiar()

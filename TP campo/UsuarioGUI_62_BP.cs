@@ -17,7 +17,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TP_campo_62_BP
 {
-    public partial class UsuarioGUI_62_BP : Form
+
+    public partial class UsuarioGUI_62_BP : LocalizableForm_62_BP
     {
         public UsuarioGUI_62_BP()
         {
@@ -102,7 +103,7 @@ namespace TP_campo_62_BP
             }
             else
             {
-                MessageBox.Show("Debe seleccionar un usuario.");
+                MostrarMensaje_62_BP("msg_usuario_debe_seleccionar", "Debe seleccionar un usuario.");
             }
         }
         private void buttonModificar_Click(object sender, EventArgs e)
@@ -113,7 +114,7 @@ namespace TP_campo_62_BP
             }
             else
             {
-                MessageBox.Show("Debe seleccionar un usuario.");
+                MostrarMensaje_62_BP("msg_usuario_debe_seleccionar", "Debe seleccionar un usuario.");
             }
         }
         private void buttonActivar_Click(object sender, EventArgs e)
@@ -124,7 +125,7 @@ namespace TP_campo_62_BP
             }
             else
             {
-                MessageBox.Show("Debe seleccionar un usuario.");
+                MostrarMensaje_62_BP("msg_usuario_debe_seleccionar", "Debe seleccionar un usuario.");
             }
         }
         private void buttonAplicar_Click(object sender, EventArgs e)
@@ -232,7 +233,7 @@ namespace TP_campo_62_BP
                 string.IsNullOrWhiteSpace(textBoxNombres.Text) || comboBoxRol.SelectedIndex == -1 ||
                 string.IsNullOrWhiteSpace(textBoxEmail.Text) || string.IsNullOrWhiteSpace(textBoxLogin.Text))
             {
-                MessageBox.Show("Faltan completar datos obligatorios.");
+                MostrarMensaje_62_BP("msg_faltan_datos_obligatorios", "Faltan completar datos obligatorios.");
                 return null;
             }
 
@@ -252,7 +253,7 @@ namespace TP_campo_62_BP
             }
             catch
             {
-                MessageBox.Show("Error en el formato de los datos (verifique Bloqueado/Activo).");
+                MostrarMensaje_62_BP("msg_usuario_formato_datos", "Error en el formato de los datos (verifique Bloqueado/Activo).");
                 return null;
             }
         }
@@ -269,18 +270,18 @@ namespace TP_campo_62_BP
 
                     if (resultado > 0)
                     {
-                        MessageBox.Show("Usuario creado con éxito.");
+                        MostrarMensaje_62_BP("msg_usuario_creado", "Usuario creado con exito.");
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo realizar el alta.");
+                        MostrarMensaje_62_BP("msg_usuario_alta_error", "No se pudo realizar el alta.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar crear el usuario: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_crear_error_detalle", "Ocurrio un error al intentar crear el usuario: {0}", ex.Message));
             }
             return false;
         }
@@ -290,13 +291,13 @@ namespace TP_campo_62_BP
             {
                 if (!hayUsuarioSeleccionado_62_BP)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario a desbloquear.");
+                    MostrarMensaje_62_BP("msg_usuario_debe_seleccionar_desbloquear", "Debe seleccionar un usuario a desbloquear.");
                     return false;
                 }
 
                 if (!checkBoxBloqueado.Checked)
                 {
-                    MessageBox.Show("El usuario seleccionado no se encuentra bloqueado.");
+                    MostrarMensaje_62_BP("msg_usuario_no_bloqueado", "El usuario seleccionado no se encuentra bloqueado.");
                     return false;
                 }
                 Usuario_62_BP usuarioADesbloquear = ValidarUsuario_62_BP();
@@ -305,17 +306,17 @@ namespace TP_campo_62_BP
 
                 if (filas > 0)
                 {
-                    MessageBox.Show("Usuario desbloqueado con éxito.");
+                    MostrarMensaje_62_BP("msg_usuario_desbloqueado", "Usuario desbloqueado con exito.");
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo realizar el desbloqueo.");
+                    MostrarMensaje_62_BP("msg_usuario_desbloqueo_error", "No se pudo realizar el desbloqueo.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar desbloquear el usuario: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_desbloquear_error_detalle", "Ocurrio un error al intentar desbloquear el usuario: {0}", ex.Message));
             }
             return false;
         }
@@ -343,7 +344,7 @@ namespace TP_campo_62_BP
             {
                 if (!hayUsuarioSeleccionado_62_BP)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario.");
+                    MostrarMensaje_62_BP("msg_usuario_debe_seleccionar", "Debe seleccionar un usuario.");
                     return false;
                 }
 
@@ -357,27 +358,27 @@ namespace TP_campo_62_BP
                 if (checkBoxActivo.Checked)
                 {
                     filas = _usuarioBLL_62_BP.Desactivar_62_BP(usuario);
-                    accionRealizada = "Desactivado";
+                    accionRealizada = Texto_62_BP("estado_usuario_desactivado", "Desactivado");
                 }
                 else
                 {
                     filas = _usuarioBLL_62_BP.Activar_62_BP(usuario);
-                    accionRealizada = "Activado";
+                    accionRealizada = Texto_62_BP("estado_usuario_activado", "Activado");
                 }
 
                 if (filas > 0)
                 {
-                    MessageBox.Show($"Usuario {accionRealizada} con éxito.");
+                    MessageBox.Show(TextoFormato_62_BP("msg_usuario_accion_exito", "Usuario {0} con exito.", accionRealizada));
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show($"No se pudo completar la acción: {accionRealizada}.");
+                    MessageBox.Show(TextoFormato_62_BP("msg_usuario_accion_error", "No se pudo completar la accion: {0}.", accionRealizada));
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar Activar/Desactivar el usuario: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_activar_error_detalle", "Ocurrio un error al intentar Activar/Desactivar el usuario: {0}", ex.Message));
             }
             return false;
         }
@@ -387,7 +388,7 @@ namespace TP_campo_62_BP
             {
                 if (!hayUsuarioSeleccionado_62_BP)
                 {
-                    MessageBox.Show("Debe seleccionar un usuario.");
+                    MostrarMensaje_62_BP("msg_usuario_debe_seleccionar", "Debe seleccionar un usuario.");
                     return false;
                 }
 
@@ -399,18 +400,18 @@ namespace TP_campo_62_BP
 
                     if (filas > 0)
                     {
-                        MessageBox.Show("Usuario modificado con éxito.");
+                        MostrarMensaje_62_BP("msg_usuario_modificado", "Usuario modificado con exito.");
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo realizar la modificacion.");
+                        MostrarMensaje_62_BP("msg_usuario_modificar_error", "No se pudo realizar la modificacion.");
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al intentar modificar: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", ex.Message));
             }
             return false;
         }
@@ -492,7 +493,7 @@ namespace TP_campo_62_BP
             }
             else
             {
-                MessageBox.Show("No hay Usuarios que cumplan con los filtros");
+                MostrarMensaje_62_BP("msg_usuario_sin_resultados", "No hay Usuarios que cumplan con los filtros");
             }
         }
     }

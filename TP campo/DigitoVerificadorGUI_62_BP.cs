@@ -11,10 +11,12 @@ using BLL;
 using BLL_62_BP;
 using SEG;
 using SEG_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class DigitoVerificadorGUI_62_BP : Form
+    
+    public partial class DigitoVerificadorGUI_62_BP : LocalizableForm_62_BP
     {
         public DigitoVerificadorGUI_62_BP()
         {
@@ -44,7 +46,7 @@ namespace TP_campo
             }
             else {
                 dataGridViewErrores.DataSource = null;
-                MessageBox.Show("NO se detectaron errores la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+                MessageBox.Show(TextoFormato_62_BP("msg_dvv_sin_errores", "NO se detectaron errores en la tabla {0}", _dvvSeleccionado_62_BP.Tabla_62_BP));
             }
         }
 
@@ -85,11 +87,11 @@ namespace TP_campo
             if (datosTabla != null && ((System.Collections.IList)datosTabla).Count > 0)
             {
                 dataGridViewErrores.DataSource = datosTabla;
-                MessageBox.Show("Se detectaron errores en los siguientes Registros de la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+                MessageBox.Show(TextoFormato_62_BP("msg_dvv_errores_registros", "Se detectaron errores en los siguientes registros de la tabla {0}", _dvvSeleccionado_62_BP.Tabla_62_BP));
             }
             else
             {
-                MessageBox.Show("Se detectó al menos un Registro eliminado en la tabla " + _dvvSeleccionado_62_BP.Tabla_62_BP);
+                MessageBox.Show(TextoFormato_62_BP("msg_dvv_registro_eliminado", "Se detecto al menos un registro eliminado en la tabla {0}", _dvvSeleccionado_62_BP.Tabla_62_BP));
             }
         }
         public bool RecalcularDigitosVerificadores()
@@ -117,19 +119,19 @@ namespace TP_campo
                 }
                 if (resultado > 0)
                 {
-                    MessageBox.Show("Digitos Verificadores Recalculados Correctamente.");
+                    MostrarMensaje_62_BP("msg_dvv_recalculados", "Digitos verificadores recalculados correctamente.");
                     dataGridViewErrores.DataSource = null;
                     AcutualizarComboDVV();
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo recalcular Digitos Verificadores.");
+                    MostrarMensaje_62_BP("msg_dvv_recalcular_error", "No se pudo recalcular digitos verificadores.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocurrió un error al intentar Recalcular Digitos Verificadores. " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_dvv_recalcular_error_detalle", "Ocurrio un error al intentar recalcular digitos verificadores. {0}", ex.Message));
             }
             return false;
         }

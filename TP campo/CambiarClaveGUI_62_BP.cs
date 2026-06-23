@@ -11,7 +11,8 @@ using BLL_62_BP;
 
 namespace TP_campo_62_BP
 {
-    public partial class CambiarClaveGUI_62_BP : Form
+
+    public partial class CambiarClaveGUI_62_BP : LocalizableForm_62_BP
     {
         public CambiarClaveGUI_62_BP()
         {
@@ -32,24 +33,24 @@ namespace TP_campo_62_BP
 
                 if (string.IsNullOrWhiteSpace(antigua) || string.IsNullOrWhiteSpace(nueva) || string.IsNullOrWhiteSpace(repetir))
                 {
-                    MessageBox.Show("Faltan completar datos.");
+                    MostrarMensaje_62_BP("msg_faltan_datos", "Faltan completar datos.");
                     return;
                 }
                 if (nueva != repetir)
                 {
-                    MessageBox.Show("La nueva contraseña y su repetición no coinciden.");
+                    MostrarMensaje_62_BP("msg_clave_no_coincide", "La nueva contrasena y su repeticion no coinciden.");
                     return;
                 }
                 if (nueva == antigua)
                 {
-                    MessageBox.Show("La nueva contraseña no puede ser igual a la anterior.");
+                    MostrarMensaje_62_BP("msg_clave_igual_anterior", "La nueva contrasena no puede ser igual a la anterior.");
                     return;
                 }
                 int resultado = _usuarioBLL_62_BP.CambiarContrasena_62_BP(antigua, nueva);
 
                 if (resultado > 0)
                 {
-                    MessageBox.Show("Contraseña actualizada con éxito.");
+                    MostrarMensaje_62_BP("msg_clave_actualizada", "Contrasena actualizada con exito.");
 
                     textBoxContrasenaActual.Clear();
                     textBoxContrasenaNueva.Clear();
@@ -74,12 +75,12 @@ namespace TP_campo_62_BP
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo realizar el cambio de contraseña.");
+                    MostrarMensaje_62_BP("msg_clave_no_actualizada", "No se pudo realizar el cambio de contrasena.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al intentar cambiar Constraseña : " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_clave_error_detalle", "Error al intentar cambiar contrasena: {0}", ex.Message));
             }
         }
 

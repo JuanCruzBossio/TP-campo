@@ -84,11 +84,11 @@
             // lbl_fecha_ini
             // 
             this.lbl_fecha_ini.AutoSize = true;
-            this.lbl_fecha_ini.Location = new System.Drawing.Point(302, 409);
+            this.lbl_fecha_ini.Location = new System.Drawing.Point(279, 409);
             this.lbl_fecha_ini.Name = "lbl_fecha_ini";
-            this.lbl_fecha_ini.Size = new System.Drawing.Size(62, 13);
+            this.lbl_fecha_ini.Size = new System.Drawing.Size(85, 13);
             this.lbl_fecha_ini.TabIndex = 3;
-            this.lbl_fecha_ini.Text = "FECHA INI:";
+            this.lbl_fecha_ini.Text = "FECHA INICIAL:";
             // 
             // lbl_evento
             // 
