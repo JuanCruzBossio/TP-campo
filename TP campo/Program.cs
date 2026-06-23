@@ -20,7 +20,7 @@ namespace TP_campo_62_BP
 
             try
             {
-                Idioma_62_BP idiomaBLL_62_BP = new Idioma_62_BP();
+                IdiomaBLL_62_BP idiomaBLL_62_BP = new IdiomaBLL_62_BP();
                 SessionManager_62_BP.GetInstancia_62_BP()
                     .CambiarIdioma_62_BP(idiomaBLL_62_BP.CargarIdioma_62_BP("es-AR"));
             }

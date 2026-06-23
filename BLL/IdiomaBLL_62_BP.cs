@@ -7,13 +7,13 @@ using SEG_62_BP.Observer;
 namespace BLL_62_BP
 {
    
-    public class Idioma_62_BP
+    public class IdiomaBLL_62_BP
     {
   
         private readonly string _rutaCarpetaIdiomas_62_BP;
 
 
-        public Idioma_62_BP()
+        public IdiomaBLL_62_BP()
         {
 
             _rutaCarpetaIdiomas_62_BP = Path.Combine(

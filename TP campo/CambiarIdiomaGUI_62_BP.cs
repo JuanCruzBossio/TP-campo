@@ -17,7 +17,7 @@ namespace TP_campo
     public partial class CambiarIdiomaGUI_62_BP : LocalizableForm_62_BP
     {
 
-        private Idioma_62_BP _idiomaBLL_62_BP = new Idioma_62_BP();
+        private IdiomaBLL_62_BP _idiomaBLL_62_BP = new IdiomaBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
         public CambiarIdiomaGUI_62_BP()
