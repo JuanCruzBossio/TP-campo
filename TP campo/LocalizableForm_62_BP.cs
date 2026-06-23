@@ -5,20 +5,17 @@ using System.Windows.Forms;
 
 namespace TP_campo_62_BP
 {
-    // NUEVO/MODIFICADO: clase base para todos los formularios que quieran traducirse.
-    // Implementa el observador del patrón Observer y se suscribe al SessionManager.
+
     public class LocalizableForm_62_BP : Form, IObservadorIdioma_62_BP
     {
         protected override void OnLoad(EventArgs e)
         {
-            // MODIFICADO: se suscribe antes del Load propio del formulario.
+
             SessionManager_62_BP.GetInstancia_62_BP().SuscribirObservador_62_BP(this);
             ActualizarIdioma_62_BP(SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP);
 
             base.OnLoad(e);
 
-            // MODIFICADO: se vuelve a aplicar despues del Load porque varios formularios
-            // asignan textos o cargan grillas dentro de su evento Load.
             ActualizarIdioma_62_BP(SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP);
         }
 
@@ -26,7 +23,6 @@ namespace TP_campo_62_BP
         {
             if (disposing)
             {
-                // NUEVO: al cerrarse, deja de escuchar cambios de idioma.
                 SessionManager_62_BP.GetInstancia_62_BP().DesuscribirObservador_62_BP(this);
             }
 
@@ -50,7 +46,6 @@ namespace TP_campo_62_BP
             }
         }
 
-        // NUEVO: traduce el Text del formulario, controles normales, menús y grillas.
         protected virtual void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
         {
             AplicarTraduccion_62_BP(this, idioma_62_BP);
@@ -121,9 +116,6 @@ namespace TP_campo_62_BP
 
         private void AplicarTraduccion_62_BP(Control control_62_BP, Idioma_62_BP idioma_62_BP)
         {
-            // MODIFICADO: primero busca una clave especifica del formulario.
-            // Ejemplo: UsuarioGUI_62_BP.labelRol.
-            // Si no existe, busca la clave general. Ejemplo: labelRol.
             string claveEspecifica_62_BP = Name + "." + control_62_BP.Name;
 
             if (idioma_62_BP.Traducciones_62_BP != null &&
@@ -147,7 +139,6 @@ namespace TP_campo_62_BP
             }
         }
 
-        // NUEVO: obtiene un texto traducido por clave. Si no existe, usa el texto por defecto.
         protected string Texto_62_BP(string clave_62_BP, string textoPorDefecto_62_BP)
         {
             Idioma_62_BP idioma_62_BP = SessionManager_62_BP.GetInstancia_62_BP().IdiomaActual_62_BP;
@@ -164,19 +155,16 @@ namespace TP_campo_62_BP
                 : traduccion_62_BP;
         }
 
-        // NUEVO: igual que Texto_62_BP, pero permite insertar valores con string.Format.
         protected string TextoFormato_62_BP(string clave_62_BP, string textoPorDefecto_62_BP, params object[] valores_62_BP)
         {
             return string.Format(Texto_62_BP(clave_62_BP, textoPorDefecto_62_BP), valores_62_BP);
         }
 
-        // NUEVO: muestra un MessageBox traducible.
         protected void MostrarMensaje_62_BP(string clave_62_BP, string textoPorDefecto_62_BP)
         {
             MessageBox.Show(Texto_62_BP(clave_62_BP, textoPorDefecto_62_BP));
         }
 
-        // NUEVO: muestra un MessageBox traducible con titulo, botones e icono.
         protected DialogResult MostrarMensaje_62_BP(
             string clave_62_BP,
             string textoPorDefecto_62_BP,

@@ -51,7 +51,6 @@
     <Compile Include="Permisos_62_BP\Patente_62_BP.cs" />
     <Compile Include="Permisos_62_BP\Rol_62_BPcs.cs" />
     <Compile Include="RegistroBitacora_62_BP.cs" />
-    <Compile Include="Singleton\Sesion_62_BP.cs" />
     <Compile Include="SessionManager_62_BP.cs" />
     <Compile Include="Usuario_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
