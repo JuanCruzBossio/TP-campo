@@ -23,9 +23,6 @@ namespace TP_campo
         public CambiarIdiomaGUI_62_BP()
         {
             InitializeComponent();
-
-            Load += CambiarIdiomaGUI_62_BP_Load;
-            btn_cambiar_idioma.Click += btn_cambiar_idioma_Click;
         }
 
         private void CambiarIdiomaGUI_62_BP_Load(object sender, EventArgs e)
@@ -92,11 +89,6 @@ namespace TP_campo
             {
                 MessageBox.Show(TextoFormato_62_BP("msg_idioma_cambiar_error", "No se pudo cambiar el idioma: {0}", ex.Message));
             }
-        }
-
-        private void btn_cambiar_idioma_Click_1(object sender, EventArgs e)
-        {
-
         }
     }
 }
