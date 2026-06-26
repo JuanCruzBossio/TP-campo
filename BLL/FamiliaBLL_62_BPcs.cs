@@ -27,7 +27,7 @@ namespace BLL
             try
             {
                 int id  = _familiaDAL_62_BP.Alta_62_BP(familia);
-
+                filasAfectadas = id;
                 if (id == 0)
                     throw new Exception("No se pudo obtener el ID de la familia.");
                 

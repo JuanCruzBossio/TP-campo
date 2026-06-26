@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridViewFamiliaNueva = new System.Windows.Forms.DataGridView();
-            this.dataGridViewFamiliasYPatentes = new System.Windows.Forms.DataGridView();
             this.buttonAgregar = new System.Windows.Forms.Button();
             this.buttonQuitar = new System.Windows.Forms.Button();
             this.buttonAplicar = new System.Windows.Forms.Button();
@@ -43,33 +41,13 @@
             this.labelMensaje = new System.Windows.Forms.Label();
             this.labelFamiliasYPatentesDisponibles = new System.Windows.Forms.Label();
             this.labelFamiliasYPatentesSeleccionadas = new System.Windows.Forms.Label();
-            this.dataGridViewPatentesSeleccionadaas = new System.Windows.Forms.DataGridView();
-            this.labelPatentesSeleccionadas = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliaNueva)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliasYPatentes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPatentesSeleccionadaas)).BeginInit();
+            this.treeViewDisponibles = new System.Windows.Forms.TreeView();
+            this.treeViewSeleccionados = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
-            // 
-            // dataGridViewFamiliaNueva
-            // 
-            this.dataGridViewFamiliaNueva.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewFamiliaNueva.Location = new System.Drawing.Point(12, 55);
-            this.dataGridViewFamiliaNueva.Name = "dataGridViewFamiliaNueva";
-            this.dataGridViewFamiliaNueva.Size = new System.Drawing.Size(439, 402);
-            this.dataGridViewFamiliaNueva.TabIndex = 0;
-            // 
-            // dataGridViewFamiliasYPatentes
-            // 
-            this.dataGridViewFamiliasYPatentes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewFamiliasYPatentes.Location = new System.Drawing.Point(567, 55);
-            this.dataGridViewFamiliasYPatentes.Name = "dataGridViewFamiliasYPatentes";
-            this.dataGridViewFamiliasYPatentes.Size = new System.Drawing.Size(439, 402);
-            this.dataGridViewFamiliasYPatentes.TabIndex = 1;
-            this.dataGridViewFamiliasYPatentes.SelectionChanged += new System.EventHandler(this.dataGridViewFamiliasYPatentes_SelectionChanged);
             // 
             // buttonAgregar
             // 
-            this.buttonAgregar.Location = new System.Drawing.Point(457, 242);
+            this.buttonAgregar.Location = new System.Drawing.Point(301, 242);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(102, 70);
             this.buttonAgregar.TabIndex = 2;
@@ -79,7 +57,7 @@
             // 
             // buttonQuitar
             // 
-            this.buttonQuitar.Location = new System.Drawing.Point(457, 348);
+            this.buttonQuitar.Location = new System.Drawing.Point(301, 348);
             this.buttonQuitar.Name = "buttonQuitar";
             this.buttonQuitar.Size = new System.Drawing.Size(102, 70);
             this.buttonQuitar.TabIndex = 3;
@@ -89,7 +67,7 @@
             // 
             // buttonAplicar
             // 
-            this.buttonAplicar.Location = new System.Drawing.Point(1022, 462);
+            this.buttonAplicar.Location = new System.Drawing.Point(725, 465);
             this.buttonAplicar.Name = "buttonAplicar";
             this.buttonAplicar.Size = new System.Drawing.Size(102, 70);
             this.buttonAplicar.TabIndex = 4;
@@ -110,12 +88,12 @@
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(63, 27);
             this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(388, 20);
+            this.textBoxNombre.Size = new System.Drawing.Size(222, 20);
             this.textBoxNombre.TabIndex = 6;
             // 
             // buttonModificar
             // 
-            this.buttonModificar.Location = new System.Drawing.Point(1022, 149);
+            this.buttonModificar.Location = new System.Drawing.Point(725, 152);
             this.buttonModificar.Name = "buttonModificar";
             this.buttonModificar.Size = new System.Drawing.Size(102, 70);
             this.buttonModificar.TabIndex = 7;
@@ -125,7 +103,7 @@
             // 
             // buttonCrear
             // 
-            this.buttonCrear.Location = new System.Drawing.Point(1022, 55);
+            this.buttonCrear.Location = new System.Drawing.Point(725, 58);
             this.buttonCrear.Name = "buttonCrear";
             this.buttonCrear.Size = new System.Drawing.Size(102, 70);
             this.buttonCrear.TabIndex = 8;
@@ -135,7 +113,7 @@
             // 
             // buttonBaja
             // 
-            this.buttonBaja.Location = new System.Drawing.Point(1022, 253);
+            this.buttonBaja.Location = new System.Drawing.Point(725, 256);
             this.buttonBaja.Name = "buttonBaja";
             this.buttonBaja.Size = new System.Drawing.Size(102, 70);
             this.buttonBaja.TabIndex = 9;
@@ -145,7 +123,7 @@
             // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(1022, 563);
+            this.buttonCancelar.Location = new System.Drawing.Point(725, 566);
             this.buttonCancelar.Name = "buttonCancelar";
             this.buttonCancelar.Size = new System.Drawing.Size(102, 70);
             this.buttonCancelar.TabIndex = 10;
@@ -155,15 +133,15 @@
             // 
             // textBoxMensaje
             // 
-            this.textBoxMensaje.Location = new System.Drawing.Point(623, 482);
+            this.textBoxMensaje.Location = new System.Drawing.Point(468, 488);
             this.textBoxMensaje.Name = "textBoxMensaje";
-            this.textBoxMensaje.Size = new System.Drawing.Size(383, 20);
+            this.textBoxMensaje.Size = new System.Drawing.Size(222, 20);
             this.textBoxMensaje.TabIndex = 12;
             // 
             // labelMensaje
             // 
             this.labelMensaje.AutoSize = true;
-            this.labelMensaje.Location = new System.Drawing.Point(570, 485);
+            this.labelMensaje.Location = new System.Drawing.Point(414, 491);
             this.labelMensaje.Name = "labelMensaje";
             this.labelMensaje.Size = new System.Drawing.Size(47, 13);
             this.labelMensaje.TabIndex = 11;
@@ -172,7 +150,7 @@
             // labelFamiliasYPatentesDisponibles
             // 
             this.labelFamiliasYPatentesDisponibles.AutoSize = true;
-            this.labelFamiliasYPatentesDisponibles.Location = new System.Drawing.Point(570, 30);
+            this.labelFamiliasYPatentesDisponibles.Location = new System.Drawing.Point(414, 30);
             this.labelFamiliasYPatentesDisponibles.Name = "labelFamiliasYPatentesDisponibles";
             this.labelFamiliasYPatentesDisponibles.Size = new System.Drawing.Size(154, 13);
             this.labelFamiliasYPatentesDisponibles.TabIndex = 13;
@@ -187,30 +165,28 @@
             this.labelFamiliasYPatentesSeleccionadas.TabIndex = 14;
             this.labelFamiliasYPatentesSeleccionadas.Text = "Familias /Patentes Seleccionadas:";
             // 
-            // dataGridViewPatentesSeleccionadaas
+            // treeViewDisponibles
             // 
-            this.dataGridViewPatentesSeleccionadaas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPatentesSeleccionadaas.Location = new System.Drawing.Point(12, 529);
-            this.dataGridViewPatentesSeleccionadaas.Name = "dataGridViewPatentesSeleccionadaas";
-            this.dataGridViewPatentesSeleccionadaas.Size = new System.Drawing.Size(439, 234);
-            this.dataGridViewPatentesSeleccionadaas.TabIndex = 15;
+            this.treeViewDisponibles.Location = new System.Drawing.Point(417, 55);
+            this.treeViewDisponibles.Name = "treeViewDisponibles";
+            this.treeViewDisponibles.Size = new System.Drawing.Size(273, 417);
+            this.treeViewDisponibles.TabIndex = 17;
+            this.treeViewDisponibles.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewDisponibles_AfterSelect);
             // 
-            // labelPatentesSeleccionadas
+            // treeViewSeleccionados
             // 
-            this.labelPatentesSeleccionadas.AutoSize = true;
-            this.labelPatentesSeleccionadas.Location = new System.Drawing.Point(12, 510);
-            this.labelPatentesSeleccionadas.Name = "labelPatentesSeleccionadas";
-            this.labelPatentesSeleccionadas.Size = new System.Drawing.Size(125, 13);
-            this.labelPatentesSeleccionadas.TabIndex = 16;
-            this.labelPatentesSeleccionadas.Text = "Patentes Seleccionadas:";
+            this.treeViewSeleccionados.Location = new System.Drawing.Point(12, 55);
+            this.treeViewSeleccionados.Name = "treeViewSeleccionados";
+            this.treeViewSeleccionados.Size = new System.Drawing.Size(273, 417);
+            this.treeViewSeleccionados.TabIndex = 18;
             // 
             // FamiliaGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1144, 775);
-            this.Controls.Add(this.labelPatentesSeleccionadas);
-            this.Controls.Add(this.dataGridViewPatentesSeleccionadaas);
+            this.ClientSize = new System.Drawing.Size(865, 672);
+            this.Controls.Add(this.treeViewSeleccionados);
+            this.Controls.Add(this.treeViewDisponibles);
             this.Controls.Add(this.labelFamiliasYPatentesSeleccionadas);
             this.Controls.Add(this.labelFamiliasYPatentesDisponibles);
             this.Controls.Add(this.textBoxMensaje);
@@ -224,23 +200,15 @@
             this.Controls.Add(this.buttonAplicar);
             this.Controls.Add(this.buttonQuitar);
             this.Controls.Add(this.buttonAgregar);
-            this.Controls.Add(this.dataGridViewFamiliasYPatentes);
-            this.Controls.Add(this.dataGridViewFamiliaNueva);
             this.Name = "FamiliaGUI_62_BP";
             this.Text = "FamiliaGUI_62_BP";
             this.Load += new System.EventHandler(this.FamiliaGUI_62_BP_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliaNueva)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFamiliasYPatentes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPatentesSeleccionadaas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridViewFamiliaNueva;
-        private System.Windows.Forms.DataGridView dataGridViewFamiliasYPatentes;
         private System.Windows.Forms.Button buttonAgregar;
         private System.Windows.Forms.Button buttonQuitar;
         private System.Windows.Forms.Button buttonAplicar;
@@ -254,7 +222,7 @@
         private System.Windows.Forms.Label labelMensaje;
         private System.Windows.Forms.Label labelFamiliasYPatentesDisponibles;
         private System.Windows.Forms.Label labelFamiliasYPatentesSeleccionadas;
-        private System.Windows.Forms.DataGridView dataGridViewPatentesSeleccionadaas;
-        private System.Windows.Forms.Label labelPatentesSeleccionadas;
+        private System.Windows.Forms.TreeView treeViewDisponibles;
+        private System.Windows.Forms.TreeView treeViewSeleccionados;
     }
 }

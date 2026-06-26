@@ -33,5 +33,10 @@ namespace SEG.Permisos
             throw new NotSupportedException(
                 "Este componente no posee elementos hijos.");
         }
+        public virtual bool RevisarSiTienePermiso(ComponentePermiso_62_BP permiso)
+        {
+            throw new NotSupportedException(
+                "Este componente no posee elementos hijos.");
+        }
     }
 }

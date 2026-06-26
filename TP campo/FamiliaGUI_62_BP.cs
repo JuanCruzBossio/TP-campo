@@ -41,13 +41,6 @@ namespace TP_campo
         //Eventos
         private void FamiliaGUI_62_BP_Load(object sender, EventArgs e)
         {
-            dataGridViewFamiliasYPatentes.ReadOnly = true;
-            dataGridViewFamiliaNueva.ReadOnly = true;
-            dataGridViewPatentesSeleccionadaas.ReadOnly = true;
-            dataGridViewFamiliasYPatentes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewFamiliasYPatentes.MultiSelect = false;
-            dataGridViewPatentesSeleccionadaas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewPatentesSeleccionadaas.MultiSelect = false;
             _listaTodasFamilias_62_BP =  _familiaBLL_62_BP.BuscarFamilias_62_BP();
 
             _listaTodasPatentes_62_BP = _patenteBLL_62_BP.BuscarPatentes_62_BP();
@@ -59,12 +52,28 @@ namespace TP_campo
 
         private void buttonQuitar_Click(object sender, EventArgs e)
         {
-            if (dataGridViewFamiliaNueva.CurrentRow == null)
+            if (treeViewSeleccionados.SelectedNode == null)
+            {
+                MessageBox.Show("Debe seleccionar un permiso para quitar.");
+                return;
+            }
+
+            TreeNode nodo = treeViewSeleccionados.SelectedNode;
+
+            if (nodo.Parent != null)
+            {
+                MessageBox.Show("Debe seleccionar el componente principal (Familia o Patente raíz) para poder quitarlo.");
+                return;
+            }
+
+            ComponentePermiso_62_BP permiso = nodo.Tag as ComponentePermiso_62_BP;
+
+            if (permiso == null)
                 return;
 
-            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliaNueva.CurrentRow.DataBoundItem;
-
             QuitarPermiso(permiso);
+
+            ActualizarTreeViewSeleccionados_62_BP();
         }
 
         private void buttonAplicar_Click(object sender, EventArgs e)
@@ -119,8 +128,7 @@ namespace TP_campo
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            Familia_62_BP familiaSeleccionada =
-                ObtenerFamiliaSeleccionada_62_BP();
+            Familia_62_BP familiaSeleccionada = ObtenerFamiliaSeleccionada_62_BP();
 
             if (familiaSeleccionada == null)
             {
@@ -133,8 +141,6 @@ namespace TP_campo
             textBoxNombre.Text = familiaSeleccionada.Nombre_62_BP;
 
             _permisosSeleccionados = new List<ComponentePermiso_62_BP>(familiaSeleccionada.Hijos_62_BP);
-            dataGridViewFamiliasYPatentes.ClearSelection();
-            dataGridViewFamiliasYPatentes.CurrentCell = null;
             ActualizarGrillas();
 
             CambiarModo_62_BP(2);
@@ -159,8 +165,6 @@ namespace TP_campo
             _permisosSeleccionados =
                 new List<ComponentePermiso_62_BP>(
                     familiaSeleccionada.Hijos_62_BP);
-            dataGridViewFamiliasYPatentes.ClearSelection();
-            dataGridViewFamiliasYPatentes.CurrentCell = null;
             ActualizarGrillas();
 
             CambiarModo_62_BP(3);
@@ -178,44 +182,86 @@ namespace TP_campo
         }
         private void buttonAgregar_Click(object sender, EventArgs e)
         {
-            if (dataGridViewFamiliasYPatentes.CurrentRow == null)
+            if (treeViewDisponibles.SelectedNode == null)
+            {
+                MessageBox.Show("Debe seleccionar un permiso.");
+                return;
+            }
+
+            TreeNode nodo = treeViewDisponibles.SelectedNode;
+
+            if (nodo.Parent == null)
+            {
+                MessageBox.Show("Debe seleccionar una Familia o una Patente.");
+                return;
+            }
+
+            if (nodo.Tag is Patente_62_BP)
+            {
+                bool esPatenteRaiz = nodo.Parent.Tag is string tagStr && tagStr == "PATENTES";
+
+                if (!esPatenteRaiz)
+                {
+                    MessageBox.Show("Debe seleccionar la Familia y no una Patente perteneciente a ella.");
+                    return;
+                }
+            }
+
+            ComponentePermiso_62_BP permiso = treeViewDisponibles.SelectedNode.Tag as ComponentePermiso_62_BP;
+
+            if (permiso == null)
                 return;
 
-            ComponentePermiso_62_BP permiso = (ComponentePermiso_62_BP)dataGridViewFamiliasYPatentes.CurrentRow.DataBoundItem;
-
             AgregarPermiso(permiso);
+
+            ActualizarTreeViewSeleccionados_62_BP();
         }
         //Funciones:
         private void CambiarModo_62_BP(int modo)
         {
             modoActual_62_BP = modo;
+
             textBoxNombre.Enabled = false;
             textBoxNombre.Text = "";
             textBoxMensaje.Text = "";
+
             buttonCrear.Enabled = false;
             buttonModificar.Enabled = false;
-
             buttonBaja.Enabled = false;
             buttonAgregar.Enabled = false;
             buttonQuitar.Enabled = false;
-            dataGridViewFamiliasYPatentes.ClearSelection();
+
+            buttonAplicar.Enabled = false;
+            buttonCancelar.Enabled = false;
+
             switch (modo)
             {
                 case 0: // Inicial
-                    buttonCrear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(8);
+
+                    _permisosSeleccionados.Clear();
+
+                    ActualizarTreeViewDisponibles_62_BP();
+                    ActualizarTreeViewSeleccionados_62_BP();
+
+                    buttonCrear.Enabled =
+                        SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(8);
+
                     break;
 
                 case 1: // Crear
 
                     textBoxNombre.Enabled = true;
+
                     _permisosSeleccionados.Clear();
-                    ActualizarGrillas();
+
+                    ActualizarTreeViewDisponibles_62_BP();
+                    ActualizarTreeViewSeleccionados_62_BP();
 
                     buttonAgregar.Enabled = true;
                     buttonQuitar.Enabled = true;
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
-                    
+
                     textBoxMensaje.Text = "Modo Crear";
 
                     break;
@@ -223,22 +269,43 @@ namespace TP_campo
                 case 2: // Modificar
 
                     textBoxNombre.Enabled = true;
+
+                    _permisosSeleccionados.Clear();
+
+                    foreach (ComponentePermiso_62_BP permiso in familiaEnEdicion_62_BP.Hijos_62_BP)
+                    {
+                        _permisosSeleccionados.Add(permiso);
+                    }
+
+                    ActualizarTreeViewDisponibles_62_BP();
+                    ActualizarTreeViewSeleccionados_62_BP();
+
                     buttonAgregar.Enabled = true;
                     buttonQuitar.Enabled = true;
-
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
-                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP ?? "";
+                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP;
                     textBoxMensaje.Text = "Modo Modificar";
 
                     break;
+
                 case 3: // Borrar
+
+                    _permisosSeleccionados.Clear();
+
+                    foreach (ComponentePermiso_62_BP permiso in familiaEnEdicion_62_BP.Hijos_62_BP)
+                    {
+                        _permisosSeleccionados.Add(permiso);
+                    }
+
+                    ActualizarTreeViewDisponibles_62_BP();
+                    ActualizarTreeViewSeleccionados_62_BP();
 
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
-                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP ?? "";
+                    textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP;
                     textBoxMensaje.Text = "Modo Borrar";
 
                     break;
@@ -246,17 +313,10 @@ namespace TP_campo
         }
         private Familia_62_BP ObtenerFamiliaSeleccionada_62_BP()
         {
-            if (dataGridViewFamiliasYPatentes.SelectedRows.Count == 0)
+            if (treeViewDisponibles.SelectedNode == null)
                 return null;
 
-            ComponentePermiso_62_BP componente = (ComponentePermiso_62_BP)dataGridViewFamiliasYPatentes.CurrentRow.DataBoundItem;
-
-            if (componente is Familia_62_BP familia)
-            {
-                return familia;
-            }
-
-            return null;
+            return treeViewDisponibles.SelectedNode.Tag as Familia_62_BP;
         }
         private void RecargarDatos_62_BP()
         {
@@ -272,62 +332,8 @@ namespace TP_campo
 
             _permisosDisponibles.Clear();
             _patentesSeleccionadas.Clear();
-            foreach (Familia_62_BP familia in _listaTodasFamilias_62_BP)
-            {
-                bool seleccionada = false;
-                if (familiaEnEdicion_62_BP != null && familia.Id_62_BP == familiaEnEdicion_62_BP.Id_62_BP)
-                {
-                    continue;
-                }
-                foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
-                {
-                    if (SonIguales_62_BP( permiso, familia))
-                    {
-                        seleccionada = true;
-                        break;
-                    }
-                }
 
-                if (!seleccionada)
-                {
-                    _permisosDisponibles.Add(familia);
-                }
-            }
-
-            foreach (Patente_62_BP patente in _listaTodasPatentes_62_BP)
-            {
-                bool seleccionada = false;
-                if (patentesCubiertas.Contains(patente.Id_62_BP))
-                {
-                    _patentesSeleccionadas.Add(patente);
-                }
-                foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
-                {
-                    if (SonIguales_62_BP(permiso, patente))
-                    {
-                        seleccionada = true;
-                        break;
-                    }
-                }
-
-                if (!seleccionada && !patentesCubiertas.Contains(patente.Id_62_BP))
-                {
-                    _permisosDisponibles.Add(patente);
-                }
-            }
-
-            dataGridViewFamiliasYPatentes.DataSource = null;
-            dataGridViewFamiliasYPatentes.DataSource = _permisosDisponibles;
-
-            dataGridViewFamiliaNueva.DataSource = null;
-            dataGridViewFamiliaNueva.DataSource = _permisosSeleccionados;
-
-            dataGridViewPatentesSeleccionadaas.DataSource = null;
-            dataGridViewPatentesSeleccionadaas.DataSource = _patentesSeleccionadas;
-
-            dataGridViewFamiliasYPatentes.Columns["Id_62_BP"].Visible = false;
-            dataGridViewPatentesSeleccionadaas.Columns["Id_62_BP"].Visible = false;
-            dataGridViewFamiliaNueva.Columns["Id_62_BP"].Visible = false;
+            ActualizarTreeViewDisponibles_62_BP();
         }
 
         private List<int> ObtenerPatentesCubiertas()
@@ -417,12 +423,10 @@ namespace TP_campo
         {
             try
             {
-                Familia_62_BP familia = new Familia_62_BP();
-
-                familia.Nombre_62_BP = textBoxNombre.Text;
-                foreach (var permiso in _permisosSeleccionados)
+                Familia_62_BP familia = ValidarFamilia_62_BP();
+                if (familia == null)
                 {
-                    familia.Agregar_62_BP(permiso);
+                    return false;
                 }
                 int filas = _familiaBLL_62_BP.Alta_62_BP(familia);
 
@@ -452,14 +456,15 @@ namespace TP_campo
 
                     return false;
                 }
+                Familia_62_BP familia = ValidarFamilia_62_BP();
 
-                familiaEnEdicion_62_BP.Nombre_62_BP = textBoxNombre.Text;
-                familiaEnEdicion_62_BP.Hijos_62_BP.Clear();
-                foreach (var permiso in _permisosSeleccionados)
+                if (familia == null)
                 {
-                    familiaEnEdicion_62_BP.Agregar_62_BP(permiso);
+                    return false;
                 }
-                int filas =_familiaBLL_62_BP.Modificar_62_BP(familiaEnEdicion_62_BP);
+                familia.Id_62_BP = familiaEnEdicion_62_BP.Id_62_BP;
+
+                int filas =_familiaBLL_62_BP.Modificar_62_BP(familia);
 
                 if (filas > 0)
                 {
@@ -505,6 +510,125 @@ namespace TP_campo
             }
 
             return false;
+        }
+        private Familia_62_BP ValidarFamilia_62_BP()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxNombre.Text))
+            {
+                MessageBox.Show("La familia debe tener un nombre.");
+                return null;
+            }
+
+            if (_permisosSeleccionados == null || _permisosSeleccionados.Count == 0)
+            {
+                MessageBox.Show("La familia debe contener al menos un permiso (Familia o Patente).");
+                return null;
+            }
+
+            Familia_62_BP familia = new Familia_62_BP();
+            familia.Nombre_62_BP = textBoxNombre.Text;
+            foreach (var permiso in _permisosSeleccionados)
+            {
+                familia.Agregar_62_BP(permiso);
+            }
+            return familia;
+        }
+        private TreeNode CrearNodoFamilia_62_BP(Familia_62_BP familia)
+        {
+            TreeNode nodo = new TreeNode(familia.Nombre_62_BP);
+
+            nodo.Tag = familia;
+
+            foreach (ComponentePermiso_62_BP hijo in familia.Hijos_62_BP)
+            {
+                if (hijo is Familia_62_BP familiaHija)
+                {
+                    nodo.Nodes.Add(CrearNodoFamilia_62_BP(familiaHija));
+                }
+                else if (hijo is Patente_62_BP patente)
+                {
+                    TreeNode nodoPatente = new TreeNode(patente.Nombre_62_BP);
+                    nodoPatente.Tag = patente;
+
+                    nodo.Nodes.Add(nodoPatente);
+                }
+            }
+
+            return nodo;
+        }
+        private void ActualizarTreeViewDisponibles_62_BP()
+        {
+            treeViewDisponibles.Nodes.Clear();
+
+            TreeNode nodoFamilias = new TreeNode("Familias");
+            nodoFamilias.Tag = "FAMILIAS";
+
+            TreeNode nodoPatentes = new TreeNode("Patentes");
+            nodoPatentes.Tag = "PATENTES";
+
+            foreach (Familia_62_BP familia in _listaTodasFamilias_62_BP)
+            {
+                nodoFamilias.Nodes.Add(CrearNodoFamilia_62_BP(familia));
+            }
+
+            foreach (Patente_62_BP patente in _listaTodasPatentes_62_BP)
+            {
+                TreeNode nodoPatente = new TreeNode(patente.Nombre_62_BP);
+                nodoPatente.Tag = patente;
+
+                nodoPatentes.Nodes.Add(nodoPatente);
+            }
+
+            treeViewDisponibles.Nodes.Add(nodoFamilias);
+            treeViewDisponibles.Nodes.Add(nodoPatentes);
+
+            treeViewDisponibles.ExpandAll();
+        }
+        private void ActualizarTreeViewSeleccionados_62_BP()
+        {
+            treeViewSeleccionados.Nodes.Clear();
+
+            foreach (ComponentePermiso_62_BP permiso in _permisosSeleccionados)
+            {
+                if (permiso is Familia_62_BP familia)
+                {
+                    treeViewSeleccionados.Nodes.Add(CrearNodoFamilia_62_BP(familia));
+                }
+                else if (permiso is Patente_62_BP patente)
+                {
+                    TreeNode nodo = new TreeNode(patente.Nombre_62_BP);
+                    nodo.Tag = patente;
+
+                    treeViewSeleccionados.Nodes.Add(nodo);
+                }
+            }
+
+            treeViewSeleccionados.ExpandAll();
+        }
+
+        private void treeViewDisponibles_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (modoActual_62_BP != 0)
+                return;
+
+            if (e.Node?.Tag is Familia_62_BP familia)
+            {
+                familiaEnEdicion_62_BP = familia;
+            }
+            else
+            {
+                familiaEnEdicion_62_BP = null;
+            }
+
+            bool hayFamilia = familiaEnEdicion_62_BP != null;
+
+            buttonModificar.Enabled =
+                SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(10) &&
+                hayFamilia;
+
+            buttonBaja.Enabled =
+                SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(9) &&
+                hayFamilia;
         }
     }
 }

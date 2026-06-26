@@ -18,6 +18,10 @@ namespace SEG.Permisos_62_BP
 
         public override void Agregar_62_BP(ComponentePermiso_62_BP componente)
         {
+            if (RevisarSiTienePermiso(componente))
+            {
+                throw new Exception("No se pudo agregar el Permiso porque ya se tiene");
+            }
             Permisos_62_BP.Add(componente);
         }
 
@@ -29,6 +33,17 @@ namespace SEG.Permisos_62_BP
         public override ComponentePermiso_62_BP ObtenerHijo_62_BP(int indice)
         {
             return Permisos_62_BP[indice];
+        }
+        public override bool RevisarSiTienePermiso(ComponentePermiso_62_BP permiso)
+        {
+            foreach (var _permiso in Permisos_62_BP)
+            {
+                if (_permiso.RevisarSiTienePermiso(permiso))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
