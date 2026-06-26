@@ -113,6 +113,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Rol " + rol.Nombre_62_BP, 3);
                 }
             }

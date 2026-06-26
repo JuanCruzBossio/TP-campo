@@ -239,6 +239,22 @@ namespace DAL
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
+        public bool TieneRolesAsignados_62_BP(int idFamilia)
+        {
+            string query = "SELECT IdFamilia_62_BP FROM Usuario_62_BP where IdFamilia_62_BP = @idRol";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idFamilia", idFamilia),
+            };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+
+            if (tabla.Rows.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
         public int ActualizarDVH_62_BP(int id, string DVH_62_BP)
         {
             var filasAfectadas = 0;

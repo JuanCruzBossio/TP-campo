@@ -89,6 +89,13 @@ namespace BLL
 
             try
             {
+                bool rolesAsignados = _familiaDAL_62_BP.TieneRolesAsignados_62_BP(familia.Id_62_BP);
+
+                if (rolesAsignados)
+                {
+                    throw new Exception("La familia tiene Roles asignados.");
+                }
+
                 _familiaDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(familia.Id_62_BP);
 
                 _familiaDAL_62_BP.BorrarRelacionesFamiliaPatente_62_BP(familia.Id_62_BP);
@@ -100,6 +107,7 @@ namespace BLL
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Familia " + familia.Nombre_62_BP,3);
+                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Familia_62_BP");
                 }
             }
             catch
