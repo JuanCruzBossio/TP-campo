@@ -183,7 +183,7 @@ namespace DAL
         }
         public bool TieneUsuariosAsignados_62_BP(int idRol)
         {
-            string query = "SELECT IdRol_62_BP FROM Usuario_62_BP where idRol = @idRol";
+            string query = "SELECT IdRol_62_BP FROM Usuario_62_BP where IdRol_62_BP = @idRol";
             SqlParameter[] parametros =
             {
                 new SqlParameter("@idRol", idRol),
