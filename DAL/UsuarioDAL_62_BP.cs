@@ -27,7 +27,10 @@ namespace DAL_62_BP
                 Bloqueo_62_BP = Convert.ToBoolean(fila["bloqueo_62_BP"]),
                 Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]),
                 IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]),
-                ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"])
+                ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]),
+                Idioma_62_BP = fila.Table.Columns.Contains("idioma") && fila["idioma"] != DBNull.Value
+                    ? Convert.ToInt32(fila["idioma"])
+                    : 1
             };
         }
         public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
@@ -122,7 +125,7 @@ namespace DAL_62_BP
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
             var dni = 0;
-            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1);";
+            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, idioma) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1, @idioma);";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -132,7 +135,8 @@ namespace DAL_62_BP
                 new SqlParameter("@idRol", usuario.IdRol_62_BP),
                 new SqlParameter("@email", usuario.Email_62_BP),
                 new SqlParameter("@login", usuario.Login_62_BP),
-                new SqlParameter("@contrasena", usuario.Contrasena_62_BP)
+                new SqlParameter("@contrasena", usuario.Contrasena_62_BP),
+                new SqlParameter("@idioma", usuario.Idioma_62_BP <= 0 ? 1 : usuario.Idioma_62_BP)
             };
 
             int filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
@@ -243,6 +247,22 @@ namespace DAL_62_BP
             filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
             return filasAfectadas;
         }
+
+        public int CambiarIdioma_62_BP(string dni, int idioma)
+        {
+            var filasAfectadas = 0;
+            string query = "UPDATE Usuario_62_BP SET idioma = @idioma WHERE dni_62_BP = @dni";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@dni", dni),
+                new SqlParameter("@idioma", idioma <= 0 ? 1 : idioma)
+            };
+
+            filasAfectadas = _acceso_62_BP.escribir_62_BP(query, parametros);
+            return filasAfectadas;
+        }
+
         public int ActualizarDVH_62_BP(string dni, string DVH_62_BP)
         {
             var filasAfectadas = 0;

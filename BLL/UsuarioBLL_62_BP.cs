@@ -22,9 +22,14 @@ namespace BLL_62_BP
         private RolBLL_62_BP _rolBLL = new RolBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL = new BitacoraBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
+        private IdiomaBLL_62_BP _idiomaBLL_62_BP = new IdiomaBLL_62_BP();
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
             var dni = 0;
+            if (usuario.Idioma_62_BP <= 0)
+            {
+                usuario.Idioma_62_BP = IdiomaBLL_62_BP.IdiomaEspanol_62_BP;
+            }
             usuario.Contrasena_62_BP = _encriptacionSEG.EncriptarConSHA256_62_BP(usuario.Nombre_62_BP + usuario.Apellido_62_BP);
             try
             {
@@ -219,6 +224,7 @@ namespace BLL_62_BP
                     }
                     usuario.Rol_62_BP = _rolBLL.BuscarRol_62_BP(usuario.IdRol_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
+                    AplicarIdiomaUsuario_62_BP(usuario);
                     _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
 
                     return usuario;
@@ -255,6 +261,7 @@ namespace BLL_62_BP
                 }
                 var dniUsuario = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Dni_62_BP;
                 SessionManager_62_BP.GetInstancia_62_BP().Logout_62_BP();
+                AplicarIdiomaDefault_62_BP();
 
                 _bitacoraBLL.RegistrarBitacora_62_BP("Logout de Usuario",1, dniUsuario);
 
@@ -305,6 +312,61 @@ namespace BLL_62_BP
                 throw;
             }
             return filasAfectadas;
+        }
+
+        public int CambiarIdioma_62_BP(int idioma)
+        {
+            int filasAfectadas = 0;
+            try
+            {
+                Usuario_62_BP usuario = SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP;
+
+                if (usuario == null)
+                {
+                    throw new Exception("No hay un usuario logueado.");
+                }
+
+                int idiomaNormalizado = idioma <= 0 ? IdiomaBLL_62_BP.IdiomaEspanol_62_BP : idioma;
+                filasAfectadas = _usuarioDAL.CambiarIdioma_62_BP(usuario.Dni_62_BP, idiomaNormalizado);
+
+                if (filasAfectadas > 0)
+                {
+                    usuario.Idioma_62_BP = idiomaNormalizado;
+                    ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return filasAfectadas;
+        }
+
+        private void AplicarIdiomaUsuario_62_BP(Usuario_62_BP usuario)
+        {
+            try
+            {
+                string codigoIdioma = _idiomaBLL_62_BP.ObtenerCodigoIdioma_62_BP(usuario.Idioma_62_BP);
+                SessionManager_62_BP.GetInstancia_62_BP()
+                    .CambiarIdioma_62_BP(_idiomaBLL_62_BP.CargarIdioma_62_BP(codigoIdioma));
+            }
+            catch
+            {
+                SessionManager_62_BP.GetInstancia_62_BP()
+                    .CambiarIdioma_62_BP(_idiomaBLL_62_BP.CargarIdioma_62_BP(IdiomaBLL_62_BP.CodigoEspanol_62_BP));
+            }
+        }
+
+        private void AplicarIdiomaDefault_62_BP()
+        {
+            try
+            {
+                SessionManager_62_BP.GetInstancia_62_BP()
+                    .CambiarIdioma_62_BP(_idiomaBLL_62_BP.CargarIdioma_62_BP(IdiomaBLL_62_BP.CodigoEspanol_62_BP));
+            }
+            catch
+            {
+            }
         }
         public int ActualizarUsuarioDVH_62_BP(string dni)
         {

@@ -91,6 +91,13 @@ namespace SEG_62_BP
             set { forzarContrasenaNueva_62_BP = value; }
         }
 
+        private int idioma_62_BP = 1;
+        public int Idioma_62_BP
+        {
+            get { return idioma_62_BP; }
+            set { idioma_62_BP = value <= 0 ? 1 : value; }
+        }
+
         public string ObtenerCadenaDVH_62_BP()
         {
             return Dni_62_BP +
@@ -103,7 +110,8 @@ namespace SEG_62_BP
                    Bloqueo_62_BP.ToString() +
                    Activo_62_BP.ToString() +
                    IntentosLogin_62_BP.ToString() +
-                   ForzarContrasenaNueva_62_BP.ToString();
+                   ForzarContrasenaNueva_62_BP.ToString() +
+                   Idioma_62_BP.ToString();
         }
     }
 

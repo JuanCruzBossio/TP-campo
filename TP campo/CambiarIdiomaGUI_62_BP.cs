@@ -19,6 +19,7 @@ namespace TP_campo
 
         private IdiomaBLL_62_BP _idiomaBLL_62_BP = new IdiomaBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         public CambiarIdiomaGUI_62_BP()
         {
@@ -70,6 +71,9 @@ namespace TP_campo
                 }
 
                 SEG_62_BP.Observer.Idioma_62_BP idioma_62_BP = _idiomaBLL_62_BP.CargarIdioma_62_BP(codigoIdioma_62_BP);
+                int idIdioma_62_BP = _idiomaBLL_62_BP.ObtenerIdIdioma_62_BP(codigoIdioma_62_BP);
+
+                _usuarioBLL_62_BP.CambiarIdioma_62_BP(idIdioma_62_BP);
 
                 SessionManager_62_BP.GetInstancia_62_BP().CambiarIdioma_62_BP(idioma_62_BP);
 
