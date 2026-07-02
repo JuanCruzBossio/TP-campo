@@ -22,8 +22,12 @@ namespace TP_campo_62_BP
             InitializeComponent();
         }
         //Variables
-        private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
-        private DigitoVerificadorBLL_62_BP _digitoVerificadorBLL_62_BP = new DigitoVerificadorBLL_62_BP();
+        DigitoVerificadorBLL_62_BP _dvvBLL_62_BP = new DigitoVerificadorBLL_62_BP();
+        BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
+        PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
+        RolBLL_62_BP _rolBLL_62_BP = new RolBLL_62_BP();
+        UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
 
         //Eventos
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -44,21 +48,10 @@ namespace TP_campo_62_BP
                         checkBoxPassword.Checked = false;
                         textBoxContrasena.PasswordChar = '*';
 
-                        List<DigitoVerificadorVertical_62_BP> listaErrores = _digitoVerificadorBLL_62_BP.BuscarErroresDVV_62_BP();
-                        if (listaErrores != null && listaErrores.Count() > 0)
+                        if (ExistenErroresDVV())
                         {
                             if (usuario.IdRol_62_BP == 1)
                             {
-                                string mensaje = Texto_62_BP(
-                                    "msg_login_integridad_tablas",
-                                    "Se detectaron errores de integridad en la(s) siguiente(s) tabla(s):\n");
-
-                                foreach (DigitoVerificadorVertical_62_BP dvv in listaErrores)
-                                {
-                                    mensaje += "- " + dvv.Tabla_62_BP + "\n";
-                                }
-
-                                MessageBox.Show(mensaje);
                                 DigitoVerificadorGUI_62_BP DigitoVerificadorForm = new DigitoVerificadorGUI_62_BP();
                                 DigitoVerificadorForm.Show();
                                 this.Hide();
@@ -115,6 +108,22 @@ namespace TP_campo_62_BP
             {
                 textBoxContrasena.PasswordChar = '*';
             }
+        }
+        public bool ExistenErroresDVV()
+        {
+            if (_bitacoraBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_familiaBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_patenteBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_rolBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+
+            var erroresDVV = _dvvBLL_62_BP.BuscarErroresDVV_62_BP();
+            if (erroresDVV != null && erroresDVV.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
