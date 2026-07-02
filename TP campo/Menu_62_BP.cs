@@ -56,7 +56,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_logout_error_detalle", "Error al cerrar sesion: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_logout_error_detalle", "Error al cerrar sesion: {0}", TraducirExcepcion_62_BP(ex)));
             }
         }
 

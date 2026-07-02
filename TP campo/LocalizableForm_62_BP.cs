@@ -160,6 +160,35 @@ namespace TP_campo_62_BP
             return string.Format(Texto_62_BP(clave_62_BP, textoPorDefecto_62_BP), valores_62_BP);
         }
 
+        protected string TraducirExcepcion_62_BP(Exception ex)
+        {
+            if (ex == null || string.IsNullOrWhiteSpace(ex.Message))
+            {
+                return string.Empty;
+            }
+
+            string mensaje_62_BP = ex.Message;
+
+            if (mensaje_62_BP.StartsWith("Archivo de idioma no encontrado:", StringComparison.OrdinalIgnoreCase))
+            {
+                string detalle_62_BP = mensaje_62_BP.Replace("Archivo de idioma no encontrado:", "").Trim();
+                return TextoFormato_62_BP("ex_archivo_idioma_no_encontrado", "Archivo de idioma no encontrado: {0}", detalle_62_BP);
+            }
+
+            if (mensaje_62_BP.StartsWith("Archivo de idioma vacío:", StringComparison.OrdinalIgnoreCase))
+            {
+                string detalle_62_BP = mensaje_62_BP.Replace("Archivo de idioma vacío:", "").Trim();
+                return TextoFormato_62_BP("ex_archivo_idioma_vacio", "Archivo de idioma vacio: {0}", detalle_62_BP);
+            }
+
+            if (mensaje_62_BP.StartsWith("Error al cargar idioma", StringComparison.OrdinalIgnoreCase))
+            {
+                return TextoFormato_62_BP("ex_error_cargar_idioma", "Error al cargar idioma: {0}", mensaje_62_BP);
+            }
+
+            return Texto_62_BP("ex_" + mensaje_62_BP, mensaje_62_BP);
+        }
+
         protected void MostrarMensaje_62_BP(string clave_62_BP, string textoPorDefecto_62_BP)
         {
             MessageBox.Show(Texto_62_BP(clave_62_BP, textoPorDefecto_62_BP));

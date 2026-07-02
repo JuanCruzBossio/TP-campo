@@ -13,6 +13,7 @@ using BLL;
 using BLL_62_BP;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using SEG_62_BP.Observer;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TP_campo_62_BP
@@ -23,6 +24,13 @@ namespace TP_campo_62_BP
         public UsuarioGUI_62_BP()
         {
             InitializeComponent();
+        }
+
+        protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
+        {
+            base.TraducirFormulario_62_BP(idioma_62_BP);
+            ActualizarCantidadUsuarios_62_BP();
+            ActualizarTextoModo_62_BP();
         }
         //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
@@ -191,8 +199,14 @@ namespace TP_campo_62_BP
         {
             _listaUsuarios_62_BP = _usuarioBLL_62_BP.TraerTodosUsuarios_62_BP();
             _listaFiltrada_62_BP = _listaUsuarios_62_BP;
-            labelCantidadUsuarios.Text = "Cantidad de Usuarios: " + _listaUsuarios_62_BP.Count();
+            ActualizarCantidadUsuarios_62_BP();
             ActualizarGrilla_62_BP();
+        }
+
+        private void ActualizarCantidadUsuarios_62_BP()
+        {
+            int cantidad_62_BP = _listaUsuarios_62_BP == null ? 0 : _listaUsuarios_62_BP.Count();
+            labelCantidadUsuarios.Text = TextoFormato_62_BP("label_cantidad_usuarios_formato", "Cantidad de Usuarios: {0}", cantidad_62_BP);
         }
         private void ActualizarGrilla_62_BP()
         {
@@ -283,7 +297,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_usuario_crear_error_detalle", "Ocurrio un error al intentar crear el usuario: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_crear_error_detalle", "Ocurrio un error al intentar crear el usuario: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
@@ -318,7 +332,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_usuario_desbloquear_error_detalle", "Ocurrio un error al intentar desbloquear el usuario: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_desbloquear_error_detalle", "Ocurrio un error al intentar desbloquear el usuario: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
@@ -380,7 +394,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_usuario_activar_error_detalle", "Ocurrio un error al intentar Activar/Desactivar el usuario: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_usuario_activar_error_detalle", "Ocurrio un error al intentar Activar/Desactivar el usuario: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
@@ -413,7 +427,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
@@ -433,7 +447,7 @@ namespace TP_campo_62_BP
                     setTextBoxs(true);
                     checkBoxBloqueado.Enabled = false;
                     checkBoxActivo.Enabled = false;
-                    textBoxMensaje.Text = "Modo Consulta";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_consulta", "Modo Consulta");
                     break;
                 case 2:
                     LimpiarCampos_62_BP();
@@ -441,24 +455,24 @@ namespace TP_campo_62_BP
                     setTextBoxs(true);
                     buttonCrear.Enabled = false;
                     checkBoxBloqueado.Enabled = false;
-                    textBoxMensaje.Text = "Modo Crear";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_crear", "Modo Crear");
                     break;
                 case 3:
                     setButtons(true);
                     setTextBoxs(false);
-                    textBoxMensaje.Text = "Modo Desbloquear";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_desbloquear", "Modo Desbloquear");
                     break;
                 case 4:
                     setButtons(true);
                     setTextBoxs(true);
                     textBoxDNI.Enabled = false;
                     checkBoxBloqueado.Enabled = false;
-                    textBoxMensaje.Text = "Modo Modificar";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_modificar", "Modo Modificar");
                     break;
                 case 5:
                     setButtons(true);
                     setTextBoxs(false);
-                    textBoxMensaje.Text = "Modo Activar/Desactivar";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_activar_desactivar", "Modo Activar/Desactivar");
                     break;
                 case 0:
                     LimpiarCampos_62_BP();
@@ -476,6 +490,28 @@ namespace TP_campo_62_BP
                     break;
             }
             buttonCancelar.Enabled = true;
+        }
+
+        private void ActualizarTextoModo_62_BP()
+        {
+            switch (modoActual_62_BP)
+            {
+                case 1:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_consulta", "Modo Consulta");
+                    break;
+                case 2:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_crear", "Modo Crear");
+                    break;
+                case 3:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_desbloquear", "Modo Desbloquear");
+                    break;
+                case 4:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_modificar", "Modo Modificar");
+                    break;
+                case 5:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_activar_desactivar", "Modo Activar/Desactivar");
+                    break;
+            }
         }
         private void filtrarUsuarios_62_BP()
         {

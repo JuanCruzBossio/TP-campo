@@ -11,6 +11,7 @@ using BLL;
 using SEG.Permisos;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using SEG_62_BP.Observer;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -21,6 +22,14 @@ namespace TP_campo
         public FamiliaGUI_62_BP()
         {
             InitializeComponent();
+        }
+
+        protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
+        {
+            base.TraducirFormulario_62_BP(idioma_62_BP);
+            ActualizarTextoModo_62_BP();
+            ActualizarTreeViewDisponibles_62_BP();
+            ActualizarTreeViewSeleccionados_62_BP();
         }
         //Variables
         FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
@@ -54,7 +63,7 @@ namespace TP_campo
         {
             if (treeViewSeleccionados.SelectedNode == null)
             {
-                MessageBox.Show("Debe seleccionar un permiso para quitar.");
+                MostrarMensaje_62_BP("msg_permiso_debe_seleccionar_quitar", "Debe seleccionar un permiso para quitar.");
                 return;
             }
 
@@ -62,7 +71,7 @@ namespace TP_campo
 
             if (nodo.Parent != null)
             {
-                MessageBox.Show("Debe seleccionar el componente principal (Familia o Patente raíz) para poder quitarlo.");
+                MostrarMensaje_62_BP("msg_permiso_debe_seleccionar_raiz_quitar", "Debe seleccionar el componente principal (Familia o Patente raiz) para poder quitarlo.");
                 return;
             }
 
@@ -184,7 +193,7 @@ namespace TP_campo
         {
             if (treeViewDisponibles.SelectedNode == null)
             {
-                MessageBox.Show("Debe seleccionar un permiso.");
+                MostrarMensaje_62_BP("msg_permiso_debe_seleccionar", "Debe seleccionar un permiso.");
                 return;
             }
 
@@ -192,7 +201,7 @@ namespace TP_campo
 
             if (nodo.Parent == null)
             {
-                MessageBox.Show("Debe seleccionar una Familia o una Patente.");
+                MostrarMensaje_62_BP("msg_permiso_debe_seleccionar_familia_o_patente", "Debe seleccionar una Familia o una Patente.");
                 return;
             }
 
@@ -202,7 +211,7 @@ namespace TP_campo
 
                 if (!esPatenteRaiz)
                 {
-                    MessageBox.Show("Debe seleccionar la Familia y no una Patente perteneciente a ella.");
+                    MostrarMensaje_62_BP("msg_permiso_debe_seleccionar_familia_no_patente_hija", "Debe seleccionar la Familia y no una Patente perteneciente a ella.");
                     return;
                 }
             }
@@ -262,7 +271,7 @@ namespace TP_campo
                     buttonAplicar.Enabled = true;
                     buttonCancelar.Enabled = true;
 
-                    textBoxMensaje.Text = "Modo Crear";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_crear", "Modo Crear");
 
                     break;
 
@@ -286,7 +295,7 @@ namespace TP_campo
                     buttonCancelar.Enabled = true;
 
                     textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP;
-                    textBoxMensaje.Text = "Modo Modificar";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_modificar", "Modo Modificar");
 
                     break;
 
@@ -306,8 +315,24 @@ namespace TP_campo
                     buttonCancelar.Enabled = true;
 
                     textBoxNombre.Text = familiaEnEdicion_62_BP.Nombre_62_BP;
-                    textBoxMensaje.Text = "Modo Borrar";
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_borrar", "Modo Borrar");
 
+                    break;
+            }
+        }
+
+        private void ActualizarTextoModo_62_BP()
+        {
+            switch (modoActual_62_BP)
+            {
+                case 1:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_crear", "Modo Crear");
+                    break;
+                case 2:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_modificar", "Modo Modificar");
+                    break;
+                case 3:
+                    textBoxMensaje.Text = Texto_62_BP("msg_modo_borrar", "Modo Borrar");
                     break;
             }
         }
@@ -441,7 +466,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_crear_error_detalle", "Error al intentar crear: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_crear_error_detalle", "Error al intentar crear: {0}", TraducirExcepcion_62_BP(ex)));
             }
 
             return false;
@@ -477,7 +502,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_modificar_error_detalle", "Error al intentar modificar: {0}", TraducirExcepcion_62_BP(ex)));
             }
 
             return false;
@@ -506,7 +531,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_eliminar_error_detalle", "Error al intentar eliminar: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_eliminar_error_detalle", "Error al intentar eliminar: {0}", TraducirExcepcion_62_BP(ex)));
             }
 
             return false;
@@ -515,13 +540,13 @@ namespace TP_campo
         {
             if (string.IsNullOrWhiteSpace(textBoxNombre.Text))
             {
-                MessageBox.Show("La familia debe tener un nombre.");
+                MostrarMensaje_62_BP("msg_familia_nombre_obligatorio", "La familia debe tener un nombre.");
                 return null;
             }
 
             if (_permisosSeleccionados == null || _permisosSeleccionados.Count == 0)
             {
-                MessageBox.Show("La familia debe contener al menos un permiso (Familia o Patente).");
+                MostrarMensaje_62_BP("msg_familia_permiso_obligatorio", "La familia debe contener al menos un permiso (Familia o Patente).");
                 return null;
             }
 
@@ -560,10 +585,10 @@ namespace TP_campo
         {
             treeViewDisponibles.Nodes.Clear();
 
-            TreeNode nodoFamilias = new TreeNode("Familias");
+            TreeNode nodoFamilias = new TreeNode(Texto_62_BP("tree_familias", "Familias"));
             nodoFamilias.Tag = "FAMILIAS";
 
-            TreeNode nodoPatentes = new TreeNode("Patentes");
+            TreeNode nodoPatentes = new TreeNode(Texto_62_BP("tree_patentes", "Patentes"));
             nodoPatentes.Tag = "PATENTES";
 
             foreach (Familia_62_BP familia in _listaTodasFamilias_62_BP)

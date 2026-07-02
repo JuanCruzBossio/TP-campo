@@ -131,7 +131,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_dvv_recalcular_error_detalle", "Ocurrio un error al intentar recalcular digitos verificadores. {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_dvv_recalcular_error_detalle", "Ocurrio un error al intentar recalcular digitos verificadores. {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }

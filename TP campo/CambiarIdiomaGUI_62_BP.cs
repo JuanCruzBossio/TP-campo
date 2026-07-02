@@ -44,7 +44,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_idiomas_cargar_error", "No se pudieron cargar los idiomas disponibles: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_idiomas_cargar_error", "No se pudieron cargar los idiomas disponibles: {0}", TraducirExcepcion_62_BP(ex)));
             }
         }
 
@@ -91,7 +91,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_idioma_cambiar_error", "No se pudo cambiar el idioma: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_idioma_cambiar_error", "No se pudo cambiar el idioma: {0}", TraducirExcepcion_62_BP(ex)));
             }
         }
     }

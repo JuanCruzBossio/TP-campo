@@ -122,7 +122,7 @@ namespace TP_campo_62_BP
 
             if (!string.IsNullOrEmpty(error))
             {
-                MessageBox.Show(error, Texto_62_BP("titulo_error", "Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(TraducirErrorBitacora_62_BP(error), Texto_62_BP("titulo_error", "Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dgv_bitacora.DataSource = null;
                 return;
             }
@@ -139,8 +139,8 @@ namespace TP_campo_62_BP
                 return;
             }
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.Filter = "Archivo XML (*.xml)|*.xml";
-            dlg.Title = "Guardar XML";
+            dlg.Filter = Texto_62_BP("dialog_filtro_xml", "Archivo XML (*.xml)|*.xml");
+            dlg.Title = Texto_62_BP("dialog_guardar_xml", "Guardar XML");
             dlg.FileName = $"Bitacora_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
 
             if (dlg.ShowDialog() != DialogResult.OK)
@@ -171,6 +171,25 @@ namespace TP_campo_62_BP
         {
             dtp_fecha_ini.Value = DateTime.Now;
             dtp_fecha_fin.Value = DateTime.Now;
+        }
+
+        private string TraducirErrorBitacora_62_BP(string error_62_BP)
+        {
+            switch (error_62_BP)
+            {
+                case "La fecha de inicio es inválida.":
+                    return Texto_62_BP("msg_bitacora_fecha_inicio_invalida", "La fecha de inicio es invalida.");
+                case "La fecha de fin es inválida.":
+                    return Texto_62_BP("msg_bitacora_fecha_fin_invalida", "La fecha de fin es invalida.");
+                case "La fecha de inicio no puede ser mayor que la fecha de fin.":
+                    return Texto_62_BP("msg_bitacora_fecha_inicio_mayor_fin", "La fecha de inicio no puede ser mayor que la fecha de fin.");
+                case "La criticidad debe ser un número entre 1 y 5.":
+                    return Texto_62_BP("msg_bitacora_criticidad_invalida", "La criticidad debe ser un numero entre 1 y 5.");
+                case "No se encontraron registros con los filtros aplicados.":
+                    return Texto_62_BP("msg_bitacora_sin_resultados", "No se encontraron registros con los filtros aplicados.");
+                default:
+                    return error_62_BP;
+            }
         }
     }
 }

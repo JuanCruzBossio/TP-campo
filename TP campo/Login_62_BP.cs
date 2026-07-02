@@ -96,7 +96,7 @@ namespace TP_campo_62_BP
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_login_error_detalle", "Error durante el inicio de sesion: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_login_error_detalle", "Error durante el inicio de sesion: {0}", TraducirExcepcion_62_BP(ex)));
             }
         }
 

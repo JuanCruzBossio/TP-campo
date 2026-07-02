@@ -156,7 +156,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_backup_error_detalle", "Ocurrio un error al intentar realizar el Backup: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_backup_error_detalle", "Ocurrio un error al intentar realizar el Backup: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
@@ -182,7 +182,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(TextoFormato_62_BP("msg_restore_error_detalle", "Ocurrio un error al intentar realizar el Restore: {0}", ex.Message));
+                MessageBox.Show(TextoFormato_62_BP("msg_restore_error_detalle", "Ocurrio un error al intentar realizar el Restore: {0}", TraducirExcepcion_62_BP(ex)));
             }
             return false;
         }
