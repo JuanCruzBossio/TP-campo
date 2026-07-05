@@ -241,7 +241,7 @@ namespace DAL
         }
         public bool TieneRolesAsignados_62_BP(int idFamilia)
         {
-            string query = "SELECT IdFamilia_62_BP FROM Usuario_62_BP where IdFamilia_62_BP = @idRol";
+            string query = "SELECT IdFamilia_62_BP FROM RolFamilia_62_BP where IdFamilia_62_BP = @idFamilia";
             SqlParameter[] parametros =
             {
                 new SqlParameter("@idFamilia", idFamilia),

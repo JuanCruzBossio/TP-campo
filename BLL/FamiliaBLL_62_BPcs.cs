@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL_62_BP;
 using DAL;
+using Newtonsoft.Json.Serialization;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
 
@@ -93,7 +94,7 @@ namespace BLL
 
                 if (rolesAsignados)
                 {
-                    throw new Exception("La familia tiene Roles asignados.");
+                    throw new Exception(" La familia tiene Roles asignados.");
                 }
 
                 _familiaDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(familia.Id_62_BP);
@@ -110,10 +111,9 @@ namespace BLL
                     _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Familia_62_BP");
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                throw new Exception(
-                    "No se pudo Borrar la familia.");
+                throw new Exception( "No se pudo Borrar la familia."+ ex.Message);
             }
 
             return filasAfectadas;
