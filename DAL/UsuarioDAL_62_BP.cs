@@ -251,7 +251,7 @@ namespace DAL_62_BP
         public int CambiarIdioma_62_BP(string dni, int idioma)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET idioma = @idioma WHERE dni_62_BP = @dni";
+            string query = "UPDATE Usuario_62_BP SET Idioma_62_BP = @idioma WHERE dni_62_BP = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
