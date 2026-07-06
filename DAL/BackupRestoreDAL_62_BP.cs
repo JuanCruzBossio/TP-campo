@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL_62_BP;
+using Newtonsoft.Json.Linq;
 
 namespace DAL
 {
@@ -37,16 +38,30 @@ namespace DAL
 
         public int Restore_62_BP(string ruta)
         {
-            string query =
+            int res = 0;
+            try
+            {
+                string query =
                 "ALTER DATABASE TP_Campo_62_BP SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
                 $"RESTORE DATABASE TP_Campo_62_BP FROM DISK = '{ruta}' WITH REPLACE; " +
                 "ALTER DATABASE TP_Campo_62_BP SET MULTI_USER;";
 
-            conexion_62_BP.Open();
+                conexion_62_BP.Open();
 
-            SqlCommand comando = new SqlCommand(query, conexion_62_BP);
+                SqlCommand comando = new SqlCommand(query, conexion_62_BP);
 
-            return comando.ExecuteNonQuery();
+                res = comando.ExecuteNonQuery();
+            }
+            catch
+            {
+                return 0;
+            }
+            finally
+            {
+                conexion_62_BP.Close();
+            }
+            
+            return res;
         }
     }
 }

@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.IO;
+using Newtonsoft.Json.Linq;
+
 namespace DAL_62_BP
 {
     public class Acceso_62_BP
     {
-        SqlConnection conexion_62_BP = new SqlConnection(@"Data Source=.;Initial Catalog=TP_Campo_62_BP;Integrated Security=True;");
-
+        public static string json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.json"));
+        public static JObject config = JObject.Parse(json);
+        public static string servidor = config["Servidor"].ToString();
+        public static SqlConnection conexion_62_BP = new SqlConnection($"Data Source={servidor};Initial Catalog=TP_Campo_62_BP;Integrated Security=True;");
         public void abrir_62_BP()
         {
             conexion_62_BP.Open();
