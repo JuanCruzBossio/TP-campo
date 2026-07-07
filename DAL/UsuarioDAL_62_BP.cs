@@ -28,10 +28,23 @@ namespace DAL_62_BP
                 Activo_62_BP = Convert.ToBoolean(fila["activo_62_BP"]),
                 IntentosLogin_62_BP = Convert.ToInt16(fila["intentosLogin_62_BP"]),
                 ForzarContrasenaNueva_62_BP = Convert.ToBoolean(fila["ForzarContrasenaNueva_62_BP"]),
-                Idioma_62_BP = fila.Table.Columns.Contains("idioma") && fila["idioma"] != DBNull.Value
-                    ? Convert.ToInt32(fila["idioma"])
-                    : 1
+                Idioma_62_BP = ObtenerIdioma_62_BP(fila)
             };
+        }
+
+        private int ObtenerIdioma_62_BP(DataRow fila)
+        {
+            if (fila.Table.Columns.Contains("idioma") && fila["idioma"] != DBNull.Value)
+            {
+                return Convert.ToInt32(fila["idioma"]);
+            }
+
+            if (fila.Table.Columns.Contains("Idioma_62_BP") && fila["Idioma_62_BP"] != DBNull.Value)
+            {
+                return Convert.ToInt32(fila["Idioma_62_BP"]);
+            }
+
+            return 1;
         }
         public Usuario_62_BP BuscarUsuario_62_BP(string dni = null, string login = null, string contrasena = null, int? idRol = null)
         {
@@ -251,7 +264,7 @@ namespace DAL_62_BP
         public int CambiarIdioma_62_BP(string dni, int idioma)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET Idioma_62_BP = @idioma WHERE dni_62_BP = @dni";
+            string query = "UPDATE Usuario_62_BP SET idioma = @idioma WHERE dni_62_BP = @dni";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
