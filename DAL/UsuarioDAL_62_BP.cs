@@ -138,7 +138,20 @@ namespace DAL_62_BP
         public int Alta_62_BP(Usuario_62_BP usuario)
         {
             var dni = 0;
-            string query = "INSERT INTO Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, idioma) VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1, @idioma);";
+            string query =
+                "DECLARE @columnaIdioma sysname; " +
+                "IF COL_LENGTH('dbo.Usuario_62_BP', 'Idioma_62_BP') IS NOT NULL " +
+                "    SET @columnaIdioma = N'Idioma_62_BP'; " +
+                "ELSE IF COL_LENGTH('dbo.Usuario_62_BP', 'idioma') IS NOT NULL " +
+                "    SET @columnaIdioma = N'idioma'; " +
+                "ELSE " +
+                "    THROW 50001, 'No existe la columna de idioma en Usuario_62_BP.', 1; " +
+                "DECLARE @sql nvarchar(max) = " +
+                "    N'INSERT INTO dbo.Usuario_62_BP (dni_62_BP, apellido_62_BP, nombre_62_BP, idrol_62_BP, email_62_BP, login_62_BP, contrasena_62_BP, bloqueo_62_BP, activo_62_BP, ' + QUOTENAME(@columnaIdioma) + N') ' + " +
+                "    N'VALUES (@dni, @apellido, @nombre, @idRol, @email, @login, @contrasena, 0, 1, @idioma);'; " +
+                "EXEC sp_executesql @sql, " +
+                "    N'@dni varchar(20), @apellido nvarchar(100), @nombre nvarchar(100), @idRol int, @email nvarchar(256), @login nvarchar(50), @contrasena nvarchar(max), @idioma int', " +
+                "    @dni = @dni, @apellido = @apellido, @nombre = @nombre, @idRol = @idRol, @email = @email, @login = @login, @contrasena = @contrasena, @idioma = @idioma;";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -264,7 +277,17 @@ namespace DAL_62_BP
         public int CambiarIdioma_62_BP(string dni, int idioma)
         {
             var filasAfectadas = 0;
-            string query = "UPDATE Usuario_62_BP SET idioma = @idioma WHERE dni_62_BP = @dni";
+            string query =
+                "DECLARE @columnaIdioma sysname; " +
+                "IF COL_LENGTH('dbo.Usuario_62_BP', 'Idioma_62_BP') IS NOT NULL " +
+                "    SET @columnaIdioma = N'Idioma_62_BP'; " +
+                "ELSE IF COL_LENGTH('dbo.Usuario_62_BP', 'idioma') IS NOT NULL " +
+                "    SET @columnaIdioma = N'idioma'; " +
+                "ELSE " +
+                "    THROW 50001, 'No existe la columna de idioma en Usuario_62_BP.', 1; " +
+                "DECLARE @sql nvarchar(max) = " +
+                "    N'UPDATE dbo.Usuario_62_BP SET ' + QUOTENAME(@columnaIdioma) + N' = @idioma WHERE dni_62_BP = @dni'; " +
+                "EXEC sp_executesql @sql, N'@idioma int, @dni varchar(20)', @idioma = @idioma, @dni = @dni;";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
