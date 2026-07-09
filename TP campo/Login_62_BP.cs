@@ -59,6 +59,7 @@ namespace TP_campo_62_BP
                             else
                             {
                                 MostrarMensaje_62_BP("msg_login_integridad_no_admin", "No es posible iniciar sesion en este momento. Por favor, comuniquese con un administrador del sistema.");
+                                _usuarioBLL_62_BP.Logout_62_BP();
                             }
                         }
                         else
