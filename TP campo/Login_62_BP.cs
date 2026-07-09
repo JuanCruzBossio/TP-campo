@@ -48,7 +48,7 @@ namespace TP_campo_62_BP
                         checkBoxPassword.Checked = false;
                         textBoxContrasena.PasswordChar = '*';
 
-                        if (ExistenErroresDVV())
+                        if (ExistenErroresDV())
                         {
                             if (usuario.IdRol_62_BP == 1)
                             {
@@ -110,7 +110,7 @@ namespace TP_campo_62_BP
                 textBoxContrasena.PasswordChar = '*';
             }
         }
-        public bool ExistenErroresDVV()
+        public bool ExistenErroresDV()
         {
             if (_bitacoraBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
             if (_familiaBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;

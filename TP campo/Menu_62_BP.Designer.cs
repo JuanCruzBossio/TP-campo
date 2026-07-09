@@ -276,6 +276,7 @@
             this.Name = "Menu_62_BP";
             this.Text = "Menu_62_BP";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Menu_62_BP_FormClosing);
             this.Load += new System.EventHandler(this.Menu_62_BP_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

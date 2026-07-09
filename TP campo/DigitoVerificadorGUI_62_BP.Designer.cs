@@ -50,12 +50,12 @@
             this.dataGridViewErrores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewErrores.Location = new System.Drawing.Point(63, 116);
             this.dataGridViewErrores.Name = "dataGridViewErrores";
-            this.dataGridViewErrores.Size = new System.Drawing.Size(692, 212);
+            this.dataGridViewErrores.Size = new System.Drawing.Size(306, 212);
             this.dataGridViewErrores.TabIndex = 3;
             // 
             // buttonRecalcular
             // 
-            this.buttonRecalcular.Location = new System.Drawing.Point(450, 28);
+            this.buttonRecalcular.Location = new System.Drawing.Point(63, 28);
             this.buttonRecalcular.Name = "buttonRecalcular";
             this.buttonRecalcular.Size = new System.Drawing.Size(95, 45);
             this.buttonRecalcular.TabIndex = 5;
@@ -65,7 +65,7 @@
             // 
             // buttonLogout
             // 
-            this.buttonLogout.Location = new System.Drawing.Point(720, 28);
+            this.buttonLogout.Location = new System.Drawing.Point(274, 28);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(95, 45);
             this.buttonLogout.TabIndex = 6;
@@ -75,7 +75,7 @@
             // 
             // buttonBackupRestore
             // 
-            this.buttonBackupRestore.Location = new System.Drawing.Point(610, 28);
+            this.buttonBackupRestore.Location = new System.Drawing.Point(169, 28);
             this.buttonBackupRestore.Name = "buttonBackupRestore";
             this.buttonBackupRestore.Size = new System.Drawing.Size(95, 45);
             this.buttonBackupRestore.TabIndex = 7;
@@ -87,7 +87,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 392);
+            this.ClientSize = new System.Drawing.Size(389, 392);
             this.Controls.Add(this.buttonBackupRestore);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.buttonRecalcular);

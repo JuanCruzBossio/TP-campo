@@ -24,6 +24,8 @@ namespace TP_campo_62_BP
         //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
         private string _nombreUsuario_62_BP = "";
+        private bool _cerrandoPorLogout_62_BP = false;
+        private bool _cerrandoAplicacion_62_BP = false;
 
         //Eventos
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -52,6 +54,7 @@ namespace TP_campo_62_BP
 
                 login.Show();
 
+                _cerrandoPorLogout_62_BP = true;
                 this.Close();
             }
             catch (Exception ex)
@@ -171,6 +174,31 @@ namespace TP_campo_62_BP
             CambiarIdiomaGUI_62_BP cambiarIdiomaForm = new CambiarIdiomaGUI_62_BP();
             cambiarIdiomaForm.MdiParent = this;
             cambiarIdiomaForm.Show();
+        }
+
+        private void Menu_62_BP_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_cerrandoPorLogout_62_BP || _cerrandoAplicacion_62_BP)
+            {
+                return;
+            }
+
+            try
+            {
+                if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
+                {
+                    _usuarioBLL_62_BP.Logout_62_BP();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(TextoFormato_62_BP("msg_logout_error_detalle", "Error al cerrar sesion: {0}", TraducirExcepcion_62_BP(ex)));
+            }
+            finally
+            {
+                _cerrandoAplicacion_62_BP = true;
+                Application.Exit();
+            }
         }
     }
 }
