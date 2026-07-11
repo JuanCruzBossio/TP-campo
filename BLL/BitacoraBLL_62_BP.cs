@@ -157,7 +157,7 @@ namespace BLL_62_BP
             }
             return filasAfectadas;
         }
-        public int RecalcularBitacorasDVH_62_BP()
+        public int RecalcularDVH_62_BP()
         {
             int filasAfectadas = 0;
             try

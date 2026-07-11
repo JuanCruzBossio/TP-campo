@@ -109,7 +109,7 @@ namespace BLL
             }
             return filasAfectadas;
         }
-        public int RecalcularPatentesDVH_62_BP()
+        public int RecalcularDVH_62_BP()
         {
             int filasAfectadas = 0;
             try

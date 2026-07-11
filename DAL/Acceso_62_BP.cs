@@ -13,8 +13,9 @@ namespace DAL_62_BP
 {
     public class Acceso_62_BP
     {
-        public static string path = File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.json")) ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.json") : "{\r\n  \"Servidor\": \"localhost\"\r\n}";
-        public static JObject config = JObject.Parse(path);
+        public static string pathBase = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "conexion.json");
+        public static string jsonConfig = File.Exists(pathBase) ? File.ReadAllText(pathBase) : "{\r\n  \"Servidor\": \"localhost\"\r\n}";
+        public static JObject config = JObject.Parse(jsonConfig);
         public static string servidor = config["Servidor"].ToString();
         public static SqlConnection conexion_62_BP = new SqlConnection($"Data Source={servidor};Initial Catalog=TP_Campo_62_BP;Integrated Security=True;");
         public void abrir_62_BP()

@@ -50,33 +50,38 @@ namespace TP_campo
         public void LlenarTablaErrores()
         {
             _listaErroresDVV_62_BP = new List<DigitoVerificadorVertical_62_BP>();
-            DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
 
             if (_bitacoraBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
+                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Bitacora_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_familiaBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
+                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Familia_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_patenteBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
+                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Patente_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_rolBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
+                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Rol_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
-            if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0) {
+            if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
+            {
+                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Usuario_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
@@ -115,19 +120,19 @@ namespace TP_campo
                     switch (tabla.Tabla_62_BP)
                     {
                         case "Bitacora_62_BP":
-                            resultado += _bitacoraBLL_62_BP.RecalcularBitacorasDVH_62_BP();
+                            resultado += _bitacoraBLL_62_BP.RecalcularDVH_62_BP();
                             break;
                         case "Familia_62_BP":
-                            resultado += _familiaBLL_62_BP.RecalcularFamiliasDVH_62_BP();
+                            resultado += _familiaBLL_62_BP.RecalcularDVH_62_BP();
                             break;
                         case "Patente_62_BP":
-                            resultado += _patenteBLL_62_BP.RecalcularPatentesDVH_62_BP();
+                            resultado += _patenteBLL_62_BP.RecalcularDVH_62_BP();
                             break;
                         case "Rol_62_BP":
-                            resultado += _rolBLL_62_BP.RecalcularRolesDVH_62_BP();
+                            resultado += _rolBLL_62_BP.RecalcularDVH_62_BP();
                             break;
                         case "Usuario_62_BP":
-                            resultado += _usuarioBLL_62_BP.RecalcularUsuariosDVH_62_BP();
+                            resultado += _usuarioBLL_62_BP.RecalcularDVH_62_BP();
                             break;
                     }
                 }
