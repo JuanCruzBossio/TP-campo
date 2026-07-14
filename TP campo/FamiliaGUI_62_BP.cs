@@ -184,7 +184,7 @@ namespace TP_campo
                 return;
 
             bool hayFamilia =
-                ObtenerFamiliaSeleccionada_62_BP() != null;
+                EsFamiliaRaizSeleccionada_62_BP();
 
             buttonModificar.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(10)  && hayFamilia;
             buttonBaja.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(9) && hayFamilia;
@@ -342,6 +342,13 @@ namespace TP_campo
                 return null;
 
             return treeViewDisponibles.SelectedNode.Tag as Familia_62_BP;
+        }
+        private bool EsFamiliaRaizSeleccionada_62_BP()
+        {
+            TreeNode nodo = treeViewDisponibles.SelectedNode;
+            return nodo?.Tag is Familia_62_BP &&
+                nodo.Parent?.Tag is string tagPadre &&
+                tagPadre == "FAMILIAS";
         }
         private void RecargarDatos_62_BP()
         {
@@ -636,7 +643,7 @@ namespace TP_campo
             if (modoActual_62_BP != 0)
                 return;
 
-            if (e.Node?.Tag is Familia_62_BP familia)
+            if (e.Node?.Tag is Familia_62_BP familia && EsFamiliaRaizSeleccionada_62_BP())
             {
                 familiaEnEdicion_62_BP = familia;
             }
@@ -645,7 +652,7 @@ namespace TP_campo
                 familiaEnEdicion_62_BP = null;
             }
 
-            bool hayFamilia = familiaEnEdicion_62_BP != null;
+            bool hayFamilia = EsFamiliaRaizSeleccionada_62_BP();
 
             buttonModificar.Enabled =
                 SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(10) &&

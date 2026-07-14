@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1280" viewBox="0 0 1800 1280">
+  <style>
+    .bg { fill: #fbfbfb; }
+    .entity { fill: #ffffff; stroke: #222; stroke-width: 2; }
+    .head { fill: #edf2f7; stroke: #222; stroke-width: 2; }
+    .title { font: 700 18px Arial, sans-serif; fill: #111; }
+    .attr { font: 14px Consolas, monospace; fill: #111; }
+    .note { font: 13px Arial, sans-serif; fill: #333; }
+    .rel { stroke: #222; stroke-width: 2; fill: none; }
+    .card { font: 16px Consolas, monospace; fill: #111; font-weight: 700; }
+    .label { font: 13px Arial, sans-serif; fill: #111; }
+    .legend { fill: #fff; stroke: #777; stroke-width: 1.5; }
+  </style>
+  <rect class="bg" x="0" y="0" width="1800" height="1280"/>
+  <text class="title" x="40" y="38">DER estilo Martin - Base TP_Campo_62_BP</text>
+  <text class="note" x="40" y="60">PK = clave primaria, FK = clave foranea, UK = clave unica. Las etiquetas "logica" representan relaciones usadas por el sistema aunque no esten declaradas como FK en el script.</text>
+
+  <rect class="legend" x="1320" y="25" width="430" height="84" rx="6"/>
+  <text class="note" x="1340" y="50">Notacion Martin / Crow's Foot usada en las lineas:</text>
+  <text class="card" x="1340" y="76">|| = uno obligatorio     o| = cero o uno</text>
+  <text class="card" x="1340" y="100">o{ = cero o muchos      |{ = uno o muchos</text>
+
+  <!-- Entidades principales -->
+  <g id="ROL_62_BP">
+    <rect class="entity" x="60" y="120" width="360" height="120"/>
+    <rect class="head" x="60" y="120" width="360" height="34"/>
+    <text class="title" x="78" y="143">Rol_62_BP</text>
+    <text class="attr" x="78" y="176">PK  int          IdRol_62_BP IDENTITY NOT NULL</text>
+    <text class="attr" x="78" y="199">    varchar(100) Nombre_62_BP NULL</text>
+    <text class="attr" x="78" y="222">    varchar(500) DVH_62_BP NULL</text>
+  </g>
+
+  <g id="USUARIO_62_BP">
+    <rect class="entity" x="60" y="300" width="430" height="338"/>
+    <rect class="head" x="60" y="300" width="430" height="34"/>
+    <text class="title" x="78" y="323">Usuario_62_BP</text>
+    <text class="attr" x="78" y="356">PK  varchar(20)  dni_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="379">    nvarchar(100) apellido_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="402">    nvarchar(100) nombre_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="425">    nvarchar(256) email_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="448">UK  nvarchar(50)  login_62_BP NOT NULL UNIQUE</text>
+    <text class="attr" x="78" y="471">    nvarchar(max) contrasena_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="494">    bit           bloqueo_62_BP NOT NULL DEFAULT 0</text>
+    <text class="attr" x="78" y="517">    bit           activo_62_BP NOT NULL DEFAULT 1</text>
+    <text class="attr" x="78" y="540">    int           intentosLogin_62_BP NOT NULL DEFAULT 0</text>
+    <text class="attr" x="78" y="563">    bit           ForzarContrasenaNueva_62_BP NOT NULL DEFAULT 0</text>
+    <text class="attr" x="78" y="586">FK  int           IdRol_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="609">    varchar(500)  DVH_62_BP NULL</text>
+    <text class="attr" x="78" y="632">    int           Idioma_62_BP NOT NULL DEFAULT 1</text>
+  </g>
+
+  <g id="BITACORA_62_BP">
+    <rect class="entity" x="60" y="700" width="430" height="178"/>
+    <rect class="head" x="60" y="700" width="430" height="34"/>
+    <text class="title" x="78" y="723">Bitacora_62_BP</text>
+    <text class="attr" x="78" y="756">PK  int           id_62_BP IDENTITY NOT NULL</text>
+    <text class="attr" x="78" y="779">    datetime      fecha_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="802">    varchar(20)   dniUsuario_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="825">    nvarchar(max) mensaje_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="848">    int           criticidad_62_BP NOT NULL</text>
+    <text class="attr" x="78" y="871">    varchar(500)  DVH_62_BP NULL</text>
+  </g>
+
+  <g id="DVV_62_BP">
+    <rect class="entity" x="60" y="940" width="430" height="86"/>
+    <rect class="head" x="60" y="940" width="430" height="34"/>
+    <text class="title" x="78" y="963">DigitoVerificadorVertical_62_BP</text>
+    <text class="attr" x="78" y="996">    varchar(100) Tabla_62_BP NULL</text>
+    <text class="attr" x="78" y="1019">    varchar(500) DVV_62_BP NULL</text>
+  </g>
+
+  <!-- Entidades puente -->
+  <g id="ROLFAMILIA_62_BP">
+    <rect class="entity" x="680" y="110" width="360" height="86"/>
+    <rect class="head" x="680" y="110" width="360" height="34"/>
+    <text class="title" x="698" y="133">RolFamilia_62_BP</text>
+    <text class="attr" x="698" y="166">PK FK int IdRol_62_BP NOT NULL</text>
+    <text class="attr" x="698" y="189">PK FK int IdFamilia_62_BP NOT NULL</text>
+  </g>
+
+  <g id="ROLPATENTE_62_BP">
+    <rect class="entity" x="680" y="275" width="360" height="86"/>
+    <rect class="head" x="680" y="275" width="360" height="34"/>
+    <text class="title" x="698" y="298">RolPatente_62_BP</text>
+    <text class="attr" x="698" y="331">PK FK int IdRol_62_BP NOT NULL</text>
+    <text class="attr" x="698" y="354">PK FK int IdPatente_62_BP NOT NULL</text>
+  </g>
+
+  <g id="FAMILIAFAMILIA_62_BP">
+    <rect class="entity" x="680" y="450" width="390" height="86"/>
+    <rect class="head" x="680" y="450" width="390" height="34"/>
+    <text class="title" x="698" y="473">FamiliaFamilia_62_BP</text>
+    <text class="attr" x="698" y="506">PK FK int IdFamiliaPadre_62_BP NOT NULL</text>
+    <text class="attr" x="698" y="529">PK FK int IdFamiliaHija_62_BP NOT NULL</text>
+  </g>
+
+  <g id="FAMILIAPATENTE_62_BP">
+    <rect class="entity" x="680" y="650" width="360" height="86"/>
+    <rect class="head" x="680" y="650" width="360" height="34"/>
+    <text class="title" x="698" y="673">FamiliaPatente_62_BP</text>
+    <text class="attr" x="698" y="706">FK int IdFamilia_62_BP NULL</text>
+    <text class="attr" x="698" y="729">FK int IdPatente_62_BP NULL</text>
+  </g>
+
+  <!-- Entidades derecha -->
+  <g id="FAMILIA_62_BP">
+    <rect class="entity" x="1280" y="140" width="400" height="120"/>
+    <rect class="head" x="1280" y="140" width="400" height="34"/>
+    <text class="title" x="1298" y="163">Familia_62_BP</text>
+    <text class="attr" x="1298" y="196">PK  int          IdFamilia_62_BP IDENTITY NOT NULL</text>
+    <text class="attr" x="1298" y="219">    varchar(100) Nombre_62_BP NULL</text>
+    <text class="attr" x="1298" y="242">    varchar(500) DVH_62_BP NULL</text>
+  </g>
+
+  <g id="PATENTE_62_BP">
+    <rect class="entity" x="1280" y="465" width="400" height="120"/>
+    <rect class="head" x="1280" y="465" width="400" height="34"/>
+    <text class="title" x="1298" y="488">Patente_62_BP</text>
+    <text class="attr" x="1298" y="521">PK  int          IdPatente_62_BP IDENTITY NOT NULL</text>
+    <text class="attr" x="1298" y="544">    varchar(100) Nombre_62_BP NULL</text>
+    <text class="attr" x="1298" y="567">    varchar(500) DVH_62_BP NULL</text>
+  </g>
+
+  <!-- Relaciones con cardinalidad estilo Martin -->
+  <path class="rel" d="M420 180 L590 180 L590 130 L680 130"/>
+  <text class="card" x="428" y="172">||</text><text class="card" x="650" y="122">o{</text>
+  <text class="label" x="508" y="158">tiene familias</text>
+
+  <path class="rel" d="M1280 190 L1160 190 L1160 130 L1040 130"/>
+  <text class="card" x="1250" y="182">||</text><text class="card" x="1048" y="122">o{</text>
+  <text class="label" x="1105" y="158">pertenece a familia</text>
+
+  <path class="rel" d="M420 205 L610 205 L610 300 L680 300"/>
+  <text class="card" x="428" y="197">||</text><text class="card" x="650" y="292">o{</text>
+  <text class="label" x="506" y="228">tiene patentes directas</text>
+
+  <path class="rel" d="M1280 525 L1150 525 L1150 320 L1040 320"/>
+  <text class="card" x="1250" y="517">||</text><text class="card" x="1048" y="312">o{</text>
+  <text class="label" x="1080" y="420">patente directa</text>
+
+  <path class="rel" d="M1480 260 L1480 430 L1070 430 L1070 475"/>
+  <text class="card" x="1488" y="282">||</text><text class="card" x="1078" y="467">o{</text>
+  <text class="label" x="1320" y="420">familia padre</text>
+
+  <path class="rel" d="M1280 215 L1115 215 L1115 515 L1070 515"/>
+  <text class="card" x="1250" y="207">||</text><text class="card" x="1078" y="507">o{</text>
+  <text class="label" x="1130" y="355">familia hija</text>
+
+  <path class="rel" d="M1280 240 L1180 240 L1180 675 L1040 675"/>
+  <text class="card" x="1250" y="232">o|</text><text class="card" x="1048" y="667">o{</text>
+  <text class="label" x="1155" y="610">familia-patente</text>
+
+  <path class="rel" d="M1280 555 L1205 555 L1205 715 L1040 715"/>
+  <text class="card" x="1250" y="547">o|</text><text class="card" x="1048" y="707">o{</text>
+  <text class="label" x="1158" y="690">patente-familia</text>
+
+  <path class="rel" d="M240 240 L240 300"/>
+  <text class="card" x="250" y="265">||</text><text class="card" x="250" y="296">o{</text>
+  <text class="label" x="270" y="278">asigna rol (logica)</text>
+
+  <path class="rel" d="M240 638 L240 700"/>
+  <text class="card" x="250" y="663">||</text><text class="card" x="250" y="696">o{</text>
+  <text class="label" x="270" y="681">registra bitacora (logica)</text>
+</svg>

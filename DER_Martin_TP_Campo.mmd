@@ -1,0 +1,83 @@
+erDiagram
+    ROL_62_BP ||--o{ USUARIO_62_BP : "asigna rol (logica por IdRol)"
+    USUARIO_62_BP ||--o{ BITACORA_62_BP : "genera registros (logica por dni)"
+
+    ROL_62_BP ||--o{ ROLFAMILIA_62_BP : "FK_RolFamilia_Rol"
+    FAMILIA_62_BP ||--o{ ROLFAMILIA_62_BP : "FK_RolFamilia_Familia"
+
+    ROL_62_BP ||--o{ ROLPATENTE_62_BP : "FK_RolPatente_Rol"
+    PATENTE_62_BP ||--o{ ROLPATENTE_62_BP : "FK_RolPatente_Patente"
+
+    FAMILIA_62_BP ||--o{ FAMILIAFAMILIA_62_BP : "FK padre"
+    FAMILIA_62_BP ||--o{ FAMILIAFAMILIA_62_BP : "FK hija"
+
+    FAMILIA_62_BP o|--o{ FAMILIAPATENTE_62_BP : "FK_FamiliaPatente_Familia"
+    PATENTE_62_BP o|--o{ FAMILIAPATENTE_62_BP : "FK_FamiliaPatente_Patente"
+
+    BITACORA_62_BP {
+        int id_62_BP PK "IDENTITY NOT NULL"
+        datetime fecha_62_BP "NOT NULL"
+        varchar_20 dniUsuario_62_BP "NOT NULL"
+        nvarchar_max mensaje_62_BP "NOT NULL"
+        int criticidad_62_BP "NOT NULL"
+        varchar_500 DVH_62_BP "NULL"
+    }
+
+    DIGITOVERIFICADORVERTICAL_62_BP {
+        varchar_100 Tabla_62_BP "NULL"
+        varchar_500 DVV_62_BP "NULL"
+    }
+
+    FAMILIA_62_BP {
+        int IdFamilia_62_BP PK "IDENTITY NOT NULL"
+        varchar_100 Nombre_62_BP "NULL"
+        varchar_500 DVH_62_BP "NULL"
+    }
+
+    FAMILIAFAMILIA_62_BP {
+        int IdFamiliaPadre_62_BP PK,FK "NOT NULL"
+        int IdFamiliaHija_62_BP PK,FK "NOT NULL"
+    }
+
+    FAMILIAPATENTE_62_BP {
+        int IdFamilia_62_BP FK "NULL"
+        int IdPatente_62_BP FK "NULL"
+    }
+
+    PATENTE_62_BP {
+        int IdPatente_62_BP PK "IDENTITY NOT NULL"
+        varchar_100 Nombre_62_BP "NULL"
+        varchar_500 DVH_62_BP "NULL"
+    }
+
+    ROL_62_BP {
+        int IdRol_62_BP PK "IDENTITY NOT NULL"
+        varchar_100 Nombre_62_BP "NULL"
+        varchar_500 DVH_62_BP "NULL"
+    }
+
+    ROLFAMILIA_62_BP {
+        int IdRol_62_BP PK,FK "NOT NULL"
+        int IdFamilia_62_BP PK,FK "NOT NULL"
+    }
+
+    ROLPATENTE_62_BP {
+        int IdRol_62_BP PK,FK "NOT NULL"
+        int IdPatente_62_BP PK,FK "NOT NULL"
+    }
+
+    USUARIO_62_BP {
+        varchar_20 dni_62_BP PK "NOT NULL"
+        nvarchar_100 apellido_62_BP "NOT NULL"
+        nvarchar_100 nombre_62_BP "NOT NULL"
+        nvarchar_256 email_62_BP "NOT NULL"
+        nvarchar_50 login_62_BP UK "NOT NULL UNIQUE"
+        nvarchar_max contrasena_62_BP "NOT NULL"
+        bit bloqueo_62_BP "NOT NULL DEFAULT 0"
+        bit activo_62_BP "NOT NULL DEFAULT 1"
+        int intentosLogin_62_BP "NOT NULL DEFAULT 0"
+        bit ForzarContrasenaNueva_62_BP "NOT NULL DEFAULT 0"
+        int IdRol_62_BP FK "NOT NULL"
+        varchar_500 DVH_62_BP "NULL"
+        int Idioma_62_BP "NOT NULL DEFAULT 1"
+    }
