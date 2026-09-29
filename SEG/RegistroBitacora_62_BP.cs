@@ -7,7 +7,7 @@ using SEG;
 
 namespace SEG_62_BP
 {
-    public class RegistroBitacora_62_BP: IDigitoVerificadorHorizontal_62_BP
+    public class RegistroBitacora_62_BP
     {
         private int id_62_BP;
 
@@ -57,5 +57,6 @@ namespace SEG_62_BP
                    Mensaje_62_BP +
                    Criticidad_62_BP.ToString();
         }
+
     }
 }

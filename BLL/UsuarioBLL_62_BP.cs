@@ -11,13 +11,14 @@ using DAL;
 using DAL_62_BP;
 using SEG;
 using SEG_62_BP;
+using MAPPER_62_BP;
 
 namespace BLL_62_BP
 {
     public class UsuarioBLL_62_BP
     {
 
-        private UsuarioDAL_62_BP _usuarioDAL = new UsuarioDAL_62_BP();
+        private UsuarioMapper_62_BP _usuarioDAL = new UsuarioMapper_62_BP();
         private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
         private RolBLL_62_BP _rolBLL = new RolBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL = new BitacoraBLL_62_BP();

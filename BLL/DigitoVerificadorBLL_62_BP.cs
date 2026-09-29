@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using SEG;
+using DIGITO_62_BP;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using MAPPER_62_BP;
 
 namespace BLL
 {
     public class DigitoVerificadorBLL_62_BP
     {
-        private DigitoVerificadorDAL_62_BP _digitoVerificadorDAL_62_BP = new DigitoVerificadorDAL_62_BP();
+        private DigitoVerificadorMapper_62_BP _digitoVerificadorDAL_62_BP = new DigitoVerificadorMapper_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         public int AltaDVV_62_BP(string tabla, string dvv)
         {
@@ -68,9 +69,9 @@ namespace BLL
             }
             return filasAfectadas;
         }
-        public DigitoVerificadorVertical_62_BP BuscarDVV_62_BP(string tabla)
+        public DIGITO_62_BP.DigitoVerificadorVertical_62_BP BuscarDVV_62_BP(string tabla)
         {
-            DigitoVerificadorVertical_62_BP dvv = null;
+            DIGITO_62_BP.DigitoVerificadorVertical_62_BP dvv = null;
             try
             {
                 dvv = _digitoVerificadorDAL_62_BP.BuscarDVV_62_BP(tabla);
@@ -81,12 +82,12 @@ namespace BLL
             }
             return dvv;
         }
-        public List<DigitoVerificadorVertical_62_BP> BuscarErroresDVV_62_BP()
+        public List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> BuscarErroresDVV_62_BP()
         {
-            List<DigitoVerificadorVertical_62_BP> errores = new List<DigitoVerificadorVertical_62_BP>();
+            List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> errores = new List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP>();
             try
             {
-                List<DigitoVerificadorVertical_62_BP> lista = _digitoVerificadorDAL_62_BP.BuscarDVV_62_BP();
+                List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> lista = _digitoVerificadorDAL_62_BP.BuscarDVV_62_BP();
                 foreach (var dvv in lista)
                 {
                     if (CalcularDVV_62_BP(dvv.Tabla_62_BP) != dvv.DVV_62_BP)
@@ -101,9 +102,9 @@ namespace BLL
             }
             return errores;
         }
-        public List<DigitoVerificadorVertical_62_BP> BuscarDVVs_62_BP()
+        public List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> BuscarDVVs_62_BP()
         {
-            List<DigitoVerificadorVertical_62_BP> lista = new List<DigitoVerificadorVertical_62_BP>();
+            List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> lista = new List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP>();
             try
             {
                 lista = _digitoVerificadorDAL_62_BP.BuscarDVV_62_BP();

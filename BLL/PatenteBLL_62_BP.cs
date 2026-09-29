@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using DAL;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using MAPPER_62_BP;
 
 namespace BLL
 {
     public class PatenteBLL_62_BP
     {
-        private PatenteDAL_62_BP _patenteDAL_62_BP = new PatenteDAL_62_BP();
+        private PatenteMapper_62_BP _patenteDAL_62_BP = new PatenteMapper_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
 

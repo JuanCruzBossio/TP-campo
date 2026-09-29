@@ -195,6 +195,10 @@
       <Project>{6e7ff95c-f654-4f0d-83ee-294381c45318}</Project>
       <Name>SEG_62_BP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DIGITO\DIGITO_62_BP.csproj">
+      <Project>{8a3c5d7e-1f2b-4a6e-9d8c-7b4f3a2e1c5d}</Project>
+      <Name>DIGITO_62_BP</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace SEG.Permisos
 {
-    public abstract class ComponentePermiso_62_BP : IDigitoVerificadorHorizontal_62_BP
+    public abstract class ComponentePermiso_62_BP
     {
         public int Id_62_BP { get; set; }
 
         public string Nombre_62_BP { get; set; }
-        public virtual string ObtenerCadenaDVH_62_BP()
-        {
-            return Id_62_BP.ToString() +
-                   Nombre_62_BP;
-        }
+
         public virtual void Agregar_62_BP(ComponentePermiso_62_BP componente)
         {
             throw new NotSupportedException(
@@ -37,6 +33,11 @@ namespace SEG.Permisos
         {
             throw new NotSupportedException(
                 "Este componente no posee elementos hijos.");
+        }
+        public virtual string ObtenerCadenaDVH_62_BP()
+        {
+            return Id_62_BP.ToString() +
+                   Nombre_62_BP;
         }
     }
 }

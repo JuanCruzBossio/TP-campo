@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL;
 using BLL_62_BP;
+using DIGITO_62_BP;
 using SEG;
 using SEG_62_BP;
 using TP_campo_62_BP;
@@ -29,8 +30,8 @@ namespace TP_campo
         PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         RolBLL_62_BP _rolBLL_62_BP = new RolBLL_62_BP();
         UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
-        List<DigitoVerificadorVertical_62_BP> _listaErroresDVV_62_BP = new List<DigitoVerificadorVertical_62_BP>();
-        DigitoVerificadorVertical_62_BP _dvvSeleccionado_62_BP = new DigitoVerificadorVertical_62_BP();
+        List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> _listaErroresDVV_62_BP = new List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP>();
+        DIGITO_62_BP.DigitoVerificadorVertical_62_BP _dvvSeleccionado_62_BP = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
         
         //Eventos
         private void DigitoVerificadorGUI_62_BP_Load(object sender, EventArgs e)
@@ -53,35 +54,35 @@ namespace TP_campo
 
             if (_bitacoraBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
-                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
+                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Bitacora_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_familiaBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
-                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
+                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Familia_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_patenteBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
-                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
+                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Patente_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_rolBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
-                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
+                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Rol_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
 
             if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
             {
-                DigitoVerificadorVertical_62_BP tabla = new DigitoVerificadorVertical_62_BP();
+                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
                 tabla.Tabla_62_BP = "Usuario_62_BP";
                 _listaErroresDVV_62_BP.Add(tabla);
             }
@@ -115,7 +116,7 @@ namespace TP_campo
             {
                 int resultado = 0;
 
-                foreach (DigitoVerificadorVertical_62_BP tabla in _listaErroresDVV_62_BP)
+                foreach (DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla in _listaErroresDVV_62_BP)
                 {
                     switch (tabla.Tabla_62_BP)
                     {

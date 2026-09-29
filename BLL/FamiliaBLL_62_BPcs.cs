@@ -10,12 +10,13 @@ using DAL;
 using Newtonsoft.Json.Serialization;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using MAPPER_62_BP;
 
 namespace BLL
 {
     public class FamiliaBLL_62_BP
     {
-        private FamiliaDAL_62_BP _familiaDAL_62_BP = new FamiliaDAL_62_BP();
+        private FamiliaMapper_62_BP _familiaDAL_62_BP = new FamiliaMapper_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();

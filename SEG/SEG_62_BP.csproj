@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DigitoVerificadorHorizontal_62_BP.cs" />
-    <Compile Include="DigitoVerificadorVertical_62_BP.cs" />
     <Compile Include="Encriptacion_62_BP.cs" />
     <Compile Include="Observer_62_BP\Idioma_62_BP.cs" />
     <Compile Include="Observer_62_BP\IObservadorIdioma_62_BP.cs" />

@@ -15,11 +15,12 @@ using iTextSharp.text.pdf;
 using DAL;
 using SEG.Permisos_62_BP;
 using BLL;
+using MAPPER_62_BP;
 namespace BLL_62_BP
 {
     public class BitacoraBLL_62_BP
     {
-        private BitacoraDAL_62_BP _bitacoraDAL = new BitacoraDAL_62_BP();
+        private BitacoraMapper_62_BP _bitacoraDAL = new BitacoraMapper_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
 

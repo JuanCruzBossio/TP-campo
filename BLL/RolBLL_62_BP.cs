@@ -7,12 +7,13 @@ using BLL_62_BP;
 using DAL;
 using SEG.Permisos_62_BP;
 using SEG_62_BP;
+using MAPPER_62_BP;
 
 namespace BLL
 {
     public class RolBLL_62_BP
     {
-        private RolDAL_62_BP _rolDAL_62_BP = new RolDAL_62_BP();
+        private RolMapper_62_BP _rolDAL_62_BP = new RolMapper_62_BP();
         private FamiliaBLL_62_BP _familiaBLL_62_BP = new FamiliaBLL_62_BP();
         private PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();

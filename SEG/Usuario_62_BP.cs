@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ using SEG.Permisos_62_BP;
 
 namespace SEG_62_BP
 {
-    public class Usuario_62_BP : IDigitoVerificadorHorizontal_62_BP
+    public class Usuario_62_BP
     {
         private string dni_62_BP;
         public string Dni_62_BP
@@ -113,6 +113,7 @@ namespace SEG_62_BP
                    ForzarContrasenaNueva_62_BP.ToString() +
                    Idioma_62_BP.ToString();
         }
+
     }
 
 }

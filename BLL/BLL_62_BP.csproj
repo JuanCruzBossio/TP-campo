@@ -73,6 +73,14 @@
       <Project>{6e7ff95c-f654-4f0d-83ee-294381c45318}</Project>
       <Name>SEG_62_BP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DIGITO\DIGITO_62_BP.csproj">
+      <Project>{8a3c5d7e-1f2b-4a6e-9d8c-7b4f3a2e1c5d}</Project>
+      <Name>DIGITO_62_BP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MAPPER\MAPPER_62_BP.csproj">
+      <Project>{9b4d6e2f-3a7c-4b8e-a1d5-6f9e2c8b3a7d}</Project>
+      <Name>MAPPER_62_BP</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
