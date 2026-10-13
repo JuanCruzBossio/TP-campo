@@ -50,54 +50,12 @@ namespace TP_campo
         //Funciones:
         public void LlenarTablaErrores()
         {
-            _listaErroresDVV_62_BP = new List<DigitoVerificadorVertical_62_BP>();
+            _listaErroresDVV_62_BP = _dvvBLL_62_BP.BuscarErroresDVV_62_BP();
 
-            if (_bitacoraBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
-            {
-                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
-                tabla.Tabla_62_BP = "Bitacora_62_BP";
-                _listaErroresDVV_62_BP.Add(tabla);
-            }
-
-            if (_familiaBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
-            {
-                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
-                tabla.Tabla_62_BP = "Familia_62_BP";
-                _listaErroresDVV_62_BP.Add(tabla);
-            }
-
-            if (_patenteBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
-            {
-                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
-                tabla.Tabla_62_BP = "Patente_62_BP";
-                _listaErroresDVV_62_BP.Add(tabla);
-            }
-
-            if (_rolBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
-            {
-                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
-                tabla.Tabla_62_BP = "Rol_62_BP";
-                _listaErroresDVV_62_BP.Add(tabla);
-            }
-
-            if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP().Count > 0)
-            {
-                DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
-                tabla.Tabla_62_BP = "Usuario_62_BP";
-                _listaErroresDVV_62_BP.Add(tabla);
-            }
-
-            foreach (var dvv in _dvvBLL_62_BP.BuscarErroresDVV_62_BP())
-            {
-                if (!_listaErroresDVV_62_BP.Any(error => error.Tabla_62_BP == dvv.Tabla_62_BP))
-                {
-                    _listaErroresDVV_62_BP.Add(dvv);
-                }
-            }
-            
             dataGridViewErrores.DataSource = null;
             dataGridViewErrores.DataSource = _listaErroresDVV_62_BP;
             dataGridViewErrores.Columns["DVV_62_BP"].Visible = false;
+
             if (_listaErroresDVV_62_BP.Count > 0)
             {
                 string tablasConError = string.Join(", ", _listaErroresDVV_62_BP.Select(x => x.Tabla_62_BP));
@@ -140,8 +98,7 @@ namespace TP_campo
                 if (resultado > 0)
                 {
                     MostrarMensaje_62_BP("msg_dvv_recalculados", "Digitos verificadores recalculados correctamente.");
-                    dataGridViewErrores.DataSource = null;
-                    buttonRecalcular.Enabled = false;
+                    LlenarTablaErrores();
                     return true;
                 }
                 else

@@ -48,6 +48,7 @@ namespace BLL
 
                 filasAfectadas = 1;
                 ActualizarRolDVH_62_BP(id);
+                ActualizarTablaDVV_62_BP_Rol();
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Rol " + rol.Nombre_62_BP, 1);
             }
             catch
@@ -65,10 +66,6 @@ namespace BLL
             try
             {
                 filasAfectadas = _rolDAL_62_BP.Modificar_62_BP(rol);
-                if (filasAfectadas > 0)
-                {
-                    ActualizarRolDVH_62_BP(rol.Id_62_BP);
-                }
                 _rolDAL_62_BP.BorrarRelacionesRolFamilia_62_BP(rol.Id_62_BP);
                 _rolDAL_62_BP.BorrarRelacionesRolPatente_62_BP(rol.Id_62_BP);
 
@@ -81,6 +78,12 @@ namespace BLL
                     else if (hijo is Patente_62_BP patente) {
                         AgregarPatente_62_BP(rol.Id_62_BP, patente.Id_62_BP);
                     }
+                }
+
+                if (filasAfectadas > 0)
+                {
+                    ActualizarRolDVH_62_BP(rol.Id_62_BP);
+                    ActualizarTablaDVV_62_BP_Rol();
                 }
 
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Rol " + rol.Nombre_62_BP, 2);
@@ -301,7 +304,6 @@ namespace BLL
                 {
                     string dvh = _encriptacionSEG.EncriptarConSHA256_62_BP(rol.ObtenerCadenaDVH_62_BP());
                     filasAfectadas = _rolDAL_62_BP.ActualizarDVH_62_BP(id, dvh);
-                    _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
                 }
             }
             catch (Exception ex)
@@ -309,6 +311,18 @@ namespace BLL
                 throw;
             }
             return filasAfectadas;
+        }
+
+        public void ActualizarTablaDVV_62_BP_Rol()
+        {
+            try
+            {
+                _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
         public int RecalcularDVH_62_BP()
         {
