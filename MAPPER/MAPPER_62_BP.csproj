@@ -53,6 +53,12 @@
     <Compile Include="BitacoraMapper_62_BP.cs" />
     <Compile Include="DigitoVerificadorMapper_62_BP.cs" />
     <Compile Include="FamiliaMapper_62_BP.cs" />
+    <Compile Include="LibroMapper_62_BP.cs" />
+    <Compile Include="LectorMapper_62_BP.cs" />
+    <Compile Include="PrestamoMapper_62_BP.cs" />
+    <Compile Include="DetallePrestamoMapper_62_BP.cs" />
+    <Compile Include="MultaMapper_62_BP.cs" />
+    <Compile Include="SolicitudInsatisfechaMapper_62_BP.cs" />
     <Compile Include="PatenteMapper_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RolMapper_62_BP.cs" />

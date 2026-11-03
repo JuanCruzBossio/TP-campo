@@ -42,6 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="LibroBE_62_BP.cs" />
+    <Compile Include="LectorBE_62_BP.cs" />
+    <Compile Include="PrestamoBE_62_BP.cs" />
+    <Compile Include="DetallePrestamoBE_62_BP.cs" />
+    <Compile Include="MultaBE_62_BP.cs" />
+    <Compile Include="SolicitudInsatisfechaBE_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
