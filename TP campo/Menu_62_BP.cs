@@ -89,6 +89,8 @@ namespace TP_campo_62_BP
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
             ActualizarTextoUsuarioLogueado_62_BP();
+            ventasToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo", "Prestamo");
+            carritoToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_solicitar", "Solicitar");
         }
 
         private void ActualizarTextoUsuarioLogueado_62_BP()
@@ -206,6 +208,19 @@ namespace TP_campo_62_BP
                 _cerrandoAplicacion_62_BP = true;
                 Application.Exit();
             }
+        }
+
+        private void ventasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+
+        private void carritoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrestamoGUI_62_BP prestamoForm = new PrestamoGUI_62_BP();
+            prestamoForm.MdiParent = this;
+            prestamoForm.Show();
         }
     }
 }

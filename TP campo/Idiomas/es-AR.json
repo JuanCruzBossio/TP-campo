@@ -313,7 +313,13 @@
 
   "maestros_lectores": "Lectores",
   "maestros_lectores_agregar": "Agregar",
+  "ventas_prestamo": "Prestamo",
+  "ventas_prestamo_solicitar": "Solicitar",
+  "titulo_prestamo": "Prestamos",
+  "lbl_dni_lector": "DNI Lector",
+  "btn_validar": "Validar",
   "titulo_agregar_lector": "Alta de Lector",
+  "titulo_validar_lector": "Validacion de Lector",
   "lbl_dni": "DNI:",
   "lbl_nombre": "Nombre:",
   "lbl_apellido": "Apellido:",
@@ -326,5 +332,12 @@
   "msg_error_lector_existente": "Ya existe un lector registrado con el DNI: {0}",
   "msg_exito_registro": "Lector registrado con exito.",
   "msg_error_registro": "No se pudo registrar el lector. Intente nuevamente.",
-  "msg_error_registro_detalle": "Error al registrar el lector: {0}"
+  "msg_error_registro_detalle": "Error al registrar el lector: {0}",
+  "msg_error_dni_vacio_prestamo": "Debe ingresar un DNI.",
+  "msg_registro_cancelado": "Registro de lector cancelado.",
+  "msg_lector_no_registrado": "El lector no esta registrado en el sistema.",
+  "msg_deuda_pendiente": "El lector posee deuda pendiente. Debe cancelarla antes de solicitar un nuevo prestamo.",
+  "msg_limite_prestamos": "El lector alcanzó el maximo de {0} libros prestados. Debe efectuar una devolucion antes de solicitar un nuevo prestamo.",
+  "msg_restriccion_prestamo": "{0}",
+  "msg_validacion_exitosa": "Lector: {0} {1}\nPrestamos activos: {2}\nDeuda pendiente: No\nPuede solicitar prestamo."
 }

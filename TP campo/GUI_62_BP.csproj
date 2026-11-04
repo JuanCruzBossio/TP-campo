@@ -158,6 +158,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menu_62_BP.resx">
       <DependentUpon>Menu_62_BP.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrestamoGUI_62_BP.resx">
+      <DependentUpon>PrestamoGUI_62_BP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -9,10 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
+using SEG_62_BP.Observer;
+using TP_campo;
 
-namespace TP_campo
+namespace TP_campo_62_BP
 {
-    public partial class PrestamoGUI_62_BP : Form
+    public partial class PrestamoGUI_62_BP : LocalizableForm_62_BP
     {
         private LectorBLL_62_BP _lectorBLL_62_BP = new LectorBLL_62_BP();
         private PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
@@ -23,6 +26,53 @@ namespace TP_campo
         public PrestamoGUI_62_BP()
         {
             InitializeComponent();
+            buttonValidar.Click += buttonValidar_Click;
+        }
+
+        protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
+        {
+            base.TraducirFormulario_62_BP(idioma_62_BP);
+            this.Text = Texto_62_BP("titulo_prestamo", "Prestamos");
+            label1.Text = Texto_62_BP("lbl_dni_lector", "DNI Lector");
+            buttonValidar.Text = Texto_62_BP("btn_validar", "Validar");
+        }
+
+        private void buttonValidar_Click(object sender, EventArgs e)
+        {
+            string dni = textBoxDNI.Text.Trim();
+
+            ResultadoValidacionLector_62_BP resultado = ValidarLectorParaPrestamo_62_BP(dni);
+
+            if (string.IsNullOrWhiteSpace(dni))
+            {
+                MostrarMensaje_62_BP("msg_error_dni_vacio", "Debe ingresar un DNI.");
+                return;
+            }
+
+            if (!resultado.LectorRegistrado)
+            {
+                if (resultado.MotivoBloqueo == "Registro de lector cancelado.")
+                {
+                    MostrarMensaje_62_BP("msg_registro_cancelado", "Registro de lector cancelado.");
+                }
+                else
+                {
+                    MostrarMensaje_62_BP("msg_lector_no_registrado", resultado.MotivoBloqueo);
+                }
+                return;
+            }
+
+            if (!resultado.PuedeSolicitarPrestamo)
+            {
+                MostrarMensaje_62_BP("msg_restriccion_prestamo", resultado.MotivoBloqueo);
+                return;
+            }
+
+            MostrarMensaje_62_BP("msg_validacion_exitosa",
+                string.Format("Lector: {0} {1}\nPrestamos activos: {2}\nDeuda pendiente: No\nPuede solicitar prestamo.",
+                    resultado.Lector.nombre_62_BP,
+                    resultado.Lector.apellido_62_BP,
+                    resultado.PrestamosActivos));
         }
 
         // -------------------------------------------------------------------------
@@ -54,7 +104,7 @@ namespace TP_campo
 
             if (string.IsNullOrWhiteSpace(dni))
             {
-                resultado.MotivoBloqueo = "Debe ingresar un DNI.";
+                resultado.MotivoBloqueo = Texto_62_BP("msg_error_dni_vacio", "Debe ingresar un DNI.");
                 return resultado;
             }
 
@@ -66,10 +116,10 @@ namespace TP_campo
                 // Lector no registrado: abrir formulario de alta
                 resultado.LectorRegistrado = false;
                 resultado.PuedeSolicitarPrestamo = false;
-                resultado.MotivoBloqueo = "El lector no esta registrado en el sistema.";
+                resultado.MotivoBloqueo = Texto_62_BP("msg_lector_no_registrado", "El lector no esta registrado en el sistema.");
 
                 AgregarLectorGUI_62_BP agregarForm = new AgregarLectorGUI_62_BP(dni);
-                agregarForm.Text = "Alta de Lector";
+                agregarForm.Text = Texto_62_BP("titulo_agregar_lector", "Alta de Lector");
                 agregarForm.StartPosition = FormStartPosition.CenterParent;
 
                 if (agregarForm.ShowDialog(this) == DialogResult.OK)
@@ -105,7 +155,7 @@ namespace TP_campo
                 else
                 {
                     // El usuario cancelo el alta: mantener estado de no registrado
-                    resultado.MotivoBloqueo = "Registro de lector cancelado.";
+                    resultado.MotivoBloqueo = Texto_62_BP("msg_registro_cancelado", "Registro de lector cancelado.");
                 }
                 return resultado;
             }
@@ -123,7 +173,7 @@ namespace TP_campo
             if (resultado.TieneDeudaPendiente)
             {
                 resultado.PuedeSolicitarPrestamo = false;
-                resultado.MotivoBloqueo = "El lector posee deuda pendiente. Debe cancelarla antes de solicitar un nuevo prestamo.";
+                resultado.MotivoBloqueo = Texto_62_BP("msg_deuda_pendiente", "El lector posee deuda pendiente. Debe cancelarla antes de solicitar un nuevo prestamo.");
                 return resultado;
             }
 
@@ -131,7 +181,7 @@ namespace TP_campo
             if (resultado.PrestamosActivos >= LIMITE_PRESTAMOS)
             {
                 resultado.PuedeSolicitarPrestamo = false;
-                resultado.MotivoBloqueo = string.Format("El lector alcanzó el maximo de {0} libros prestados. Debe efectuar una devolucion antes de solicitar un nuevo prestamo.", LIMITE_PRESTAMOS);
+                resultado.MotivoBloqueo = TextoFormato_62_BP("msg_limite_prestamos", "El lector alcanzó el maximo de {0} libros prestados. Debe efectuar una devolucion antes de solicitar un nuevo prestamo.", LIMITE_PRESTAMOS);
                 return resultado;
             }
 

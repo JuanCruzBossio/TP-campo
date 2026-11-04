@@ -313,6 +313,11 @@
 
   "maestros_lectores": "Readers",
   "maestros_lectores_agregar": "Add",
+  "ventas_prestamo": "Loan",
+  "ventas_prestamo_solicitar": "Request",
+  "titulo_prestamo": "Loans",
+  "lbl_dni_lector": "Reader ID",
+  "btn_validar": "Validate",
   "titulo_agregar_lector": "Register Reader",
   "lbl_dni": "ID:",
   "lbl_nombre": "Name:",
@@ -326,5 +331,12 @@
   "msg_error_lector_existente": "A reader is already registered with ID: {0}",
   "msg_exito_registro": "Reader registered successfully.",
   "msg_error_registro": "Could not register the reader. Please try again.",
-  "msg_error_registro_detalle": "Error while registering the reader: {0}"
+  "msg_error_registro_detalle": "Error while registering the reader: {0}",
+  "msg_error_dni_vacio_prestamo": "You must enter an ID.",
+  "msg_registro_cancelado": "Reader registration canceled.",
+  "msg_lector_no_registrado": "The reader is not registered in the system.",
+  "msg_deuda_pendiente": "The reader has a pending debt. It must be canceled before requesting a new loan.",
+  "msg_limite_prestamos": "The reader has reached the maximum of {0} active loans. A return must be made before requesting a new loan.",
+  "msg_restriccion_prestamo": "{0}",
+  "msg_validacion_exitosa": "Reader: {0} {1}\nActive loans: {2}\nPending debt: None\nCan request loan."
 }

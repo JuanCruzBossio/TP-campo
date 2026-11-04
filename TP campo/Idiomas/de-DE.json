@@ -313,6 +313,11 @@
 
   "maestros_lectores": "Lektoren",
   "maestros_lectores_agregar": "Hinzufugen",
+  "ventas_prestamo": "Darlehen",
+  "ventas_prestamo_solicitar": "Anfordern",
+  "titulo_prestamo": "Darlehen",
+  "lbl_dni_lector": "Lektor-ID",
+  "btn_validar": "Validieren",
   "titulo_agregar_lector": "Lektor registering",
   "lbl_dni": "ID:",
   "lbl_nombre": "Name:",
@@ -326,5 +331,12 @@
   "msg_error_lector_existente": "Ein Lektor ist bereits mit der ID {0} registriert.",
   "msg_exito_registro": "Lektor erfolgreich registriert.",
   "msg_error_registro": "Der Lektor konnte nicht registriert werden. Bitte versuchen Sie es erneut.",
-  "msg_error_registro_detalle": "Fehler beim Registieren des Lektor: {0}"
+  "msg_error_registro_detalle": "Fehler beim Registieren des Lektor: {0}",
+  "msg_error_dni_vacio_prestamo": "Sie mussen eine ID eingeben.",
+  "msg_registro_cancelado": "Lektor-Registrierung abgebrochen.",
+  "msg_lector_no_registrado": "Der Lektor ist nicht im System registriert.",
+  "msg_deuda_pendiente": "Der Lektor hat eine ausstehende Schuld. Sie muss vor der Beantragung eines neuen Darlehens beglichen werden.",
+  "msg_limite_prestamos": "Der Lektor hat das Maximum von {0} aktiven Darlehen erreicht. Eine Rueckgabe muss vor der Beantragung eines neuen Darlehens erfolgen.",
+  "msg_restriccion_prestamo": "{0}",
+  "msg_validacion_exitosa": "Lektor: {0} {1}\nAktive Darlehen: {2}\nAusstehende Schulden: Keine\nKann Darlehen anfordern."
 }
