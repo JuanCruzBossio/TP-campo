@@ -77,5 +77,35 @@ namespace MAPPER_62_BP
 
             return null;
         }
+
+        public List<MultaBE_62_BP> BuscarMultasPorIdPrestamo_62_BP(int idPrestamo)
+        {
+            string query = "SELECT id_multa_62_BP, id_prestamo_62_BP, monto_62_BP, pagada_62_BP FROM Multa_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idPrestamo", idPrestamo)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+
+            List<MultaBE_62_BP> lista = new List<MultaBE_62_BP>();
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                foreach (DataRow row in tabla.Rows)
+                {
+                    lista.Add(new MultaBE_62_BP
+                    {
+                        id_multa_62_BP = Convert.ToInt32(row["id_multa_62_BP"]),
+                        id_prestamo_62_BP = Convert.ToInt32(row["id_prestamo_62_BP"]),
+                        monto_62_BP = Convert.ToInt32(row["monto_62_BP"]),
+                        pagada_62_BP = Convert.ToBoolean(row["pagada_62_BP"])
+                    });
+                }
+            }
+
+            return lista;
+        }
     }
 }

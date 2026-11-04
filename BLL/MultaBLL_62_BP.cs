@@ -59,5 +59,52 @@ namespace BLL_62_BP
 
             return multa;
         }
+
+        public List<MultaBE_62_BP> BuscarMultasPorIdPrestamo_62_BP(int idPrestamo)
+        {
+            List<MultaBE_62_BP> multas = null;
+
+            try
+            {
+                multas = _multaMapper_62_BP.BuscarMultasPorIdPrestamo_62_BP(idPrestamo);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar las multas del préstamo.");
+            }
+
+            return multas;
+        }
+
+        public List<MultaBE_62_BP> ObtenerMultas_62_BP(string dni)
+        {
+            List<MultaBE_62_BP> multas = new List<MultaBE_62_BP>();
+
+            try
+            {
+                PrestamoBLL_62_BP prestamoBLL = new PrestamoBLL_62_BP();
+
+                List<PrestamoBE_62_BP> prestamos = prestamoBLL.BuscarPrestamosPorDNI_62_BP(dni);
+
+                if (prestamos != null && prestamos.Count > 0)
+                {
+                    foreach (PrestamoBE_62_BP prestamo in prestamos)
+                    {
+                        List<MultaBE_62_BP> multasPrestamo = BuscarMultasPorIdPrestamo_62_BP(prestamo.id_prestamo_62_BP);
+
+                        if (multasPrestamo != null && multasPrestamo.Count > 0)
+                        {
+                            multas.AddRange(multasPrestamo);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw new Exception("No se pudieron obtener las multas del lector.");
+            }
+
+            return multas;
+        }
     }
 }

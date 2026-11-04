@@ -12,5 +12,6 @@ namespace BE_62_BP
         public string dni_lector_62_BP { get; set; }
         public DateTime fecha_prestamo_62_BP { get; set; }
         public DateTime fecha_limite_62_BP { get; set; }
+        public bool finalizado_62_BP { get; set; }
     }
 }

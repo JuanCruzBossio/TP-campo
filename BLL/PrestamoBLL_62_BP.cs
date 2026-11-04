@@ -59,5 +59,37 @@ namespace BLL_62_BP
 
             return prestamo;
         }
+
+        public List<PrestamoBE_62_BP> BuscarPrestamosPorDNI_62_BP(string dni)
+        {
+            List<PrestamoBE_62_BP> prestamos = null;
+
+            try
+            {
+                prestamos = _prestamoMapper_62_BP.BuscarPrestamosPorDNI_62_BP(dni);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los préstamos del lector.");
+            }
+
+            return prestamos;
+        }
+
+        public int ContarPrestamosActivos_62_BP(string dni)
+        {
+            int cantidad = 0;
+
+            try
+            {
+                cantidad = _prestamoMapper_62_BP.ContarPrestamosActivos_62_BP(dni);
+            }
+            catch
+            {
+                throw new Exception("No se pudo contar los préstamos activos del lector.");
+            }
+
+            return cantidad;
+        }
     }
 }

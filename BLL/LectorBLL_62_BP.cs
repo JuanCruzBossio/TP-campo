@@ -18,11 +18,18 @@ namespace BLL_62_BP
 
             try
             {
+                LectorBE_62_BP lectorExistente = _lectorMapper_62_BP.BuscarLector_62_BP(dni: lector.dni_62_BP);
+
+                if (lectorExistente != null)
+                {
+                    throw new Exception("Ya existe un lector con el DNI: " + lector.dni_62_BP);
+                }
+
                 filasAfectadas = _lectorMapper_62_BP.AgregarLector_62_BP(lector);
             }
             catch
             {
-                throw new Exception("No se pudo agregar el lector.");
+                throw;
             }
 
             return filasAfectadas;
