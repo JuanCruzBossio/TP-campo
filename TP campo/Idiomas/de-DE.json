@@ -309,5 +309,20 @@
   "ex_archivo_idioma_no_encontrado": "Sprachdatei nicht gefunden: {0}",
   "ex_archivo_idioma_vacio": "Sprachdatei ist leer: {0}",
   "ex_error_cargar_idioma": "Fehler beim Laden der Sprache: {0}",
-  "ex_No se pudo agregar el Permiso porque ya se tiene": "Berechtigung konnte nicht hinzugefugt werden, da sie bereits vorhanden ist."
+  "ex_No se pudo agregar el Permiso porque ya se tiene": "Berechtigung konnte nicht hinzugefugt werden, da sie bereits vorhanden ist.",
+
+  "titulo_agregar_lector": "Lektor registering",
+  "lbl_dni": "ID:",
+  "lbl_nombre": "Name:",
+  "lbl_apellido": "Nachname:",
+  "lbl_fechaNacimiento": "Geburtsdatum:",
+  "msg_error_dni_vacio": "Die ID darf nicht leer sein.",
+  "msg_error_dni_letras": "Die ID darf keine Buchstaben enthalten. Nur Zahlen sind erlaubt.",
+  "msg_error_nombre_vacio": "Der Name darf nicht leer sein.",
+  "msg_error_apellido_vacio": "Der Nachname darf nicht leer sein.",
+  "msg_error_fecha_superior": "Das Geburtsdatum darf nicht spater als heute liegen.",
+  "msg_error_lector_existente": "Ein Lektor ist bereits mit der ID {0} registriert.",
+  "msg_exito_registro": "Lektor erfolgreich registriert.",
+  "msg_error_registro": "Der Lektor konnte nicht registriert werden. Bitte versuchen Sie es erneut.",
+  "msg_error_registro_detalle": "Fehler beim Registieren des Lektor: {0}"
 }

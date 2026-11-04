@@ -10,5 +10,7 @@ namespace BE_62_BP
     {
         public string dni_62_BP { get; set; }
         public string nombre_62_BP { get; set; }
+        public string apellido_62_BP { get; set; }
+        public DateTime? fecha_nacimiento_62_BP { get; set; }
     }
 }

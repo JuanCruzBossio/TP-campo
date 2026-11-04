@@ -309,5 +309,20 @@
   "ex_archivo_idioma_no_encontrado": "Archivo de idioma no encontrado: {0}",
   "ex_archivo_idioma_vacio": "Archivo de idioma vacio: {0}",
   "ex_error_cargar_idioma": "Error al cargar idioma: {0}",
-  "ex_No se pudo agregar el Permiso porque ya se tiene": "No se pudo agregar el permiso porque ya se tiene."
+  "ex_No se pudo agregar el Permiso porque ya se tiene": "No se pudo agregar el permiso porque ya se tiene.",
+
+  "titulo_agregar_lector": "Alta de Lector",
+  "lbl_dni": "DNI:",
+  "lbl_nombre": "Nombre:",
+  "lbl_apellido": "Apellido:",
+  "lbl_fechaNacimiento": "Fecha de Nacimiento:",
+  "msg_error_dni_vacio": "El DNI no puede estar vacio.",
+  "msg_error_dni_letras": "El DNI no puede contener letras. Solo se permiten numeros.",
+  "msg_error_nombre_vacio": "El nombre no puede estar vacio.",
+  "msg_error_apellido_vacio": "El apellido no puede estar vacio.",
+  "msg_error_fecha_superior": "La fecha de nacimiento no puede ser superior a la fecha de hoy.",
+  "msg_error_lector_existente": "Ya existe un lector registrado con el DNI: {0}",
+  "msg_exito_registro": "Lector registrado con exito.",
+  "msg_error_registro": "No se pudo registrar el lector. Intente nuevamente.",
+  "msg_error_registro_detalle": "Error al registrar el lector: {0}"
 }

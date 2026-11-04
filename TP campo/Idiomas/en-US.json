@@ -309,5 +309,20 @@
   "ex_archivo_idioma_no_encontrado": "Language file not found: {0}",
   "ex_archivo_idioma_vacio": "Language file is empty: {0}",
   "ex_error_cargar_idioma": "Error while loading language: {0}",
-  "ex_No se pudo agregar el Permiso porque ya se tiene": "Could not add the permission because it already exists."
+  "ex_No se pudo agregar el Permiso porque ya se tiene": "Could not add the permission because it already exists.",
+
+  "titulo_agregar_lector": "Register Reader",
+  "lbl_dni": "ID:",
+  "lbl_nombre": "Name:",
+  "lbl_apellido": "Last name:",
+  "lbl_fechaNacimiento": "Date of birth:",
+  "msg_error_dni_vacio": "The ID cannot be empty.",
+  "msg_error_dni_letras": "The ID cannot contain letters. Only numbers are allowed.",
+  "msg_error_nombre_vacio": "The name cannot be empty.",
+  "msg_error_apellido_vacio": "The last name cannot be empty.",
+  "msg_error_fecha_superior": "The date of birth cannot be later than today.",
+  "msg_error_lector_existente": "A reader is already registered with ID: {0}",
+  "msg_exito_registro": "Reader registered successfully.",
+  "msg_error_registro": "Could not register the reader. Please try again.",
+  "msg_error_registro_detalle": "Error while registering the reader: {0}"
 }
