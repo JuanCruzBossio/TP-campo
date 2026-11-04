@@ -311,6 +311,8 @@
   "ex_error_cargar_idioma": "Fehler beim Laden der Sprache: {0}",
   "ex_No se pudo agregar el Permiso porque ya se tiene": "Berechtigung konnte nicht hinzugefugt werden, da sie bereits vorhanden ist.",
 
+  "maestros_lectores": "Lektoren",
+  "maestros_lectores_agregar": "Hinzufugen",
   "titulo_agregar_lector": "Lektor registering",
   "lbl_dni": "ID:",
   "lbl_nombre": "Name:",

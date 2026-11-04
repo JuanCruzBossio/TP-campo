@@ -109,6 +109,13 @@ namespace TP_campo_62_BP
             FamiliaForm.Show();
         }
 
+        private void agregarLectorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AgregarLectorGUI_62_BP agregarLectorForm = new AgregarLectorGUI_62_BP("");
+            agregarLectorForm.MdiParent = this;
+            agregarLectorForm.Show();
+        }
+
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RolGUI_62_BP RolForm = new RolGUI_62_BP();

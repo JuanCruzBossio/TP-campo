@@ -311,6 +311,8 @@
   "ex_error_cargar_idioma": "Error al cargar idioma: {0}",
   "ex_No se pudo agregar el Permiso porque ya se tiene": "No se pudo agregar el permiso porque ya se tiene.",
 
+  "maestros_lectores": "Lectores",
+  "maestros_lectores_agregar": "Agregar",
   "titulo_agregar_lector": "Alta de Lector",
   "lbl_dni": "DNI:",
   "lbl_nombre": "Nombre:",

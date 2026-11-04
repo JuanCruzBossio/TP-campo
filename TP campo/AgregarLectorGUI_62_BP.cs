@@ -27,6 +27,10 @@ namespace TP_campo
                 txt_dni.Text = _dniPrellenado_62_BP;
                 txt_dni.ReadOnly = true;
             }
+            else
+            {
+                txt_dni.ReadOnly = false;
+            }
 
             dtp_fechaNacimiento.MaxDate = DateTime.Today;
         }

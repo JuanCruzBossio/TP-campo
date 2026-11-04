@@ -311,6 +311,8 @@
   "ex_error_cargar_idioma": "Error while loading language: {0}",
   "ex_No se pudo agregar el Permiso porque ya se tiene": "Could not add the permission because it already exists.",
 
+  "maestros_lectores": "Readers",
+  "maestros_lectores_agregar": "Add",
   "titulo_agregar_lector": "Register Reader",
   "lbl_dni": "ID:",
   "lbl_nombre": "Name:",
