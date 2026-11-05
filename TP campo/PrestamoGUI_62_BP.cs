@@ -49,6 +49,7 @@ namespace TP_campo_62_BP
             dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn6"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
+                _prestamoBLL_62_BP.MarcarLibrosPrestados_62_BP(idPrestamo);
         protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
