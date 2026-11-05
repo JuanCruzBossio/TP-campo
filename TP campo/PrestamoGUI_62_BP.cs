@@ -20,6 +20,7 @@ namespace TP_campo_62_BP
         private LectorBLL_62_BP _lectorBLL_62_BP = new LectorBLL_62_BP();
         private PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
         private MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
+        private LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
 
         private const int LIMITE_PRESTAMOS = 5;
 
@@ -27,14 +28,83 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
             buttonValidar.Click += buttonValidar_Click;
+            buttonBuscarLibros.Click += buttonBuscarLibros_Click;
+            ConfigurarDataGridViewLibrosFiltrados();
+        }
+
+        private void ConfigurarDataGridViewLibrosFiltrados()
+        {
+            dataGridViewLibrosFiltrados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn1", "ID");
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn1"].Width = 40;
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn2", "Titulo");
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn2"].Width = 120;
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn3", "Autor");
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn3"].Width = 100;
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn4", "Genero");
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn5", "ISBN");
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn5"].Width = 110;
+            dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn6", "Vol.");
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn6"].Width = 40;
+            dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn6"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
         protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
             this.Text = Texto_62_BP("titulo_prestamo", "Prestamos");
-            label1.Text = Texto_62_BP("lbl_dni_lector", "DNI Lector");
+            labelDNI.Text = Texto_62_BP("lbl_dni_lector", "DNI Lector");
             buttonValidar.Text = Texto_62_BP("btn_validar", "Validar");
+            labelTitulo.Text = Texto_62_BP("lbl_titulo", "Titulo");
+            labelAutor.Text = Texto_62_BP("lbl_autor", "Autor");
+            labelGenero.Text = Texto_62_BP("lbl_genero", "Genero");
+            label1.Text = Texto_62_BP("lbl_isbn", "ISBN");
+            buttonBuscarLibros.Text = Texto_62_BP("btn_buscar_libros", "Buscar Libros");
+        }
+
+        // -------------------------------------------------------------------------
+        // Filtrar libros por titulo, autor, genero e ISBN (LIKE)
+        // -------------------------------------------------------------------------
+
+        private void buttonBuscarLibros_Click(object sender, EventArgs e)
+        {
+            string titulo = textBoxTitulo.Text.Trim();
+            string autor = textBoxAutor.Text.Trim();
+            string genero = textBoxGenero.Text.Trim();
+            string isbn = textBoxISBN.Text.Trim();
+
+            // Si todos los campos estan vacios, mostrar todos los libros
+            if (string.IsNullOrWhiteSpace(titulo) && string.IsNullOrWhiteSpace(autor)
+                && string.IsNullOrWhiteSpace(genero) && string.IsNullOrWhiteSpace(isbn))
+            {
+                List<LibroBE_62_BP> todosLosLibros = _libroBLL_62_BP.BuscarTodosLosLibros_62_BP();
+                LlenarDataGridViewLibrosFiltrados(todosLosLibros);
+                return;
+            }
+
+            List<LibroBE_62_BP> librosFiltrados = _libroBLL_62_BP.BuscarLibrosConFiltros_62_BP(titulo, autor, genero, isbn);
+            LlenarDataGridViewLibrosFiltrados(librosFiltrados);
+        }
+
+        private void LlenarDataGridViewLibrosFiltrados(List<LibroBE_62_BP> libros)
+        {
+            dataGridViewLibrosFiltrados.Rows.Clear();
+
+            if (libros == null || libros.Count == 0)
+            {
+                return;
+            }
+
+            foreach (LibroBE_62_BP libro in libros)
+            {
+                int indice = dataGridViewLibrosFiltrados.Rows.Add();
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn1"].Value = libro.id_libro_62_BP;
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn2"].Value = libro.titulo_62_BP;
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn3"].Value = libro.autor_62_BP;
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn4"].Value = libro.genero_62_BP;
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn5"].Value = libro.isbn_62_BP;
+                dataGridViewLibrosFiltrados.Rows[indice].Cells["dataGridViewTextBoxColumn6"].Value = libro.numero_volumen_62_BP;
+            }
         }
 
         private void buttonValidar_Click(object sender, EventArgs e)

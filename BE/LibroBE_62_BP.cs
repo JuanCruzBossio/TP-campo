@@ -12,5 +12,7 @@ namespace BE_62_BP
         public string titulo_62_BP { get; set; }
         public string autor_62_BP { get; set; }
         public string isbn_62_BP { get; set; }
+        public string genero_62_BP { get; set; }
+        public int numero_volumen_62_BP { get; set; }
     }
 }

@@ -59,5 +59,37 @@ namespace BLL_62_BP
 
             return libro;
         }
+
+        public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP()
+        {
+            List<LibroBE_62_BP> libros = null;
+
+            try
+            {
+                libros = _libroMapper_62_BP.BuscarTodosLosLibros_62_BP();
+            }
+            catch
+            {
+                throw new Exception("No se pudieron obtener los libros.");
+            }
+
+            return libros;
+        }
+
+        public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn)
+        {
+            List<LibroBE_62_BP> libros = null;
+
+            try
+            {
+                libros = _libroMapper_62_BP.BuscarLibrosConFiltros_62_BP(titulo, autor, genero, isbn);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los libros con los filtros especificados.");
+            }
+
+            return libros;
+        }
     }
 }
