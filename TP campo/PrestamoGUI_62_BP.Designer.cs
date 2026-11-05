@@ -53,7 +53,7 @@
             // labelDNI
             // 
             this.labelDNI.AutoSize = true;
-            this.labelDNI.Location = new System.Drawing.Point(91, 22);
+            this.labelDNI.Location = new System.Drawing.Point(31, 39);
             this.labelDNI.Name = "labelDNI";
             this.labelDNI.Size = new System.Drawing.Size(59, 13);
             this.labelDNI.TabIndex = 0;
@@ -61,14 +61,14 @@
             // 
             // textBoxDNI
             // 
-            this.textBoxDNI.Location = new System.Drawing.Point(168, 19);
+            this.textBoxDNI.Location = new System.Drawing.Point(108, 36);
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(163, 20);
             this.textBoxDNI.TabIndex = 1;
             // 
             // buttonValidar
             // 
-            this.buttonValidar.Location = new System.Drawing.Point(337, 19);
+            this.buttonValidar.Location = new System.Drawing.Point(277, 36);
             this.buttonValidar.Name = "buttonValidar";
             this.buttonValidar.Size = new System.Drawing.Size(75, 23);
             this.buttonValidar.TabIndex = 2;

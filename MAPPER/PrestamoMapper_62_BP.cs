@@ -87,14 +87,29 @@ namespace MAPPER_62_BP
 
         public List<PrestamoBE_62_BP> BuscarPrestamosPorDNI_62_BP(string dni)
         {
-            string query = "SELECT id_prestamo_62_BP, dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP FROM Prestamo_62_BP WHERE dni_lector_62_BP = @dni";
+            return BuscarPrestamos_62_BP(null, dni);
+        }
 
-            SqlParameter[] parametros =
+        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null)
+        {
+            StringBuilder query = new StringBuilder("SELECT id_prestamo_62_BP, dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP FROM Prestamo_62_BP WHERE 1=1");
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (idPrestamo.HasValue)
             {
-                new SqlParameter("@dni", dni)
-            };
+                query.Append(" AND id_prestamo_62_BP = @idPrestamo");
+                parametros.Add(new SqlParameter("@idPrestamo", idPrestamo.Value));
+            }
 
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            if (!string.IsNullOrWhiteSpace(dni))
+            {
+                query.Append(" AND dni_lector_62_BP LIKE @dni");
+                parametros.Add(new SqlParameter("@dni", "%" + dni + "%"));
+            }
+
+            query.Append(" ORDER BY fecha_prestamo_62_BP DESC");
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
 
             List<PrestamoBE_62_BP> lista = new List<PrestamoBE_62_BP>();
 

@@ -315,6 +315,7 @@
   "maestros_lectores_agregar": "Add",
   "ventas_prestamo": "Loan",
   "ventas_prestamo_solicitar": "Request",
+  "ventas_prestamo_devolver": "Return",
   "titulo_prestamo": "Loans",
   "lbl_dni_lector": "Reader ID",
   "btn_validar": "Validate",

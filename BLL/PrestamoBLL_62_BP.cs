@@ -76,6 +76,18 @@ namespace BLL_62_BP
             return prestamos;
         }
 
+        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null)
+        {
+            try
+            {
+                return _prestamoMapper_62_BP.BuscarPrestamos_62_BP(idPrestamo, dni);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los préstamos.");
+            }
+        }
+
         public int ContarPrestamosActivos_62_BP(string dni)
         {
             int cantidad = 0;

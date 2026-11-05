@@ -315,6 +315,7 @@
   "maestros_lectores_agregar": "Hinzufugen",
   "ventas_prestamo": "Darlehen",
   "ventas_prestamo_solicitar": "Anfordern",
+  "ventas_prestamo_devolver": "Zurueckgeben",
   "titulo_prestamo": "Darlehen",
   "lbl_dni_lector": "Lektor-ID",
   "btn_validar": "Validieren",

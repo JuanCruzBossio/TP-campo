@@ -315,6 +315,7 @@
   "maestros_lectores_agregar": "Agregar",
   "ventas_prestamo": "Prestamo",
   "ventas_prestamo_solicitar": "Solicitar",
+  "ventas_prestamo_devolver": "Devolver",
   "titulo_prestamo": "Prestamos",
   "lbl_dni_lector": "DNI Lector",
   "btn_validar": "Validar",
