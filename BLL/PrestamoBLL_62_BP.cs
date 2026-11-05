@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE_62_BP;
 using MAPPER_62_BP;
+using System.Data.SqlClient;
 
 namespace BLL_62_BP
 {
@@ -90,6 +92,84 @@ namespace BLL_62_BP
             }
 
             return cantidad;
+        }
+
+        public int MarcarLibrosPrestados_62_BP(int idPrestamo)
+        {
+            LibroBLL_62_BP libroBLL = new LibroBLL_62_BP();
+            List<int> idsLibros = new List<int>();
+
+            try
+            {
+                string query = "SELECT id_libro_62_BP FROM DetallePrestamo_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
+                using (SqlConnection conn = new SqlConnection(File.ReadAllText("conexion.json")))
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idPrestamo", idPrestamo);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                idsLibros.Add(Convert.ToInt32(reader["id_libro_62_BP"]));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo obtener la lista de libros del prestamo: " + ex.Message);
+            }
+
+            int total = 0;
+            foreach (int idLibro in idsLibros)
+            {
+                total += libroBLL.MarcarPrestado_62_BP(idLibro);
+            }
+
+            return total;
+        }
+
+        public int MarcarLibrosDevolvidos_62_BP(int idPrestamo)
+        {
+            LibroBLL_62_BP libroBLL = new LibroBLL_62_BP();
+            List<int> idsLibros = new List<int>();
+
+            try
+            {
+                string query = "SELECT id_libro_62_BP FROM DetallePrestamo_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
+                using (SqlConnection conn = new SqlConnection(File.ReadAllText("conexion.json")))
+                {
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@idPrestamo", idPrestamo);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                idsLibros.Add(Convert.ToInt32(reader["id_libro_62_BP"]));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo obtener la lista de libros del prestamo: " + ex.Message);
+            }
+
+            int total = 0;
+            foreach (int idLibro in idsLibros)
+            {
+                total += libroBLL.MarcarDisponible_62_BP(idLibro);
+            }
+
+            return total;
         }
     }
 }

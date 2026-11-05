@@ -31,8 +31,9 @@ namespace TP_campo_62_BP
             buttonValidar.Click += buttonValidar_Click;
             buttonBuscarLibros.Click += buttonBuscarLibros_Click;
             buttonAgregarLibro.Click += buttonAgregarLibro_Click;
+            buttonRegistrarPrestamo.Click += buttonRegistrarPrestamo_Click;
             ConfigurarDataGridViewLibrosFiltrados();
-            ConfigurarDataGridViewLibrosSeleccionados();
+            ConfigurardataGridViewLibrosSeleccion();
             DeshabilitarFiltros();
         }
 
@@ -76,22 +77,22 @@ namespace TP_campo_62_BP
             dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn6"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
-        private void ConfigurarDataGridViewLibrosSeleccionados()
+        private void ConfigurardataGridViewLibrosSeleccion()
         {
-            dataGridViewLibrosSeleccionados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewLibrosSeleccionados.EditMode = DataGridViewEditMode.EditProgrammatically;
-            dataGridViewLibrosSeleccionados.Columns.Add("colId", "ID");
-            dataGridViewLibrosSeleccionados.Columns["colId"].Width = 40;
-            dataGridViewLibrosSeleccionados.Columns.Add("colTitulo", "Título");
-            dataGridViewLibrosSeleccionados.Columns["colTitulo"].Width = 120;
-            dataGridViewLibrosSeleccionados.Columns.Add("colAutor", "Autor");
-            dataGridViewLibrosSeleccionados.Columns["colAutor"].Width = 100;
-            dataGridViewLibrosSeleccionados.Columns.Add("colGenero", "Género");
-            dataGridViewLibrosSeleccionados.Columns.Add("colIsbn", "ISBN");
-            dataGridViewLibrosSeleccionados.Columns["colIsbn"].Width = 110;
-            dataGridViewLibrosSeleccionados.Columns.Add("colVol", "Vol.");
-            dataGridViewLibrosSeleccionados.Columns["colVol"].Width = 40;
-            dataGridViewLibrosSeleccionados.Columns["colVol"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewLibrosSeleccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewLibrosSeleccion.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dataGridViewLibrosSeleccion.Columns.Add("colId", "ID");
+            dataGridViewLibrosSeleccion.Columns["colId"].Width = 40;
+            dataGridViewLibrosSeleccion.Columns.Add("colTitulo", "Título");
+            dataGridViewLibrosSeleccion.Columns["colTitulo"].Width = 120;
+            dataGridViewLibrosSeleccion.Columns.Add("colAutor", "Autor");
+            dataGridViewLibrosSeleccion.Columns["colAutor"].Width = 100;
+            dataGridViewLibrosSeleccion.Columns.Add("colGenero", "Género");
+            dataGridViewLibrosSeleccion.Columns.Add("colIsbn", "ISBN");
+            dataGridViewLibrosSeleccion.Columns["colIsbn"].Width = 110;
+            dataGridViewLibrosSeleccion.Columns.Add("colVol", "Vol.");
+            dataGridViewLibrosSeleccion.Columns["colVol"].Width = 40;
+            dataGridViewLibrosSeleccion.Columns["colVol"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
         private void buttonAgregarLibro_Click(object sender, EventArgs e)
@@ -107,7 +108,7 @@ namespace TP_campo_62_BP
             // Verificar si el libro ya está en la lista de seleccionados
             int idLibro = Convert.ToInt32(filaSeleccionada.Cells["dataGridViewTextBoxColumn1"].Value);
             bool yaExiste = false;
-            foreach (DataGridViewRow fila in dataGridViewLibrosSeleccionados.Rows)
+            foreach (DataGridViewRow fila in dataGridViewLibrosSeleccion.Rows)
             {
                 if (fila.Cells["colId"].Value != null && Convert.ToInt32(fila.Cells["colId"].Value) == idLibro)
                 {
@@ -122,13 +123,124 @@ namespace TP_campo_62_BP
                 return;
             }
 
-            int indice = dataGridViewLibrosSeleccionados.Rows.Add();
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colId"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn1"].Value;
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colTitulo"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn2"].Value;
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colAutor"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn3"].Value;
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colGenero"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn4"].Value;
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colIsbn"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn5"].Value;
-            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colVol"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn6"].Value;
+            // Validar que agregar este libro no supere el límite de 5
+            string dni = textBoxDNI.Text.Trim();
+            int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(dni);
+            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
+            int totalDespues = prestamosActivos + librosSeleccionados;
+
+            if (totalDespues > LIMITE_PRESTAMOS)
+            {
+                MostrarMensaje_62_BP("msg_limite_superado",
+                    string.Format("No se puede agregar este libro. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
+                        prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
+                return;
+            }
+
+            int indice = dataGridViewLibrosSeleccion.Rows.Add();
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colId"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn1"].Value;
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colTitulo"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn2"].Value;
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colAutor"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn3"].Value;
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colGenero"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn4"].Value;
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colIsbn"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn5"].Value;
+            dataGridViewLibrosSeleccion.Rows[indice].Cells["colVol"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn6"].Value;
+        }
+
+        private void buttonRegistrarPrestamo_Click(object sender, EventArgs e)
+        {
+            string dni = textBoxDNI.Text.Trim();
+
+            if (dataGridViewLibrosSeleccion.Rows.Count == 0)
+            {
+                MostrarMensaje_62_BP("msg_sin_libros", "No hay libros seleccionados para el prestamo.");
+                return;
+            }
+
+            int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(dni);
+            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
+            int totalDespues = prestamosActivos + librosSeleccionados;
+
+            if (totalDespues > LIMITE_PRESTAMOS)
+            {
+                MostrarMensaje_62_BP("msg_limite_superado",
+                    string.Format("No se puede registrar el prestamo. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
+                        prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
+                return;
+            }
+
+            try
+            {
+                PrestamoBE_62_BP prestamo = new PrestamoBE_62_BP
+                {
+                    dni_lector_62_BP = dni,
+                    fecha_prestamo_62_BP = DateTime.Now,
+                    fecha_limite_62_BP = DateTime.Now.AddDays(7),
+                    finalizado_62_BP = false
+                };
+
+                int idPrestamo = _prestamoBLL_62_BP.AgregarPrestamo_62_BP(prestamo);
+
+                if (idPrestamo <= 0)
+                {
+                    throw new Exception("No se pudo crear el prestamo.");
+                }
+
+                foreach (DataGridViewRow fila in dataGridViewLibrosSeleccion.Rows)
+                {
+                    if (fila.IsNewRow) continue;
+
+                    int idLibro = Convert.ToInt32(fila.Cells["colId"].Value);
+
+                    DetallePrestamoBE_62_BP detalle = new DetallePrestamoBE_62_BP
+                    {
+                        id_libro_62_BP = idLibro,
+                        id_prestamo_62_BP = idPrestamo,
+                        devuelto_62_BP = false,
+                        perdido_62_BP = false
+                    };
+
+                    DetallePrestamoBLL_62_BP detalleBLL = new DetallePrestamoBLL_62_BP();
+                    bool agregado = detalleBLL.AgregarDetallePrestamo_62_BP(detalle);
+
+                    if (!agregado)
+                    {
+                        throw new Exception("No se pudo agregar el libro al detalle del prestamo.");
+                    }
+                }
+
+                _prestamoBLL_62_BP.MarcarLibrosPrestados_62_BP(idPrestamo);
+
+                MostrarMensaje_62_BP("msg_prestamo_exitoso", "Prestamo registrado con exito.");
+
+                dataGridViewLibrosSeleccion.Rows.Clear();
+                ActualizarBotonRegistrarPrestamo();
+            }
+            catch (Exception ex)
+            {
+                MostrarMensaje_62_BP("msg_error_prestamo", "Error al registrar el prestamo: " + ex.Message);
+            }
+        }
+
+        private void ActualizarBotonRegistrarPrestamo()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxDNI.Text.Trim()) || !dniValidado_62_BP)
+            {
+                buttonRegistrarPrestamo.Enabled = false;
+                return;
+            }
+
+            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
+            int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(textBoxDNI.Text.Trim());
+
+            int totalDespues = prestamosActivos + librosSeleccionados;
+
+            if (librosSeleccionados == 0 || totalDespues > LIMITE_PRESTAMOS)
+            {
+                buttonRegistrarPrestamo.Enabled = false;
+                return;
+            }
+
+            buttonRegistrarPrestamo.Enabled = true;
         }
 
 

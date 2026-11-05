@@ -32,6 +32,7 @@
             this.textBoxDNI = new System.Windows.Forms.TextBox();
             this.buttonValidar = new System.Windows.Forms.Button();
             this.buttonAgregarLibro = new System.Windows.Forms.Button();
+            this.buttonRegistrarPrestamo = new System.Windows.Forms.Button();
             this.dataGridViewLibrosFiltrados = new System.Windows.Forms.DataGridView();
             this.textBoxTitulo = new System.Windows.Forms.TextBox();
             this.labelTitulo = new System.Windows.Forms.Label();
@@ -43,8 +44,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBuscarLibros = new System.Windows.Forms.Button();
             this.dataGridViewLibrosSeleccionados = new System.Windows.Forms.DataGridView();
+            this.dataGridViewLibrosSeleccion = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosFiltrados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccionados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccion)).BeginInit();
             this.SuspendLayout();
             // 
             // labelDNI
@@ -81,6 +84,16 @@
             this.buttonAgregarLibro.TabIndex = 3;
             this.buttonAgregarLibro.Text = "Agregar Libro";
             this.buttonAgregarLibro.UseVisualStyleBackColor = true;
+            // 
+            // buttonRegistrarPrestamo
+            // 
+            this.buttonRegistrarPrestamo.Enabled = false;
+            this.buttonRegistrarPrestamo.Location = new System.Drawing.Point(354, 582);
+            this.buttonRegistrarPrestamo.Name = "buttonRegistrarPrestamo";
+            this.buttonRegistrarPrestamo.Size = new System.Drawing.Size(122, 23);
+            this.buttonRegistrarPrestamo.TabIndex = 3;
+            this.buttonRegistrarPrestamo.Text = "Registrar Prestamo";
+            this.buttonRegistrarPrestamo.UseVisualStyleBackColor = true;
             // 
             // dataGridViewLibrosFiltrados
             // 
@@ -163,12 +176,28 @@
             this.buttonBuscarLibros.TabIndex = 13;
             this.buttonBuscarLibros.Text = "Buscar Libros";
             this.buttonBuscarLibros.UseVisualStyleBackColor = true;
-            //
+            // 
+            // dataGridViewLibrosSeleccionados
+            // 
+            this.dataGridViewLibrosSeleccionados.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewLibrosSeleccionados.Name = "dataGridViewLibrosSeleccionados";
+            this.dataGridViewLibrosSeleccionados.Size = new System.Drawing.Size(240, 150);
+            this.dataGridViewLibrosSeleccionados.TabIndex = 0;
+            // 
+            // dataGridViewLibrosSeleccion
+            // 
+            this.dataGridViewLibrosSeleccion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewLibrosSeleccion.Location = new System.Drawing.Point(32, 422);
+            this.dataGridViewLibrosSeleccion.Name = "dataGridViewLibrosSeleccion";
+            this.dataGridViewLibrosSeleccion.Size = new System.Drawing.Size(779, 143);
+            this.dataGridViewLibrosSeleccion.TabIndex = 14;
+            // 
             // PrestamoGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 632);
+            this.Controls.Add(this.dataGridViewLibrosSeleccion);
             this.Controls.Add(this.buttonBuscarLibros);
             this.Controls.Add(this.textBoxISBN);
             this.Controls.Add(this.label1);
@@ -180,6 +209,7 @@
             this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.dataGridViewLibrosFiltrados);
             this.Controls.Add(this.buttonAgregarLibro);
+            this.Controls.Add(this.buttonRegistrarPrestamo);
             this.Controls.Add(this.buttonValidar);
             this.Controls.Add(this.textBoxDNI);
             this.Controls.Add(this.labelDNI);
@@ -187,6 +217,7 @@
             this.Text = "PrestamoGUI_62_BP";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosFiltrados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccionados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,6 +229,7 @@
         private System.Windows.Forms.TextBox textBoxDNI;
         private System.Windows.Forms.Button buttonValidar;
         private System.Windows.Forms.Button buttonAgregarLibro;
+        private System.Windows.Forms.Button buttonRegistrarPrestamo;
         private System.Windows.Forms.DataGridView dataGridViewLibrosFiltrados;
         private System.Windows.Forms.TextBox textBoxTitulo;
         private System.Windows.Forms.Label labelTitulo;
@@ -209,5 +241,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonBuscarLibros;
         private System.Windows.Forms.DataGridView dataGridViewLibrosSeleccionados;
+        private System.Windows.Forms.DataGridView dataGridViewLibrosSeleccion;
     }
 }
