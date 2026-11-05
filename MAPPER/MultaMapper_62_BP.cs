@@ -16,7 +16,7 @@ namespace MAPPER_62_BP
 
         public int AgregarMulta_62_BP(MultaBE_62_BP multa)
         {
-            string query = "INSERT INTO Multa_62_BP (id_prestamo_62_BP, monto_62_BP, pagada_62_BP) VALUES (@idPrestamo, @monto, @pagada);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Multa_62_BP (id_prestamo_62_BP, monto_62_BP, pagada_62_BP) OUTPUT INSERTED.id_multa_62_BP VALUES (@idPrestamo, @monto, @pagada);";
 
             SqlParameter[] parametros =
             {
@@ -26,6 +26,10 @@ namespace MAPPER_62_BP
             };
 
             object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
+            if (resultado == null || resultado == DBNull.Value)
+            {
+                return 0;
+            }
             return Convert.ToInt32(Convert.ToDecimal(resultado));
         }
 

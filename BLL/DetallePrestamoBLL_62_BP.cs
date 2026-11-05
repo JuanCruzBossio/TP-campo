@@ -12,52 +12,40 @@ namespace BLL_62_BP
     {
         private DetallePrestamoMapper_62_BP _detallePrestamoMapper_62_BP = new DetallePrestamoMapper_62_BP();
 
-        public bool AgregarDetallePrestamo_62_BP(DetallePrestamoBE_62_BP detallePrestamo)
+        public bool AgregarDetallePrestamo_62_BP(DetallePrestamoBE_62_BP detalle)
         {
-            bool resultado = false;
-
             try
             {
-                resultado = _detallePrestamoMapper_62_BP.AgregarDetallePrestamo_62_BP(detallePrestamo);
+                return _detallePrestamoMapper_62_BP.AgregarDetallePrestamo_62_BP(detalle);
             }
             catch
             {
-                throw new Exception("No se pudo agregar el detalle del préstamo.");
+                throw new Exception("No se pudo agregar el detalle del prestamo.");
             }
-
-            return resultado;
         }
 
-        public bool ModificarDetallePrestamo_62_BP(DetallePrestamoBE_62_BP detallePrestamo)
+        public bool ModificarDetallePrestamo_62_BP(DetallePrestamoBE_62_BP detalle)
         {
-            bool resultado = false;
-
             try
             {
-                resultado = _detallePrestamoMapper_62_BP.ModificarDetallePrestamo_62_BP(detallePrestamo);
+                return _detallePrestamoMapper_62_BP.ModificarDetallePrestamo_62_BP(detalle);
             }
             catch
             {
-                throw new Exception("No se pudo modificar el detalle del préstamo.");
+                throw new Exception("No se pudo modificar el detalle del prestamo.");
             }
-
-            return resultado;
         }
 
         public DetallePrestamoBE_62_BP BuscarDetallePrestamo_62_BP(int idLibro = 0, int idPrestamo = 0)
         {
-            DetallePrestamoBE_62_BP detallePrestamo = null;
-
             try
             {
-                detallePrestamo = _detallePrestamoMapper_62_BP.BuscarDetallePrestamo_62_BP(idLibro, idPrestamo);
+                return _detallePrestamoMapper_62_BP.BuscarDetallePrestamo_62_BP(idLibro, idPrestamo);
             }
             catch
             {
-                throw new Exception("No se pudo buscar el detalle del préstamo.");
+                throw new Exception("No se pudo buscar el detalle del prestamo.");
             }
-
-            return detallePrestamo;
         }
     }
 }

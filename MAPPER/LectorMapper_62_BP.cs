@@ -16,7 +16,7 @@ namespace MAPPER_62_BP
 
         public int AgregarLector_62_BP(LectorBE_62_BP lector)
         {
-            string query = "INSERT INTO Lector_62_BP (dni_62_BP, nombre_62_BP, apellido_62_BP, fecha_nacimiento_62_BP) VALUES (@dni, @nombre, @apellido, @fecha_nacimiento);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Lector_62_BP (dni_62_BP, nombre_62_BP, apellido_62_BP, fecha_nacimiento_62_BP) VALUES (@dni, @nombre, @apellido, @fecha_nacimiento);";
 
             SqlParameter[] parametros =
             {
@@ -26,17 +26,15 @@ namespace MAPPER_62_BP
                 new SqlParameter("@fecha_nacimiento", lector.fecha_nacimiento_62_BP ?? (object)DBNull.Value)
             };
 
-            object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
-            return Convert.ToInt32(Convert.ToDecimal(resultado));
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
 
         public int ModificarLector_62_BP(LectorBE_62_BP lector)
         {
-            string query = "UPDATE Lector_62_BP SET dni_62_BP = @dni, nombre_62_BP = @nombre, apellido_62_BP = @apellido, fecha_nacimiento_62_BP = @fecha_nacimiento WHERE dni_62_BP = @id";
+            string query = "UPDATE Lector_62_BP SET nombre_62_BP = @nombre, apellido_62_BP = @apellido, fecha_nacimiento_62_BP = @fecha_nacimiento WHERE dni_62_BP = @dni";
 
             SqlParameter[] parametros =
             {
-                new SqlParameter("@id", lector.dni_62_BP),
                 new SqlParameter("@dni", lector.dni_62_BP),
                 new SqlParameter("@nombre", lector.nombre_62_BP),
                 new SqlParameter("@apellido", lector.apellido_62_BP),

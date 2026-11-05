@@ -16,7 +16,7 @@ namespace MAPPER_62_BP
 
         public int AgregarLibro_62_BP(LibroBE_62_BP libro)
         {
-            string query = "INSERT INTO Libro_62_BP (titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP) VALUES (@titulo, @autor, @isbn, @genero, @numeroVolumen);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Libro_62_BP (titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP) OUTPUT INSERTED.id_libro_62_BP VALUES (@titulo, @autor, @isbn, @genero, @numeroVolumen, @prestado);";
 
             SqlParameter[] parametros =
             {
@@ -24,16 +24,21 @@ namespace MAPPER_62_BP
                 new SqlParameter("@autor", libro.autor_62_BP),
                 new SqlParameter("@isbn", libro.isbn_62_BP),
                 new SqlParameter("@genero", libro.genero_62_BP),
-                new SqlParameter("@numeroVolumen", libro.numero_volumen_62_BP)
+                new SqlParameter("@numeroVolumen", libro.numero_volumen_62_BP),
+                new SqlParameter("@prestado", libro.prestado_62_BP)
             };
 
             object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
+            if (resultado == null || resultado == DBNull.Value)
+            {
+                return 0;
+            }
             return Convert.ToInt32(Convert.ToDecimal(resultado));
         }
 
         public int ModificarLibro_62_BP(LibroBE_62_BP libro)
         {
-            string query = "UPDATE Libro_62_BP SET titulo_62_BP = @titulo, autor_62_BP = @autor, isbn_62_BP = @isbn, genero_62_BP = @genero, numero_volumen_62_BP = @numeroVolumen WHERE id_libro_62_BP = @id";
+            string query = "UPDATE Libro_62_BP SET titulo_62_BP = @titulo, autor_62_BP = @autor, isbn_62_BP = @isbn, genero_62_BP = @genero, numero_volumen_62_BP = @numeroVolumen, prestado_62_BP = @prestado WHERE id_libro_62_BP = @id";
 
             SqlParameter[] parametros =
             {
@@ -42,7 +47,8 @@ namespace MAPPER_62_BP
                 new SqlParameter("@autor", libro.autor_62_BP),
                 new SqlParameter("@isbn", libro.isbn_62_BP),
                 new SqlParameter("@genero", libro.genero_62_BP),
-                new SqlParameter("@numeroVolumen", libro.numero_volumen_62_BP)
+                new SqlParameter("@numeroVolumen", libro.numero_volumen_62_BP),
+                new SqlParameter("@prestado", libro.prestado_62_BP)
             };
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
@@ -50,7 +56,7 @@ namespace MAPPER_62_BP
 
         public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null)
         {
-            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP FROM Libro_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE 1=1");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -83,7 +89,8 @@ namespace MAPPER_62_BP
                     autor_62_BP = tabla.Rows[0]["autor_62_BP"].ToString(),
                     isbn_62_BP = tabla.Rows[0]["isbn_62_BP"].ToString(),
                     genero_62_BP = tabla.Rows[0]["genero_62_BP"] as string ?? string.Empty,
-                    numero_volumen_62_BP = Convert.ToInt32(tabla.Rows[0]["numero_volumen_62_BP"])
+                    numero_volumen_62_BP = Convert.ToInt32(tabla.Rows[0]["numero_volumen_62_BP"]),
+                    prestado_62_BP = Convert.ToBoolean(tabla.Rows[0]["prestado_62_BP"])
                 };
             }
 
@@ -92,7 +99,7 @@ namespace MAPPER_62_BP
 
         public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP()
         {
-            string query = "SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP FROM Libro_62_BP ORDER BY id_libro_62_BP ASC";
+            string query = "SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0 ORDER BY id_libro_62_BP ASC";
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query, new SqlParameter[0]);
 
@@ -109,7 +116,8 @@ namespace MAPPER_62_BP
                         autor_62_BP = row["autor_62_BP"].ToString(),
                         isbn_62_BP = row["isbn_62_BP"].ToString(),
                         genero_62_BP = row["genero_62_BP"] as string ?? string.Empty,
-                        numero_volumen_62_BP = Convert.ToInt32(row["numero_volumen_62_BP"])
+                        numero_volumen_62_BP = Convert.ToInt32(row["numero_volumen_62_BP"]),
+                        prestado_62_BP = Convert.ToBoolean(row["prestado_62_BP"])
                     });
                 }
             }
@@ -119,7 +127,7 @@ namespace MAPPER_62_BP
 
         public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn)
         {
-            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP FROM Libro_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -170,6 +178,30 @@ namespace MAPPER_62_BP
             }
 
             return lista;
+        }
+
+        public int MarcarPrestado_62_BP(int idLibro)
+        {
+            string query = "UPDATE Libro_62_BP SET prestado_62_BP = 1 WHERE id_libro_62_BP = @id";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idLibro)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public int MarcarDisponible_62_BP(int idLibro)
+        {
+            string query = "UPDATE Libro_62_BP SET prestado_62_BP = 0 WHERE id_libro_62_BP = @id";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idLibro)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
     }
 }

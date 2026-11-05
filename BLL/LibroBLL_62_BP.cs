@@ -91,5 +91,29 @@ namespace BLL_62_BP
 
             return libros;
         }
+
+        public int MarcarPrestado_62_BP(int idLibro)
+        {
+            try
+            {
+                return _libroMapper_62_BP.MarcarPrestado_62_BP(idLibro);
+            }
+            catch
+            {
+                throw new Exception("No se pudo marcar el libro como prestado.");
+            }
+        }
+
+        public int MarcarDisponible_62_BP(int idLibro)
+        {
+            try
+            {
+                return _libroMapper_62_BP.MarcarDisponible_62_BP(idLibro);
+            }
+            catch
+            {
+                throw new Exception("No se pudo marcar el libro como disponible.");
+            }
+        }
     }
 }

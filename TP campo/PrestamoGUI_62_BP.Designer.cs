@@ -42,7 +42,9 @@
             this.textBoxISBN = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBuscarLibros = new System.Windows.Forms.Button();
+            this.dataGridViewLibrosSeleccionados = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosFiltrados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccionados)).BeginInit();
             this.SuspendLayout();
             // 
             // labelDNI
@@ -69,10 +71,11 @@
             this.buttonValidar.TabIndex = 2;
             this.buttonValidar.Text = "Validar";
             this.buttonValidar.UseVisualStyleBackColor = true;
+            this.buttonValidar.Click += new System.EventHandler(this.buttonValidar_Click_1);
             // 
             // buttonAgregarLibro
             // 
-            this.buttonAgregarLibro.Location = new System.Drawing.Point(324, 244);
+            this.buttonAgregarLibro.Location = new System.Drawing.Point(354, 393);
             this.buttonAgregarLibro.Name = "buttonAgregarLibro";
             this.buttonAgregarLibro.Size = new System.Drawing.Size(122, 23);
             this.buttonAgregarLibro.TabIndex = 3;
@@ -84,7 +87,7 @@
             this.dataGridViewLibrosFiltrados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewLibrosFiltrados.Location = new System.Drawing.Point(32, 244);
             this.dataGridViewLibrosFiltrados.Name = "dataGridViewLibrosFiltrados";
-            this.dataGridViewLibrosFiltrados.Size = new System.Drawing.Size(275, 332);
+            this.dataGridViewLibrosFiltrados.Size = new System.Drawing.Size(779, 143);
             this.dataGridViewLibrosFiltrados.TabIndex = 4;
             // 
             // textBoxTitulo
@@ -160,7 +163,7 @@
             this.buttonBuscarLibros.TabIndex = 13;
             this.buttonBuscarLibros.Text = "Buscar Libros";
             this.buttonBuscarLibros.UseVisualStyleBackColor = true;
-            // 
+            //
             // PrestamoGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,6 +186,7 @@
             this.Name = "PrestamoGUI_62_BP";
             this.Text = "PrestamoGUI_62_BP";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosFiltrados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewLibrosSeleccionados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +208,6 @@
         private System.Windows.Forms.TextBox textBoxISBN;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonBuscarLibros;
+        private System.Windows.Forms.DataGridView dataGridViewLibrosSeleccionados;
     }
 }

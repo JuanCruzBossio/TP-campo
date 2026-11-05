@@ -23,18 +23,45 @@ namespace TP_campo_62_BP
         private LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
 
         private const int LIMITE_PRESTAMOS = 5;
+        private bool dniValidado_62_BP = false;
 
         public PrestamoGUI_62_BP()
         {
             InitializeComponent();
             buttonValidar.Click += buttonValidar_Click;
             buttonBuscarLibros.Click += buttonBuscarLibros_Click;
+            buttonAgregarLibro.Click += buttonAgregarLibro_Click;
             ConfigurarDataGridViewLibrosFiltrados();
+            ConfigurarDataGridViewLibrosSeleccionados();
+            DeshabilitarFiltros();
+        }
+
+        private void DeshabilitarFiltros()
+        {
+            textBoxTitulo.ReadOnly = true;
+            textBoxAutor.ReadOnly = true;
+            textBoxGenero.ReadOnly = true;
+            textBoxISBN.ReadOnly = true;
+            buttonBuscarLibros.Enabled = false;
+            dataGridViewLibrosFiltrados.Enabled = false;
+            buttonAgregarLibro.Enabled = false;
+        }
+
+        private void HabilitarFiltros()
+        {
+            textBoxTitulo.ReadOnly = false;
+            textBoxAutor.ReadOnly = false;
+            textBoxGenero.ReadOnly = false;
+            textBoxISBN.ReadOnly = false;
+            buttonBuscarLibros.Enabled = true;
+            dataGridViewLibrosFiltrados.Enabled = true;
+            buttonAgregarLibro.Enabled = true;
         }
 
         private void ConfigurarDataGridViewLibrosFiltrados()
         {
             dataGridViewLibrosFiltrados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewLibrosFiltrados.EditMode = DataGridViewEditMode.EditProgrammatically;
             dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn1", "ID");
             dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn1"].Width = 40;
             dataGridViewLibrosFiltrados.Columns.Add("dataGridViewTextBoxColumn2", "Titulo");
@@ -49,7 +76,62 @@ namespace TP_campo_62_BP
             dataGridViewLibrosFiltrados.Columns["dataGridViewTextBoxColumn6"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
         }
 
-                _prestamoBLL_62_BP.MarcarLibrosPrestados_62_BP(idPrestamo);
+        private void ConfigurarDataGridViewLibrosSeleccionados()
+        {
+            dataGridViewLibrosSeleccionados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewLibrosSeleccionados.EditMode = DataGridViewEditMode.EditProgrammatically;
+            dataGridViewLibrosSeleccionados.Columns.Add("colId", "ID");
+            dataGridViewLibrosSeleccionados.Columns["colId"].Width = 40;
+            dataGridViewLibrosSeleccionados.Columns.Add("colTitulo", "Título");
+            dataGridViewLibrosSeleccionados.Columns["colTitulo"].Width = 120;
+            dataGridViewLibrosSeleccionados.Columns.Add("colAutor", "Autor");
+            dataGridViewLibrosSeleccionados.Columns["colAutor"].Width = 100;
+            dataGridViewLibrosSeleccionados.Columns.Add("colGenero", "Género");
+            dataGridViewLibrosSeleccionados.Columns.Add("colIsbn", "ISBN");
+            dataGridViewLibrosSeleccionados.Columns["colIsbn"].Width = 110;
+            dataGridViewLibrosSeleccionados.Columns.Add("colVol", "Vol.");
+            dataGridViewLibrosSeleccionados.Columns["colVol"].Width = 40;
+            dataGridViewLibrosSeleccionados.Columns["colVol"].DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void buttonAgregarLibro_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewLibrosFiltrados.SelectedRows.Count == 0)
+            {
+                MostrarMensaje_62_BP("msg_sin_seleccion", "Seleccione un libro de la lista para agregar.");
+                return;
+            }
+
+            DataGridViewRow filaSeleccionada = dataGridViewLibrosFiltrados.SelectedRows[0];
+
+            // Verificar si el libro ya está en la lista de seleccionados
+            int idLibro = Convert.ToInt32(filaSeleccionada.Cells["dataGridViewTextBoxColumn1"].Value);
+            bool yaExiste = false;
+            foreach (DataGridViewRow fila in dataGridViewLibrosSeleccionados.Rows)
+            {
+                if (fila.Cells["colId"].Value != null && Convert.ToInt32(fila.Cells["colId"].Value) == idLibro)
+                {
+                    yaExiste = true;
+                    break;
+                }
+            }
+
+            if (yaExiste)
+            {
+                MostrarMensaje_62_BP("msg_libro_ya_agregado", "Este libro ya se encuentra en la lista de seleccionados.");
+                return;
+            }
+
+            int indice = dataGridViewLibrosSeleccionados.Rows.Add();
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colId"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn1"].Value;
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colTitulo"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn2"].Value;
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colAutor"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn3"].Value;
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colGenero"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn4"].Value;
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colIsbn"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn5"].Value;
+            dataGridViewLibrosSeleccionados.Rows[indice].Cells["colVol"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn6"].Value;
+        }
+
+
         protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
@@ -130,20 +212,30 @@ namespace TP_campo_62_BP
                 {
                     MostrarMensaje_62_BP("msg_lector_no_registrado", resultado.MotivoBloqueo);
                 }
+                DeshabilitarFiltros();
                 return;
             }
 
             if (!resultado.PuedeSolicitarPrestamo)
             {
                 MostrarMensaje_62_BP("msg_restriccion_prestamo", resultado.MotivoBloqueo);
+                // El lector existe, bloquear el DNI pero no habilitar filtros
+                dniValidado_62_BP = true;
+                textBoxDNI.ReadOnly = true;
+                DeshabilitarFiltros();
                 return;
             }
 
-            MostrarMensaje_62_BP("msg_validacion_exitosa",
-                string.Format("Lector: {0} {1}\nPrestamos activos: {2}\nDeuda pendiente: No\nPuede solicitar prestamo.",
+            MessageBox.Show(TextoFormato_62_BP("msg_validacion_exitosa",
+                "Lector: {0} {1}\nPrestamos activos: {2}\nDeuda pendiente: No\nPuede solicitar prestamo.",
                     resultado.Lector.nombre_62_BP,
                     resultado.Lector.apellido_62_BP,
                     resultado.PrestamosActivos));
+
+            // Bloquear el DNI y habilitar los filtros
+            dniValidado_62_BP = true;
+            textBoxDNI.ReadOnly = true;
+            HabilitarFiltros();
         }
 
         // -------------------------------------------------------------------------
@@ -328,6 +420,11 @@ namespace TP_campo_62_BP
             public int PrestamosActivos { get; set; }
             public bool TieneDeudaPendiente { get; set; }
             public bool PuedePrestar { get; set; }
+        }
+
+        private void buttonValidar_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

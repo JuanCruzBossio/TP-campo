@@ -16,7 +16,7 @@ namespace MAPPER_62_BP
 
         public int AgregarPrestamo_62_BP(PrestamoBE_62_BP prestamo)
         {
-            string query = "INSERT INTO Prestamo_62_BP (dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP) VALUES (@dniLector, @fechaPrestamo, @fechaLimite, @finalizado);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Prestamo_62_BP (dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP) OUTPUT INSERTED.id_prestamo_62_BP VALUES (@dniLector, @fechaPrestamo, @fechaLimite, @finalizado);";
 
             SqlParameter[] parametros =
             {
@@ -27,6 +27,10 @@ namespace MAPPER_62_BP
             };
 
             object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
+            if (resultado == null || resultado == DBNull.Value)
+            {
+                return 0;
+            }
             return Convert.ToInt32(Convert.ToDecimal(resultado));
         }
 
