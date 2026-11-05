@@ -21,6 +21,7 @@ namespace TP_campo_62_BP
         private PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
         private MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
         private LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
+        private DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
 
         private const int LIMITE_PRESTAMOS = 5;
         private bool dniValidado_62_BP = false;
@@ -126,8 +127,8 @@ namespace TP_campo_62_BP
             // Validar que agregar este libro no supere el límite de 5
             string dni = textBoxDNI.Text.Trim();
             int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(dni);
-            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
-            int totalDespues = prestamosActivos + librosSeleccionados;
+            int librosSeleccionados = ContarLibrosSeleccionados();
+            int totalDespues = prestamosActivos + librosSeleccionados + 1;
 
             if (totalDespues > LIMITE_PRESTAMOS)
             {
@@ -144,6 +145,7 @@ namespace TP_campo_62_BP
             dataGridViewLibrosSeleccion.Rows[indice].Cells["colGenero"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn4"].Value;
             dataGridViewLibrosSeleccion.Rows[indice].Cells["colIsbn"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn5"].Value;
             dataGridViewLibrosSeleccion.Rows[indice].Cells["colVol"].Value = filaSeleccionada.Cells["dataGridViewTextBoxColumn6"].Value;
+            ActualizarBotonRegistrarPrestamo();
         }
 
         private void buttonRegistrarPrestamo_Click(object sender, EventArgs e)
@@ -157,7 +159,7 @@ namespace TP_campo_62_BP
             }
 
             int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(dni);
-            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
+            int librosSeleccionados = ContarLibrosSeleccionados();
             int totalDespues = prestamosActivos + librosSeleccionados;
 
             if (totalDespues > LIMITE_PRESTAMOS)
@@ -199,8 +201,7 @@ namespace TP_campo_62_BP
                         perdido_62_BP = false
                     };
 
-                    DetallePrestamoBLL_62_BP detalleBLL = new DetallePrestamoBLL_62_BP();
-                    bool agregado = detalleBLL.AgregarDetallePrestamo_62_BP(detalle);
+                    bool agregado = _detallePrestamoBLL_62_BP.AgregarDetallePrestamo_62_BP(detalle);
 
                     if (!agregado)
                     {
@@ -213,6 +214,15 @@ namespace TP_campo_62_BP
                 MostrarMensaje_62_BP("msg_prestamo_exitoso", "Prestamo registrado con exito.");
 
                 dataGridViewLibrosSeleccion.Rows.Clear();
+                dataGridViewLibrosFiltrados.Rows.Clear();
+                textBoxDNI.Clear();
+                textBoxTitulo.Clear();
+                textBoxAutor.Clear();
+                textBoxGenero.Clear();
+                textBoxISBN.Clear();
+                textBoxDNI.ReadOnly = false;
+                dniValidado_62_BP = false;
+                DeshabilitarFiltros();
                 ActualizarBotonRegistrarPrestamo();
             }
             catch (Exception ex)
@@ -229,7 +239,7 @@ namespace TP_campo_62_BP
                 return;
             }
 
-            int librosSeleccionados = dataGridViewLibrosSeleccion.Rows.Count;
+            int librosSeleccionados = ContarLibrosSeleccionados();
             int prestamosActivos = _prestamoBLL_62_BP.ContarPrestamosActivos_62_BP(textBoxDNI.Text.Trim());
 
             int totalDespues = prestamosActivos + librosSeleccionados;
@@ -241,6 +251,12 @@ namespace TP_campo_62_BP
             }
 
             buttonRegistrarPrestamo.Enabled = true;
+        }
+
+        private int ContarLibrosSeleccionados()
+        {
+            return dataGridViewLibrosSeleccion.Rows.Cast<DataGridViewRow>()
+                .Count(fila => !fila.IsNewRow);
         }
 
 
@@ -330,11 +346,12 @@ namespace TP_campo_62_BP
 
             if (!resultado.PuedeSolicitarPrestamo)
             {
-                MostrarMensaje_62_BP("msg_restriccion_prestamo", resultado.MotivoBloqueo);
-                // El lector existe, bloquear el DNI pero no habilitar filtros
-                dniValidado_62_BP = true;
-                textBoxDNI.ReadOnly = true;
+                MessageBox.Show(TextoFormato_62_BP("msg_restriccion_prestamo", "{0}", resultado.MotivoBloqueo));
+                // El lector no puede solicitar un prestamo; permitir ingresar otro DNI.
+                dniValidado_62_BP = false;
+                textBoxDNI.ReadOnly = false;
                 DeshabilitarFiltros();
+                ActualizarBotonRegistrarPrestamo();
                 return;
             }
 
@@ -418,7 +435,7 @@ namespace TP_campo_62_BP
                         else if (resultado.PrestamosActivos >= LIMITE_PRESTAMOS)
                         {
                             resultado.PuedeSolicitarPrestamo = false;
-                            resultado.MotivoBloqueo = string.Format("El lector alcanzó el maximo de {0} libros prestados. Debe efectuar una devolucion antes de solicitar un nuevo prestamo.", LIMITE_PRESTAMOS);
+                            resultado.MotivoBloqueo = TextoFormato_62_BP("msg_limite_prestamos", "El lector alcanzó el maximo de {0} libros prestados. Debe efectuar una devolucion antes de solicitar un nuevo prestamo.", LIMITE_PRESTAMOS);
                         }
                         else
                         {

@@ -137,5 +137,28 @@ namespace MAPPER_62_BP
 
             return 0;
         }
+
+        public List<int> ObtenerIdsLibrosPorPrestamo_62_BP(int idPrestamo)
+        {
+            string query = "SELECT id_libro_62_BP FROM DetallePrestamo_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idPrestamo", idPrestamo)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            List<int> idsLibros = new List<int>();
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                foreach (DataRow row in tabla.Rows)
+                {
+                    idsLibros.Add(Convert.ToInt32(row["id_libro_62_BP"]));
+                }
+            }
+
+            return idsLibros;
+        }
     }
 }

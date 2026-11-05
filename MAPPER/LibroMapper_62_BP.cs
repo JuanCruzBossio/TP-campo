@@ -56,7 +56,7 @@ namespace MAPPER_62_BP
 
         public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null)
         {
-            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
