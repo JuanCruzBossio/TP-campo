@@ -88,11 +88,11 @@ namespace BLL_62_BP
             return prestamos;
         }
 
-        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null)
+        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null, bool soloActivos = false)
         {
             try
             {
-                return _prestamoMapper_62_BP.BuscarPrestamos_62_BP(idPrestamo, dni);
+                return _prestamoMapper_62_BP.BuscarPrestamos_62_BP(idPrestamo, dni, soloActivos);
             }
             catch
             {

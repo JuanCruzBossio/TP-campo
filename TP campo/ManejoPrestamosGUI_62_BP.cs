@@ -94,7 +94,8 @@ namespace TP_campo
             {
                 List<PrestamoBE_62_BP> prestamos = _prestamoBLL_62_BP.BuscarPrestamos_62_BP(
                     idPrestamo,
-                    textBoxDNI.Text.Trim());
+                    textBoxDNI.Text.Trim(),
+                    radioButtonActivos.Checked);
 
                 LlenarDataGridViewPrestamos(prestamos);
             }

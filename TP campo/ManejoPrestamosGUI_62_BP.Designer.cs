@@ -30,6 +30,8 @@
         {
             this.textBoxDNI = new System.Windows.Forms.TextBox();
             this.labelDNI = new System.Windows.Forms.Label();
+            this.radioButtonActivos = new System.Windows.Forms.RadioButton();
+            this.radioButtonTodos = new System.Windows.Forms.RadioButton();
             this.textBoxNumeroPrestamo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBuscarPrestamos = new System.Windows.Forms.Button();
@@ -43,7 +45,7 @@
             // 
             // textBoxDNI
             // 
-            this.textBoxDNI.Location = new System.Drawing.Point(120, 23);
+            this.textBoxDNI.Location = new System.Drawing.Point(118, 23);
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(163, 20);
             this.textBoxDNI.TabIndex = 4;
@@ -51,15 +53,37 @@
             // labelDNI
             // 
             this.labelDNI.AutoSize = true;
-            this.labelDNI.Location = new System.Drawing.Point(43, 26);
+            this.labelDNI.Location = new System.Drawing.Point(41, 26);
             this.labelDNI.Name = "labelDNI";
             this.labelDNI.Size = new System.Drawing.Size(59, 13);
             this.labelDNI.TabIndex = 3;
             this.labelDNI.Text = "DNI Lector";
-            // 
+            //
+            // radioButtonActivos
+            //
+            this.radioButtonActivos.AutoSize = true;
+            this.radioButtonActivos.Checked = true;
+            this.radioButtonActivos.Location = new System.Drawing.Point(118, 94);
+            this.radioButtonActivos.Name = "radioButtonActivos";
+            this.radioButtonActivos.Size = new System.Drawing.Size(84, 17);
+            this.radioButtonActivos.TabIndex = 5;
+            this.radioButtonActivos.TabStop = true;
+            this.radioButtonActivos.Text = "Solo Activos";
+            this.radioButtonActivos.UseVisualStyleBackColor = true;
+            //
+            // radioButtonTodos
+            //
+            this.radioButtonTodos.AutoSize = true;
+            this.radioButtonTodos.Location = new System.Drawing.Point(220, 94);
+            this.radioButtonTodos.Name = "radioButtonTodos";
+            this.radioButtonTodos.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonTodos.TabIndex = 6;
+            this.radioButtonTodos.Text = "Todos";
+            this.radioButtonTodos.UseVisualStyleBackColor = true;
+            //
             // textBoxNumeroPrestamo
             // 
-            this.textBoxNumeroPrestamo.Location = new System.Drawing.Point(120, 68);
+            this.textBoxNumeroPrestamo.Location = new System.Drawing.Point(118, 68);
             this.textBoxNumeroPrestamo.Name = "textBoxNumeroPrestamo";
             this.textBoxNumeroPrestamo.Size = new System.Drawing.Size(163, 20);
             this.textBoxNumeroPrestamo.TabIndex = 6;
@@ -67,7 +91,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 71);
+            this.label1.Location = new System.Drawing.Point(41, 71);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 13);
             this.label1.TabIndex = 5;
@@ -131,6 +155,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxDNI);
             this.Controls.Add(this.labelDNI);
+            this.Controls.Add(this.radioButtonActivos);
+            this.Controls.Add(this.radioButtonTodos);
             this.Name = "ManejoPrestamosGUI_62_BP";
             this.Text = "ManejoPrestamosGUI_62_BP";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPrestamosFiltrados)).EndInit();
@@ -143,6 +169,8 @@
         #endregion
         private System.Windows.Forms.TextBox textBoxDNI;
         private System.Windows.Forms.Label labelDNI;
+        private System.Windows.Forms.RadioButton radioButtonActivos;
+        private System.Windows.Forms.RadioButton radioButtonTodos;
         private System.Windows.Forms.TextBox textBoxNumeroPrestamo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonBuscarPrestamos;

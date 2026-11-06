@@ -99,13 +99,18 @@ namespace MAPPER_62_BP
 
         public List<PrestamoBE_62_BP> BuscarPrestamosPorDNI_62_BP(string dni)
         {
-            return BuscarPrestamos_62_BP(null, dni);
+            return BuscarPrestamos_62_BP(null, dni, false);
         }
 
-        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null)
+        public List<PrestamoBE_62_BP> BuscarPrestamos_62_BP(int? idPrestamo = null, string dni = null, bool soloActivos = false)
         {
             StringBuilder query = new StringBuilder("SELECT id_prestamo_62_BP, dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP FROM Prestamo_62_BP WHERE 1=1");
             List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (soloActivos)
+            {
+                query.Append(" AND finalizado_62_BP = 0");
+            }
 
             if (idPrestamo.HasValue)
             {
