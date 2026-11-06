@@ -76,6 +76,18 @@ namespace BLL_62_BP
             return multas;
         }
 
+        public List<MultaBE_62_BP> BuscarMultas_62_BP(int? idMulta = null, int? idPrestamo = null, string dni = null)
+        {
+            try
+            {
+                return _multaMapper_62_BP.BuscarMultas_62_BP(idMulta, idPrestamo, dni);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar las multas.");
+            }
+        }
+
         public List<MultaBE_62_BP> ObtenerMultas_62_BP(string dni)
         {
             List<MultaBE_62_BP> multas = new List<MultaBE_62_BP>();
@@ -107,7 +119,7 @@ namespace BLL_62_BP
             return multas;
         }
 
-        public void GenerarMultasPorDevolucion_62_BP(
+        public int GenerarMultasPorDevolucion_62_BP(
             PrestamoBE_62_BP prestamo,
             List<DetallePrestamoBE_62_BP> detalles)
         {
@@ -116,6 +128,7 @@ namespace BLL_62_BP
                 throw new ArgumentNullException();
             }
 
+            int multasGeneradas = 0;
             foreach (DetallePrestamoBE_62_BP detalle in detalles)
             {
                 if (detalle.perdido_62_BP)
@@ -132,6 +145,8 @@ namespace BLL_62_BP
                     {
                         throw new Exception("No se pudo generar la multa por libro perdido.");
                     }
+
+                    multasGeneradas++;
                 }
             }
 
@@ -150,7 +165,11 @@ namespace BLL_62_BP
                 {
                     throw new Exception("No se pudo generar la multa por devolución fuera de término.");
                 }
+
+                multasGeneradas++;
             }
+
+            return multasGeneradas;
         }
     }
 }

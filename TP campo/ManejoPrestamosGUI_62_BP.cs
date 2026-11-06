@@ -299,7 +299,7 @@ namespace TP_campo
                     detallesDevueltos.Add(detalle);
                 }
 
-                _multaBLL_62_BP.GenerarMultasPorDevolucion_62_BP(prestamo, detallesDevueltos);
+                int multasGeneradas = _multaBLL_62_BP.GenerarMultasPorDevolucion_62_BP(prestamo, detallesDevueltos);
 
                 if (_prestamoBLL_62_BP.FinalizarPrestamo_62_BP(idPrestamo) <= 0)
                 {
@@ -316,6 +316,13 @@ namespace TP_campo
                 _prestamoSeleccionadoFinalizado_62_BP = false;
                 dataGridViewDetallePrestamo.ReadOnly = false;
                 dataGridViewPrestamosFiltrados.ClearSelection();
+
+                if (multasGeneradas > 0)
+                {
+                    MultaGUI_62_BP multaForm = new MultaGUI_62_BP(idPrestamo);
+                    multaForm.MdiParent = MdiParent;
+                    multaForm.Show();
+                }
             }
             catch (Exception ex)
             {

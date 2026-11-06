@@ -347,6 +347,14 @@ namespace TP_campo_62_BP
             if (!resultado.PuedeSolicitarPrestamo)
             {
                 MessageBox.Show(TextoFormato_62_BP("msg_restriccion_prestamo", "{0}", resultado.MotivoBloqueo));
+
+                if (resultado.TieneDeudaPendiente)
+                {
+                    MultaGUI_62_BP multaForm = new MultaGUI_62_BP(dni);
+                    multaForm.MdiParent = MdiParent;
+                    multaForm.Show();
+                }
+
                 // El lector no puede solicitar un prestamo; permitir ingresar otro DNI.
                 dniValidado_62_BP = false;
                 textBoxDNI.ReadOnly = false;

@@ -115,5 +115,52 @@ namespace MAPPER_62_BP
 
             return lista;
         }
+
+        public List<MultaBE_62_BP> BuscarMultas_62_BP(int? idMulta = null, int? idPrestamo = null, string dni = null)
+        {
+            StringBuilder query = new StringBuilder("SELECT m.id_multa_62_BP, m.id_prestamo_62_BP, p.dni_lector_62_BP, m.monto_62_BP, m.pagada_62_BP, m.motivo_62_BP FROM Multa_62_BP m INNER JOIN Prestamo_62_BP p ON p.id_prestamo_62_BP = m.id_prestamo_62_BP WHERE 1=1");
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (idMulta.HasValue)
+            {
+                query.Append(" AND m.id_multa_62_BP = @idMulta");
+                parametros.Add(new SqlParameter("@idMulta", idMulta.Value));
+            }
+
+            if (idPrestamo.HasValue)
+            {
+                query.Append(" AND m.id_prestamo_62_BP = @idPrestamo");
+                parametros.Add(new SqlParameter("@idPrestamo", idPrestamo.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dni))
+            {
+                query.Append(" AND p.dni_lector_62_BP LIKE @dni");
+                parametros.Add(new SqlParameter("@dni", "%" + dni + "%"));
+            }
+
+            query.Append(" ORDER BY m.id_multa_62_BP ASC");
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+            List<MultaBE_62_BP> multas = new List<MultaBE_62_BP>();
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                foreach (DataRow row in tabla.Rows)
+                {
+                    multas.Add(new MultaBE_62_BP
+                    {
+                        id_multa_62_BP = Convert.ToInt32(row["id_multa_62_BP"]),
+                        id_prestamo_62_BP = Convert.ToInt32(row["id_prestamo_62_BP"]),
+                        dni_lector_62_BP = row["dni_lector_62_BP"].ToString(),
+                        monto_62_BP = Convert.ToInt32(row["monto_62_BP"]),
+                        pagada_62_BP = Convert.ToBoolean(row["pagada_62_BP"]),
+                        motivo_62_BP = row["motivo_62_BP"] == DBNull.Value ? null : row["motivo_62_BP"].ToString()
+                    });
+                }
+            }
+
+            return multas;
+        }
     }
 }

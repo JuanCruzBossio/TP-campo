@@ -76,7 +76,7 @@
             this.radioButtonTodos.AutoSize = true;
             this.radioButtonTodos.Location = new System.Drawing.Point(220, 94);
             this.radioButtonTodos.Name = "radioButtonTodos";
-            this.radioButtonTodos.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonTodos.Size = new System.Drawing.Size(55, 17);
             this.radioButtonTodos.TabIndex = 6;
             this.radioButtonTodos.Text = "Todos";
             this.radioButtonTodos.UseVisualStyleBackColor = true;

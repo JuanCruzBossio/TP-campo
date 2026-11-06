@@ -103,6 +103,12 @@
     <Compile Include="Login_62_BP.Designer.cs">
       <DependentUpon>Login_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="MultaGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MultaGUI_62_BP.Designer.cs">
+      <DependentUpon>MultaGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="ManejoPrestamosGUI_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Login_62_BP.resx">
       <DependentUpon>Login_62_BP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultaGUI_62_BP.resx">
+      <DependentUpon>MultaGUI_62_BP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ManejoPrestamosGUI_62_BP.resx">
       <DependentUpon>ManejoPrestamosGUI_62_BP.cs</DependentUpon>
