@@ -79,5 +79,34 @@ namespace MAPPER_62_BP
 
             return null;
         }
+
+        public List<DetallePrestamoBE_62_BP> BuscarDetallesPorPrestamo_62_BP(int idPrestamo)
+        {
+            string query = "SELECT id_libro_62_BP, id_prestamo_62_BP, devuelto_62_BP, perdido_62_BP FROM DetallePrestamo_62_BP WHERE id_prestamo_62_BP = @idPrestamo ORDER BY id_libro_62_BP ASC";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idPrestamo", idPrestamo)
+            };
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            List<DetallePrestamoBE_62_BP> detalles = new List<DetallePrestamoBE_62_BP>();
+
+            if (tabla != null && tabla.Rows.Count > 0)
+            {
+                foreach (DataRow row in tabla.Rows)
+                {
+                    detalles.Add(new DetallePrestamoBE_62_BP
+                    {
+                        id_libro_62_BP = Convert.ToInt32(row["id_libro_62_BP"]),
+                        id_prestamo_62_BP = Convert.ToInt32(row["id_prestamo_62_BP"]),
+                        devuelto_62_BP = Convert.ToBoolean(row["devuelto_62_BP"]),
+                        perdido_62_BP = Convert.ToBoolean(row["perdido_62_BP"])
+                    });
+                }
+            }
+
+            return detalles;
+        }
     }
 }

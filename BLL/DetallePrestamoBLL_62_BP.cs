@@ -47,5 +47,17 @@ namespace BLL_62_BP
                 throw new Exception("No se pudo buscar el detalle del prestamo.");
             }
         }
+
+        public List<DetallePrestamoBE_62_BP> BuscarDetallesPorPrestamo_62_BP(int idPrestamo)
+        {
+            try
+            {
+                return _detallePrestamoMapper_62_BP.BuscarDetallesPorPrestamo_62_BP(idPrestamo);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los libros del prestamo.");
+            }
+        }
     }
 }

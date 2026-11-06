@@ -50,6 +50,18 @@ namespace MAPPER_62_BP
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
 
+        public int FinalizarPrestamo_62_BP(int idPrestamo)
+        {
+            string query = "UPDATE Prestamo_62_BP SET finalizado_62_BP = 1 WHERE id_prestamo_62_BP = @idPrestamo";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idPrestamo", idPrestamo)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
         public PrestamoBE_62_BP BuscarPrestamo_62_BP(int? id = null, string dniLector = null)
         {
             StringBuilder query = new StringBuilder("SELECT id_prestamo_62_BP, dni_lector_62_BP, fecha_prestamo_62_BP, fecha_limite_62_BP, finalizado_62_BP FROM Prestamo_62_BP WHERE 1=1");

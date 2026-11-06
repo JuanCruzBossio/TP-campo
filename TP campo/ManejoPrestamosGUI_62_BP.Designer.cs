@@ -34,7 +34,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBuscarPrestamos = new System.Windows.Forms.Button();
             this.dataGridViewPrestamosFiltrados = new System.Windows.Forms.DataGridView();
+            this.dataGridViewDetallePrestamo = new System.Windows.Forms.DataGridView();
+            this.buttonSeleccionarPrestamo = new System.Windows.Forms.Button();
+            this.buttonDevolverPrestamo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPrestamosFiltrados)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetallePrestamo)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxDNI
@@ -86,11 +90,41 @@
             this.dataGridViewPrestamosFiltrados.Size = new System.Drawing.Size(779, 143);
             this.dataGridViewPrestamosFiltrados.TabIndex = 15;
             // 
+            // dataGridViewDetallePrestamo
+            // 
+            this.dataGridViewDetallePrestamo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewDetallePrestamo.Location = new System.Drawing.Point(9, 320);
+            this.dataGridViewDetallePrestamo.Name = "dataGridViewDetallePrestamo";
+            this.dataGridViewDetallePrestamo.Size = new System.Drawing.Size(779, 143);
+            this.dataGridViewDetallePrestamo.TabIndex = 16;
+            // 
+            // buttonSeleccionarPrestamo
+            // 
+            this.buttonSeleccionarPrestamo.Location = new System.Drawing.Point(120, 291);
+            this.buttonSeleccionarPrestamo.Name = "buttonSeleccionarPrestamo";
+            this.buttonSeleccionarPrestamo.Size = new System.Drawing.Size(162, 23);
+            this.buttonSeleccionarPrestamo.TabIndex = 17;
+            this.buttonSeleccionarPrestamo.Text = "Seleccionar  Prestamo";
+            this.buttonSeleccionarPrestamo.UseVisualStyleBackColor = true;
+            // 
+            // buttonDevolverPrestamo
+            // 
+            this.buttonDevolverPrestamo.Enabled = false;
+            this.buttonDevolverPrestamo.Location = new System.Drawing.Point(120, 479);
+            this.buttonDevolverPrestamo.Name = "buttonDevolverPrestamo";
+            this.buttonDevolverPrestamo.Size = new System.Drawing.Size(162, 23);
+            this.buttonDevolverPrestamo.TabIndex = 18;
+            this.buttonDevolverPrestamo.Text = "Devolver Prestamo";
+            this.buttonDevolverPrestamo.UseVisualStyleBackColor = true;
+            // 
             // ManejoPrestamosGUI_62_BP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 514);
+            this.Controls.Add(this.buttonSeleccionarPrestamo);
+            this.Controls.Add(this.buttonDevolverPrestamo);
+            this.Controls.Add(this.dataGridViewDetallePrestamo);
             this.Controls.Add(this.dataGridViewPrestamosFiltrados);
             this.Controls.Add(this.buttonBuscarPrestamos);
             this.Controls.Add(this.textBoxNumeroPrestamo);
@@ -100,6 +134,7 @@
             this.Name = "ManejoPrestamosGUI_62_BP";
             this.Text = "ManejoPrestamosGUI_62_BP";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPrestamosFiltrados)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDetallePrestamo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,5 +147,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonBuscarPrestamos;
         private System.Windows.Forms.DataGridView dataGridViewPrestamosFiltrados;
+        private System.Windows.Forms.DataGridView dataGridViewDetallePrestamo;
+        private System.Windows.Forms.Button buttonSeleccionarPrestamo;
+        private System.Windows.Forms.Button buttonDevolverPrestamo;
     }
 }

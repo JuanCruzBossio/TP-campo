@@ -44,6 +44,18 @@ namespace BLL_62_BP
             return filasAfectadas;
         }
 
+        public int FinalizarPrestamo_62_BP(int idPrestamo)
+        {
+            try
+            {
+                return _prestamoMapper_62_BP.FinalizarPrestamo_62_BP(idPrestamo);
+            }
+            catch
+            {
+                throw new Exception("No se pudo finalizar el préstamo.");
+            }
+        }
+
         public PrestamoBE_62_BP BuscarPrestamo_62_BP(int? id = null, string dniLector = null)
         {
             PrestamoBE_62_BP prestamo = null;
