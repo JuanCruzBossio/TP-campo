@@ -265,7 +265,8 @@
             // 
             this.despacharToolStripMenuItem.Name = "despacharToolStripMenuItem";
             this.despacharToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.despacharToolStripMenuItem.Text = "Despachar";
+            this.despacharToolStripMenuItem.Text = "Multas";
+            this.despacharToolStripMenuItem.Click += new System.EventHandler(this.despacharToolStripMenuItem_Click);
             // 
             // comprasToolStripMenuItem
             // 

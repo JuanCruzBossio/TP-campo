@@ -92,6 +92,7 @@ namespace TP_campo_62_BP
             ventasToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo", "Prestamo");
             carritoToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_solicitar", "Solicitar");
             facturarToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_devolver", "Devolver");
+            despacharToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_multas", "Multas");
         }
 
         private void ActualizarTextoUsuarioLogueado_62_BP()
@@ -229,6 +230,13 @@ namespace TP_campo_62_BP
             ManejoPrestamosGUI_62_BP manejoPrestamosForm = new ManejoPrestamosGUI_62_BP();
             manejoPrestamosForm.MdiParent = this;
             manejoPrestamosForm.Show();
+        }
+
+        private void despacharToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MultaGUI_62_BP multaForm = new MultaGUI_62_BP();
+            multaForm.MdiParent = this;
+            multaForm.Show();
         }
     }
 }

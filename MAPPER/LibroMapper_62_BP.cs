@@ -54,9 +54,9 @@ namespace MAPPER_62_BP
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
 
-        public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null)
+        public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null, bool? prestado = null)
         {
-            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0");
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE 1 = 1");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -78,6 +78,12 @@ namespace MAPPER_62_BP
                 parametros.Add(new SqlParameter("@isbn", isbn));
             }
 
+            if (prestado.HasValue)
+            {
+                query.Append(" AND prestado_62_BP = @prestado");
+                parametros.Add(new SqlParameter("@prestado", prestado.Value));
+            }
+
             DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
 
             if (tabla != null && tabla.Rows.Count > 0)
@@ -97,11 +103,20 @@ namespace MAPPER_62_BP
             return null;
         }
 
-        public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP()
+        public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP(bool? prestado = null)
         {
-            string query = "SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0 ORDER BY id_libro_62_BP ASC";
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE 1 = 1");
+            List<SqlParameter> parametros = new List<SqlParameter>();
 
-            DataTable tabla = _acceso_62_BP.leer_62_BP(query, new SqlParameter[0]);
+            if (prestado.HasValue)
+            {
+                query.Append(" AND prestado_62_BP = @prestado");
+                parametros.Add(new SqlParameter("@prestado", prestado.Value));
+            }
+
+            query.Append(" ORDER BY id_libro_62_BP ASC");
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
 
             List<LibroBE_62_BP> lista = new List<LibroBE_62_BP>();
 
@@ -125,9 +140,9 @@ namespace MAPPER_62_BP
             return lista;
         }
 
-        public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn)
+        public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn, bool? prestado = null)
         {
-            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE prestado_62_BP = 0");
+            StringBuilder query = new StringBuilder("SELECT id_libro_62_BP, titulo_62_BP, autor_62_BP, isbn_62_BP, genero_62_BP, numero_volumen_62_BP, prestado_62_BP FROM Libro_62_BP WHERE 1 = 1");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -155,6 +170,12 @@ namespace MAPPER_62_BP
                 parametros.Add(new SqlParameter("@isbn", "%" + isbn + "%"));
             }
 
+            if (prestado.HasValue)
+            {
+                query.Append(" AND prestado_62_BP = @prestado");
+                parametros.Add(new SqlParameter("@prestado", prestado.Value));
+            }
+
             query.Append(" ORDER BY id_libro_62_BP ASC");
 
             DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
@@ -172,7 +193,8 @@ namespace MAPPER_62_BP
                         autor_62_BP = row["autor_62_BP"].ToString(),
                         isbn_62_BP = row["isbn_62_BP"].ToString(),
                         genero_62_BP = row["genero_62_BP"] as string ?? string.Empty,
-                        numero_volumen_62_BP = Convert.ToInt32(row["numero_volumen_62_BP"])
+                        numero_volumen_62_BP = Convert.ToInt32(row["numero_volumen_62_BP"]),
+                        prestado_62_BP = Convert.ToBoolean(row["prestado_62_BP"])
                     });
                 }
             }

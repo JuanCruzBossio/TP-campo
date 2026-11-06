@@ -22,6 +22,7 @@ namespace TP_campo_62_BP
         private MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
         private LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
         private DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
+        private SolicitudInsatisfechaBLL_62_BP _solicitudInsatisfechaBLL_62_BP = new SolicitudInsatisfechaBLL_62_BP();
 
         private const int LIMITE_PRESTAMOS = 5;
         private bool dniValidado_62_BP = false;
@@ -288,13 +289,46 @@ namespace TP_campo_62_BP
             if (string.IsNullOrWhiteSpace(titulo) && string.IsNullOrWhiteSpace(autor)
                 && string.IsNullOrWhiteSpace(genero) && string.IsNullOrWhiteSpace(isbn))
             {
-                List<LibroBE_62_BP> todosLosLibros = _libroBLL_62_BP.BuscarTodosLosLibros_62_BP();
+                List<LibroBE_62_BP> todosLosLibros = _libroBLL_62_BP.BuscarTodosLosLibros_62_BP(false);
                 LlenarDataGridViewLibrosFiltrados(todosLosLibros);
                 return;
             }
 
-            List<LibroBE_62_BP> librosFiltrados = _libroBLL_62_BP.BuscarLibrosConFiltros_62_BP(titulo, autor, genero, isbn);
-            LlenarDataGridViewLibrosFiltrados(librosFiltrados);
+            // Con filtros se traen todos los resultados para poder determinar si
+            // el libro solicitado está agotado y luego quitar los ejemplares prestados.
+            List<LibroBE_62_BP> librosCoincidentes = _libroBLL_62_BP.BuscarLibrosConFiltros_62_BP(
+                titulo, autor, genero, isbn);
+
+            bool mismoISBN = librosCoincidentes.Count > 0
+                && librosCoincidentes.All(libro => libro.isbn_62_BP == librosCoincidentes[0].isbn_62_BP);
+            bool todosPrestados = librosCoincidentes.Count > 0
+                && librosCoincidentes.All(libro => libro.prestado_62_BP);
+
+            if (mismoISBN && todosPrestados)
+            {
+                LibroBE_62_BP libroSolicitado = librosCoincidentes[0];
+
+                SolicitudInsatisfechaBE_62_BP solicitud = new SolicitudInsatisfechaBE_62_BP
+                {
+                    id_libro_62_BP = libroSolicitado.id_libro_62_BP,
+                    fecha_62_BP = DateTime.Now
+                };
+
+                _solicitudInsatisfechaBLL_62_BP.AgregarSolicitudInsatisfecha_62_BP(solicitud);
+                librosCoincidentes = _libroBLL_62_BP.BuscarLibrosAlternativos_62_BP(libroSolicitado);
+
+                MostrarMensaje_62_BP(
+                    "msg_libro_no_disponible",
+                    "Todos los ejemplares del libro solicitado están prestados. Se muestran alternativas disponibles.");
+            }
+            else
+            {
+                librosCoincidentes = librosCoincidentes
+                    .Where(libro => !libro.prestado_62_BP)
+                    .ToList();
+            }
+
+            LlenarDataGridViewLibrosFiltrados(librosCoincidentes);
         }
 
         private void LlenarDataGridViewLibrosFiltrados(List<LibroBE_62_BP> libros)

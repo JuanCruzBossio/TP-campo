@@ -44,13 +44,13 @@ namespace BLL_62_BP
             return filasAfectadas;
         }
 
-        public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null)
+        public LibroBE_62_BP BuscarLibro_62_BP(int? id = null, string titulo = null, string isbn = null, bool? prestado = null)
         {
             LibroBE_62_BP libro = null;
 
             try
             {
-                libro = _libroMapper_62_BP.BuscarLibro_62_BP(id, titulo, isbn);
+                libro = _libroMapper_62_BP.BuscarLibro_62_BP(id, titulo, isbn, prestado);
             }
             catch
             {
@@ -60,13 +60,13 @@ namespace BLL_62_BP
             return libro;
         }
 
-        public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP()
+        public List<LibroBE_62_BP> BuscarTodosLosLibros_62_BP(bool? prestado = null)
         {
             List<LibroBE_62_BP> libros = null;
 
             try
             {
-                libros = _libroMapper_62_BP.BuscarTodosLosLibros_62_BP();
+                libros = _libroMapper_62_BP.BuscarTodosLosLibros_62_BP(prestado);
             }
             catch
             {
@@ -76,13 +76,13 @@ namespace BLL_62_BP
             return libros;
         }
 
-        public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn)
+        public List<LibroBE_62_BP> BuscarLibrosConFiltros_62_BP(string titulo, string autor, string genero, string isbn, bool? prestado = null)
         {
             List<LibroBE_62_BP> libros = null;
 
             try
             {
-                libros = _libroMapper_62_BP.BuscarLibrosConFiltros_62_BP(titulo, autor, genero, isbn);
+                libros = _libroMapper_62_BP.BuscarLibrosConFiltros_62_BP(titulo, autor, genero, isbn, prestado);
             }
             catch
             {
@@ -90,6 +90,66 @@ namespace BLL_62_BP
             }
 
             return libros;
+        }
+
+        public List<LibroBE_62_BP> BuscarLibrosAlternativos_62_BP(LibroBE_62_BP libroSolicitado)
+        {
+            List<LibroBE_62_BP> alternativas = new List<LibroBE_62_BP>();
+
+            if (libroSolicitado == null)
+            {
+                return alternativas;
+            }
+
+            try
+            {
+                // Primera búsqueda: un libro disponible del mismo autor.
+                List<LibroBE_62_BP> librosMismoAutor = BuscarLibrosConFiltros_62_BP(
+                    null, libroSolicitado.autor_62_BP, null, null, false);
+
+                LibroBE_62_BP alternativaAutor = librosMismoAutor
+                    .FirstOrDefault(libro => !EsMismoLibro_62_BP(libro, libroSolicitado));
+
+                if (alternativaAutor != null)
+                {
+                    alternativas.Add(alternativaAutor);
+                }
+
+                // Segunda búsqueda: un libro disponible del mismo género.
+                List<LibroBE_62_BP> librosMismoGenero = BuscarLibrosConFiltros_62_BP(
+                    null, null, libroSolicitado.genero_62_BP, null, false);
+
+                LibroBE_62_BP alternativaGenero = librosMismoGenero
+                    .FirstOrDefault(libro => !EsMismoLibro_62_BP(libro, libroSolicitado)
+                        && !alternativas.Any(alternativa => EsMismoLibro_62_BP(libro, alternativa)));
+
+                if (alternativaGenero != null)
+                {
+                    alternativas.Add(alternativaGenero);
+                }
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los libros alternativos.");
+            }
+
+            return alternativas;
+        }
+
+        private bool EsMismoLibro_62_BP(LibroBE_62_BP primerLibro, LibroBE_62_BP segundoLibro)
+        {
+            if (primerLibro == null || segundoLibro == null)
+            {
+                return false;
+            }
+
+            if (primerLibro.id_libro_62_BP == segundoLibro.id_libro_62_BP)
+            {
+                return true;
+            }
+
+            return !string.IsNullOrWhiteSpace(primerLibro.isbn_62_BP)
+                && primerLibro.isbn_62_BP == segundoLibro.isbn_62_BP;
         }
 
         public int MarcarPrestado_62_BP(int idLibro)
