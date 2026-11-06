@@ -16,13 +16,14 @@ namespace MAPPER_62_BP
 
         public int AgregarMulta_62_BP(MultaBE_62_BP multa)
         {
-            string query = "INSERT INTO Multa_62_BP (id_prestamo_62_BP, monto_62_BP, pagada_62_BP) OUTPUT INSERTED.id_multa_62_BP VALUES (@idPrestamo, @monto, @pagada);";
+            string query = "INSERT INTO Multa_62_BP (id_prestamo_62_BP, monto_62_BP, pagada_62_BP, motivo_62_BP) OUTPUT INSERTED.id_multa_62_BP VALUES (@idPrestamo, @monto, @pagada, @motivo);";
 
             SqlParameter[] parametros =
             {
                 new SqlParameter("@idPrestamo", multa.id_prestamo_62_BP),
                 new SqlParameter("@monto", multa.monto_62_BP),
-                new SqlParameter("@pagada", multa.pagada_62_BP)
+                new SqlParameter("@pagada", multa.pagada_62_BP),
+                new SqlParameter("@motivo", (object)multa.motivo_62_BP ?? DBNull.Value)
             };
 
             object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
@@ -35,14 +36,15 @@ namespace MAPPER_62_BP
 
         public int ModificarMulta_62_BP(MultaBE_62_BP multa)
         {
-            string query = "UPDATE Multa_62_BP SET id_prestamo_62_BP = @idPrestamo, monto_62_BP = @monto, pagada_62_BP = @pagada WHERE id_multa_62_BP = @id";
+            string query = "UPDATE Multa_62_BP SET id_prestamo_62_BP = @idPrestamo, monto_62_BP = @monto, pagada_62_BP = @pagada, motivo_62_BP = @motivo WHERE id_multa_62_BP = @id";
 
             SqlParameter[] parametros =
             {
                 new SqlParameter("@id", multa.id_multa_62_BP),
                 new SqlParameter("@idPrestamo", multa.id_prestamo_62_BP),
                 new SqlParameter("@monto", multa.monto_62_BP),
-                new SqlParameter("@pagada", multa.pagada_62_BP)
+                new SqlParameter("@pagada", multa.pagada_62_BP),
+                new SqlParameter("@motivo", (object)multa.motivo_62_BP ?? DBNull.Value)
             };
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
@@ -50,7 +52,7 @@ namespace MAPPER_62_BP
 
         public MultaBE_62_BP BuscarMulta_62_BP(int? id = null, int idPrestamo = 0)
         {
-            StringBuilder query = new StringBuilder("SELECT id_multa_62_BP, id_prestamo_62_BP, monto_62_BP, pagada_62_BP FROM Multa_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_multa_62_BP, id_prestamo_62_BP, monto_62_BP, pagada_62_BP, motivo_62_BP FROM Multa_62_BP WHERE 1=1");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -75,7 +77,8 @@ namespace MAPPER_62_BP
                     id_multa_62_BP = Convert.ToInt32(tabla.Rows[0]["id_multa_62_BP"]),
                     id_prestamo_62_BP = Convert.ToInt32(tabla.Rows[0]["id_prestamo_62_BP"]),
                     monto_62_BP = Convert.ToInt32(tabla.Rows[0]["monto_62_BP"]),
-                    pagada_62_BP = Convert.ToBoolean(tabla.Rows[0]["pagada_62_BP"])
+                    pagada_62_BP = Convert.ToBoolean(tabla.Rows[0]["pagada_62_BP"]),
+                    motivo_62_BP = tabla.Rows[0]["motivo_62_BP"] == DBNull.Value ? null : tabla.Rows[0]["motivo_62_BP"].ToString()
                 };
             }
 
@@ -84,7 +87,7 @@ namespace MAPPER_62_BP
 
         public List<MultaBE_62_BP> BuscarMultasPorIdPrestamo_62_BP(int idPrestamo)
         {
-            string query = "SELECT id_multa_62_BP, id_prestamo_62_BP, monto_62_BP, pagada_62_BP FROM Multa_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
+            string query = "SELECT id_multa_62_BP, id_prestamo_62_BP, monto_62_BP, pagada_62_BP, motivo_62_BP FROM Multa_62_BP WHERE id_prestamo_62_BP = @idPrestamo";
 
             SqlParameter[] parametros =
             {
@@ -104,7 +107,8 @@ namespace MAPPER_62_BP
                         id_multa_62_BP = Convert.ToInt32(row["id_multa_62_BP"]),
                         id_prestamo_62_BP = Convert.ToInt32(row["id_prestamo_62_BP"]),
                         monto_62_BP = Convert.ToInt32(row["monto_62_BP"]),
-                        pagada_62_BP = Convert.ToBoolean(row["pagada_62_BP"])
+                        pagada_62_BP = Convert.ToBoolean(row["pagada_62_BP"]),
+                        motivo_62_BP = row["motivo_62_BP"] == DBNull.Value ? null : row["motivo_62_BP"].ToString()
                     });
                 }
             }

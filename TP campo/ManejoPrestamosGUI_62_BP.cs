@@ -17,6 +17,7 @@ namespace TP_campo
         private readonly PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
         private readonly DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
         private readonly LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
+        private readonly MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
         private bool _prestamoSeleccionadoFinalizado_62_BP;
 
         public ManejoPrestamosGUI_62_BP()
@@ -259,6 +260,14 @@ namespace TP_campo
 
             try
             {
+                PrestamoBE_62_BP prestamo = _prestamoBLL_62_BP.BuscarPrestamo_62_BP(id: idPrestamo);
+                if (prestamo == null)
+                {
+                    throw new Exception("No se encontró el préstamo seleccionado.");
+                }
+
+                List<DetallePrestamoBE_62_BP> detallesDevueltos = new List<DetallePrestamoBE_62_BP>();
+
                 foreach (DataGridViewRow fila in dataGridViewDetallePrestamo.Rows)
                 {
                     bool devuelto = Convert.ToBoolean(fila.Cells["colDetalleDevuelto"].Value ?? false);
@@ -285,7 +294,11 @@ namespace TP_campo
                         }
                     }
                     // Si el libro fue perdido, no se modifica: permanece prestado.
+
+                    detallesDevueltos.Add(detalle);
                 }
+
+                _multaBLL_62_BP.GenerarMultasPorDevolucion_62_BP(prestamo, detallesDevueltos);
 
                 if (_prestamoBLL_62_BP.FinalizarPrestamo_62_BP(idPrestamo) <= 0)
                 {

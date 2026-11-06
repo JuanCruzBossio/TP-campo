@@ -106,5 +106,51 @@ namespace BLL_62_BP
 
             return multas;
         }
+
+        public void GenerarMultasPorDevolucion_62_BP(
+            PrestamoBE_62_BP prestamo,
+            List<DetallePrestamoBE_62_BP> detalles)
+        {
+            if (prestamo == null || detalles == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            foreach (DetallePrestamoBE_62_BP detalle in detalles)
+            {
+                if (detalle.perdido_62_BP)
+                {
+                    MultaBE_62_BP multaLibroPerdido = new MultaBE_62_BP
+                    {
+                        id_prestamo_62_BP = prestamo.id_prestamo_62_BP,
+                        monto_62_BP = 20000,
+                        pagada_62_BP = false,
+                        motivo_62_BP = "Libro perdido. ID libro: " + detalle.id_libro_62_BP
+                    };
+
+                    if (AgregarMulta_62_BP(multaLibroPerdido) <= 0)
+                    {
+                        throw new Exception("No se pudo generar la multa por libro perdido.");
+                    }
+                }
+            }
+
+            int diasRetraso = (DateTime.Now.Date - prestamo.fecha_limite_62_BP.Date).Days;
+            if (diasRetraso > 0)
+            {
+                MultaBE_62_BP multaRetraso = new MultaBE_62_BP
+                {
+                    id_prestamo_62_BP = prestamo.id_prestamo_62_BP,
+                    monto_62_BP = diasRetraso * 500,
+                    pagada_62_BP = false,
+                    motivo_62_BP = "Devolución fuera de término. Días de retraso: " + diasRetraso
+                };
+
+                if (AgregarMulta_62_BP(multaRetraso) <= 0)
+                {
+                    throw new Exception("No se pudo generar la multa por devolución fuera de término.");
+                }
+            }
+        }
     }
 }
