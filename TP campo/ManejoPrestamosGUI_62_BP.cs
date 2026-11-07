@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class ManejoPrestamosGUI_62_BP : Form
+    public partial class ManejoPrestamosGUI_62_BP : LocalizableForm_62_BP
     {
         private readonly PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
         private readonly DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
@@ -40,29 +41,29 @@ namespace TP_campo
             dataGridViewPrestamosFiltrados.ReadOnly = true;
             dataGridViewPrestamosFiltrados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            dataGridViewPrestamosFiltrados.Columns.Add("colIdPrestamo", "Num. Préstamo");
-            dataGridViewPrestamosFiltrados.Columns.Add("colDni", "DNI Lector");
-            dataGridViewPrestamosFiltrados.Columns.Add("colFechaPrestamo", "Fecha Préstamo");
-            dataGridViewPrestamosFiltrados.Columns.Add("colFechaLimite", "Fecha Límite");
-            dataGridViewPrestamosFiltrados.Columns.Add("colFinalizado", "Finalizado");
+            dataGridViewPrestamosFiltrados.Columns.Add("colIdPrestamo", Texto_62_BP("col_numero_prestamo", "Num. Préstamo"));
+            dataGridViewPrestamosFiltrados.Columns.Add("colDni", Texto_62_BP("col_dni_lector", "DNI Lector"));
+            dataGridViewPrestamosFiltrados.Columns.Add("colFechaPrestamo", Texto_62_BP("col_fecha_prestamo", "Fecha Préstamo"));
+            dataGridViewPrestamosFiltrados.Columns.Add("colFechaLimite", Texto_62_BP("col_fecha_limite", "Fecha Límite"));
+            dataGridViewPrestamosFiltrados.Columns.Add("colFinalizado", Texto_62_BP("col_finalizado", "Finalizado"));
 
             dataGridViewDetallePrestamo.AutoGenerateColumns = false;
             dataGridViewDetallePrestamo.AllowUserToAddRows = false;
             dataGridViewDetallePrestamo.ReadOnly = false;
             dataGridViewDetallePrestamo.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewDetallePrestamo.Columns.Add("colDetalleIdLibro", "ID Libro");
-            dataGridViewDetallePrestamo.Columns.Add("colDetalleIdPrestamo", "ID Préstamo");
+            dataGridViewDetallePrestamo.Columns.Add("colDetalleIdLibro", Texto_62_BP("col_detalle_id_libro", "ID Libro"));
+            dataGridViewDetallePrestamo.Columns.Add("colDetalleIdPrestamo", Texto_62_BP("col_detalle_id_prestamo", "ID Préstamo"));
             DataGridViewCheckBoxColumn columnaDevuelto = new DataGridViewCheckBoxColumn
             {
                 Name = "colDetalleDevuelto",
-                HeaderText = "Devuelto",
+                HeaderText = Texto_62_BP("col_detalle_devuelto", "Devuelto"),
                 TrueValue = true,
                 FalseValue = false
             };
             DataGridViewCheckBoxColumn columnaPerdido = new DataGridViewCheckBoxColumn
             {
                 Name = "colDetallePerdido",
-                HeaderText = "Perdido",
+                HeaderText = Texto_62_BP("col_detalle_perdido", "Perdido"),
                 TrueValue = true,
                 FalseValue = false
             };
@@ -83,7 +84,7 @@ namespace TP_campo
                 if (!int.TryParse(textoId, out id) || id <= 0)
                 {
                     buttonSeleccionarPrestamo.Enabled = false;
-                    MessageBox.Show("El número de préstamo debe ser un número entero positivo.");
+                    MessageBox.Show(Texto_62_BP("msg_numero_prestamo_invalido", "El número de préstamo debe ser un número entero positivo."));
                     return;
                 }
 
@@ -102,7 +103,7 @@ namespace TP_campo
             catch (Exception ex)
             {
                 buttonSeleccionarPrestamo.Enabled = false;
-                MessageBox.Show("No se pudieron buscar los préstamos: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_prestamos_busqueda_error", "No se pudieron buscar los préstamos: {0}", ex.Message));
             }
         }
 
@@ -127,7 +128,9 @@ namespace TP_campo
                 fila.Cells["colDni"].Value = prestamo.dni_lector_62_BP;
                 fila.Cells["colFechaPrestamo"].Value = prestamo.fecha_prestamo_62_BP.ToString("dd/MM/yyyy HH:mm");
                 fila.Cells["colFechaLimite"].Value = prestamo.fecha_limite_62_BP.ToString("dd/MM/yyyy HH:mm");
-                fila.Cells["colFinalizado"].Value = prestamo.finalizado_62_BP ? "Sí" : "No";
+                fila.Cells["colFinalizado"].Value = prestamo.finalizado_62_BP
+                    ? Texto_62_BP("estado_si", "Sí")
+                    : Texto_62_BP("estado_no", "No");
             }
 
             dataGridViewPrestamosFiltrados.ClearSelection();
@@ -156,7 +159,7 @@ namespace TP_campo
 
             _prestamoSeleccionadoFinalizado_62_BP = string.Equals(
                 Convert.ToString(dataGridViewPrestamosFiltrados.SelectedRows[0].Cells["colFinalizado"].Value),
-                "Sí",
+                Texto_62_BP("estado_si", "Sí"),
                 StringComparison.OrdinalIgnoreCase);
             dataGridViewDetallePrestamo.ReadOnly = _prestamoSeleccionadoFinalizado_62_BP;
 
@@ -169,7 +172,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudieron buscar los libros del préstamo: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_detalle_prestamo_busqueda_error", "No se pudieron buscar los libros del préstamo: {0}", ex.Message));
             }
         }
 
@@ -264,7 +267,7 @@ namespace TP_campo
                 PrestamoBE_62_BP prestamo = _prestamoBLL_62_BP.BuscarPrestamo_62_BP(id: idPrestamo);
                 if (prestamo == null)
                 {
-                    throw new Exception("No se encontró el préstamo seleccionado.");
+                    throw new Exception(Texto_62_BP("msg_prestamo_no_encontrado", "No se encontró el préstamo seleccionado."));
                 }
 
                 List<DetallePrestamoBE_62_BP> detallesDevueltos = new List<DetallePrestamoBE_62_BP>();
@@ -284,14 +287,14 @@ namespace TP_campo
 
                     if (!_detallePrestamoBLL_62_BP.ModificarDetallePrestamo_62_BP(detalle))
                     {
-                        throw new Exception("No se pudo actualizar el detalle del préstamo.");
+                        throw new Exception(Texto_62_BP("msg_detalle_prestamo_actualizacion_error", "No se pudo actualizar el detalle del préstamo."));
                     }
 
                     if (devuelto)
                     {
                         if (_libroBLL_62_BP.MarcarDisponible_62_BP(detalle.id_libro_62_BP) <= 0)
                         {
-                            throw new Exception("No se pudo marcar el libro como disponible.");
+                            throw new Exception(Texto_62_BP("msg_libro_disponible_error", "No se pudo marcar el libro como disponible."));
                         }
                     }
                     // Si el libro fue perdido, no se modifica: permanece prestado.
@@ -303,10 +306,10 @@ namespace TP_campo
 
                 if (_prestamoBLL_62_BP.FinalizarPrestamo_62_BP(idPrestamo) <= 0)
                 {
-                    throw new Exception("No se pudo finalizar el préstamo.");
+                    throw new Exception(Texto_62_BP("msg_prestamo_finalizacion_error", "No se pudo finalizar el préstamo."));
                 }
 
-                MessageBox.Show("Préstamo devuelto correctamente.");
+                MessageBox.Show(Texto_62_BP("msg_prestamo_devuelto", "Préstamo devuelto correctamente."));
                 textBoxDNI.Clear();
                 textBoxNumeroPrestamo.Clear();
                 dataGridViewPrestamosFiltrados.Rows.Clear();
@@ -326,7 +329,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo devolver el préstamo: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_prestamo_devolucion_error", "No se pudo devolver el préstamo: {0}", ex.Message));
             }
         }
 

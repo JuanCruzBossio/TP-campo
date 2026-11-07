@@ -98,7 +98,8 @@ namespace TP_campo
             LectorBE_62_BP lectorExistente = _lectorBLL_62_BP.BuscarLector_62_BP(dni: dni);
             if (lectorExistente != null)
             {
-                MostrarMensaje_62_BP("msg_error_lector_existente", string.Format("Ya existe un lector registrado con el DNI: {0}", dni));
+                MessageBox.Show(
+                    TextoFormato_62_BP("msg_error_lector_existente", "Ya existe un lector registrado con el DNI: {0}", dni));
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
                 return;
@@ -130,7 +131,8 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MostrarMensaje_62_BP("msg_error_registro_detalle", "Error al registrar el lector: " + ex.Message);
+                MessageBox.Show(
+                    TextoFormato_62_BP("msg_error_registro_detalle", "Error al registrar el lector: {0}", ex.Message));
             }
         }
 

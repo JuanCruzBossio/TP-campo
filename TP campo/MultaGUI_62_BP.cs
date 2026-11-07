@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using TP_campo_62_BP;
 
 namespace TP_campo
 {
-    public partial class MultaGUI_62_BP : Form
+    public partial class MultaGUI_62_BP : LocalizableForm_62_BP
     {
         private readonly MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
 
@@ -60,13 +61,13 @@ namespace TP_campo
 
         private void buttonBuscarMultas_Click(object sender, EventArgs e)
         {
-            int? idMulta = ObtenerIdOpcional(textBoxNumeroMulta.Text, "multa");
+            int? idMulta = ObtenerIdOpcional(textBoxNumeroMulta.Text, Texto_62_BP("campo_multa", "multa"));
             if (textBoxNumeroMulta.Text.Trim().Length > 0 && !idMulta.HasValue)
             {
                 return;
             }
 
-            int? idPrestamo = ObtenerIdOpcional(textBoxNumPrestamo.Text, "préstamo");
+            int? idPrestamo = ObtenerIdOpcional(textBoxNumPrestamo.Text, Texto_62_BP("campo_prestamo", "préstamo"));
             if (textBoxNumPrestamo.Text.Trim().Length > 0 && !idPrestamo.HasValue)
             {
                 return;
@@ -89,14 +90,16 @@ namespace TP_campo
                     fila.Cells["colIdPrestamo"].Value = multa.id_prestamo_62_BP;
                     fila.Cells["colDni"].Value = multa.dni_lector_62_BP;
                     fila.Cells["colMonto"].Value = multa.monto_62_BP;
-                    fila.Cells["colPagada"].Value = multa.pagada_62_BP ? "Sí" : "No";
+                    fila.Cells["colPagada"].Value = multa.pagada_62_BP
+                        ? Texto_62_BP("estado_si", "Sí")
+                        : Texto_62_BP("estado_no", "No");
                     fila.Cells["colMotivo"].Value = multa.motivo_62_BP;
                 }
                 ActualizarBotonPagarMulta();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudieron buscar las multas: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_multa_busqueda_error", "No se pudieron buscar las multas: {0}", ex.Message));
             }
         }
 
@@ -116,7 +119,7 @@ namespace TP_campo
 
             object pagada = dataGridView1.SelectedRows[0].Cells["colPagada"].Value;
             buttonPagarMulta.Enabled = string.Equals(
-                Convert.ToString(pagada), "No", StringComparison.OrdinalIgnoreCase);
+                Convert.ToString(pagada), Texto_62_BP("estado_no", "No"), StringComparison.OrdinalIgnoreCase);
         }
 
         private void buttonPagarMulta_Click(object sender, EventArgs e)
@@ -140,10 +143,10 @@ namespace TP_campo
             {
                 if (_multaBLL_62_BP.ModificarMulta_62_BP(multa) <= 0)
                 {
-                    throw new Exception("No se pudo actualizar el estado de la multa.");
+                    throw new Exception(Texto_62_BP("msg_multa_actualizacion_error", "No se pudo actualizar el estado de la multa."));
                 }
 
-                MessageBox.Show("Multa pagada correctamente.");
+                MessageBox.Show(Texto_62_BP("msg_multa_pagada", "Multa pagada correctamente."));
                 textBoxNumeroMulta.Clear();
                 textBoxNumPrestamo.Clear();
                 textBoxDNI.Clear();
@@ -152,7 +155,7 @@ namespace TP_campo
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo pagar la multa: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_multa_pago_error", "No se pudo pagar la multa: {0}", ex.Message));
             }
         }
 
@@ -166,7 +169,7 @@ namespace TP_campo
             int id;
             if (!int.TryParse(texto.Trim(), out id) || id <= 0)
             {
-                MessageBox.Show("El número de " + nombreCampo + " debe ser un número entero positivo.");
+                MessageBox.Show(TextoFormato_62_BP("msg_numero_entero_positivo", "El número de {0} debe ser un número entero positivo.", nombreCampo));
                 return null;
             }
 

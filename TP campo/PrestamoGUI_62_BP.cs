@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using BE_62_BP;
 using BLL_62_BP;
 using SEG_62_BP;
@@ -26,6 +28,7 @@ namespace TP_campo_62_BP
 
         private const int LIMITE_PRESTAMOS = 5;
         private bool dniValidado_62_BP = false;
+        private LectorBE_62_BP _lectorActual_62_BP;
 
         public PrestamoGUI_62_BP()
         {
@@ -133,9 +136,9 @@ namespace TP_campo_62_BP
 
             if (totalDespues > LIMITE_PRESTAMOS)
             {
-                MostrarMensaje_62_BP("msg_limite_superado",
-                    string.Format("No se puede agregar este libro. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
-                        prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
+                MessageBox.Show(TextoFormato_62_BP("msg_limite_superado",
+                    "No se puede agregar este libro. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
+                    prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
                 return;
             }
 
@@ -165,9 +168,9 @@ namespace TP_campo_62_BP
 
             if (totalDespues > LIMITE_PRESTAMOS)
             {
-                MostrarMensaje_62_BP("msg_limite_superado",
-                    string.Format("No se puede registrar el prestamo. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
-                        prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
+                MessageBox.Show(TextoFormato_62_BP("msg_limite_superado",
+                    "No se puede registrar el prestamo. El lector ya tiene {0} libros prestados y selecciono {1} mas. El maximo es {2}.",
+                    prestamosActivos, librosSeleccionados, LIMITE_PRESTAMOS));
                 return;
             }
 
@@ -212,6 +215,8 @@ namespace TP_campo_62_BP
 
                 _prestamoBLL_62_BP.MarcarLibrosPrestados_62_BP(idPrestamo);
 
+                GuardarComprobantePrestamo_62_BP(idPrestamo, prestamo);
+
                 MostrarMensaje_62_BP("msg_prestamo_exitoso", "Prestamo registrado con exito.");
 
                 dataGridViewLibrosSeleccion.Rows.Clear();
@@ -223,12 +228,13 @@ namespace TP_campo_62_BP
                 textBoxISBN.Clear();
                 textBoxDNI.ReadOnly = false;
                 dniValidado_62_BP = false;
+                _lectorActual_62_BP = null;
                 DeshabilitarFiltros();
                 ActualizarBotonRegistrarPrestamo();
             }
             catch (Exception ex)
             {
-                MostrarMensaje_62_BP("msg_error_prestamo", "Error al registrar el prestamo: " + ex.Message);
+                MessageBox.Show(TextoFormato_62_BP("msg_error_prestamo", "Error al registrar el prestamo: {0}", ex.Message));
             }
         }
 
@@ -404,9 +410,46 @@ namespace TP_campo_62_BP
                     resultado.PrestamosActivos));
 
             // Bloquear el DNI y habilitar los filtros
+            _lectorActual_62_BP = resultado.Lector;
             dniValidado_62_BP = true;
             textBoxDNI.ReadOnly = true;
             HabilitarFiltros();
+        }
+
+        private void GuardarComprobantePrestamo_62_BP(int idPrestamo, PrestamoBE_62_BP prestamo)
+        {
+            SaveFileDialog dialogo = new SaveFileDialog
+            {
+                Filter = Texto_62_BP("dialog_filtro_xml", "Archivo XML (*.xml)|*.xml"),
+                Title = Texto_62_BP("dialog_guardar_comprobante", "Guardar comprobante de préstamo"),
+                FileName = string.Format("ComprobanteN_{0}.xml", idPrestamo),
+                AddExtension = true,
+                DefaultExt = "xml"
+            };
+
+            if (dialogo.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            XElement comprobante = new XElement("ComprobantePrestamo",
+                new XElement("Lector",
+                    new XElement("Nombre", _lectorActual_62_BP == null ? string.Empty : _lectorActual_62_BP.nombre_62_BP),
+                    new XElement("Apellido", _lectorActual_62_BP == null ? string.Empty : _lectorActual_62_BP.apellido_62_BP),
+                    new XElement("DNI", prestamo.dni_lector_62_BP)),
+                new XElement("NumeroPrestamo", idPrestamo),
+                new XElement("Ejemplares",
+                    dataGridViewLibrosSeleccion.Rows
+                        .Cast<DataGridViewRow>()
+                        .Where(fila => !fila.IsNewRow)
+                        .Select(fila => new XElement("Libro",
+                            new XElement("Titulo", Convert.ToString(fila.Cells["colTitulo"].Value)),
+                            new XElement("Autor", Convert.ToString(fila.Cells["colAutor"].Value)),
+                            new XElement("ISBN", Convert.ToString(fila.Cells["colIsbn"].Value)),
+                            new XElement("Volumen", Convert.ToString(fila.Cells["colVol"].Value))))),
+                new XElement("FechaLimiteDevolucion", prestamo.fecha_limite_62_BP.ToString("yyyy-MM-dd")));
+
+            comprobante.Save(dialogo.FileName);
         }
 
         // -------------------------------------------------------------------------

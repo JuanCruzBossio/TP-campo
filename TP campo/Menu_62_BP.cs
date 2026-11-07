@@ -93,6 +93,8 @@ namespace TP_campo_62_BP
             carritoToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_solicitar", "Solicitar");
             facturarToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_devolver", "Devolver");
             despacharToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_multas", "Multas");
+            lectoresToolStripMenuItem.Text = Texto_62_BP("maestros_lectores", "Lectores");
+            agregarLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_agregar", "Agregar");
         }
 
         private void ActualizarTextoUsuarioLogueado_62_BP()
