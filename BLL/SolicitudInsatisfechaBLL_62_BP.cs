@@ -44,13 +44,13 @@ namespace BLL_62_BP
             return filasAfectadas;
         }
 
-        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(int? id = null, int idLibro = 0)
+        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(int? id = null, int idLibro = 0, string dniLector = null)
         {
             SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha = null;
 
             try
             {
-                solicitudInsatisfecha = _solicitudInsatisfechaMapper_62_BP.BuscarSolicitudInsatisfecha_62_BP(id, idLibro);
+                solicitudInsatisfecha = _solicitudInsatisfechaMapper_62_BP.BuscarSolicitudInsatisfecha_62_BP(id, idLibro, dniLector);
             }
             catch
             {
