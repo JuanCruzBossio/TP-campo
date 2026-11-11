@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using BE_62_BP;
 using BLL_62_BP;
 using TP_campo_62_BP;
@@ -302,12 +303,29 @@ namespace TP_campo
                     detallesDevueltos.Add(detalle);
                 }
 
+                List<MultaBE_62_BP> multasAnteriores =
+                    _multaBLL_62_BP.BuscarMultasPorIdPrestamo_62_BP(idPrestamo);
+
                 int multasGeneradas = _multaBLL_62_BP.GenerarMultasPorDevolucion_62_BP(prestamo, detallesDevueltos);
+
+                List<MultaBE_62_BP> multasAplicadas = new List<MultaBE_62_BP>();
+                if (multasGeneradas > 0)
+                {
+                    HashSet<int> idsMultasAnteriores = new HashSet<int>(
+                        multasAnteriores.Select(multa => multa.id_multa_62_BP));
+
+                    multasAplicadas = _multaBLL_62_BP
+                        .BuscarMultasPorIdPrestamo_62_BP(idPrestamo)
+                        .Where(multa => !idsMultasAnteriores.Contains(multa.id_multa_62_BP))
+                        .ToList();
+                }
 
                 if (_prestamoBLL_62_BP.FinalizarPrestamo_62_BP(idPrestamo) <= 0)
                 {
                     throw new Exception(Texto_62_BP("msg_prestamo_finalizacion_error", "No se pudo finalizar el préstamo."));
                 }
+
+                GuardarComprobanteDevolucion_62_BP(prestamo, detallesDevueltos, multasAplicadas);
 
                 MessageBox.Show(Texto_62_BP("msg_prestamo_devuelto", "Préstamo devuelto correctamente."));
                 textBoxDNI.Clear();
@@ -331,6 +349,78 @@ namespace TP_campo
             {
                 MessageBox.Show(TextoFormato_62_BP("msg_prestamo_devolucion_error", "No se pudo devolver el préstamo: {0}", ex.Message));
             }
+        }
+
+        private void GuardarComprobanteDevolucion_62_BP(
+            PrestamoBE_62_BP prestamo,
+            List<DetallePrestamoBE_62_BP> detalles,
+            List<MultaBE_62_BP> multasAplicadas)
+        {
+            SaveFileDialog dialogo = new SaveFileDialog
+            {
+                Filter = Texto_62_BP("dialog_filtro_xml", "Archivo XML (*.xml)|*.xml"),
+                Title = Texto_62_BP("dialog_guardar_comprobante_devolucion", "Guardar comprobante de devolución"),
+                FileName = string.Format("ComprobanteDevolucionN_{0}.xml", prestamo.id_prestamo_62_BP),
+                AddExtension = true,
+                DefaultExt = "xml"
+            };
+
+            if (dialogo.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            List<XElement> librosDevueltos = detalles
+                .Where(detalle => detalle.devuelto_62_BP)
+                .Select(CrearElementoLibro_62_BP)
+                .ToList();
+
+            List<XElement> librosPerdidos = detalles
+                .Where(detalle => detalle.perdido_62_BP)
+                .Select(CrearElementoLibro_62_BP)
+                .ToList();
+
+            XElement comprobante = new XElement("ComprobanteDevolucion",
+                new XElement("Prestamo",
+                    new XElement("NumeroPrestamo", prestamo.id_prestamo_62_BP),
+                    new XElement("DNILector", prestamo.dni_lector_62_BP),
+                    new XElement("FechaPrestamo", prestamo.fecha_prestamo_62_BP.ToString("yyyy-MM-dd HH:mm:ss")),
+                    new XElement("FechaLimiteDevolucion", prestamo.fecha_limite_62_BP.ToString("yyyy-MM-dd HH:mm:ss")),
+                    new XElement("FechaDevolucion", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),
+                    new XElement("Finalizado", true)),
+                new XElement("LibrosDevueltos",
+                    new XAttribute("Cantidad", librosDevueltos.Count),
+                    librosDevueltos),
+                new XElement("LibrosPerdidos",
+                    new XAttribute("Cantidad", librosPerdidos.Count),
+                    librosPerdidos));
+
+            if (multasAplicadas != null && multasAplicadas.Count > 0)
+            {
+                comprobante.Add(new XElement("MultasAplicadas",
+                    new XAttribute("Cantidad", multasAplicadas.Count),
+                    new XElement("MontoTotal", multasAplicadas.Sum(multa => multa.monto_62_BP)),
+                    multasAplicadas.Select(multa => new XElement("Multa",
+                        new XElement("NumeroMulta", multa.id_multa_62_BP),
+                        new XElement("Motivo", multa.motivo_62_BP),
+                        new XElement("Monto", multa.monto_62_BP),
+                        new XElement("Pagada", multa.pagada_62_BP)))));
+            }
+
+            comprobante.Save(dialogo.FileName);
+        }
+
+        private XElement CrearElementoLibro_62_BP(DetallePrestamoBE_62_BP detalle)
+        {
+            LibroBE_62_BP libro = _libroBLL_62_BP.BuscarLibro_62_BP(id: detalle.id_libro_62_BP);
+
+            return new XElement("Libro",
+                new XElement("IdLibro", detalle.id_libro_62_BP),
+                new XElement("Titulo", libro == null ? string.Empty : libro.titulo_62_BP),
+                new XElement("Autor", libro == null ? string.Empty : libro.autor_62_BP),
+                new XElement("ISBN", libro == null ? string.Empty : libro.isbn_62_BP),
+                new XElement("Genero", libro == null ? string.Empty : libro.genero_62_BP),
+                new XElement("Volumen", libro == null ? 0 : libro.numero_volumen_62_BP));
         }
 
         private bool TodosLosDetallesTienenEstado()

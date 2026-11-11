@@ -370,6 +370,7 @@
   "msg_confirmar_libro_no_registrado": "No existe un libro para esos filtros. ¿Desea agregarlo?",
   "titulo_confirmacion": "Confirmacion",
   "dialog_guardar_comprobante": "Guardar comprobante de prestamo",
+  "dialog_guardar_comprobante_devolucion": "Guardar comprobante de devolucion",
   "MultaGUI_62_BP": "Multas",
   "labelNumMulta": "Num. Multa",
   "MultaGUI_62_BP.labelDNI": "DNI Lector",

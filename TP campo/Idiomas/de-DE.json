@@ -369,6 +369,7 @@
   "msg_confirmar_libro_no_registrado": "Fur diese Filter ist kein Buch vorhanden. Mochten Sie es hinzufugen?",
   "titulo_confirmacion": "Bestatigung",
   "dialog_guardar_comprobante": "Darlehensbeleg speichern",
+  "dialog_guardar_comprobante_devolucion": "Ruckgabebeleg speichern",
   "MultaGUI_62_BP": "Mahngebuhren",
   "labelNumMulta": "Gebuhren-Nr.",
   "MultaGUI_62_BP.labelDNI": "Lektor-ID",

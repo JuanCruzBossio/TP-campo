@@ -369,6 +369,7 @@
   "msg_confirmar_libro_no_registrado": "No book exists for those filters. Do you want to add it?",
   "titulo_confirmacion": "Confirmation",
   "dialog_guardar_comprobante": "Save loan receipt",
+  "dialog_guardar_comprobante_devolucion": "Save return receipt",
   "MultaGUI_62_BP": "Fines",
   "labelNumMulta": "Fine No.",
   "MultaGUI_62_BP.labelDNI": "Reader ID",
