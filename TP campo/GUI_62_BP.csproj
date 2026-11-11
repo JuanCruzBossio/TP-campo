@@ -103,6 +103,12 @@
     <Compile Include="Login_62_BP.Designer.cs">
       <DependentUpon>Login_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="LibroGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LibroGUI_62_BP.Designer.cs">
+      <DependentUpon>LibroGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="MultaGUI_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>

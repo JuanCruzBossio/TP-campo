@@ -315,7 +315,7 @@ namespace TP_campo_62_BP
                 DialogResult confirmarAlta = MessageBox.Show(
                     Texto_62_BP(
                         "msg_confirmar_libro_no_registrado",
-                        "No se encontro un libro con los filtros ingresados. ¿Desea agregarlo usando esos datos y registrar una solicitud insatisfecha?"),
+                        "No existe un libro para esos filtros. ¿Desea agregarlo?"),
                     Texto_62_BP("titulo_confirmacion", "Confirmacion"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -326,35 +326,28 @@ namespace TP_campo_62_BP
                     return;
                 }
 
-                LibroBE_62_BP libroNuevo = new LibroBE_62_BP
-                {
-                    titulo_62_BP = titulo,
-                    autor_62_BP = autor,
-                    isbn_62_BP = isbn,
-                    genero_62_BP = genero,
-                    numero_volumen_62_BP = 1,
-                    prestado_62_BP = true
-                };
+                LibroGUI_62_BP libroForm = new LibroGUI_62_BP(
+                    titulo,
+                    autor,
+                    isbn,
+                    genero,
+                    true);
+                libroForm.StartPosition = FormStartPosition.CenterParent;
 
-                int idLibroNuevo = _libroBLL_62_BP.AgregarLibro_62_BP(libroNuevo);
-
-                if (idLibroNuevo <= 0)
+                if (libroForm.ShowDialog(this) != DialogResult.OK)
                 {
-                    throw new Exception("No se pudo registrar el libro solicitado.");
+                    LlenarDataGridViewLibrosFiltrados(new List<LibroBE_62_BP>());
+                    return;
                 }
 
                 SolicitudInsatisfechaBE_62_BP solicitudNueva = new SolicitudInsatisfechaBE_62_BP
                 {
-                    id_libro_62_BP = idLibroNuevo,
+                    id_libro_62_BP = libroForm.IdLibroRegistrado_62_BP,
                     dni_lector_62_BP = textBoxDNI.Text.Trim(),
                     fecha_62_BP = DateTime.Now
                 };
 
                 _solicitudInsatisfechaBLL_62_BP.AgregarSolicitudInsatisfecha_62_BP(solicitudNueva);
-
-                MostrarMensaje_62_BP(
-                    "msg_libro_no_registrado",
-                    "El libro no estaba registrado. Se agrego y se registro la solicitud insatisfecha.");
 
                 librosCoincidentes = new List<LibroBE_62_BP>();
             }
