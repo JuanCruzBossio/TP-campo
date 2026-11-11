@@ -18,6 +18,7 @@ namespace TP_campo
             InitializeComponent();
             buttonBuscarSolicitudes.Click += buttonBuscarSolicitudes_Click;
             buttonAceptarSolicitud.Click += buttonAceptarSolicitud_Click;
+            buttonCompletarSolicitud.Click += buttonCompletarSolicitud_Click;
             dataGridViewSolicitudes.SelectionChanged += dataGridViewSolicitudes_SelectionChanged;
         }
 
@@ -77,6 +78,12 @@ namespace TP_campo
                 fila.Cells["colAceptada"].Value = solicitud.aceptada_62_BP
                     ? Texto_62_BP("estado_si", "Sí")
                     : Texto_62_BP("estado_no", "No");
+                fila.Cells["colCompletada"].Value = solicitud.completada_62_BP
+                    ? Texto_62_BP("estado_si", "Sí")
+                    : Texto_62_BP("estado_no", "No");
+                fila.Cells["colFechaCompletada"].Value = solicitud.fecha_completada_62_BP.HasValue
+                    ? solicitud.fecha_completada_62_BP.Value.ToString("dd/MM/yyyy HH:mm")
+                    : string.Empty;
             }
 
             dataGridViewSolicitudes.ClearSelection();
@@ -91,6 +98,7 @@ namespace TP_campo
         private void ActualizarBotones_62_BP()
         {
             buttonAceptarSolicitud.Enabled = false;
+            buttonCompletarSolicitud.Enabled = false;
 
             if (dataGridViewSolicitudes.SelectedRows.Count != 1)
             {
@@ -101,6 +109,9 @@ namespace TP_campo
                 dataGridViewSolicitudes.SelectedRows[0].Tag as SolicitudInsatisfechaBE_62_BP;
 
             buttonAceptarSolicitud.Enabled = solicitud != null && !solicitud.aceptada_62_BP;
+            buttonCompletarSolicitud.Enabled = solicitud != null
+                && solicitud.aceptada_62_BP
+                && !solicitud.completada_62_BP;
         }
 
         private void buttonAceptarSolicitud_Click(object sender, EventArgs e)
@@ -145,6 +156,81 @@ namespace TP_campo
                 MessageBox.Show(TextoFormato_62_BP(
                     "msg_solicitud_estado_error",
                     "No se pudo actualizar el estado de la solicitud: {0}",
+                    ex.Message));
+            }
+        }
+
+        private void buttonCompletarSolicitud_Click(object sender, EventArgs e)
+        {
+            CompletarSolicitud_62_BP();
+        }
+
+        private void CompletarSolicitud_62_BP()
+        {
+            if (dataGridViewSolicitudes.SelectedRows.Count != 1)
+            {
+                return;
+            }
+
+            DataGridViewRow fila = dataGridViewSolicitudes.SelectedRows[0];
+            SolicitudInsatisfechaBE_62_BP solicitud = fila.Tag as SolicitudInsatisfechaBE_62_BP;
+            if (solicitud == null || !solicitud.aceptada_62_BP || solicitud.completada_62_BP)
+            {
+                return;
+            }
+
+            solicitud.completada_62_BP = true;
+            solicitud.fecha_completada_62_BP = DateTime.Now;
+            bool libroMarcadoDisponible = false;
+            bool solicitudActualizada = false;
+
+            try
+            {
+                if (_libroBLL_62_BP.MarcarDisponible_62_BP(solicitud.id_libro_62_BP) <= 0)
+                {
+                    throw new Exception(Texto_62_BP(
+                        "msg_libro_solicitud_disponible_error",
+                        "No se pudo marcar el libro solicitado como disponible."));
+                }
+
+                libroMarcadoDisponible = true;
+
+                if (_solicitudInsatisfechaBLL_62_BP.ModificarSolicitudInsatisfecha_62_BP(solicitud) <= 0)
+                {
+                    throw new Exception(Texto_62_BP(
+                        "msg_solicitud_completado_error",
+                        "No se pudo completar la solicitud."));
+                }
+
+                solicitudActualizada = true;
+
+                fila.Cells["colCompletada"].Value = Texto_62_BP("estado_si", "Sí");
+                fila.Cells["colFechaCompletada"].Value =
+                    solicitud.fecha_completada_62_BP.Value.ToString("dd/MM/yyyy HH:mm");
+                ActualizarBotones_62_BP();
+
+                MostrarMensaje_62_BP(
+                    "msg_solicitud_completada",
+                    "Solicitud completada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                if (libroMarcadoDisponible && !solicitudActualizada)
+                {
+                    try
+                    {
+                        _libroBLL_62_BP.MarcarPrestado_62_BP(solicitud.id_libro_62_BP);
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                solicitud.completada_62_BP = false;
+                solicitud.fecha_completada_62_BP = null;
+                MessageBox.Show(TextoFormato_62_BP(
+                    "msg_solicitud_completar_estado_error",
+                    "No se pudo completar la solicitud: {0}",
                     ex.Message));
             }
         }

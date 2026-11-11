@@ -20,6 +20,7 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
             cambiarIdiomaToolStripMenuItem.Click += cambiarIdiomaToolStripMenuItem_Click;
+            solicitarTextoToolStripMenuItem.Click += solicitarTextoToolStripMenuItem_Click;
             manejarSolicitudesToolStripMenuItem.Click += manejarSolicitudesToolStripMenuItem_Click;
         }
         //Variables
@@ -247,6 +248,13 @@ namespace TP_campo_62_BP
             SolicitudInsatisfechaGUI_62_BP solicitudesForm = new SolicitudInsatisfechaGUI_62_BP();
             solicitudesForm.MdiParent = this;
             solicitudesForm.Show();
+        }
+
+        private void solicitarTextoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LibroGUI_62_BP libroForm = new LibroGUI_62_BP();
+            libroForm.MdiParent = this;
+            libroForm.Show();
         }
     }
 }

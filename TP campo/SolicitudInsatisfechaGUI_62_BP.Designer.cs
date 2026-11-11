@@ -18,7 +18,10 @@ namespace TP_campo
         private System.Windows.Forms.DataGridViewTextBoxColumn colDniSolicitante;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFechaSolicitud;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAceptada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCompletada;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFechaCompletada;
         private System.Windows.Forms.Button buttonAceptarSolicitud;
+        private System.Windows.Forms.Button buttonCompletarSolicitud;
 
         protected override void Dispose(bool disposing)
         {
@@ -46,7 +49,10 @@ namespace TP_campo
             this.colDniSolicitante = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFechaSolicitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAceptada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCompletada = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFechaCompletada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonAceptarSolicitud = new System.Windows.Forms.Button();
+            this.buttonCompletarSolicitud = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSolicitudes)).BeginInit();
             this.SuspendLayout();
             //
@@ -120,7 +126,9 @@ namespace TP_campo
             this.colAutorLibro,
             this.colDniSolicitante,
             this.colFechaSolicitud,
-            this.colAceptada});
+            this.colAceptada,
+            this.colCompletada,
+            this.colFechaCompletada});
             this.dataGridViewSolicitudes.Location = new System.Drawing.Point(25, 169);
             this.dataGridViewSolicitudes.MultiSelect = false;
             this.dataGridViewSolicitudes.Name = "dataGridViewSolicitudes";
@@ -171,6 +179,18 @@ namespace TP_campo
             this.colAceptada.Name = "colAceptada";
             this.colAceptada.ReadOnly = true;
             //
+            // colCompletada
+            //
+            this.colCompletada.HeaderText = "Completada";
+            this.colCompletada.Name = "colCompletada";
+            this.colCompletada.ReadOnly = true;
+            //
+            // colFechaCompletada
+            //
+            this.colFechaCompletada.HeaderText = "Fecha completada";
+            this.colFechaCompletada.Name = "colFechaCompletada";
+            this.colFechaCompletada.ReadOnly = true;
+            //
             // buttonAceptarSolicitud
             //
             this.buttonAceptarSolicitud.Enabled = false;
@@ -181,11 +201,22 @@ namespace TP_campo
             this.buttonAceptarSolicitud.Text = "Aceptar solicitud";
             this.buttonAceptarSolicitud.UseVisualStyleBackColor = true;
             //
+            // buttonCompletarSolicitud
+            //
+            this.buttonCompletarSolicitud.Enabled = false;
+            this.buttonCompletarSolicitud.Location = new System.Drawing.Point(305, 327);
+            this.buttonCompletarSolicitud.Name = "buttonCompletarSolicitud";
+            this.buttonCompletarSolicitud.Size = new System.Drawing.Size(163, 23);
+            this.buttonCompletarSolicitud.TabIndex = 9;
+            this.buttonCompletarSolicitud.Text = "Completar solicitud";
+            this.buttonCompletarSolicitud.UseVisualStyleBackColor = true;
+            //
             // SolicitudInsatisfechaGUI_62_BP
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 362);
+            this.Controls.Add(this.buttonCompletarSolicitud);
             this.Controls.Add(this.buttonAceptarSolicitud);
             this.Controls.Add(this.dataGridViewSolicitudes);
             this.Controls.Add(this.buttonBuscarSolicitudes);

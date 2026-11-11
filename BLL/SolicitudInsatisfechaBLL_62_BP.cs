@@ -48,7 +48,8 @@ namespace BLL_62_BP
             int? id = null,
             int idLibro = 0,
             string dniLector = null,
-            bool? aceptada = null)
+            bool? aceptada = null,
+            bool? completada = null)
         {
             SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha = null;
 
@@ -58,7 +59,8 @@ namespace BLL_62_BP
                     id,
                     idLibro,
                     dniLector,
-                    aceptada);
+                    aceptada,
+                    completada);
             }
             catch
             {
@@ -72,7 +74,8 @@ namespace BLL_62_BP
             int? idSolicitud = null,
             int? idLibro = null,
             string dniLector = null,
-            bool? aceptada = null)
+            bool? aceptada = null,
+            bool? completada = null)
         {
             try
             {
@@ -80,7 +83,8 @@ namespace BLL_62_BP
                     idSolicitud,
                     idLibro,
                     dniLector,
-                    aceptada);
+                    aceptada,
+                    completada);
             }
             catch
             {

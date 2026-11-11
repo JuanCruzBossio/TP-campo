@@ -13,5 +13,7 @@ namespace BE_62_BP
         public string dni_lector_62_BP { get; set; }
         public DateTime fecha_62_BP { get; set; }
         public bool aceptada_62_BP { get; set; } = false;
+        public bool completada_62_BP { get; set; } = false;
+        public DateTime? fecha_completada_62_BP { get; set; }
     }
 }
