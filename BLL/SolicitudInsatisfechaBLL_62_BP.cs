@@ -44,13 +44,21 @@ namespace BLL_62_BP
             return filasAfectadas;
         }
 
-        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(int? id = null, int idLibro = 0, string dniLector = null)
+        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(
+            int? id = null,
+            int idLibro = 0,
+            string dniLector = null,
+            bool? aceptada = null)
         {
             SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha = null;
 
             try
             {
-                solicitudInsatisfecha = _solicitudInsatisfechaMapper_62_BP.BuscarSolicitudInsatisfecha_62_BP(id, idLibro, dniLector);
+                solicitudInsatisfecha = _solicitudInsatisfechaMapper_62_BP.BuscarSolicitudInsatisfecha_62_BP(
+                    id,
+                    idLibro,
+                    dniLector,
+                    aceptada);
             }
             catch
             {
@@ -58,6 +66,26 @@ namespace BLL_62_BP
             }
 
             return solicitudInsatisfecha;
+        }
+
+        public List<SolicitudInsatisfechaBE_62_BP> BuscarSolicitudesInsatisfechas_62_BP(
+            int? idSolicitud = null,
+            int? idLibro = null,
+            string dniLector = null,
+            bool? aceptada = null)
+        {
+            try
+            {
+                return _solicitudInsatisfechaMapper_62_BP.BuscarSolicitudesInsatisfechas_62_BP(
+                    idSolicitud,
+                    idLibro,
+                    dniLector,
+                    aceptada);
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar las solicitudes insatisfechas.");
+            }
         }
     }
 }

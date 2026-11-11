@@ -144,6 +144,12 @@
     <Compile Include="RolGUI_62_BP.Designer.cs">
       <DependentUpon>RolGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="SolicitudInsatisfechaGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SolicitudInsatisfechaGUI_62_BP.Designer.cs">
+      <DependentUpon>SolicitudInsatisfechaGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="UsuarioGUI_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>

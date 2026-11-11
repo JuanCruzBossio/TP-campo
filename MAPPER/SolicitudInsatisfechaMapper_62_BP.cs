@@ -16,13 +16,14 @@ namespace MAPPER_62_BP
 
         public int AgregarSolicitudInsatisfecha_62_BP(SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha)
         {
-            string query = "INSERT INTO SolicitudInsatisfecha_62_BP (id_libro_62_BP, dni_lector_62_BP, fecha_62_BP) VALUES (@idLibro, @dniLector, @fecha);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO SolicitudInsatisfecha_62_BP (id_libro_62_BP, dni_lector_62_BP, fecha_62_BP, aceptada_62_BP) VALUES (@idLibro, @dniLector, @fecha, @aceptada);SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] parametros =
             {
                 new SqlParameter("@idLibro", solicitudInsatisfecha.id_libro_62_BP),
                 new SqlParameter("@dniLector", solicitudInsatisfecha.dni_lector_62_BP),
-                new SqlParameter("@fecha", solicitudInsatisfecha.fecha_62_BP)
+                new SqlParameter("@fecha", solicitudInsatisfecha.fecha_62_BP),
+                new SqlParameter("@aceptada", solicitudInsatisfecha.aceptada_62_BP)
             };
 
             object resultado = _acceso_62_BP.escalar_62_BP(query, parametros);
@@ -31,22 +32,27 @@ namespace MAPPER_62_BP
 
         public int ModificarSolicitudInsatisfecha_62_BP(SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha)
         {
-            string query = "UPDATE SolicitudInsatisfecha_62_BP SET id_libro_62_BP = @idLibro, dni_lector_62_BP = @dniLector, fecha_62_BP = @fecha WHERE id_solicitud_62_BP = @id";
+            string query = "UPDATE SolicitudInsatisfecha_62_BP SET id_libro_62_BP = @idLibro, dni_lector_62_BP = @dniLector, fecha_62_BP = @fecha, aceptada_62_BP = @aceptada WHERE id_solicitud_62_BP = @id";
 
             SqlParameter[] parametros =
             {
                 new SqlParameter("@id", solicitudInsatisfecha.id_solicitud_62_BP),
                 new SqlParameter("@idLibro", solicitudInsatisfecha.id_libro_62_BP),
                 new SqlParameter("@dniLector", solicitudInsatisfecha.dni_lector_62_BP),
-                new SqlParameter("@fecha", solicitudInsatisfecha.fecha_62_BP)
+                new SqlParameter("@fecha", solicitudInsatisfecha.fecha_62_BP),
+                new SqlParameter("@aceptada", solicitudInsatisfecha.aceptada_62_BP)
             };
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
 
-        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(int? id = null, int idLibro = 0, string dniLector = null)
+        public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(
+            int? id = null,
+            int idLibro = 0,
+            string dniLector = null,
+            bool? aceptada = null)
         {
-            StringBuilder query = new StringBuilder("SELECT id_solicitud_62_BP, id_libro_62_BP, dni_lector_62_BP, fecha_62_BP FROM SolicitudInsatisfecha_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_solicitud_62_BP, id_libro_62_BP, dni_lector_62_BP, fecha_62_BP, aceptada_62_BP FROM SolicitudInsatisfecha_62_BP WHERE 1=1");
 
             List<SqlParameter> parametros = new List<SqlParameter>();
 
@@ -68,6 +74,12 @@ namespace MAPPER_62_BP
                 parametros.Add(new SqlParameter("@dniLector", dniLector));
             }
 
+            if (aceptada.HasValue)
+            {
+                query.Append(" AND aceptada_62_BP = @aceptada");
+                parametros.Add(new SqlParameter("@aceptada", aceptada.Value));
+            }
+
             DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
 
             if (tabla != null && tabla.Rows.Count > 0)
@@ -77,11 +89,71 @@ namespace MAPPER_62_BP
                     id_solicitud_62_BP = Convert.ToInt32(tabla.Rows[0]["id_solicitud_62_BP"]),
                     id_libro_62_BP = Convert.ToInt32(tabla.Rows[0]["id_libro_62_BP"]),
                     dni_lector_62_BP = tabla.Rows[0]["dni_lector_62_BP"].ToString(),
-                    fecha_62_BP = Convert.ToDateTime(tabla.Rows[0]["fecha_62_BP"])
+                    fecha_62_BP = Convert.ToDateTime(tabla.Rows[0]["fecha_62_BP"]),
+                    aceptada_62_BP = Convert.ToBoolean(tabla.Rows[0]["aceptada_62_BP"])
                 };
             }
 
             return null;
+        }
+
+        public List<SolicitudInsatisfechaBE_62_BP> BuscarSolicitudesInsatisfechas_62_BP(
+            int? idSolicitud = null,
+            int? idLibro = null,
+            string dniLector = null,
+            bool? aceptada = null)
+        {
+            StringBuilder query = new StringBuilder(
+                "SELECT id_solicitud_62_BP, id_libro_62_BP, dni_lector_62_BP, fecha_62_BP, aceptada_62_BP " +
+                "FROM SolicitudInsatisfecha_62_BP WHERE 1=1");
+
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (idSolicitud.HasValue)
+            {
+                query.Append(" AND id_solicitud_62_BP = @idSolicitud");
+                parametros.Add(new SqlParameter("@idSolicitud", idSolicitud.Value));
+            }
+
+            if (idLibro.HasValue)
+            {
+                query.Append(" AND id_libro_62_BP = @idLibro");
+                parametros.Add(new SqlParameter("@idLibro", idLibro.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(dniLector))
+            {
+                query.Append(" AND dni_lector_62_BP = @dniLector");
+                parametros.Add(new SqlParameter("@dniLector", dniLector));
+            }
+
+            if (aceptada.HasValue)
+            {
+                query.Append(" AND aceptada_62_BP = @aceptada");
+                parametros.Add(new SqlParameter("@aceptada", aceptada.Value));
+            }
+
+            query.Append(" ORDER BY id_solicitud_62_BP ASC");
+
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query.ToString(), parametros.ToArray());
+            List<SolicitudInsatisfechaBE_62_BP> solicitudes = new List<SolicitudInsatisfechaBE_62_BP>();
+
+            if (tabla != null)
+            {
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    solicitudes.Add(new SolicitudInsatisfechaBE_62_BP
+                    {
+                        id_solicitud_62_BP = Convert.ToInt32(fila["id_solicitud_62_BP"]),
+                        id_libro_62_BP = Convert.ToInt32(fila["id_libro_62_BP"]),
+                        dni_lector_62_BP = fila["dni_lector_62_BP"].ToString(),
+                        fecha_62_BP = Convert.ToDateTime(fila["fecha_62_BP"]),
+                        aceptada_62_BP = Convert.ToBoolean(fila["aceptada_62_BP"])
+                    });
+                }
+            }
+
+            return solicitudes;
         }
     }
 }

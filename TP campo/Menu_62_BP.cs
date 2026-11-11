@@ -20,6 +20,7 @@ namespace TP_campo_62_BP
         {
             InitializeComponent();
             cambiarIdiomaToolStripMenuItem.Click += cambiarIdiomaToolStripMenuItem_Click;
+            manejarSolicitudesToolStripMenuItem.Click += manejarSolicitudesToolStripMenuItem_Click;
         }
         //Variables
         private UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
@@ -239,6 +240,13 @@ namespace TP_campo_62_BP
             MultaGUI_62_BP multaForm = new MultaGUI_62_BP();
             multaForm.MdiParent = this;
             multaForm.Show();
+        }
+
+        private void manejarSolicitudesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SolicitudInsatisfechaGUI_62_BP solicitudesForm = new SolicitudInsatisfechaGUI_62_BP();
+            solicitudesForm.MdiParent = this;
+            solicitudesForm.Show();
         }
     }
 }

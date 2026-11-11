@@ -12,5 +12,6 @@ namespace BE_62_BP
         public int id_libro_62_BP { get; set; }
         public string dni_lector_62_BP { get; set; }
         public DateTime fecha_62_BP { get; set; }
+        public bool aceptada_62_BP { get; set; } = false;
     }
 }
