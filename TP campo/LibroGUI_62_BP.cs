@@ -9,7 +9,9 @@ namespace TP_campo
     public partial class LibroGUI_62_BP : LocalizableForm_62_BP
     {
         private LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
+        private SolicitudInsatisfechaBLL_62_BP _solicitudInsatisfechaBLL_62_BP = new SolicitudInsatisfechaBLL_62_BP();
         private bool _prestadoInicial_62_BP;
+        private string _dniLector_62_BP;
 
         public int IdLibroRegistrado_62_BP { get; private set; }
 
@@ -23,26 +25,28 @@ namespace TP_campo
             string autor,
             string isbn,
             string genero,
-            bool prestado) : this()
+            bool prestado,
+            string dniLector) : this()
         {
             txt_titulo.Text = titulo;
             txt_autor.Text = autor;
             txt_isbn.Text = isbn;
             txt_genero.Text = genero;
             _prestadoInicial_62_BP = prestado;
+            _dniLector_62_BP = dniLector;
         }
 
         protected override void TraducirFormulario_62_BP(SEG_62_BP.Observer.Idioma_62_BP idioma_62_BP)
         {
             base.TraducirFormulario_62_BP(idioma_62_BP);
 
-            Text = Texto_62_BP("titulo_agregar_libro", "Alta de Libro");
+            Text = Texto_62_BP("titulo_solicitud_libro", "Solicitud de libro");
             lbl_titulo.Text = Texto_62_BP("lbl_titulo", "Titulo:");
             lbl_autor.Text = Texto_62_BP("lbl_autor", "Autor:");
             lbl_isbn.Text = Texto_62_BP("lbl_isbn", "ISBN:");
             lbl_genero.Text = Texto_62_BP("lbl_genero", "Genero:");
             lbl_numeroVolumen.Text = Texto_62_BP("lbl_numero_volumen", "Numero de volumen:");
-            btn_crear.Text = Texto_62_BP("btn_crear", "Crear");
+            btn_crear.Text = Texto_62_BP("btn_solicitar_libro", "Solicitar");
             btn_cancelar.Text = Texto_62_BP("btn_cancelar", "Cancelar");
         }
 
@@ -99,7 +103,20 @@ namespace TP_campo
                 if (idLibro > 0)
                 {
                     IdLibroRegistrado_62_BP = idLibro;
-                    MostrarMensaje_62_BP("msg_exito_registro_libro", "Libro registrado con exito.");
+
+                    SolicitudInsatisfechaBE_62_BP solicitud = new SolicitudInsatisfechaBE_62_BP
+                    {
+                        id_libro_62_BP = idLibro,
+                        dni_lector_62_BP = _dniLector_62_BP,
+                        fecha_62_BP = DateTime.Now
+                    };
+
+                    if (_solicitudInsatisfechaBLL_62_BP.AgregarSolicitudInsatisfecha_62_BP(solicitud) <= 0)
+                    {
+                        throw new Exception("No se pudo registrar la solicitud del libro.");
+                    }
+
+                    MostrarMensaje_62_BP("msg_exito_solicitud_libro", "Solicitud de libro registrada con exito.");
                     DialogResult = DialogResult.OK;
                     Close();
                 }

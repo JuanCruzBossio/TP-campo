@@ -331,7 +331,8 @@ namespace TP_campo_62_BP
                     autor,
                     isbn,
                     genero,
-                    true);
+                    true,
+                    textBoxDNI.Text.Trim());
                 libroForm.StartPosition = FormStartPosition.CenterParent;
 
                 if (libroForm.ShowDialog(this) != DialogResult.OK)
@@ -339,15 +340,6 @@ namespace TP_campo_62_BP
                     LlenarDataGridViewLibrosFiltrados(new List<LibroBE_62_BP>());
                     return;
                 }
-
-                SolicitudInsatisfechaBE_62_BP solicitudNueva = new SolicitudInsatisfechaBE_62_BP
-                {
-                    id_libro_62_BP = libroForm.IdLibroRegistrado_62_BP,
-                    dni_lector_62_BP = textBoxDNI.Text.Trim(),
-                    fecha_62_BP = DateTime.Now
-                };
-
-                _solicitudInsatisfechaBLL_62_BP.AgregarSolicitudInsatisfecha_62_BP(solicitudNueva);
 
                 librosCoincidentes = new List<LibroBE_62_BP>();
             }

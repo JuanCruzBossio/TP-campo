@@ -98,7 +98,7 @@ namespace TP_campo
             this.btn_crear.Name = "btn_crear";
             this.btn_crear.Size = new System.Drawing.Size(110, 30);
             this.btn_crear.TabIndex = 10;
-            this.btn_crear.Text = "Crear";
+            this.btn_crear.Text = "Solicitar";
             this.btn_crear.UseVisualStyleBackColor = true;
             this.btn_crear.Click += new System.EventHandler(this.btn_crear_Click);
             this.btn_cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -131,7 +131,7 @@ namespace TP_campo
             this.MinimizeBox = false;
             this.Name = "LibroGUI_62_BP";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Alta de Libro";
+            this.Text = "Solicitud de libro";
             ((System.ComponentModel.ISupportInitialize)(this.nud_numeroVolumen)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

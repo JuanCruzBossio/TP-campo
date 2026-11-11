@@ -55,6 +55,8 @@
             this.facturarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.despacharToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comprasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.solicitarTextoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manejarSolicitudesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -270,9 +272,24 @@
             // 
             // comprasToolStripMenuItem
             // 
+            this.comprasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.solicitarTextoToolStripMenuItem,
+            this.manejarSolicitudesToolStripMenuItem});
             this.comprasToolStripMenuItem.Name = "comprasToolStripMenuItem";
             this.comprasToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.comprasToolStripMenuItem.Text = "Compras";
+            this.comprasToolStripMenuItem.Text = "Reposición";
+            //
+            // solicitarTextoToolStripMenuItem
+            //
+            this.solicitarTextoToolStripMenuItem.Name = "solicitarTextoToolStripMenuItem";
+            this.solicitarTextoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.solicitarTextoToolStripMenuItem.Text = "Solicitar texto";
+            //
+            // manejarSolicitudesToolStripMenuItem
+            //
+            this.manejarSolicitudesToolStripMenuItem.Name = "manejarSolicitudesToolStripMenuItem";
+            this.manejarSolicitudesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.manejarSolicitudesToolStripMenuItem.Text = "Manejar solicitudes";
             // 
             // reportesToolStripMenuItem
             // 
@@ -331,6 +348,8 @@
         private System.Windows.Forms.ToolStripMenuItem facturarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem despacharToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem comprasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem solicitarTextoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manejarSolicitudesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.Label labelNombre;
