@@ -61,6 +61,8 @@
     "msg_solicitud_completada": "Anfrage erfolgreich abgeschlossen.",
     "msg_solicitud_completar_estado_error": "Die Anfrage konnte nicht abgeschlossen werden: {0}",
     "msg_libro_solicitud_disponible_error": "Das angeforderte Buch konnte nicht als verfugbar markiert werden.",
+    "msg_sin_permiso": "Sie haben keine Berechtigung, diese Aktion auszufuhren.",
+    "msg_sin_permiso_alta_lector": "Der Leser ist nicht registriert und Sie haben keine Berechtigung, ihn zu registrieren.",
 
     "CambiarIdiomaGUI_62_BP": "Sprache andern",
     "lbl_idioma": "Sprache",

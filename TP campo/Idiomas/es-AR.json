@@ -61,6 +61,8 @@
     "msg_solicitud_completada": "Solicitud completada correctamente.",
     "msg_solicitud_completar_estado_error": "No se pudo completar la solicitud: {0}",
     "msg_libro_solicitud_disponible_error": "No se pudo marcar el libro solicitado como disponible.",
+    "msg_sin_permiso": "No tiene permiso para realizar esta accion.",
+    "msg_sin_permiso_alta_lector": "El lector no esta registrado y no tiene permiso para registrarlo.",
 
     "CambiarIdiomaGUI_62_BP": "Cambiar idioma",
     "lbl_idioma": "Idioma",

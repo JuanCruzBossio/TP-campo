@@ -154,6 +154,12 @@ namespace TP_campo_62_BP
 
         private void buttonRegistrarPrestamo_Click(object sender, EventArgs e)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(20))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             string dni = textBoxDNI.Text.Trim();
 
             if (dataGridViewLibrosSeleccion.Rows.Count == 0)
@@ -240,6 +246,12 @@ namespace TP_campo_62_BP
 
         private void ActualizarBotonRegistrarPrestamo()
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(20))
+            {
+                buttonRegistrarPrestamo.Enabled = false;
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(textBoxDNI.Text.Trim()) || !dniValidado_62_BP)
             {
                 buttonRegistrarPrestamo.Enabled = false;
@@ -312,6 +324,13 @@ namespace TP_campo_62_BP
 
             if (librosCoincidentes.Count == 0)
             {
+                if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(23))
+                {
+                    MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                    LlenarDataGridViewLibrosFiltrados(new List<LibroBE_62_BP>());
+                    return;
+                }
+
                 DialogResult confirmarAlta = MessageBox.Show(
                     Texto_62_BP(
                         "msg_confirmar_libro_no_registrado",
@@ -345,6 +364,13 @@ namespace TP_campo_62_BP
             }
             else if (mismoISBN && todosPrestados)
             {
+                if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(23))
+                {
+                    MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                    LlenarDataGridViewLibrosFiltrados(new List<LibroBE_62_BP>());
+                    return;
+                }
+
                 LibroBE_62_BP libroSolicitado = librosCoincidentes[0];
 
                 SolicitudInsatisfechaBE_62_BP solicitud = new SolicitudInsatisfechaBE_62_BP
@@ -529,6 +555,14 @@ namespace TP_campo_62_BP
                 resultado.PuedeSolicitarPrestamo = false;
                 resultado.MotivoBloqueo = Texto_62_BP("msg_lector_no_registrado", "El lector no esta registrado en el sistema.");
 
+                if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(19))
+                {
+                    resultado.MotivoBloqueo = Texto_62_BP(
+                        "msg_sin_permiso_alta_lector",
+                        "El lector no esta registrado y no tiene permiso para registrarlo.");
+                    return resultado;
+                }
+
                 AgregarLectorGUI_62_BP agregarForm = new AgregarLectorGUI_62_BP(dni);
                 agregarForm.Text = Texto_62_BP("titulo_agregar_lector", "Alta de Lector");
                 agregarForm.StartPosition = FormStartPosition.CenterParent;
@@ -607,6 +641,11 @@ namespace TP_campo_62_BP
 
         public int RegistrarLectorNuevo_62_BP(string dni, string nombre, string apellido, DateTime fechaNacimiento)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(19))
+            {
+                throw new Exception(Texto_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion."));
+            }
+
             try
             {
                 LectorBE_62_BP lector = new LectorBE_62_BP

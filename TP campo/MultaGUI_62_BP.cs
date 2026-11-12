@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -112,6 +113,11 @@ namespace TP_campo
         {
             buttonPagarMulta.Enabled = false;
 
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(22))
+            {
+                return;
+            }
+
             if (dataGridView1.SelectedRows.Count != 1)
             {
                 return;
@@ -124,6 +130,12 @@ namespace TP_campo
 
         private void buttonPagarMulta_Click(object sender, EventArgs e)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(22))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             if (dataGridView1.SelectedRows.Count != 1 || !buttonPagarMulta.Enabled)
             {
                 return;

@@ -61,6 +61,8 @@
     "msg_solicitud_completada": "Request completed successfully.",
     "msg_solicitud_completar_estado_error": "The request could not be completed: {0}",
     "msg_libro_solicitud_disponible_error": "The requested book could not be marked as available.",
+    "msg_sin_permiso": "You do not have permission to perform this action.",
+    "msg_sin_permiso_alta_lector": "The reader is not registered and you do not have permission to register them.",
 
     "CambiarIdiomaGUI_62_BP": "Change language",
     "lbl_idioma": "Language",

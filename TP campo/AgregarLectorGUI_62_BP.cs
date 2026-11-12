@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -33,6 +34,7 @@ namespace TP_campo
             }
 
             dtp_fechaNacimiento.MaxDate = DateTime.Today;
+            btn_crear.Enabled = SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(19);
         }
 
         protected override void TraducirFormulario_62_BP(SEG_62_BP.Observer.Idioma_62_BP idioma_62_BP)
@@ -50,6 +52,12 @@ namespace TP_campo
 
         private void btn_crear_Click(object sender, EventArgs e)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(19))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             string dni = txt_dni.Text.Trim();
             string nombre = txt_nombre.Text.Trim();
             string apellido = txt_apellido.Text.Trim();

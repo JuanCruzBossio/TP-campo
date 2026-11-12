@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -108,8 +109,11 @@ namespace TP_campo
             SolicitudInsatisfechaBE_62_BP solicitud =
                 dataGridViewSolicitudes.SelectedRows[0].Tag as SolicitudInsatisfechaBE_62_BP;
 
-            buttonAceptarSolicitud.Enabled = solicitud != null && !solicitud.aceptada_62_BP;
+            buttonAceptarSolicitud.Enabled = solicitud != null
+                && SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(24)
+                && !solicitud.aceptada_62_BP;
             buttonCompletarSolicitud.Enabled = solicitud != null
+                && SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(25)
                 && solicitud.aceptada_62_BP
                 && !solicitud.completada_62_BP;
         }
@@ -121,6 +125,12 @@ namespace TP_campo
 
         private void AceptarSolicitud_62_BP()
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(24))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             if (dataGridViewSolicitudes.SelectedRows.Count != 1)
             {
                 return;
@@ -167,6 +177,12 @@ namespace TP_campo
 
         private void CompletarSolicitud_62_BP()
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(25))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             if (dataGridViewSolicitudes.SelectedRows.Count != 1)
             {
                 return;

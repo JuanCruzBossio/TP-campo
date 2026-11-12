@@ -167,6 +167,32 @@ namespace TP_campo_62_BP
 
             cambiarIdiomaToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(17);
+
+            agregarLectorToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(19);
+            lectoresToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(19);
+
+            carritoToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(20);
+            facturarToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(21);
+            despacharToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(22);
+            ventasToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(20) ||
+                session.TienePermiso_62_BP(21) ||
+                session.TienePermiso_62_BP(22);
+
+            solicitarTextoToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(23);
+            manejarSolicitudesToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(24) ||
+                session.TienePermiso_62_BP(25);
+            comprasToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(23) ||
+                session.TienePermiso_62_BP(24) ||
+                session.TienePermiso_62_BP(25);
         }
 
         private void digitoVerificadorToolStripMenuItem_Click(object sender, EventArgs e)

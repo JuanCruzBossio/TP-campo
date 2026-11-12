@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
 using TP_campo_62_BP;
 
 namespace TP_campo
@@ -224,6 +225,12 @@ namespace TP_campo
 
         private void ActualizarBotonDevolverPrestamo()
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(21))
+            {
+                buttonDevolverPrestamo.Enabled = false;
+                return;
+            }
+
             if (_prestamoSeleccionadoFinalizado_62_BP)
             {
                 buttonDevolverPrestamo.Enabled = false;
@@ -249,6 +256,12 @@ namespace TP_campo
 
         private void buttonDevolverPrestamo_Click(object sender, EventArgs e)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(21))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             if (!TodosLosDetallesTienenEstado())
             {
                 ActualizarBotonDevolverPrestamo();
@@ -338,12 +351,6 @@ namespace TP_campo
                 dataGridViewDetallePrestamo.ReadOnly = false;
                 dataGridViewPrestamosFiltrados.ClearSelection();
 
-                if (multasGeneradas > 0)
-                {
-                    MultaGUI_62_BP multaForm = new MultaGUI_62_BP(idPrestamo);
-                    multaForm.MdiParent = MdiParent;
-                    multaForm.Show();
-                }
             }
             catch (Exception ex)
             {

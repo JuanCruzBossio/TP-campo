@@ -53,10 +53,25 @@ namespace TP_campo
             _listaErroresDVV_62_BP = _dvvBLL_62_BP.BuscarErroresDVV_62_BP();
 
             dataGridViewErrores.DataSource = null;
+            AgregarTablaConErrorDVH_62_BP(
+                "Bitacora_62_BP",
+                _bitacoraBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Familia_62_BP",
+                _familiaBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Patente_62_BP",
+                _patenteBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Rol_62_BP",
+                _rolBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Usuario_62_BP",
+                _usuarioBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
             dataGridViewErrores.DataSource = _listaErroresDVV_62_BP;
             dataGridViewErrores.Columns["DVV_62_BP"].Visible = false;
 
-            if (_listaErroresDVV_62_BP.Count > 0)
+            if (_listaErroresDVV_62_BP.Count > 0 )
             {
                 string tablasConError = string.Join(", ", _listaErroresDVV_62_BP.Select(x => x.Tabla_62_BP));
                 MessageBox.Show(TextoFormato_62_BP("msg_dvv_tablas_error", "Se detectaron errores de Dígitos Verificadores."));
@@ -68,6 +83,21 @@ namespace TP_campo
                 MessageBox.Show(TextoFormato_62_BP("msg_dvv_sin_errores", "No se detectaron errores en las tablas."));
             }
         }
+
+        private void AgregarTablaConErrorDVH_62_BP(string nombreTabla, bool tieneErrores)
+        {
+            if (!tieneErrores || _listaErroresDVV_62_BP.Any(error => error.Tabla_62_BP == nombreTabla))
+            {
+                return;
+            }
+
+            _listaErroresDVV_62_BP.Add(new DigitoVerificadorVertical_62_BP
+            {
+                Tabla_62_BP = nombreTabla,
+                DVV_62_BP = string.Empty
+            });
+        }
+
         public bool RecalcularDigitosVerificadores()
         {
             try
