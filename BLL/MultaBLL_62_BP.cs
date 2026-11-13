@@ -39,6 +39,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0 && multa.pagada_62_BP)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Multa",
+                        "ModificarMulta",
                         "Pago de Multa N: " + multa.id_multa_62_BP,
                         2);
                 }

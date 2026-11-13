@@ -83,6 +83,8 @@ namespace TP_campo
                     : "Sin idioma";
 
                 _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                    "Usuario",
+                    "CambiarIdioma",
                     "Cambio de idioma de " + idiomaAnterior_62_BP + " a " + idioma_62_BP.Nombre_62_BP,
                     2);
 

@@ -46,7 +46,7 @@ namespace BLL
                     }
                 ActualizarFamiliaDVH_62_BP(id);
                 ActualizarTablaDVV_62_BP_Familia();
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Familia " + familia.Nombre_62_BP, 1);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "Alta", "Alta de Familia " + familia.Nombre_62_BP, 1);
             }
             catch
             {
@@ -80,7 +80,7 @@ namespace BLL
                     ActualizarTablaDVV_62_BP_Familia();
                 }
 
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Familia " + familia.Nombre_62_BP, 2);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "Modificar", "Modificación de Familia " + familia.Nombre_62_BP, 2);
             }
             catch
             {
@@ -112,7 +112,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Familia " + familia.Nombre_62_BP,3);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "Baja", "Baja de Familia " + familia.Nombre_62_BP,3);
                     _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Familia_62_BP");
                 }
             }
@@ -225,7 +225,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Asignación de Patente a Familia", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "AgregarPatente", "Asignación de Patente a Familia", 2);
                 }
             }
             catch
@@ -246,7 +246,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Desasignación de Patente de Familia", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "QuitarPatente", "Desasignación de Patente de Familia", 2);
                 }
             }
             catch
@@ -270,7 +270,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Asignación de Familia a Familia", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "AgregarFamilia", "Asignación de Familia a Familia", 2);
                 }
             }
             catch (Exception ex)
@@ -294,7 +294,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Desasignación de Familia de Familia", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Familia", "QuitarFamilia", "Desasignación de Familia de Familia", 2);
                 }
             }
             catch

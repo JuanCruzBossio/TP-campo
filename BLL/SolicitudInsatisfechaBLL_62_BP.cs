@@ -23,6 +23,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "SolicitudInsatisfecha",
+                        "AgregarSolicitudInsatisfecha",
                         "Alta de Solicitud de Libro N: " + filasAfectadas,
                         1);
                 }
@@ -45,6 +47,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "SolicitudInsatisfecha",
+                        "AceptarSolicitudInsatisfecha",
                         "Aceptacion de Solicitud N: " + idSolicitud,
                         2);
                 }
@@ -67,6 +71,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "SolicitudInsatisfecha",
+                        "CompletarSolicitudInsatisfecha",
                         "Solicitud Completada N: " + idSolicitud,
                         2);
                 }

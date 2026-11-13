@@ -252,6 +252,7 @@
             this.cmb_modulo.Name = "cmb_modulo";
             this.cmb_modulo.Size = new System.Drawing.Size(100, 21);
             this.cmb_modulo.TabIndex = 27;
+            this.cmb_modulo.SelectedIndexChanged += new System.EventHandler(this.cmb_modulo_SelectedIndexChanged);
             // 
             // Bitacora_62_BP
             // 

@@ -24,10 +24,16 @@ namespace BLL_62_BP
         private Encriptacion_62_BP _encriptacionSEG = new Encriptacion_62_BP();
         private DigitoVerificadorBLL_62_BP _digitoVerificadorDAL = new DigitoVerificadorBLL_62_BP();
 
-        public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad)
+        public void RegistrarBitacora_62_BP(
+            string modulo,
+            string evento,
+            string mensaje,
+            int nivelCriticidad)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
+            registro.Modulo_62_BP = modulo;
+            registro.Evento_62_BP = evento;
             registro.Mensaje_62_BP = mensaje;
             if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
             {
@@ -40,11 +46,18 @@ namespace BLL_62_BP
             int id = _bitacoraDAL.RegistrarBitacora_62_BP(registro);
             ActualizarBitacoraDVH_62_BP(id);
         }
-        public void RegistrarBitacora_62_BP(string mensaje, int nivelCriticidad, string dni)
+        public void RegistrarBitacora_62_BP(
+            string modulo,
+            string evento,
+            string mensaje,
+            int nivelCriticidad,
+            string dni)
         {
             RegistroBitacora_62_BP registro = new RegistroBitacora_62_BP();
             registro.Criticidad_62_BP = nivelCriticidad;
             registro.DniUsuario_62_BP = dni;
+            registro.Modulo_62_BP = modulo;
+            registro.Evento_62_BP = evento;
             registro.Mensaje_62_BP = mensaje;
 
             int id = _bitacoraDAL.RegistrarBitacora_62_BP(registro);
@@ -114,11 +127,13 @@ namespace BLL_62_BP
                 doc.Add(new Paragraph("Bitácora - Exportación"));
                 doc.Add(new Paragraph(" "));
 
-                PdfPTable tabla = new PdfPTable(5);
+                PdfPTable tabla = new PdfPTable(7);
                 tabla.WidthPercentage = 100;
                 tabla.AddCell("ID");
                 tabla.AddCell("Fecha");
                 tabla.AddCell("DNI Usuario");
+                tabla.AddCell("Módulo");
+                tabla.AddCell("Evento");
                 tabla.AddCell("Mensaje");
                 tabla.AddCell("Criticidad");
 
@@ -127,6 +142,8 @@ namespace BLL_62_BP
                     tabla.AddCell(reg.Id_62_BP.ToString());
                     tabla.AddCell(reg.Fecha_62_BP.ToString("yyyy-MM-dd HH:mm:ss"));
                     tabla.AddCell(reg.DniUsuario_62_BP);
+                    tabla.AddCell(reg.Modulo_62_BP);
+                    tabla.AddCell(reg.Evento_62_BP);
                     tabla.AddCell(reg.Mensaje_62_BP);
                     tabla.AddCell(reg.Criticidad_62_BP.ToString());
                 }

@@ -25,6 +25,8 @@ namespace MAPPER_62_BP
                 Id_62_BP = Convert.ToInt32(fila["id_62_BP"]),
                 Fecha_62_BP = Convert.ToDateTime(fila["fecha_62_BP"]),
                 DniUsuario_62_BP = fila["dniUsuario_62_BP"].ToString(),
+                Modulo_62_BP = fila["modulo_62_BP"].ToString(),
+                Evento_62_BP = fila["evento_62_BP"].ToString(),
                 Mensaje_62_BP = fila["mensaje_62_BP"].ToString(),
                 Criticidad_62_BP = Convert.ToInt32(fila["criticidad_62_BP"])
             };
@@ -32,11 +34,13 @@ namespace MAPPER_62_BP
         public int RegistrarBitacora_62_BP(RegistroBitacora_62_BP registro)
         {
             var id = 0;
-            string query = "INSERT INTO Bitacora_62_BP (fecha_62_BP, dniUsuario_62_BP, mensaje_62_BP, criticidad_62_BP) VALUES (GETDATE(), @dniUsuario, @mensaje, @criticidad);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO Bitacora_62_BP (fecha_62_BP, dniUsuario_62_BP, modulo_62_BP, evento_62_BP, mensaje_62_BP, criticidad_62_BP) VALUES (GETDATE(), @dniUsuario, @modulo, @evento, @mensaje, @criticidad);SELECT SCOPE_IDENTITY();";
 
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@dniUsuario", registro.DniUsuario_62_BP),
+                new SqlParameter("@modulo", registro.Modulo_62_BP),
+                new SqlParameter("@evento", registro.Evento_62_BP),
                 new SqlParameter("@mensaje", registro.Mensaje_62_BP),
                 new SqlParameter("@criticidad", registro.Criticidad_62_BP)
             };
@@ -51,7 +55,7 @@ namespace MAPPER_62_BP
         {
             List<RegistroBitacora_62_BP> lista = new List<RegistroBitacora_62_BP>();
             List<SqlParameter> parametros = new List<SqlParameter>();
-            StringBuilder query = new StringBuilder("SELECT id_62_BP, fecha_62_BP, dniUsuario_62_BP, mensaje_62_BP, criticidad_62_BP FROM Bitacora_62_BP WHERE 1=1");
+            StringBuilder query = new StringBuilder("SELECT id_62_BP, fecha_62_BP, dniUsuario_62_BP, modulo_62_BP, evento_62_BP, mensaje_62_BP, criticidad_62_BP FROM Bitacora_62_BP WHERE 1=1");
 
             if (fechaIni.HasValue)
             {
@@ -68,11 +72,15 @@ namespace MAPPER_62_BP
                 query.Append(" AND DniUsuario_62_BP = @login");
                 parametros.Add(new SqlParameter("@login", login));
             }
-            // El filtro de modulo NO se usa
+            if (!string.IsNullOrWhiteSpace(modulo))
+            {
+                query.Append(" AND modulo_62_BP = @modulo");
+                parametros.Add(new SqlParameter("@modulo", modulo));
+            }
             if (!string.IsNullOrWhiteSpace(evento))
             {
-                query.Append(" AND Mensaje_62_BP LIKE @evento");
-                parametros.Add(new SqlParameter("@evento", "%" + evento + "%"));
+                query.Append(" AND evento_62_BP = @evento");
+                parametros.Add(new SqlParameter("@evento", evento));
             }
             if (criticidad.HasValue)
             {
@@ -81,8 +89,8 @@ namespace MAPPER_62_BP
             }
             if (id_62_BP.HasValue)
             {
-                query.Append(" AND Criticidad_62_BP = @criticidad");
-                parametros.Add(new SqlParameter("@id_62_BP", id_62_BP.ToString()));
+                query.Append(" AND id_62_BP = @id_62_BP");
+                parametros.Add(new SqlParameter("@id_62_BP", id_62_BP.Value));
             }
 
             query.Append(" ORDER BY fecha_62_BP DESC");

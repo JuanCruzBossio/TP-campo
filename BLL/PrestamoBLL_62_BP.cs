@@ -23,6 +23,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Prestamo",
+                        "AgregarPrestamo",
                         "Registro de Prestamo N: " + filasAfectadas,
                         1);
                 }
@@ -59,6 +61,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Prestamo",
+                        "FinalizarPrestamo",
                         "Devolucion de Prestamo N: " + idPrestamo,
                         2);
                 }

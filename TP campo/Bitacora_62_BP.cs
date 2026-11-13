@@ -24,6 +24,18 @@ namespace TP_campo_62_BP
         BitacoraBLL_62_BP bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
         List<RegistroBitacora_62_BP> listaRegistrosBitacora_62_BP = new List<RegistroBitacora_62_BP>();
         UsuarioBLL_62_BP usuarioBLL_62_BP = new UsuarioBLL_62_BP();
+        private readonly Dictionary<string, string[]> eventosPorModulo_62_BP =
+            new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "BackupRestore", new[] { "RealizarBackup", "RealizarRestore" } },
+                { "Familia", new[] { "AgregarFamilia", "AgregarPatente", "Alta", "Baja", "Modificar", "QuitarFamilia", "QuitarPatente" } },
+                { "Lector", new[] { "AgregarLector" } },
+                { "Multa", new[] { "ModificarMulta" } },
+                { "Prestamo", new[] { "AgregarPrestamo", "FinalizarPrestamo" } },
+                { "Rol", new[] { "AgregarFamilia", "AgregarPatente", "Alta", "Baja", "Modificar", "QuitarFamilia", "QuitarPatente" } },
+                { "SolicitudInsatisfecha", new[] { "AceptarSolicitudInsatisfecha", "AgregarSolicitudInsatisfecha", "CompletarSolicitudInsatisfecha" } },
+                { "Usuario", new[] { "Activar", "Alta", "Bloquear", "CambiarContrasena", "CambiarIdioma", "Desactivar", "Desbloquear", "Login", "Logout", "Modificar" } }
+            };
         
         //Eventos
         private void Bitacora_62_BP_Load(object sender, EventArgs e)
@@ -31,6 +43,7 @@ namespace TP_campo_62_BP
             dtp_fecha_fin.Value = DateTime.Now;
             dtp_fecha_ini.Value = dtp_fecha_fin.Value.AddDays(-3);
             listaRegistrosBitacora_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
+            CargarFiltrosModuloYEvento_62_BP();
             List<RegistroBitacora_62_BP> ultimos3Dias = listaRegistrosBitacora_62_BP
                 .Where(r => r.Fecha_62_BP >= dtp_fecha_ini.Value)
                 .ToList();
@@ -88,6 +101,7 @@ namespace TP_campo_62_BP
 
 
             listaRegistrosBitacora_62_BP = bitacoraBLL_62_BP.ObtenerBitacora_62_BP();
+            CargarFiltrosModuloYEvento_62_BP();
             List<RegistroBitacora_62_BP> ultimos3Dias = listaRegistrosBitacora_62_BP
                 .Where(r => r.Fecha_62_BP >= DateTime.Now.AddDays(-3))
                 .ToList();
@@ -111,14 +125,14 @@ namespace TP_campo_62_BP
             string error;
 
             string login = cmb_login.SelectedItem is ComboboxItem item ? item.Value : string.Empty;
-            // El valor de modulo NO se usa en la consulta todavia
+            string modulo = cmb_modulo.SelectedItem != null ? cmb_modulo.SelectedItem.ToString() : string.Empty;
             string evento = cmb_evento.SelectedItem != null ? cmb_evento.SelectedItem.ToString() : string.Empty;
             string criticidad = cmb_criticidad.SelectedItem != null ? cmb_criticidad.SelectedItem.ToString() : string.Empty;
             string fechaIni = dtp_fecha_ini.Value.ToString("yyyy-MM-dd");
             string fechaFin = dtp_fecha_fin.Value.ToString("yyyy-MM-dd");
 
             var resultados = bitacoraBLL_62_BP.FiltrarBitacora_62_BP(
-                fechaIni, fechaFin, login, null, evento, criticidad, out error);
+                fechaIni, fechaFin, login, modulo, evento, criticidad, out error);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -128,6 +142,15 @@ namespace TP_campo_62_BP
             }
 
             dgv_bitacora.DataSource = resultados;
+        }
+
+        private void cmb_modulo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string modulo = cmb_modulo.SelectedItem != null
+                ? cmb_modulo.SelectedItem.ToString()
+                : null;
+
+            CargarEventos_62_BP(modulo);
         }
 
         private void btn_imprimir_Click(object sender, EventArgs e)
@@ -171,6 +194,41 @@ namespace TP_campo_62_BP
         {
             dtp_fecha_ini.Value = DateTime.Now;
             dtp_fecha_fin.Value = DateTime.Now;
+        }
+
+        private void CargarFiltrosModuloYEvento_62_BP()
+        {
+            cmb_modulo.Items.Clear();
+            cmb_evento.Items.Clear();
+
+            string[] modulos = eventosPorModulo_62_BP.Keys
+                .OrderBy(modulo => modulo)
+                .ToArray();
+
+            cmb_modulo.Items.AddRange(modulos);
+            cmb_modulo.SelectedIndex = -1;
+            CargarEventos_62_BP(null);
+        }
+
+        private void CargarEventos_62_BP(string modulo)
+        {
+            cmb_evento.Items.Clear();
+
+            IEnumerable<string> eventos;
+            if (!string.IsNullOrWhiteSpace(modulo) && eventosPorModulo_62_BP.ContainsKey(modulo))
+            {
+                eventos = eventosPorModulo_62_BP[modulo];
+            }
+            else
+            {
+                eventos = eventosPorModulo_62_BP.Values
+                    .SelectMany(eventosModulo => eventosModulo)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(evento => evento);
+            }
+
+            cmb_evento.Items.AddRange(eventos.Cast<object>().ToArray());
+            cmb_evento.SelectedIndex = -1;
         }
 
         private string TraducirErrorBitacora_62_BP(string error_62_BP)

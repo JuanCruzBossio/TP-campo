@@ -30,6 +30,8 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Lector",
+                        "AgregarLector",
                         "Alta de Lector DNI: " + lector.dni_62_BP,
                         1);
                 }

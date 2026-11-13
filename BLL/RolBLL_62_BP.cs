@@ -49,7 +49,7 @@ namespace BLL
                 filasAfectadas = 1;
                 ActualizarRolDVH_62_BP(id);
                 ActualizarTablaDVV_62_BP_Rol();
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Alta de Rol " + rol.Nombre_62_BP, 1);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "Alta", "Alta de Rol " + rol.Nombre_62_BP, 1);
             }
             catch
             {
@@ -86,7 +86,7 @@ namespace BLL
                     ActualizarTablaDVV_62_BP_Rol();
                 }
 
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Modificación de Rol " + rol.Nombre_62_BP, 2);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "Modificar", "Modificación de Rol " + rol.Nombre_62_BP, 2);
             }
             catch
             {
@@ -118,7 +118,7 @@ namespace BLL
                 if (filasAfectadas > 0)
                 {
                     _digitoVerificadorDAL.ActualizarTablaDVV_62_BP("Rol_62_BP");
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Baja de Rol " + rol.Nombre_62_BP, 3);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "Baja", "Baja de Rol " + rol.Nombre_62_BP, 3);
                 }
             }
             catch
@@ -220,7 +220,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Asignación de Patente a Rol", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "AgregarPatente", "Asignación de Patente a Rol", 2);
                 }
             }
             catch
@@ -241,7 +241,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Desasignación de Patente de Rol", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "QuitarPatente", "Desasignación de Patente de Rol", 2);
                 }
             }
             catch
@@ -262,7 +262,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Asignación de Familia a Rol", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "AgregarFamilia", "Asignación de Familia a Rol", 2);
                 }
             }
             catch
@@ -283,7 +283,7 @@ namespace BLL
 
                 if (filasAfectadas > 0)
                 {
-                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Desasignación de Familia de Rol", 2);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Rol", "QuitarFamilia", "Desasignación de Familia de Rol", 2);
                 }
             }
             catch

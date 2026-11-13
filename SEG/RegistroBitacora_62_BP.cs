@@ -41,6 +41,22 @@ namespace SEG_62_BP
             set { mensaje_62_BP = value; }
         }
 
+        private string modulo_62_BP;
+
+        public string Modulo_62_BP
+        {
+            get { return modulo_62_BP; }
+            set { modulo_62_BP = value; }
+        }
+
+        private string evento_62_BP;
+
+        public string Evento_62_BP
+        {
+            get { return evento_62_BP; }
+            set { evento_62_BP = value; }
+        }
+
         private int criticidad_62_BP;
 
         public int Criticidad_62_BP
@@ -54,6 +70,8 @@ namespace SEG_62_BP
             return Id_62_BP.ToString() +
                    Fecha_62_BP.ToString() +
                    DniUsuario_62_BP +
+                   Modulo_62_BP +
+                   Evento_62_BP +
                    Mensaje_62_BP +
                    Criticidad_62_BP.ToString();
         }

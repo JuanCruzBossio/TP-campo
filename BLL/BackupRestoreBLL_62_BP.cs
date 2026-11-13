@@ -22,7 +22,7 @@ namespace BLL
             {
                 filasAfectadas = _backupRestoreDAL.Backup_62_BP(ruta);
 
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Se realizo Backup de Base de Datos en la ruta: " + ruta, 2);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("BackupRestore", "RealizarBackup", "Se realizo Backup de Base de Datos en la ruta: " + ruta, 2);
                 
                 filasAfectadas = 1;
             }
@@ -39,11 +39,11 @@ namespace BLL
 
             try
             {
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Se inicia Restore de Base de Datos desde la ruta: " + ruta,5);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("BackupRestore", "RealizarRestore", "Se inicia Restore de Base de Datos desde la ruta: " + ruta,5);
 
                 filasAfectadas = _backupRestoreDAL.Restore_62_BP(ruta);
 
-                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("Se realizo Restore de Base de Datos desde la ruta: " + ruta, 5);
+                _bitacoraBLL_62_BP.RegistrarBitacora_62_BP("BackupRestore", "RealizarRestore", "Se realizo Restore de Base de Datos desde la ruta: " + ruta, 5);
                 filasAfectadas = 1;
             }
             catch (Exception)

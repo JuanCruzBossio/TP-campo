@@ -38,7 +38,7 @@ namespace BLL_62_BP
                 if (dni > 0)
                 {
                     ActualizarUsuarioDVH_62_BP(dni.ToString());
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Alta de Usuario " + usuario.Login_62_BP, 1);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Alta", "Alta de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (SqlException ex)
@@ -72,7 +72,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Activación de Usuario " + usuario.Login_62_BP, 2);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Activar", "Activación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Desactivación de Usuario " + usuario.Login_62_BP, 2);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Desactivar", "Desactivación de Usuario " + usuario.Login_62_BP, 2);
                 }
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace BLL_62_BP
                 {
                     Usuario_62_BP usuario = _usuarioDAL.BuscarUsuario_62_BP(login: login);
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Bloquear", "Bloqueo de Usuario " + login, 3, usuario.Dni_62_BP);
                 }
             }
             catch (Exception ex)
@@ -132,7 +132,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Desbloquear", "Desbloqueo de Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)
@@ -150,7 +150,7 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Modificacion de Usuario " + usuario.Login_62_BP, 1);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Modificar", "Modificacion de Usuario " + usuario.Login_62_BP, 1);
                 }
             }
             catch (SqlException ex)
@@ -226,7 +226,7 @@ namespace BLL_62_BP
                     usuario.Rol_62_BP = _rolBLL.BuscarRol_62_BP(usuario.IdRol_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().Login_62_BP(usuario);
                     AplicarIdiomaUsuario_62_BP(usuario);
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Login de Usuario " + usuario.Login_62_BP, 1);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Login", "Login de Usuario " + usuario.Login_62_BP, 1);
 
                     return usuario;
                 }
@@ -264,7 +264,7 @@ namespace BLL_62_BP
                 SessionManager_62_BP.GetInstancia_62_BP().Logout_62_BP();
                 AplicarIdiomaDefault_62_BP();
 
-                _bitacoraBLL.RegistrarBitacora_62_BP("Logout de Usuario",1, dniUsuario);
+                _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "Logout", "Logout de Usuario",1, dniUsuario);
 
             }
             catch (Exception ex)
@@ -305,7 +305,7 @@ namespace BLL_62_BP
                 {
                     ActualizarUsuarioDVH_62_BP(usuario.Dni_62_BP);
                     SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP.Contrasena_62_BP = usuario.Contrasena_62_BP;
-                    _bitacoraBLL.RegistrarBitacora_62_BP("Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
+                    _bitacoraBLL.RegistrarBitacora_62_BP("Usuario", "CambiarContrasena", "Cambio de contraseña del Usuario " + usuario.Login_62_BP, 3);
                 }
             }
             catch (Exception ex)
