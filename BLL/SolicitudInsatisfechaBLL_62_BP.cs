@@ -11,6 +11,7 @@ namespace BLL_62_BP
     public class SolicitudInsatisfechaBLL_62_BP
     {
         private SolicitudInsatisfechaMapper_62_BP _solicitudInsatisfechaMapper_62_BP = new SolicitudInsatisfechaMapper_62_BP();
+        private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
         public int AgregarSolicitudInsatisfecha_62_BP(SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha)
         {
@@ -19,6 +20,12 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _solicitudInsatisfechaMapper_62_BP.AgregarSolicitudInsatisfecha_62_BP(solicitudInsatisfecha);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Alta de Solicitud de Libro N: " + filasAfectadas,
+                        1);
+                }
             }
             catch
             {
@@ -26,6 +33,50 @@ namespace BLL_62_BP
             }
 
             return filasAfectadas;
+        }
+
+        public int AceptarSolicitudInsatisfecha_62_BP(int idSolicitud)
+        {
+            try
+            {
+                int filasAfectadas = _solicitudInsatisfechaMapper_62_BP
+                    .AceptarSolicitudInsatisfecha_62_BP(idSolicitud);
+
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Aceptacion de Solicitud N: " + idSolicitud,
+                        2);
+                }
+
+                return filasAfectadas;
+            }
+            catch
+            {
+                throw new Exception("No se pudo aceptar la solicitud insatisfecha.");
+            }
+        }
+
+        public int CompletarSolicitudInsatisfecha_62_BP(int idSolicitud, DateTime fechaCompletada)
+        {
+            try
+            {
+                int filasAfectadas = _solicitudInsatisfechaMapper_62_BP
+                    .CompletarSolicitudInsatisfecha_62_BP(idSolicitud, fechaCompletada);
+
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Solicitud Completada N: " + idSolicitud,
+                        2);
+                }
+
+                return filasAfectadas;
+            }
+            catch
+            {
+                throw new Exception("No se pudo completar la solicitud insatisfecha.");
+            }
         }
 
         public int ModificarSolicitudInsatisfecha_62_BP(SolicitudInsatisfechaBE_62_BP solicitudInsatisfecha)

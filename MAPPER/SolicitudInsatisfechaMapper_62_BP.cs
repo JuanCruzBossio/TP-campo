@@ -50,6 +50,31 @@ namespace MAPPER_62_BP
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
 
+        public int AceptarSolicitudInsatisfecha_62_BP(int idSolicitud)
+        {
+            string query = "UPDATE SolicitudInsatisfecha_62_BP SET aceptada_62_BP = 1 WHERE id_solicitud_62_BP = @id AND aceptada_62_BP = 0";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idSolicitud)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public int CompletarSolicitudInsatisfecha_62_BP(int idSolicitud, DateTime fechaCompletada)
+        {
+            string query = "UPDATE SolicitudInsatisfecha_62_BP SET completada_62_BP = 1, fecha_completada_62_BP = @fechaCompletada WHERE id_solicitud_62_BP = @id AND aceptada_62_BP = 1 AND completada_62_BP = 0";
+
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idSolicitud),
+                new SqlParameter("@fechaCompletada", fechaCompletada)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
         public SolicitudInsatisfechaBE_62_BP BuscarSolicitudInsatisfecha_62_BP(
             int? id = null,
             int idLibro = 0,

@@ -11,6 +11,7 @@ namespace BLL_62_BP
     public class LectorBLL_62_BP
     {
         private LectorMapper_62_BP _lectorMapper_62_BP = new LectorMapper_62_BP();
+        private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
         public int AgregarLector_62_BP(LectorBE_62_BP lector)
         {
@@ -26,6 +27,12 @@ namespace BLL_62_BP
                 }
 
                 filasAfectadas = _lectorMapper_62_BP.AgregarLector_62_BP(lector);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Alta de Lector DNI: " + lector.dni_62_BP,
+                        1);
+                }
             }
             catch
             {

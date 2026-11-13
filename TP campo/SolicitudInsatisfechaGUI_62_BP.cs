@@ -143,17 +143,17 @@ namespace TP_campo
                 return;
             }
 
-            solicitud.aceptada_62_BP = true;
-
             try
             {
-                if (_solicitudInsatisfechaBLL_62_BP.ModificarSolicitudInsatisfecha_62_BP(solicitud) <= 0)
+                if (_solicitudInsatisfechaBLL_62_BP
+                    .AceptarSolicitudInsatisfecha_62_BP(solicitud.id_solicitud_62_BP) <= 0)
                 {
                     throw new Exception(Texto_62_BP(
                         "msg_solicitud_actualizacion_error",
                         "No se pudo actualizar la solicitud."));
                 }
 
+                solicitud.aceptada_62_BP = true;
                 fila.Cells["colAceptada"].Value = Texto_62_BP("estado_si", "Sí");
                 ActualizarBotones_62_BP();
 
@@ -195,8 +195,7 @@ namespace TP_campo
                 return;
             }
 
-            solicitud.completada_62_BP = true;
-            solicitud.fecha_completada_62_BP = DateTime.Now;
+            DateTime fechaCompletada = DateTime.Now;
             bool libroMarcadoDisponible = false;
             bool solicitudActualizada = false;
 
@@ -211,7 +210,9 @@ namespace TP_campo
 
                 libroMarcadoDisponible = true;
 
-                if (_solicitudInsatisfechaBLL_62_BP.ModificarSolicitudInsatisfecha_62_BP(solicitud) <= 0)
+                if (_solicitudInsatisfechaBLL_62_BP.CompletarSolicitudInsatisfecha_62_BP(
+                    solicitud.id_solicitud_62_BP,
+                    fechaCompletada) <= 0)
                 {
                     throw new Exception(Texto_62_BP(
                         "msg_solicitud_completado_error",
@@ -219,10 +220,12 @@ namespace TP_campo
                 }
 
                 solicitudActualizada = true;
+                solicitud.completada_62_BP = true;
+                solicitud.fecha_completada_62_BP = fechaCompletada;
 
                 fila.Cells["colCompletada"].Value = Texto_62_BP("estado_si", "Sí");
                 fila.Cells["colFechaCompletada"].Value =
-                    solicitud.fecha_completada_62_BP.Value.ToString("dd/MM/yyyy HH:mm");
+                    fechaCompletada.ToString("dd/MM/yyyy HH:mm");
                 ActualizarBotones_62_BP();
 
                 MostrarMensaje_62_BP(
@@ -242,8 +245,6 @@ namespace TP_campo
                     }
                 }
 
-                solicitud.completada_62_BP = false;
-                solicitud.fecha_completada_62_BP = null;
                 MessageBox.Show(TextoFormato_62_BP(
                     "msg_solicitud_completar_estado_error",
                     "No se pudo completar la solicitud: {0}",

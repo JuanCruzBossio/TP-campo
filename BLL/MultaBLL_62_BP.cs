@@ -11,6 +11,7 @@ namespace BLL_62_BP
     public class MultaBLL_62_BP
     {
         private MultaMapper_62_BP _multaMapper_62_BP = new MultaMapper_62_BP();
+        private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
         public int AgregarMulta_62_BP(MultaBE_62_BP multa)
         {
@@ -35,6 +36,12 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _multaMapper_62_BP.ModificarMulta_62_BP(multa);
+                if (filasAfectadas > 0 && multa.pagada_62_BP)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Pago de Multa N: " + multa.id_multa_62_BP,
+                        2);
+                }
             }
             catch
             {

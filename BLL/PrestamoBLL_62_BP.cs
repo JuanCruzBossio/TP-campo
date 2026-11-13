@@ -11,6 +11,7 @@ namespace BLL_62_BP
     public class PrestamoBLL_62_BP
     {
         private PrestamoMapper_62_BP _prestamoMapper_62_BP = new PrestamoMapper_62_BP();
+        private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
 
         public int AgregarPrestamo_62_BP(PrestamoBE_62_BP prestamo)
         {
@@ -19,6 +20,12 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _prestamoMapper_62_BP.AgregarPrestamo_62_BP(prestamo);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Registro de Prestamo N: " + filasAfectadas,
+                        1);
+                }
             }
             catch
             {
@@ -48,7 +55,15 @@ namespace BLL_62_BP
         {
             try
             {
-                return _prestamoMapper_62_BP.FinalizarPrestamo_62_BP(idPrestamo);
+                int filasAfectadas = _prestamoMapper_62_BP.FinalizarPrestamo_62_BP(idPrestamo);
+                if (filasAfectadas > 0)
+                {
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Devolucion de Prestamo N: " + idPrestamo,
+                        2);
+                }
+
+                return filasAfectadas;
             }
             catch
             {
