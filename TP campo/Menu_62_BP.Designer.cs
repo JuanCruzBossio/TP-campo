@@ -58,6 +58,9 @@
             this.solicitarTextoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manejarSolicitudesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rankingLectoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rankingLibrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.morosidadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -293,9 +296,34 @@
             // 
             // reportesToolStripMenuItem
             // 
+            this.reportesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rankingLectoresToolStripMenuItem,
+            this.rankingLibrosToolStripMenuItem,
+            this.morosidadToolStripMenuItem});
             this.reportesToolStripMenuItem.Name = "reportesToolStripMenuItem";
             this.reportesToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.reportesToolStripMenuItem.Text = "Reportes";
+            //
+            // rankingLectoresToolStripMenuItem
+            //
+            this.rankingLectoresToolStripMenuItem.Name = "rankingLectoresToolStripMenuItem";
+            this.rankingLectoresToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.rankingLectoresToolStripMenuItem.Text = "Ranking de lectores";
+            this.rankingLectoresToolStripMenuItem.Click += new System.EventHandler(this.rankingLectoresToolStripMenuItem_Click);
+            //
+            // rankingLibrosToolStripMenuItem
+            //
+            this.rankingLibrosToolStripMenuItem.Name = "rankingLibrosToolStripMenuItem";
+            this.rankingLibrosToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.rankingLibrosToolStripMenuItem.Text = "Ranking de libros";
+            this.rankingLibrosToolStripMenuItem.Click += new System.EventHandler(this.rankingLibrosToolStripMenuItem_Click);
+            //
+            // morosidadToolStripMenuItem
+            //
+            this.morosidadToolStripMenuItem.Name = "morosidadToolStripMenuItem";
+            this.morosidadToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.morosidadToolStripMenuItem.Text = "Morosidad y cumplimiento";
+            this.morosidadToolStripMenuItem.Click += new System.EventHandler(this.morosidadToolStripMenuItem_Click);
             // 
             // ayudaToolStripMenuItem
             // 
@@ -351,6 +379,9 @@
         private System.Windows.Forms.ToolStripMenuItem solicitarTextoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manejarSolicitudesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rankingLectoresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rankingLibrosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem morosidadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.Label labelNombre;
         private System.Windows.Forms.ToolStripMenuItem rolesToolStripMenuItem;

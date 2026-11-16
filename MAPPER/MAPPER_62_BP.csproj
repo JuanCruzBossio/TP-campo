@@ -56,6 +56,7 @@
     <Compile Include="LibroMapper_62_BP.cs" />
     <Compile Include="LectorMapper_62_BP.cs" />
     <Compile Include="PrestamoMapper_62_BP.cs" />
+    <Compile Include="ReporteMapper_62_BP.cs" />
     <Compile Include="DetallePrestamoMapper_62_BP.cs" />
     <Compile Include="MultaMapper_62_BP.cs" />
     <Compile Include="SolicitudInsatisfechaMapper_62_BP.cs" />

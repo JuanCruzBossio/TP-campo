@@ -58,6 +58,7 @@
     <Compile Include="LibroBLL_62_BP.cs" />
     <Compile Include="LectorBLL_62_BP.cs" />
     <Compile Include="PrestamoBLL_62_BP.cs" />
+    <Compile Include="ReporteBLL_62_BP.cs" />
     <Compile Include="DetallePrestamoBLL_62_BP.cs" />
     <Compile Include="MultaBLL_62_BP.cs" />
     <Compile Include="SolicitudInsatisfechaBLL_62_BP.cs" />

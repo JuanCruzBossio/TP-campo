@@ -282,5 +282,27 @@ namespace TP_campo_62_BP
             libroForm.MdiParent = this;
             libroForm.Show();
         }
+
+        private void rankingLectoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirReporte_62_BP(ReporteGUI_62_BP.REPORTE_RANKING_LECTORES_62_BP);
+        }
+
+        private void rankingLibrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirReporte_62_BP(ReporteGUI_62_BP.REPORTE_RANKING_LIBROS_62_BP);
+        }
+
+        private void morosidadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirReporte_62_BP(ReporteGUI_62_BP.REPORTE_MOROSIDAD_62_BP);
+        }
+
+        private void AbrirReporte_62_BP(int tipoReporte)
+        {
+            ReporteGUI_62_BP reporteForm = new ReporteGUI_62_BP(tipoReporte);
+            reporteForm.MdiParent = this;
+            reporteForm.Show();
+        }
     }
 }
