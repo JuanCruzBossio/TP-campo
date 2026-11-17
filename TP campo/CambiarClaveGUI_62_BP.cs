@@ -55,22 +55,22 @@ namespace TP_campo_62_BP
                     textBoxContrasenaActual.Clear();
                     textBoxContrasenaNueva.Clear();
                     textBoxRepetirContrasenaNueva.Clear();
-                    _usuarioBLL_62_BP.Logout_62_BP();
-                    Form menu = Application.OpenForms["Menu_62_BP"];
 
+                    Menu_62_BP menu = Application.OpenForms["Menu_62_BP"] as Menu_62_BP;
                     if (menu != null)
                     {
-                        menu.Close();
+                        menu.CerrarSesion_62_BP(false);
+                        return;
                     }
 
-                    Form login = Application.OpenForms["Login_62_BP"];
+                    _usuarioBLL_62_BP.Logout_62_BP();
 
+                    Form login = Application.OpenForms["Login_62_BP"];
                     if (login != null)
                     {
                         login.Show();
                     }
 
-                    login.Show();
                     this.Close();
                 }
                 else

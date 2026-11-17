@@ -46,15 +46,29 @@ namespace TP_campo_62_BP
 
         private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CerrarSesion_62_BP(true);
+        }
+
+        public void CerrarSesion_62_BP(bool mostrarMensaje)
+        {
             try
             {
-                _usuarioBLL_62_BP.Logout_62_BP();
+                if (SessionManager_62_BP.GetInstancia_62_BP().UsuarioLogueado_62_BP != null)
+                {
+                    _usuarioBLL_62_BP.Logout_62_BP();
+                }
 
-                MostrarMensaje_62_BP("msg_logout_exito", "Sesion cerrada con exito.");
+                if (mostrarMensaje)
+                {
+                    MostrarMensaje_62_BP("msg_logout_exito", "Sesion cerrada con exito.");
+                }
 
                 Form login = Application.OpenForms["Login_62_BP"];
 
-                login.Show();
+                if (login != null)
+                {
+                    login.Show();
+                }
 
                 _cerrandoPorLogout_62_BP = true;
                 this.Close();
@@ -298,11 +312,21 @@ namespace TP_campo_62_BP
             AbrirReporte_62_BP(ReporteGUI_62_BP.REPORTE_MOROSIDAD_62_BP);
         }
 
+        private void demandaInsatisfechaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirReporte_62_BP(ReporteGUI_62_BP.REPORTE_DEMANDA_INSATISFECHA_62_BP);
+        }
+
         private void AbrirReporte_62_BP(int tipoReporte)
         {
             ReporteGUI_62_BP reporteForm = new ReporteGUI_62_BP(tipoReporte);
             reporteForm.MdiParent = this;
             reporteForm.Show();
+        }
+
+        private void bitacoraToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace TP_campo_62_BP
         public const int REPORTE_RANKING_LECTORES_62_BP = 1;
         public const int REPORTE_RANKING_LIBROS_62_BP = 2;
         public const int REPORTE_MOROSIDAD_62_BP = 3;
+        public const int REPORTE_DEMANDA_INSATISFECHA_62_BP = 4;
 
         private readonly ReporteBLL_62_BP _reporteBLL_62_BP = new ReporteBLL_62_BP();
         private readonly int _reporteInicial_62_BP;
@@ -88,12 +89,18 @@ namespace TP_campo_62_BP
                         _reporteActual_62_BP = _reporteBLL_62_BP
                             .ObtenerInformeMorosidad_62_BP(fechaDesde, fechaHasta);
                         break;
+
+                    case REPORTE_DEMANDA_INSATISFECHA_62_BP:
+                        _reporteActual_62_BP = _reporteBLL_62_BP
+                            .ObtenerDemandaInsatisfecha_62_BP(fechaDesde, fechaHasta);
+                        break;
                 }
 
                 dataGridViewReportes.DataSource = null;
                 dataGridViewReportes.Columns.Clear();
                 dataGridViewReportes.DataSource = _reporteActual_62_BP;
                 ConfigurarGrilla_62_BP();
+                TraducirColumnasReporte_62_BP();
 
                 int cantidadResultados = _reporteActual_62_BP != null
                     ? _reporteActual_62_BP.Rows.Count
@@ -220,7 +227,12 @@ namespace TP_campo_62_BP
 
                 foreach (DataColumn columna in _reporteActual_62_BP.Columns)
                 {
-                    PdfPCell celdaEncabezado = new PdfPCell(new Phrase(columna.ColumnName, fuenteEncabezado));
+                    DataGridViewColumn columnaGrilla = dataGridViewReportes.Columns[columna.ColumnName];
+                    string encabezado = columnaGrilla != null
+                        ? columnaGrilla.HeaderText
+                        : columna.ColumnName;
+
+                    PdfPCell celdaEncabezado = new PdfPCell(new Phrase(encabezado, fuenteEncabezado));
                     celdaEncabezado.BackgroundColor = BaseColor.LIGHT_GRAY;
                     tabla.AddCell(celdaEncabezado);
                 }
@@ -229,9 +241,7 @@ namespace TP_campo_62_BP
                 {
                     foreach (DataColumn columna in _reporteActual_62_BP.Columns)
                     {
-                        string valor = fila[columna] == DBNull.Value
-                            ? string.Empty
-                            : fila[columna].ToString();
+                        string valor = TraducirValorCelda_62_BP(columna.ColumnName, fila[columna]);
 
                         tabla.AddCell(new PdfPCell(new Phrase(valor, fuenteCelda)));
                     }
@@ -254,6 +264,69 @@ namespace TP_campo_62_BP
             dataGridViewReportes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
+        private void TraducirColumnasReporte_62_BP()
+        {
+            foreach (DataGridViewColumn columna in dataGridViewReportes.Columns)
+            {
+                columna.HeaderText = Texto_62_BP(columna.Name, columna.HeaderText);
+            }
+        }
+
+        private void dataGridViewReportes_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+            {
+                return;
+            }
+
+            string nombreColumna = dataGridViewReportes.Columns[e.ColumnIndex].Name;
+            string valorTraducido = TraducirValorCelda_62_BP(nombreColumna, e.Value);
+
+            if (!string.Equals(valorTraducido, e.Value != null ? e.Value.ToString() : string.Empty, StringComparison.Ordinal))
+            {
+                e.Value = valorTraducido;
+                e.FormattingApplied = true;
+            }
+        }
+
+        private string TraducirValorCelda_62_BP(string nombreColumna, object valor)
+        {
+            if (valor == null || valor == DBNull.Value)
+            {
+                return string.Empty;
+            }
+
+            string texto = valor.ToString();
+
+            if (nombreColumna == "EstadoSolicitud")
+            {
+                switch (texto)
+                {
+                    case "Pendiente":
+                        return Texto_62_BP("estado_solicitud_pendiente", "Pendiente");
+                    case "Aceptada":
+                        return Texto_62_BP("estado_solicitud_aceptada", "Aceptada");
+                    case "Completada":
+                        return Texto_62_BP("estado_solicitud_completada", "Completada");
+                }
+            }
+
+            if (nombreColumna == "EstadoDeCuenta")
+            {
+                if (texto == "Con deuda")
+                {
+                    return Texto_62_BP("estado_cuenta_con_deuda", "Con deuda");
+                }
+
+                if (texto == "Sin deuda")
+                {
+                    return Texto_62_BP("estado_cuenta_sin_deuda", "Sin deuda");
+                }
+            }
+
+            return texto;
+        }
+
         private void LimpiarResultados_62_BP()
         {
             _reporteActual_62_BP = null;
@@ -273,7 +346,8 @@ namespace TP_campo_62_BP
                 comboBoxReporte.Items.Add(Texto_62_BP("reporte_ranking_lectores", "Ranking de lectores"));
                 comboBoxReporte.Items.Add(Texto_62_BP("reporte_ranking_libros", "Ranking de libros"));
                 comboBoxReporte.Items.Add(Texto_62_BP("reporte_morosidad", "Morosidad y cumplimiento"));
-                comboBoxReporte.SelectedIndex = indiceSeleccionado >= 0 && indiceSeleccionado < 3
+                comboBoxReporte.Items.Add(Texto_62_BP("reporte_demanda_insatisfecha", "Demanda insatisfecha"));
+                comboBoxReporte.SelectedIndex = indiceSeleccionado >= 0 && indiceSeleccionado < 4
                     ? indiceSeleccionado
                     : 0;
             }
@@ -291,6 +365,8 @@ namespace TP_campo_62_BP
                     return Texto_62_BP("reporte_ranking_libros", "Ranking de libros");
                 case REPORTE_MOROSIDAD_62_BP:
                     return Texto_62_BP("reporte_morosidad", "Morosidad y cumplimiento");
+                case REPORTE_DEMANDA_INSATISFECHA_62_BP:
+                    return Texto_62_BP("reporte_demanda_insatisfecha", "Demanda insatisfecha");
                 default:
                     return Texto_62_BP("reporte_ranking_lectores", "Ranking de lectores");
             }
@@ -304,6 +380,8 @@ namespace TP_campo_62_BP
                     return "RankingLibros";
                 case REPORTE_MOROSIDAD_62_BP:
                     return "Morosidad";
+                case REPORTE_DEMANDA_INSATISFECHA_62_BP:
+                    return "DemandaInsatisfecha";
                 default:
                     return "RankingLectores";
             }
@@ -312,7 +390,7 @@ namespace TP_campo_62_BP
         private bool EsReporteValido_62_BP(int reporte)
         {
             return reporte >= REPORTE_RANKING_LECTORES_62_BP
-                && reporte <= REPORTE_MOROSIDAD_62_BP;
+                && reporte <= REPORTE_DEMANDA_INSATISFECHA_62_BP;
         }
 
         protected override void TraducirFormulario_62_BP(Idioma_62_BP idioma_62_BP)
@@ -326,6 +404,11 @@ namespace TP_campo_62_BP
             if (comboBoxReporte != null)
             {
                 CargarOpcionesReporte_62_BP(indiceSeleccionado);
+            }
+
+            if (dataGridViewReportes != null)
+            {
+                TraducirColumnasReporte_62_BP();
             }
         }
     }

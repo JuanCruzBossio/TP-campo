@@ -123,6 +123,7 @@ namespace TP_campo_62_BP
             this.dataGridViewReportes.Name = "dataGridViewReportes";
             this.dataGridViewReportes.Size = new System.Drawing.Size(1071, 474);
             this.dataGridViewReportes.TabIndex = 9;
+            this.dataGridViewReportes.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewReportes_CellFormatting);
             // 
             // labelResumen
             // 

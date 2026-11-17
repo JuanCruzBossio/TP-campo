@@ -170,6 +170,31 @@ namespace MAPPER_62_BP
             return EjecutarReporte_62_BP(query, fechaDesde, fechaHasta);
         }
 
+        public DataTable ObtenerDemandaInsatisfecha_62_BP(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string query = @"
+                SELECT
+                    s.fecha_62_BP AS FechaSolicitud,
+                    s.dni_lector_62_BP AS DNI,
+                    l.titulo_62_BP AS TituloSolicitado,
+                    l.autor_62_BP AS Autor,
+                    l.isbn_62_BP AS ISBN,
+                    CASE
+                        WHEN s.completada_62_BP = 1 THEN 'Completada'
+                        WHEN s.aceptada_62_BP = 1 THEN 'Aceptada'
+                        ELSE 'Pendiente'
+                    END AS EstadoSolicitud,
+                    s.fecha_completada_62_BP AS FechaCompletada
+                FROM SolicitudInsatisfecha_62_BP s
+                INNER JOIN Libro_62_BP l
+                    ON l.id_libro_62_BP = s.id_libro_62_BP
+                WHERE s.fecha_62_BP >= @fechaDesde
+                  AND s.fecha_62_BP < @fechaHastaExclusiva
+                ORDER BY s.fecha_62_BP DESC, s.id_solicitud_62_BP DESC;";
+
+            return EjecutarReporte_62_BP(query, fechaDesde, fechaHasta);
+        }
+
         private DataTable EjecutarReporte_62_BP(string query, DateTime fechaDesde, DateTime fechaHasta)
         {
             SqlParameter[] parametros =

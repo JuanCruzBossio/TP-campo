@@ -50,6 +50,20 @@ namespace BLL_62_BP
             }
         }
 
+        public DataTable ObtenerDemandaInsatisfecha_62_BP(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            ValidarPeriodo_62_BP(fechaDesde, fechaHasta);
+
+            try
+            {
+                return _reporteMapper_62_BP.ObtenerDemandaInsatisfecha_62_BP(fechaDesde, fechaHasta);
+            }
+            catch
+            {
+                throw new Exception("No se pudo obtener el informe de demanda insatisfecha.");
+            }
+        }
+
         private void ValidarPeriodo_62_BP(DateTime fechaDesde, DateTime fechaHasta)
         {
             if (fechaDesde.Date > fechaHasta.Date)
