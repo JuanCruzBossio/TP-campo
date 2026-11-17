@@ -30,6 +30,8 @@
         {
             this.labelDNI = new System.Windows.Forms.Label();
             this.textBoxDNI = new System.Windows.Forms.TextBox();
+            this.labelNombreLector = new System.Windows.Forms.Label();
+            this.textBoxNombreLector = new System.Windows.Forms.TextBox();
             this.buttonValidar = new System.Windows.Forms.Button();
             this.buttonAgregarLibro = new System.Windows.Forms.Button();
             this.buttonRegistrarPrestamo = new System.Windows.Forms.Button();
@@ -65,6 +67,25 @@
             this.textBoxDNI.Name = "textBoxDNI";
             this.textBoxDNI.Size = new System.Drawing.Size(163, 20);
             this.textBoxDNI.TabIndex = 1;
+            this.textBoxDNI.TextChanged += new System.EventHandler(this.textBoxDNI_TextChanged);
+            //
+            // labelNombreLector
+            //
+            this.labelNombreLector.AutoSize = true;
+            this.labelNombreLector.Location = new System.Drawing.Point(31, 72);
+            this.labelNombreLector.Name = "labelNombreLector";
+            this.labelNombreLector.Size = new System.Drawing.Size(44, 13);
+            this.labelNombreLector.TabIndex = 15;
+            this.labelNombreLector.Text = "Lector";
+            //
+            // textBoxNombreLector
+            //
+            this.textBoxNombreLector.Location = new System.Drawing.Point(108, 69);
+            this.textBoxNombreLector.Name = "textBoxNombreLector";
+            this.textBoxNombreLector.ReadOnly = true;
+            this.textBoxNombreLector.Size = new System.Drawing.Size(244, 20);
+            this.textBoxNombreLector.TabIndex = 16;
+            this.textBoxNombreLector.TabStop = false;
             // 
             // buttonValidar
             // 
@@ -211,6 +232,8 @@
             this.Controls.Add(this.buttonAgregarLibro);
             this.Controls.Add(this.buttonRegistrarPrestamo);
             this.Controls.Add(this.buttonValidar);
+            this.Controls.Add(this.textBoxNombreLector);
+            this.Controls.Add(this.labelNombreLector);
             this.Controls.Add(this.textBoxDNI);
             this.Controls.Add(this.labelDNI);
             this.Name = "PrestamoGUI_62_BP";
@@ -227,6 +250,8 @@
 
         private System.Windows.Forms.Label labelDNI;
         private System.Windows.Forms.TextBox textBoxDNI;
+        private System.Windows.Forms.Label labelNombreLector;
+        private System.Windows.Forms.TextBox textBoxNombreLector;
         private System.Windows.Forms.Button buttonValidar;
         private System.Windows.Forms.Button buttonAgregarLibro;
         private System.Windows.Forms.Button buttonRegistrarPrestamo;

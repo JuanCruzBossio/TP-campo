@@ -228,6 +228,7 @@ namespace TP_campo_62_BP
                 dataGridViewLibrosSeleccion.Rows.Clear();
                 dataGridViewLibrosFiltrados.Rows.Clear();
                 textBoxDNI.Clear();
+                textBoxNombreLector.Clear();
                 textBoxTitulo.Clear();
                 textBoxAutor.Clear();
                 textBoxGenero.Clear();
@@ -421,6 +422,7 @@ namespace TP_campo_62_BP
         private void buttonValidar_Click(object sender, EventArgs e)
         {
             string dni = textBoxDNI.Text.Trim();
+            textBoxNombreLector.Clear();
 
             ResultadoValidacionLector_62_BP resultado = ValidarLectorParaPrestamo_62_BP(dni);
 
@@ -443,6 +445,11 @@ namespace TP_campo_62_BP
                 DeshabilitarFiltros();
                 return;
             }
+
+            textBoxNombreLector.Text = string.Format(
+                "{0} {1}",
+                resultado.Lector.nombre_62_BP,
+                resultado.Lector.apellido_62_BP).Trim();
 
             if (!resultado.PuedeSolicitarPrestamo)
             {
@@ -474,6 +481,11 @@ namespace TP_campo_62_BP
             dniValidado_62_BP = true;
             textBoxDNI.ReadOnly = true;
             HabilitarFiltros();
+        }
+
+        private void textBoxDNI_TextChanged(object sender, EventArgs e)
+        {
+            textBoxNombreLector.Clear();
         }
 
         private void GuardarComprobantePrestamo_62_BP(int idPrestamo, PrestamoBE_62_BP prestamo)

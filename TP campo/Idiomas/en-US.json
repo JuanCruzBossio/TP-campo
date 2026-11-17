@@ -401,6 +401,7 @@
   "ventas_prestamo_devolver": "Return",
   "titulo_prestamo": "Loans",
   "lbl_dni_lector": "Reader ID",
+  "PrestamoGUI_62_BP.labelNombreLector": "Reader",
   "btn_validar": "Validate",
   "titulo_agregar_lector": "Register Reader",
   "lbl_dni": "ID:",

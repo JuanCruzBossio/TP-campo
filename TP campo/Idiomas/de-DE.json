@@ -401,6 +401,7 @@
   "ventas_prestamo_devolver": "Zurueckgeben",
   "titulo_prestamo": "Darlehen",
   "lbl_dni_lector": "Lektor-ID",
+  "PrestamoGUI_62_BP.labelNombreLector": "Lektor",
   "btn_validar": "Validieren",
   "titulo_agregar_lector": "Lektor registering",
   "lbl_dni": "ID:",

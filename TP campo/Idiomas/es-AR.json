@@ -401,6 +401,7 @@
   "ventas_prestamo_devolver": "Devolver",
   "titulo_prestamo": "Prestamos",
   "lbl_dni_lector": "DNI Lector",
+  "PrestamoGUI_62_BP.labelNombreLector": "Lector",
   "btn_validar": "Validar",
   "titulo_agregar_lector": "Alta de Lector",
   "titulo_validar_lector": "Validacion de Lector",
