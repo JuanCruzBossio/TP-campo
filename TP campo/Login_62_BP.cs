@@ -28,6 +28,12 @@ namespace TP_campo_62_BP
         PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         RolBLL_62_BP _rolBLL_62_BP = new RolBLL_62_BP();
         UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
+        LectorBLL_62_BP _lectorBLL_62_BP = new LectorBLL_62_BP();
+        LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
+        PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
+        DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
+        MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
+        SolicitudInsatisfechaBLL_62_BP _solicitudBLL_62_BP = new SolicitudInsatisfechaBLL_62_BP();
 
         //Eventos
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -117,6 +123,12 @@ namespace TP_campo_62_BP
             if (_patenteBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
             if (_rolBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
             if (_usuarioBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_lectorBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_libroBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_prestamoBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_detallePrestamoBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_multaBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
+            if (_solicitudBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0) return true;
 
             var erroresDVV = _dvvBLL_62_BP.BuscarErroresDVV_62_BP();
             if (erroresDVV != null && erroresDVV.Count > 0)

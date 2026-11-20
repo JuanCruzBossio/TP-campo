@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BE_62_BP;
 using MAPPER_62_BP;
+using BLL;
+using SEG_62_BP;
 
 namespace BLL_62_BP
 {
@@ -12,6 +14,8 @@ namespace BLL_62_BP
     {
         private MultaMapper_62_BP _multaMapper_62_BP = new MultaMapper_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG_62_BP = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorBLL_62_BP = new DigitoVerificadorBLL_62_BP();
 
         public int AgregarMulta_62_BP(MultaBE_62_BP multa)
         {
@@ -20,6 +24,10 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _multaMapper_62_BP.AgregarMulta_62_BP(multa);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarMultaDVH_62_BP(filasAfectadas);
+                }
             }
             catch
             {
@@ -36,6 +44,10 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _multaMapper_62_BP.ModificarMulta_62_BP(multa);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarMultaDVH_62_BP(multa.id_multa_62_BP);
+                }
                 if (filasAfectadas > 0 && multa.pagada_62_BP)
                 {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
@@ -179,6 +191,39 @@ namespace BLL_62_BP
             }
 
             return multasGeneradas;
+        }
+
+        public int ActualizarMultaDVH_62_BP(int idMulta)
+        {
+            MultaBE_62_BP multa = _multaMapper_62_BP.BuscarMulta_62_BP(id: idMulta);
+            if (multa == null) return 0;
+            string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(multa.ObtenerCadenaDVH_62_BP());
+            int filas = _multaMapper_62_BP.ActualizarDVH_62_BP(idMulta, dvh);
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Multa_62_BP");
+            return filas;
+        }
+
+        public int RecalcularDVH_62_BP()
+        {
+            int filas = 0;
+            foreach (MultaBE_62_BP multa in _multaMapper_62_BP.BuscarMultas_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(multa.ObtenerCadenaDVH_62_BP());
+                filas += _multaMapper_62_BP.ActualizarDVH_62_BP(multa.id_multa_62_BP, dvh);
+            }
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Multa_62_BP");
+            return filas;
+        }
+
+        public List<MultaBE_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<MultaBE_62_BP> errores = new List<MultaBE_62_BP>();
+            foreach (MultaBE_62_BP multa in _multaMapper_62_BP.BuscarMultas_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(multa.ObtenerCadenaDVH_62_BP());
+                if (dvh != _multaMapper_62_BP.BuscarDVH_62_BP(multa.id_multa_62_BP)) errores.Add(multa);
+            }
+            return errores;
         }
     }
 }

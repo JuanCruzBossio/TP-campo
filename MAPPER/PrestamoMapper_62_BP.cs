@@ -192,5 +192,26 @@ namespace MAPPER_62_BP
 
             return idsLibros;
         }
+
+        public int ActualizarDVH_62_BP(int idPrestamo, string dvh)
+        {
+            string query = "UPDATE Prestamo_62_BP SET DVH_62_BP = @dvh WHERE id_prestamo_62_BP = @id";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idPrestamo),
+                new SqlParameter("@dvh", dvh)
+            };
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public string BuscarDVH_62_BP(int idPrestamo)
+        {
+            string query = "SELECT DVH_62_BP FROM Prestamo_62_BP WHERE id_prestamo_62_BP = @id";
+            SqlParameter[] parametros = { new SqlParameter("@id", idPrestamo) };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            return tabla != null && tabla.Rows.Count > 0
+                ? tabla.Rows[0]["DVH_62_BP"].ToString()
+                : string.Empty;
+        }
     }
 }

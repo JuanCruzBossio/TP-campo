@@ -108,5 +108,54 @@ namespace MAPPER_62_BP
 
             return detalles;
         }
+
+        public List<DetallePrestamoBE_62_BP> BuscarTodosLosDetalles_62_BP()
+        {
+            string query = "SELECT id_libro_62_BP, id_prestamo_62_BP, devuelto_62_BP, perdido_62_BP FROM DetallePrestamo_62_BP ORDER BY id_prestamo_62_BP, id_libro_62_BP";
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
+            List<DetallePrestamoBE_62_BP> detalles = new List<DetallePrestamoBE_62_BP>();
+
+            if (tabla != null)
+            {
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    detalles.Add(new DetallePrestamoBE_62_BP
+                    {
+                        id_libro_62_BP = Convert.ToInt32(fila["id_libro_62_BP"]),
+                        id_prestamo_62_BP = Convert.ToInt32(fila["id_prestamo_62_BP"]),
+                        devuelto_62_BP = Convert.ToBoolean(fila["devuelto_62_BP"]),
+                        perdido_62_BP = Convert.ToBoolean(fila["perdido_62_BP"])
+                    });
+                }
+            }
+
+            return detalles;
+        }
+
+        public int ActualizarDVH_62_BP(int idLibro, int idPrestamo, string dvh)
+        {
+            string query = "UPDATE DetallePrestamo_62_BP SET DVH_62_BP = @dvh WHERE id_libro_62_BP = @idLibro AND id_prestamo_62_BP = @idPrestamo";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idLibro", idLibro),
+                new SqlParameter("@idPrestamo", idPrestamo),
+                new SqlParameter("@dvh", dvh)
+            };
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public string BuscarDVH_62_BP(int idLibro, int idPrestamo)
+        {
+            string query = "SELECT DVH_62_BP FROM DetallePrestamo_62_BP WHERE id_libro_62_BP = @idLibro AND id_prestamo_62_BP = @idPrestamo";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@idLibro", idLibro),
+                new SqlParameter("@idPrestamo", idPrestamo)
+            };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            return tabla != null && tabla.Rows.Count > 0
+                ? tabla.Rows[0]["DVH_62_BP"].ToString()
+                : string.Empty;
+        }
     }
 }

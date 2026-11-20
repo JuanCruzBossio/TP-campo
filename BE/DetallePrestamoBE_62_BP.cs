@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DIGITO_62_BP;
 
 namespace BE_62_BP
 {
-    public class DetallePrestamoBE_62_BP
+    public class DetallePrestamoBE_62_BP : IDigitoVerificadorHorizontal_62_BP
     {
         public int id_libro_62_BP { get; set; }
         public int id_prestamo_62_BP { get; set; }
         public bool devuelto_62_BP { get; set; }
         public bool perdido_62_BP { get; set; }
+
+        public string ObtenerCadenaDVH_62_BP()
+        {
+            return id_libro_62_BP.ToString() +
+                   id_prestamo_62_BP.ToString() +
+                   devuelto_62_BP.ToString() +
+                   perdido_62_BP.ToString();
+        }
     }
 }

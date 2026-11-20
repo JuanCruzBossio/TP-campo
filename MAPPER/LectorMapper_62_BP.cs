@@ -77,5 +77,51 @@ namespace MAPPER_62_BP
 
             return null;
         }
+
+        public List<LectorBE_62_BP> BuscarLectores_62_BP()
+        {
+            string query = "SELECT dni_62_BP, nombre_62_BP, apellido_62_BP, fecha_nacimiento_62_BP FROM Lector_62_BP ORDER BY dni_62_BP";
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, null);
+            List<LectorBE_62_BP> lectores = new List<LectorBE_62_BP>();
+
+            if (tabla != null)
+            {
+                foreach (DataRow fila in tabla.Rows)
+                {
+                    lectores.Add(new LectorBE_62_BP
+                    {
+                        dni_62_BP = fila["dni_62_BP"].ToString(),
+                        nombre_62_BP = fila["nombre_62_BP"].ToString(),
+                        apellido_62_BP = fila["apellido_62_BP"].ToString(),
+                        fecha_nacimiento_62_BP = fila["fecha_nacimiento_62_BP"] == DBNull.Value
+                            ? (DateTime?)null
+                            : Convert.ToDateTime(fila["fecha_nacimiento_62_BP"])
+                    });
+                }
+            }
+
+            return lectores;
+        }
+
+        public int ActualizarDVH_62_BP(string dni, string dvh)
+        {
+            string query = "UPDATE Lector_62_BP SET DVH_62_BP = @dvh WHERE dni_62_BP = @dni";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@dni", dni),
+                new SqlParameter("@dvh", dvh)
+            };
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public string BuscarDVH_62_BP(string dni)
+        {
+            string query = "SELECT DVH_62_BP FROM Lector_62_BP WHERE dni_62_BP = @dni";
+            SqlParameter[] parametros = { new SqlParameter("@dni", dni) };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            return tabla != null && tabla.Rows.Count > 0
+                ? tabla.Rows[0]["DVH_62_BP"].ToString()
+                : string.Empty;
+        }
     }
 }

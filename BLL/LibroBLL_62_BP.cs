@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using BE_62_BP;
 using MAPPER_62_BP;
+using BLL;
+using SEG_62_BP;
 
 namespace BLL_62_BP
 {
     public class LibroBLL_62_BP
     {
         private LibroMapper_62_BP _libroMapper_62_BP = new LibroMapper_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG_62_BP = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorBLL_62_BP = new DigitoVerificadorBLL_62_BP();
 
         public int AgregarLibro_62_BP(LibroBE_62_BP libro)
         {
@@ -19,6 +23,10 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _libroMapper_62_BP.AgregarLibro_62_BP(libro);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarLibroDVH_62_BP(filasAfectadas);
+                }
             }
             catch
             {
@@ -35,6 +43,10 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _libroMapper_62_BP.ModificarLibro_62_BP(libro);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarLibroDVH_62_BP(libro.id_libro_62_BP);
+                }
             }
             catch
             {
@@ -156,7 +168,9 @@ namespace BLL_62_BP
         {
             try
             {
-                return _libroMapper_62_BP.MarcarPrestado_62_BP(idLibro);
+                int filas = _libroMapper_62_BP.MarcarPrestado_62_BP(idLibro);
+                if (filas > 0) ActualizarLibroDVH_62_BP(idLibro);
+                return filas;
             }
             catch
             {
@@ -168,12 +182,47 @@ namespace BLL_62_BP
         {
             try
             {
-                return _libroMapper_62_BP.MarcarDisponible_62_BP(idLibro);
+                int filas = _libroMapper_62_BP.MarcarDisponible_62_BP(idLibro);
+                if (filas > 0) ActualizarLibroDVH_62_BP(idLibro);
+                return filas;
             }
             catch
             {
                 throw new Exception("No se pudo marcar el libro como disponible.");
             }
+        }
+
+        public int ActualizarLibroDVH_62_BP(int idLibro)
+        {
+            LibroBE_62_BP libro = _libroMapper_62_BP.BuscarLibro_62_BP(id: idLibro);
+            if (libro == null) return 0;
+            string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(libro.ObtenerCadenaDVH_62_BP());
+            int filas = _libroMapper_62_BP.ActualizarDVH_62_BP(idLibro, dvh);
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Libro_62_BP");
+            return filas;
+        }
+
+        public int RecalcularDVH_62_BP()
+        {
+            int filas = 0;
+            foreach (LibroBE_62_BP libro in _libroMapper_62_BP.BuscarTodosLosLibros_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(libro.ObtenerCadenaDVH_62_BP());
+                filas += _libroMapper_62_BP.ActualizarDVH_62_BP(libro.id_libro_62_BP, dvh);
+            }
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Libro_62_BP");
+            return filas;
+        }
+
+        public List<LibroBE_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<LibroBE_62_BP> errores = new List<LibroBE_62_BP>();
+            foreach (LibroBE_62_BP libro in _libroMapper_62_BP.BuscarTodosLosLibros_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(libro.ObtenerCadenaDVH_62_BP());
+                if (dvh != _libroMapper_62_BP.BuscarDVH_62_BP(libro.id_libro_62_BP)) errores.Add(libro);
+            }
+            return errores;
         }
     }
 }

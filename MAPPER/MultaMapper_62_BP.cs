@@ -162,5 +162,26 @@ namespace MAPPER_62_BP
 
             return multas;
         }
+
+        public int ActualizarDVH_62_BP(int idMulta, string dvh)
+        {
+            string query = "UPDATE Multa_62_BP SET DVH_62_BP = @dvh WHERE id_multa_62_BP = @id";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idMulta),
+                new SqlParameter("@dvh", dvh)
+            };
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public string BuscarDVH_62_BP(int idMulta)
+        {
+            string query = "SELECT DVH_62_BP FROM Multa_62_BP WHERE id_multa_62_BP = @id";
+            SqlParameter[] parametros = { new SqlParameter("@id", idMulta) };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            return tabla != null && tabla.Rows.Count > 0
+                ? tabla.Rows[0]["DVH_62_BP"].ToString()
+                : string.Empty;
+        }
     }
 }

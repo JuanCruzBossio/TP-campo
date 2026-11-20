@@ -17,7 +17,9 @@ namespace MAPPER_62_BP
         private static readonly HashSet<string> TablasPermitidas = new HashSet<string>
         {
             "Bitacora_62_BP", "Familia_62_BP", "Patente_62_BP",
-            "Rol_62_BP", "Usuario_62_BP"
+            "Rol_62_BP", "Usuario_62_BP", "Lector_62_BP",
+            "Libro_62_BP", "Prestamo_62_BP", "DetallePrestamo_62_BP",
+            "Multa_62_BP", "SolicitudInsatisfecha_62_BP"
         };
 
         private static readonly Dictionary<string, string> OrdenPorTabla = new Dictionary<string, string>
@@ -26,7 +28,13 @@ namespace MAPPER_62_BP
             { "Familia_62_BP", "ORDER BY IdFamilia_62_BP" },
             { "Patente_62_BP", "ORDER BY IdPatente_62_BP" },
             { "Rol_62_BP", "ORDER BY IdRol_62_BP" },
-            { "Usuario_62_BP", "ORDER BY dni_62_BP" }
+            { "Usuario_62_BP", "ORDER BY dni_62_BP" },
+            { "Lector_62_BP", "ORDER BY dni_62_BP" },
+            { "Libro_62_BP", "ORDER BY id_libro_62_BP" },
+            { "Prestamo_62_BP", "ORDER BY id_prestamo_62_BP" },
+            { "DetallePrestamo_62_BP", "ORDER BY id_prestamo_62_BP, id_libro_62_BP" },
+            { "Multa_62_BP", "ORDER BY id_multa_62_BP" },
+            { "SolicitudInsatisfecha_62_BP", "ORDER BY id_solicitud_62_BP" }
         };
 
         private DIGITO_62_BP.DigitoVerificadorVertical_62_BP MapearDVV(DataRow fila)

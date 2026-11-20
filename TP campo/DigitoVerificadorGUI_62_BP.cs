@@ -30,6 +30,12 @@ namespace TP_campo
         PatenteBLL_62_BP _patenteBLL_62_BP = new PatenteBLL_62_BP();
         RolBLL_62_BP _rolBLL_62_BP = new RolBLL_62_BP();
         UsuarioBLL_62_BP _usuarioBLL_62_BP = new UsuarioBLL_62_BP();
+        LectorBLL_62_BP _lectorBLL_62_BP = new LectorBLL_62_BP();
+        LibroBLL_62_BP _libroBLL_62_BP = new LibroBLL_62_BP();
+        PrestamoBLL_62_BP _prestamoBLL_62_BP = new PrestamoBLL_62_BP();
+        DetallePrestamoBLL_62_BP _detallePrestamoBLL_62_BP = new DetallePrestamoBLL_62_BP();
+        MultaBLL_62_BP _multaBLL_62_BP = new MultaBLL_62_BP();
+        SolicitudInsatisfechaBLL_62_BP _solicitudBLL_62_BP = new SolicitudInsatisfechaBLL_62_BP();
         List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP> _listaErroresDVV_62_BP = new List<DIGITO_62_BP.DigitoVerificadorVertical_62_BP>();
         DIGITO_62_BP.DigitoVerificadorVertical_62_BP _dvvSeleccionado_62_BP = new DIGITO_62_BP.DigitoVerificadorVertical_62_BP();
         
@@ -68,6 +74,24 @@ namespace TP_campo
             AgregarTablaConErrorDVH_62_BP(
                 "Usuario_62_BP",
                 _usuarioBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Lector_62_BP",
+                _lectorBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Libro_62_BP",
+                _libroBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Prestamo_62_BP",
+                _prestamoBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "DetallePrestamo_62_BP",
+                _detallePrestamoBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "Multa_62_BP",
+                _multaBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
+            AgregarTablaConErrorDVH_62_BP(
+                "SolicitudInsatisfecha_62_BP",
+                _solicitudBLL_62_BP.BuscarErrorDVH_62_BP()?.Count > 0);
             dataGridViewErrores.DataSource = _listaErroresDVV_62_BP;
             dataGridViewErrores.Columns["DVV_62_BP"].Visible = false;
 
@@ -103,6 +127,7 @@ namespace TP_campo
             try
             {
                 int resultado = 0;
+                bool tablaProcesada = false;
 
                 foreach (DIGITO_62_BP.DigitoVerificadorVertical_62_BP tabla in _listaErroresDVV_62_BP)
                 {
@@ -110,22 +135,51 @@ namespace TP_campo
                     {
                         case "Bitacora_62_BP":
                             resultado += _bitacoraBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
                             break;
                         case "Familia_62_BP":
                             resultado += _familiaBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
                             break;
                         case "Patente_62_BP":
                             resultado += _patenteBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
                             break;
                         case "Rol_62_BP":
                             resultado += _rolBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
                             break;
                         case "Usuario_62_BP":
                             resultado += _usuarioBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "Lector_62_BP":
+                            resultado += _lectorBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "Libro_62_BP":
+                            resultado += _libroBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "Prestamo_62_BP":
+                            resultado += _prestamoBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "DetallePrestamo_62_BP":
+                            resultado += _detallePrestamoBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "Multa_62_BP":
+                            resultado += _multaBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
+                            break;
+                        case "SolicitudInsatisfecha_62_BP":
+                            resultado += _solicitudBLL_62_BP.RecalcularDVH_62_BP();
+                            tablaProcesada = true;
                             break;
                     }
                 }
-                if (resultado > 0)
+                if (tablaProcesada)
                 {
                     MostrarMensaje_62_BP("msg_dvv_recalculados", "Digitos verificadores recalculados correctamente.");
                     LlenarTablaErrores();

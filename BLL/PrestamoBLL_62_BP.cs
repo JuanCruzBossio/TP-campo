@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BE_62_BP;
 using MAPPER_62_BP;
+using BLL;
+using SEG_62_BP;
 
 namespace BLL_62_BP
 {
@@ -12,6 +14,8 @@ namespace BLL_62_BP
     {
         private PrestamoMapper_62_BP _prestamoMapper_62_BP = new PrestamoMapper_62_BP();
         private BitacoraBLL_62_BP _bitacoraBLL_62_BP = new BitacoraBLL_62_BP();
+        private Encriptacion_62_BP _encriptacionSEG_62_BP = new Encriptacion_62_BP();
+        private DigitoVerificadorBLL_62_BP _digitoVerificadorBLL_62_BP = new DigitoVerificadorBLL_62_BP();
 
         public int AgregarPrestamo_62_BP(PrestamoBE_62_BP prestamo)
         {
@@ -22,6 +26,7 @@ namespace BLL_62_BP
                 filasAfectadas = _prestamoMapper_62_BP.AgregarPrestamo_62_BP(prestamo);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarPrestamoDVH_62_BP(filasAfectadas);
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
                         "Prestamo",
                         "AgregarPrestamo",
@@ -44,6 +49,10 @@ namespace BLL_62_BP
             try
             {
                 filasAfectadas = _prestamoMapper_62_BP.ModificarPrestamo_62_BP(prestamo);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarPrestamoDVH_62_BP(prestamo.id_prestamo_62_BP);
+                }
             }
             catch
             {
@@ -60,6 +69,7 @@ namespace BLL_62_BP
                 int filasAfectadas = _prestamoMapper_62_BP.FinalizarPrestamo_62_BP(idPrestamo);
                 if (filasAfectadas > 0)
                 {
+                    ActualizarPrestamoDVH_62_BP(idPrestamo);
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
                         "Prestamo",
                         "FinalizarPrestamo",
@@ -179,6 +189,39 @@ namespace BLL_62_BP
             }
 
             return total;
+        }
+
+        public int ActualizarPrestamoDVH_62_BP(int idPrestamo)
+        {
+            PrestamoBE_62_BP prestamo = _prestamoMapper_62_BP.BuscarPrestamo_62_BP(id: idPrestamo);
+            if (prestamo == null) return 0;
+            string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(prestamo.ObtenerCadenaDVH_62_BP());
+            int filas = _prestamoMapper_62_BP.ActualizarDVH_62_BP(idPrestamo, dvh);
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Prestamo_62_BP");
+            return filas;
+        }
+
+        public int RecalcularDVH_62_BP()
+        {
+            int filas = 0;
+            foreach (PrestamoBE_62_BP prestamo in _prestamoMapper_62_BP.BuscarPrestamos_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(prestamo.ObtenerCadenaDVH_62_BP());
+                filas += _prestamoMapper_62_BP.ActualizarDVH_62_BP(prestamo.id_prestamo_62_BP, dvh);
+            }
+            _digitoVerificadorBLL_62_BP.ActualizarTablaDVV_62_BP("Prestamo_62_BP");
+            return filas;
+        }
+
+        public List<PrestamoBE_62_BP> BuscarErrorDVH_62_BP()
+        {
+            List<PrestamoBE_62_BP> errores = new List<PrestamoBE_62_BP>();
+            foreach (PrestamoBE_62_BP prestamo in _prestamoMapper_62_BP.BuscarPrestamos_62_BP())
+            {
+                string dvh = _encriptacionSEG_62_BP.EncriptarConSHA256_62_BP(prestamo.ObtenerCadenaDVH_62_BP());
+                if (dvh != _prestamoMapper_62_BP.BuscarDVH_62_BP(prestamo.id_prestamo_62_BP)) errores.Add(prestamo);
+            }
+            return errores;
         }
     }
 }

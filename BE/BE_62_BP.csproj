@@ -50,5 +50,11 @@
     <Compile Include="SolicitudInsatisfechaBE_62_BP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DIGITO\DIGITO_62_BP.csproj">
+      <Project>{8A3C5D7E-1F2B-4A6E-9D8C-7B4F3A2E1C5D}</Project>
+      <Name>DIGITO_62_BP</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

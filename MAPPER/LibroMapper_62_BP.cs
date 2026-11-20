@@ -225,5 +225,26 @@ namespace MAPPER_62_BP
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
         }
+
+        public int ActualizarDVH_62_BP(int idLibro, string dvh)
+        {
+            string query = "UPDATE Libro_62_BP SET DVH_62_BP = @dvh WHERE id_libro_62_BP = @id";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idLibro),
+                new SqlParameter("@dvh", dvh)
+            };
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public string BuscarDVH_62_BP(int idLibro)
+        {
+            string query = "SELECT DVH_62_BP FROM Libro_62_BP WHERE id_libro_62_BP = @id";
+            SqlParameter[] parametros = { new SqlParameter("@id", idLibro) };
+            DataTable tabla = _acceso_62_BP.leer_62_BP(query, parametros);
+            return tabla != null && tabla.Rows.Count > 0
+                ? tabla.Rows[0]["DVH_62_BP"].ToString()
+                : string.Empty;
+        }
     }
 }
