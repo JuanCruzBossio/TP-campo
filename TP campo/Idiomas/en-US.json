@@ -531,5 +531,17 @@
   "msg_listado_libros_modificacion_sin_cambios": "The selected book could not be updated.",
   "msg_listado_libros_modificacion_exitosa": "Book updated successfully.",
   "msg_listado_libros_modificacion_error": "The book could not be updated: {0}",
-  "maestros_libros": "Books"
+  "maestros_libros": "Books",
+  "titulo_listado_lectores": "Reader list",
+  "grupo_edicion_lector": "Selected reader editing",
+  "btn_agregar_lector": "Add reader",
+  "col_dni": "ID",
+  "col_nombre": "First name",
+  "col_apellido": "Last name",
+  "col_fecha_nacimiento": "Date of birth",
+  "msg_listado_lectores_busqueda_error": "Readers could not be retrieved: {0}",
+  "msg_listado_lectores_modificacion_sin_cambios": "The selected reader could not be updated.",
+  "msg_listado_lectores_modificacion_exitosa": "Reader updated successfully.",
+  "msg_listado_lectores_modificacion_error": "The reader could not be updated: {0}",
+  "maestros_lectores_listado": "List"
 }

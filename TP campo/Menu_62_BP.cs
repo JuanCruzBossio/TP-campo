@@ -111,6 +111,7 @@ namespace TP_campo_62_BP
             despacharToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_multas", "Multas");
             lectoresToolStripMenuItem.Text = Texto_62_BP("maestros_lectores", "Lectores");
             agregarLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_agregar", "Agregar");
+            listaLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_listado", "Listado");
             librosToolStripMenuItem.Text = Texto_62_BP("maestros_libros", "Libros");
         }
 
@@ -144,6 +145,13 @@ namespace TP_campo_62_BP
             ListaLibroGUI_62_BP listaLibroForm = new ListaLibroGUI_62_BP();
             listaLibroForm.MdiParent = this;
             listaLibroForm.Show();
+        }
+
+        private void listaLectorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListaLectorGUI_62_BP listaLectorForm = new ListaLectorGUI_62_BP();
+            listaLectorForm.MdiParent = this;
+            listaLectorForm.Show();
         }
 
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -192,8 +200,11 @@ namespace TP_campo_62_BP
 
             agregarLectorToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(19);
+            listaLectorToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(27);
             lectoresToolStripMenuItem.Enabled =
-                session.TienePermiso_62_BP(19);
+                session.TienePermiso_62_BP(19) ||
+                session.TienePermiso_62_BP(27);
 
             librosToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(26);

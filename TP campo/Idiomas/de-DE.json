@@ -531,5 +531,17 @@
   "msg_listado_libros_modificacion_sin_cambios": "Das ausgewahlte Buch konnte nicht aktualisiert werden.",
   "msg_listado_libros_modificacion_exitosa": "Buch erfolgreich aktualisiert.",
   "msg_listado_libros_modificacion_error": "Das Buch konnte nicht aktualisiert werden: {0}",
-  "maestros_libros": "Bucher"
+  "maestros_libros": "Bucher",
+  "titulo_listado_lectores": "Leserliste",
+  "grupo_edicion_lector": "Bearbeitung des ausgewahlten Lesers",
+  "btn_agregar_lector": "Leser hinzufugen",
+  "col_dni": "ID",
+  "col_nombre": "Vorname",
+  "col_apellido": "Nachname",
+  "col_fecha_nacimiento": "Geburtsdatum",
+  "msg_listado_lectores_busqueda_error": "Leser konnten nicht geladen werden: {0}",
+  "msg_listado_lectores_modificacion_sin_cambios": "Der ausgewahlte Leser konnte nicht aktualisiert werden.",
+  "msg_listado_lectores_modificacion_exitosa": "Leser erfolgreich aktualisiert.",
+  "msg_listado_lectores_modificacion_error": "Der Leser konnte nicht aktualisiert werden: {0}",
+  "maestros_lectores_listado": "Liste"
 }

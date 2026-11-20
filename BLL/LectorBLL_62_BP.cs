@@ -59,6 +59,11 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarLectorDVH_62_BP(lector.dni_62_BP);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Lector",
+                        "ModificarLector",
+                        "Modificacion de Lector DNI: " + lector.dni_62_BP,
+                        2);
                 }
             }
             catch
@@ -83,6 +88,50 @@ namespace BLL_62_BP
             }
 
             return lector;
+        }
+
+        public List<LectorBE_62_BP> BuscarLectores_62_BP(
+            string dni = null,
+            string nombre = null,
+            string apellido = null)
+        {
+            try
+            {
+                IEnumerable<LectorBE_62_BP> lectores = _lectorMapper_62_BP.BuscarLectores_62_BP();
+
+                if (!string.IsNullOrWhiteSpace(dni))
+                {
+                    string filtroDni = dni.Trim();
+                    lectores = lectores.Where(lector =>
+                        (lector.dni_62_BP ?? string.Empty).IndexOf(
+                            filtroDni,
+                            StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                if (!string.IsNullOrWhiteSpace(nombre))
+                {
+                    string filtroNombre = nombre.Trim();
+                    lectores = lectores.Where(lector =>
+                        (lector.nombre_62_BP ?? string.Empty).IndexOf(
+                            filtroNombre,
+                            StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                if (!string.IsNullOrWhiteSpace(apellido))
+                {
+                    string filtroApellido = apellido.Trim();
+                    lectores = lectores.Where(lector =>
+                        (lector.apellido_62_BP ?? string.Empty).IndexOf(
+                            filtroApellido,
+                            StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                return lectores.ToList();
+            }
+            catch
+            {
+                throw new Exception("No se pudieron buscar los lectores.");
+            }
         }
 
         public int ActualizarLectorDVH_62_BP(string dni)

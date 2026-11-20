@@ -29,7 +29,7 @@ namespace TP_campo_62_BP
             {
                 { "BackupRestore", new[] { "RealizarBackup", "RealizarRestore" } },
                 { "Familia", new[] { "AgregarFamilia", "AgregarPatente", "Alta", "Baja", "Modificar", "QuitarFamilia", "QuitarPatente" } },
-                { "Lector", new[] { "AgregarLector" } },
+                { "Lector", new[] { "AgregarLector", "ModificarLector" } },
                 { "Multa", new[] { "ModificarMulta" } },
                 { "Prestamo", new[] { "AgregarPrestamo", "FinalizarPrestamo" } },
                 { "Rol", new[] { "AgregarFamilia", "AgregarPatente", "Alta", "Baja", "Modificar", "QuitarFamilia", "QuitarPatente" } },

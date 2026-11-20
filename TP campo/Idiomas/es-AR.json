@@ -532,5 +532,17 @@
   "msg_listado_libros_modificacion_sin_cambios": "No se pudo actualizar el libro seleccionado.",
   "msg_listado_libros_modificacion_exitosa": "Libro modificado correctamente.",
   "msg_listado_libros_modificacion_error": "No se pudo modificar el libro: {0}",
-  "maestros_libros": "Libros"
+  "maestros_libros": "Libros",
+  "titulo_listado_lectores": "Listado de lectores",
+  "grupo_edicion_lector": "Edicion del lector seleccionado",
+  "btn_agregar_lector": "Agregar lector",
+  "col_dni": "DNI",
+  "col_nombre": "Nombre",
+  "col_apellido": "Apellido",
+  "col_fecha_nacimiento": "Fecha de nacimiento",
+  "msg_listado_lectores_busqueda_error": "No se pudieron obtener los lectores: {0}",
+  "msg_listado_lectores_modificacion_sin_cambios": "No se pudo actualizar el lector seleccionado.",
+  "msg_listado_lectores_modificacion_exitosa": "Lector modificado correctamente.",
+  "msg_listado_lectores_modificacion_error": "No se pudo modificar el lector: {0}",
+  "maestros_lectores_listado": "Listado"
 }

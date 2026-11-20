@@ -41,6 +41,7 @@
             this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lectoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarLectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listaLectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.librosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -164,7 +165,8 @@
             // lectoresToolStripMenuItem
             // 
             this.lectoresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.agregarLectorToolStripMenuItem});
+            this.agregarLectorToolStripMenuItem,
+            this.listaLectorToolStripMenuItem});
             this.lectoresToolStripMenuItem.Name = "lectoresToolStripMenuItem";
             this.lectoresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lectoresToolStripMenuItem.Text = "Lectores";
@@ -175,6 +177,13 @@
             this.agregarLectorToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.agregarLectorToolStripMenuItem.Text = "Agregar";
             this.agregarLectorToolStripMenuItem.Click += new System.EventHandler(this.agregarLectorToolStripMenuItem_Click);
+            //
+            // listaLectorToolStripMenuItem
+            //
+            this.listaLectorToolStripMenuItem.Name = "listaLectorToolStripMenuItem";
+            this.listaLectorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.listaLectorToolStripMenuItem.Text = "Listado";
+            this.listaLectorToolStripMenuItem.Click += new System.EventHandler(this.listaLectorToolStripMenuItem_Click);
             //
             // librosToolStripMenuItem
             //
@@ -381,6 +390,7 @@
         private System.Windows.Forms.ToolStripMenuItem familiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lectoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem agregarLectorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listaLectorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem librosToolStripMenuItem;
     }
 }
