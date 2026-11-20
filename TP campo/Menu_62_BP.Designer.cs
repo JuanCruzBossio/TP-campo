@@ -41,6 +41,7 @@
             this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lectoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarLectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.librosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +63,9 @@
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // labelNombre
-            // 
+            //
             this.labelNombre.AutoSize = true;
             this.labelNombre.Location = new System.Drawing.Point(788, 9);
             this.labelNombre.Name = "labelNombre";
@@ -154,6 +155,7 @@
             // 
             this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lectoresToolStripMenuItem,
+            this.librosToolStripMenuItem,
             this.bitacoraToolStripMenuItem1});
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
             this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
@@ -173,9 +175,16 @@
             this.agregarLectorToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.agregarLectorToolStripMenuItem.Text = "Agregar";
             this.agregarLectorToolStripMenuItem.Click += new System.EventHandler(this.agregarLectorToolStripMenuItem_Click);
-            // 
+            //
+            // librosToolStripMenuItem
+            //
+            this.librosToolStripMenuItem.Name = "librosToolStripMenuItem";
+            this.librosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.librosToolStripMenuItem.Text = "Libros";
+            this.librosToolStripMenuItem.Click += new System.EventHandler(this.librosToolStripMenuItem_Click);
+            //
             // bitacoraToolStripMenuItem1
-            // 
+            //
             this.bitacoraToolStripMenuItem1.Name = "bitacoraToolStripMenuItem1";
             this.bitacoraToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.bitacoraToolStripMenuItem1.Text = "Bitacora";
@@ -372,5 +381,6 @@
         private System.Windows.Forms.ToolStripMenuItem familiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lectoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem agregarLectorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem librosToolStripMenuItem;
     }
 }
