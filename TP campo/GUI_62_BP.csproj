@@ -121,6 +121,12 @@
     <Compile Include="ListaLectorGUI_62_BP.Designer.cs">
       <DependentUpon>ListaLectorGUI_62_BP.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListaMultaGUI_62_BP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListaMultaGUI_62_BP.Designer.cs">
+      <DependentUpon>ListaMultaGUI_62_BP.cs</DependentUpon>
+    </Compile>
     <Compile Include="MultaGUI_62_BP.cs">
       <SubType>Form</SubType>
     </Compile>

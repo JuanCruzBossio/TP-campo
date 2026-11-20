@@ -108,11 +108,12 @@ namespace TP_campo_62_BP
             ventasToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo", "Prestamo");
             carritoToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_solicitar", "Solicitar");
             facturarToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_devolver", "Devolver");
-            despacharToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_multas", "Multas");
+            despacharToolStripMenuItem.Text = Texto_62_BP("ventas_prestamo_multas", "Pagar Multa");
             lectoresToolStripMenuItem.Text = Texto_62_BP("maestros_lectores", "Lectores");
             agregarLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_agregar", "Agregar");
             listaLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_listado", "Listado");
             librosToolStripMenuItem.Text = Texto_62_BP("maestros_libros", "Libros");
+            multasMaestrosToolStripMenuItem.Text = Texto_62_BP("maestros_multas", "Multas");
         }
 
         private void ActualizarTextoUsuarioLogueado_62_BP()
@@ -152,6 +153,19 @@ namespace TP_campo_62_BP
             ListaLectorGUI_62_BP listaLectorForm = new ListaLectorGUI_62_BP();
             listaLectorForm.MdiParent = this;
             listaLectorForm.Show();
+        }
+
+        private void multasMaestrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(28))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
+            ListaMultaGUI_62_BP listaMultaForm = new ListaMultaGUI_62_BP();
+            listaMultaForm.MdiParent = this;
+            listaMultaForm.Show();
         }
 
         private void rolesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -208,6 +222,9 @@ namespace TP_campo_62_BP
 
             librosToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(26);
+
+            multasMaestrosToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(28);
 
             carritoToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(20);

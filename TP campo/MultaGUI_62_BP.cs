@@ -142,18 +142,11 @@ namespace TP_campo
             }
 
             DataGridViewRow fila = dataGridView1.SelectedRows[0];
-            MultaBE_62_BP multa = new MultaBE_62_BP
-            {
-                id_multa_62_BP = Convert.ToInt32(fila.Cells["colIdMulta"].Value),
-                id_prestamo_62_BP = Convert.ToInt32(fila.Cells["colIdPrestamo"].Value),
-                monto_62_BP = Convert.ToInt32(fila.Cells["colMonto"].Value),
-                pagada_62_BP = true,
-                motivo_62_BP = Convert.ToString(fila.Cells["colMotivo"].Value)
-            };
+            int idMulta = Convert.ToInt32(fila.Cells["colIdMulta"].Value);
 
             try
             {
-                if (_multaBLL_62_BP.ModificarMulta_62_BP(multa) <= 0)
+                if (_multaBLL_62_BP.PagarMulta_62_BP(idMulta) <= 0)
                 {
                     throw new Exception(Texto_62_BP("msg_multa_actualizacion_error", "No se pudo actualizar el estado de la multa."));
                 }

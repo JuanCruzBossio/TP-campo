@@ -43,6 +43,7 @@
             this.agregarLectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listaLectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.librosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.multasMaestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bitacoraToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.usuarioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -157,6 +158,7 @@
             this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lectoresToolStripMenuItem,
             this.librosToolStripMenuItem,
+            this.multasMaestrosToolStripMenuItem,
             this.bitacoraToolStripMenuItem1});
             this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
             this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
@@ -191,6 +193,13 @@
             this.librosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.librosToolStripMenuItem.Text = "Libros";
             this.librosToolStripMenuItem.Click += new System.EventHandler(this.librosToolStripMenuItem_Click);
+            //
+            // multasMaestrosToolStripMenuItem
+            //
+            this.multasMaestrosToolStripMenuItem.Name = "multasMaestrosToolStripMenuItem";
+            this.multasMaestrosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.multasMaestrosToolStripMenuItem.Text = "Multas";
+            this.multasMaestrosToolStripMenuItem.Click += new System.EventHandler(this.multasMaestrosToolStripMenuItem_Click);
             //
             // bitacoraToolStripMenuItem1
             //
@@ -266,7 +275,7 @@
             // 
             this.despacharToolStripMenuItem.Name = "despacharToolStripMenuItem";
             this.despacharToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.despacharToolStripMenuItem.Text = "Multas";
+            this.despacharToolStripMenuItem.Text = "Pagar Multa";
             this.despacharToolStripMenuItem.Click += new System.EventHandler(this.despacharToolStripMenuItem_Click);
             // 
             // comprasToolStripMenuItem
@@ -392,5 +401,6 @@
         private System.Windows.Forms.ToolStripMenuItem agregarLectorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listaLectorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem librosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem multasMaestrosToolStripMenuItem;
     }
 }

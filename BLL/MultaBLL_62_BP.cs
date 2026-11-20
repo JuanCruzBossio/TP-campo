@@ -47,13 +47,10 @@ namespace BLL_62_BP
                 if (filasAfectadas > 0)
                 {
                     ActualizarMultaDVH_62_BP(multa.id_multa_62_BP);
-                }
-                if (filasAfectadas > 0 && multa.pagada_62_BP)
-                {
                     _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
                         "Multa",
                         "ModificarMulta",
-                        "Pago de Multa N: " + multa.id_multa_62_BP,
+                        "Modificacion de Multa N: " + multa.id_multa_62_BP,
                         2);
                 }
             }
@@ -63,6 +60,29 @@ namespace BLL_62_BP
             }
 
             return filasAfectadas;
+        }
+
+        public int PagarMulta_62_BP(int idMulta)
+        {
+            try
+            {
+                int filasAfectadas = _multaMapper_62_BP.PagarMulta_62_BP(idMulta);
+                if (filasAfectadas > 0)
+                {
+                    ActualizarMultaDVH_62_BP(idMulta);
+                    _bitacoraBLL_62_BP.RegistrarBitacora_62_BP(
+                        "Multa",
+                        "PagarMulta",
+                        "Pago de Multa N: " + idMulta,
+                        2);
+                }
+
+                return filasAfectadas;
+            }
+            catch
+            {
+                throw new Exception("No se pudo pagar la multa.");
+            }
         }
 
         public MultaBE_62_BP BuscarMulta_62_BP(int? id = null, int idPrestamo = 0)
@@ -97,11 +117,15 @@ namespace BLL_62_BP
             return multas;
         }
 
-        public List<MultaBE_62_BP> BuscarMultas_62_BP(int? idMulta = null, int? idPrestamo = null, string dni = null)
+        public List<MultaBE_62_BP> BuscarMultas_62_BP(
+            int? idMulta = null,
+            int? idPrestamo = null,
+            string dni = null,
+            bool? pagada = null)
         {
             try
             {
-                return _multaMapper_62_BP.BuscarMultas_62_BP(idMulta, idPrestamo, dni);
+                return _multaMapper_62_BP.BuscarMultas_62_BP(idMulta, idPrestamo, dni, pagada);
             }
             catch
             {

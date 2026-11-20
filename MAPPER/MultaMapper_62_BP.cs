@@ -36,15 +36,24 @@ namespace MAPPER_62_BP
 
         public int ModificarMulta_62_BP(MultaBE_62_BP multa)
         {
-            string query = "UPDATE Multa_62_BP SET id_prestamo_62_BP = @idPrestamo, monto_62_BP = @monto, pagada_62_BP = @pagada, motivo_62_BP = @motivo WHERE id_multa_62_BP = @id";
+            string query = "UPDATE Multa_62_BP SET monto_62_BP = @monto, motivo_62_BP = @motivo WHERE id_multa_62_BP = @id";
 
             SqlParameter[] parametros =
             {
                 new SqlParameter("@id", multa.id_multa_62_BP),
-                new SqlParameter("@idPrestamo", multa.id_prestamo_62_BP),
                 new SqlParameter("@monto", multa.monto_62_BP),
-                new SqlParameter("@pagada", multa.pagada_62_BP),
                 new SqlParameter("@motivo", (object)multa.motivo_62_BP ?? DBNull.Value)
+            };
+
+            return _acceso_62_BP.escribir_62_BP(query, parametros);
+        }
+
+        public int PagarMulta_62_BP(int idMulta)
+        {
+            string query = "UPDATE Multa_62_BP SET pagada_62_BP = 1 WHERE id_multa_62_BP = @id AND pagada_62_BP = 0";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@id", idMulta)
             };
 
             return _acceso_62_BP.escribir_62_BP(query, parametros);
@@ -116,7 +125,11 @@ namespace MAPPER_62_BP
             return lista;
         }
 
-        public List<MultaBE_62_BP> BuscarMultas_62_BP(int? idMulta = null, int? idPrestamo = null, string dni = null)
+        public List<MultaBE_62_BP> BuscarMultas_62_BP(
+            int? idMulta = null,
+            int? idPrestamo = null,
+            string dni = null,
+            bool? pagada = null)
         {
             StringBuilder query = new StringBuilder("SELECT m.id_multa_62_BP, m.id_prestamo_62_BP, p.dni_lector_62_BP, m.monto_62_BP, m.pagada_62_BP, m.motivo_62_BP FROM Multa_62_BP m INNER JOIN Prestamo_62_BP p ON p.id_prestamo_62_BP = m.id_prestamo_62_BP WHERE 1=1");
             List<SqlParameter> parametros = new List<SqlParameter>();
@@ -137,6 +150,12 @@ namespace MAPPER_62_BP
             {
                 query.Append(" AND p.dni_lector_62_BP LIKE @dni");
                 parametros.Add(new SqlParameter("@dni", "%" + dni + "%"));
+            }
+
+            if (pagada.HasValue)
+            {
+                query.Append(" AND m.pagada_62_BP = @pagada");
+                parametros.Add(new SqlParameter("@pagada", pagada.Value));
             }
 
             query.Append(" ORDER BY m.id_multa_62_BP ASC");
