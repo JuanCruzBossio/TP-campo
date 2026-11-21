@@ -54,6 +54,7 @@
     <Compile Include="DigitoVerificadorMapper_62_BP.cs" />
     <Compile Include="FamiliaMapper_62_BP.cs" />
     <Compile Include="LibroMapper_62_BP.cs" />
+    <Compile Include="LibroHistoricoMapper_62_BP.cs" />
     <Compile Include="LectorMapper_62_BP.cs" />
     <Compile Include="PrestamoMapper_62_BP.cs" />
     <Compile Include="ReporteMapper_62_BP.cs" />

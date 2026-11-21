@@ -56,6 +56,7 @@
     <Compile Include="FamiliaBLL_62_BPcs.cs" />
     <Compile Include="IdiomaBLL_62_BP.cs" />
     <Compile Include="LibroBLL_62_BP.cs" />
+    <Compile Include="LibroHistoricoBLL_62_BP.cs" />
     <Compile Include="LectorBLL_62_BP.cs" />
     <Compile Include="PrestamoBLL_62_BP.cs" />
     <Compile Include="ReporteBLL_62_BP.cs" />

@@ -564,5 +564,21 @@
   "msg_listado_multas_modificacion_error": "No se pudo modificar la multa: {0}",
   "msg_monto_multa_invalido": "El monto debe ser mayor que cero.",
   "msg_motivo_multa_vacio": "El motivo no puede estar vacio.",
-  "maestros_multas": "Multas"
+  "maestros_multas": "Multas",
+  "titulo_historial_libros": "Historial de libros",
+  "lbl_estado_libro": "Estado del libro:",
+  "lbl_estado_version": "Estado de version:",
+  "col_fecha_actualizacion": "Fecha de actualizacion",
+  "col_id_historico": "ID Historico",
+  "col_version": "Version",
+  "version_actual": "Actual",
+  "version_historica": "Historica",
+  "msg_id_libro_invalido": "El ID del libro debe ser un numero entero positivo.",
+  "msg_historial_libros_busqueda_error": "No se pudo obtener el historial de libros: {0}",
+  "maestros_bitacora_cambios": "Bitacora de Cambios",
+  "btn_recuperar_estado": "Recuperar estado",
+  "msg_historial_version_ya_actual": "La version seleccionada ya es la version actual.",
+  "msg_historial_confirmar_recuperacion": "¿Desea recuperar la version historica {0} del libro {1}?",
+  "msg_historial_recuperacion_exitosa": "Se recupero correctamente el estado del libro {0}.",
+  "msg_historial_recuperacion_error": "No se pudo recuperar el estado del libro: {0}"
 }

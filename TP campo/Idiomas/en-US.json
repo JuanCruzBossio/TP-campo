@@ -563,5 +563,21 @@
   "msg_listado_multas_modificacion_error": "The fine could not be updated: {0}",
   "msg_monto_multa_invalido": "The amount must be greater than zero.",
   "msg_motivo_multa_vacio": "The reason cannot be empty.",
-  "maestros_multas": "Fines"
+  "maestros_multas": "Fines",
+  "titulo_historial_libros": "Book history",
+  "lbl_estado_libro": "Book status:",
+  "lbl_estado_version": "Version status:",
+  "col_fecha_actualizacion": "Update date",
+  "col_id_historico": "History ID",
+  "col_version": "Version",
+  "version_actual": "Current",
+  "version_historica": "Historical",
+  "msg_id_libro_invalido": "The book ID must be a positive integer.",
+  "msg_historial_libros_busqueda_error": "Book history could not be retrieved: {0}",
+  "maestros_bitacora_cambios": "Change Log",
+  "btn_recuperar_estado": "Restore state",
+  "msg_historial_version_ya_actual": "The selected version is already the current version.",
+  "msg_historial_confirmar_recuperacion": "Do you want to restore historical version {0} of book {1}?",
+  "msg_historial_recuperacion_exitosa": "The state of book {0} was restored successfully.",
+  "msg_historial_recuperacion_error": "The book state could not be restored: {0}"
 }

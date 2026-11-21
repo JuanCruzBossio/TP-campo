@@ -563,5 +563,21 @@
   "msg_listado_multas_modificacion_error": "Die Gebuhr konnte nicht aktualisiert werden: {0}",
   "msg_monto_multa_invalido": "Der Betrag muss grosser als null sein.",
   "msg_motivo_multa_vacio": "Der Grund darf nicht leer sein.",
-  "maestros_multas": "Gebuhren"
+  "maestros_multas": "Gebuhren",
+  "titulo_historial_libros": "Buchverlauf",
+  "lbl_estado_libro": "Buchstatus:",
+  "lbl_estado_version": "Versionsstatus:",
+  "col_fecha_actualizacion": "Aktualisierungsdatum",
+  "col_id_historico": "Verlaufs-ID",
+  "col_version": "Version",
+  "version_actual": "Aktuell",
+  "version_historica": "Historisch",
+  "msg_id_libro_invalido": "Die Buch-ID muss eine positive ganze Zahl sein.",
+  "msg_historial_libros_busqueda_error": "Der Buchverlauf konnte nicht geladen werden: {0}",
+  "maestros_bitacora_cambios": "Anderungsprotokoll",
+  "btn_recuperar_estado": "Zustand wiederherstellen",
+  "msg_historial_version_ya_actual": "Die ausgewahlte Version ist bereits die aktuelle Version.",
+  "msg_historial_confirmar_recuperacion": "Mochten Sie die historische Version {0} des Buches {1} wiederherstellen?",
+  "msg_historial_recuperacion_exitosa": "Der Zustand des Buches {0} wurde erfolgreich wiederhergestellt.",
+  "msg_historial_recuperacion_error": "Der Buchzustand konnte nicht wiederhergestellt werden: {0}"
 }

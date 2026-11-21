@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="LibroBE_62_BP.cs" />
+    <Compile Include="LibroHistoricoBE_62_BP.cs" />
     <Compile Include="LectorBE_62_BP.cs" />
     <Compile Include="PrestamoBE_62_BP.cs" />
     <Compile Include="DetallePrestamoBE_62_BP.cs" />

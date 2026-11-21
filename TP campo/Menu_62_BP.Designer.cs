@@ -205,7 +205,7 @@
             //
             this.bitacoraToolStripMenuItem1.Name = "bitacoraToolStripMenuItem1";
             this.bitacoraToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.bitacoraToolStripMenuItem1.Text = "Bitacora";
+            this.bitacoraToolStripMenuItem1.Text = "Bitacora de Cambios";
             this.bitacoraToolStripMenuItem1.Click += new System.EventHandler(this.bitacoraToolStripMenuItem1_Click);
             // 
             // usuarioToolStripMenuItem

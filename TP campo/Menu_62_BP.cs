@@ -114,6 +114,7 @@ namespace TP_campo_62_BP
             listaLectorToolStripMenuItem.Text = Texto_62_BP("maestros_lectores_listado", "Listado");
             librosToolStripMenuItem.Text = Texto_62_BP("maestros_libros", "Libros");
             multasMaestrosToolStripMenuItem.Text = Texto_62_BP("maestros_multas", "Multas");
+            bitacoraToolStripMenuItem1.Text = Texto_62_BP("maestros_bitacora_cambios", "Bitacora de Cambios");
         }
 
         private void ActualizarTextoUsuarioLogueado_62_BP()
@@ -365,7 +366,9 @@ namespace TP_campo_62_BP
 
         private void bitacoraToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
+            LibroHistoricoGUI_62_BP libroHistoricoForm = new LibroHistoricoGUI_62_BP();
+            libroHistoricoForm.MdiParent = this;
+            libroHistoricoForm.Show();
         }
     }
 }
