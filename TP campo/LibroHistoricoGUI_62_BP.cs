@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using BE_62_BP;
 using BLL_62_BP;
+using SEG_62_BP;
 using SEG_62_BP.Observer;
 using TP_campo_62_BP;
 
@@ -27,6 +28,14 @@ namespace TP_campo
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            if (!TienePermiso_62_BP(29))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                Close();
+                return;
+            }
+
             CargarEstados_62_BP();
             BuscarHistoricosDesdeBLL_62_BP();
         }
@@ -197,11 +206,19 @@ namespace TP_campo
         private void ActualizarBotonRecuperar_62_BP()
         {
             LibroHistoricoBE_62_BP historico = ObtenerHistoricoSeleccionado_62_BP();
-            buttonRecuperarEstado.Enabled = historico != null && !historico.actual_62_BP;
+            buttonRecuperarEstado.Enabled = TienePermiso_62_BP(30)
+                && historico != null
+                && !historico.actual_62_BP;
         }
 
         private void buttonRecuperarEstado_Click(object sender, EventArgs e)
         {
+            if (!TienePermiso_62_BP(30))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             LibroHistoricoBE_62_BP historico = ObtenerHistoricoSeleccionado_62_BP();
             if (historico == null)
             {
@@ -251,6 +268,11 @@ namespace TP_campo
                     "No se pudo recuperar el estado del libro: {0}",
                     ex.Message));
             }
+        }
+
+        private bool TienePermiso_62_BP(int idPatente)
+        {
+            return SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(idPatente);
         }
 
         private void ActualizarTextosGrilla_62_BP()

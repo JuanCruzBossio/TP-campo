@@ -227,6 +227,16 @@ namespace TP_campo_62_BP
             multasMaestrosToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(28);
 
+            bitacoraToolStripMenuItem1.Enabled =
+                session.TienePermiso_62_BP(29);
+
+            maestrosToolStripMenuItem.Enabled =
+                session.TienePermiso_62_BP(19) ||
+                session.TienePermiso_62_BP(26) ||
+                session.TienePermiso_62_BP(27) ||
+                session.TienePermiso_62_BP(28) ||
+                session.TienePermiso_62_BP(29);
+
             carritoToolStripMenuItem.Enabled =
                 session.TienePermiso_62_BP(20);
             facturarToolStripMenuItem.Enabled =
@@ -247,6 +257,13 @@ namespace TP_campo_62_BP
                 session.TienePermiso_62_BP(23) ||
                 session.TienePermiso_62_BP(24) ||
                 session.TienePermiso_62_BP(25);
+
+            bool puedeConsultarReportes = session.TienePermiso_62_BP(31);
+            reportesToolStripMenuItem.Enabled = puedeConsultarReportes;
+            rankingLectoresToolStripMenuItem.Enabled = puedeConsultarReportes;
+            rankingLibrosToolStripMenuItem.Enabled = puedeConsultarReportes;
+            morosidadToolStripMenuItem.Enabled = puedeConsultarReportes;
+            demandaInsatisfechaToolStripMenuItem.Enabled = puedeConsultarReportes;
         }
 
         private void digitoVerificadorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -366,6 +383,12 @@ namespace TP_campo_62_BP
 
         private void bitacoraToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            if (!SessionManager_62_BP.GetInstancia_62_BP().TienePermiso_62_BP(29))
+            {
+                MostrarMensaje_62_BP("msg_sin_permiso", "No tiene permiso para realizar esta accion.");
+                return;
+            }
+
             LibroHistoricoGUI_62_BP libroHistoricoForm = new LibroHistoricoGUI_62_BP();
             libroHistoricoForm.MdiParent = this;
             libroHistoricoForm.Show();
