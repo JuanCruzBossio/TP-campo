@@ -291,6 +291,8 @@ namespace TP_campo_62_BP
             labelGenero.Text = Texto_62_BP("lbl_genero", "Genero");
             label1.Text = Texto_62_BP("lbl_isbn", "ISBN");
             buttonBuscarLibros.Text = Texto_62_BP("btn_buscar_libros", "Buscar Libros");
+            buttonAgregarLibro.Text = Texto_62_BP("btn_agregar_libro", "Agregar Libro");
+            buttonRegistrarPrestamo.Text = Texto_62_BP("btn_registrar_prestamo", "Registrar Prestamo");
         }
 
         // -------------------------------------------------------------------------

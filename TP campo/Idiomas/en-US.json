@@ -579,5 +579,8 @@
   "msg_historial_version_ya_actual": "The selected version is already the current version.",
   "msg_historial_confirmar_recuperacion": "Do you want to restore historical version {0} of book {1}?",
   "msg_historial_recuperacion_exitosa": "The state of book {0} was restored successfully.",
-  "msg_historial_recuperacion_error": "The book state could not be restored: {0}"
+  "msg_historial_recuperacion_error": "The book state could not be restored: {0}",
+  "lbl_fecha_nacimiento": "Date of birth:",
+  "btn_agregar_libro": "Add Book",
+  "btn_registrar_prestamo": "Register Loan"
 }

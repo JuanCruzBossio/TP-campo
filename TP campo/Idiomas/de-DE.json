@@ -579,5 +579,8 @@
   "msg_historial_version_ya_actual": "Die ausgewahlte Version ist bereits die aktuelle Version.",
   "msg_historial_confirmar_recuperacion": "Mochten Sie die historische Version {0} des Buches {1} wiederherstellen?",
   "msg_historial_recuperacion_exitosa": "Der Zustand des Buches {0} wurde erfolgreich wiederhergestellt.",
-  "msg_historial_recuperacion_error": "Der Buchzustand konnte nicht wiederhergestellt werden: {0}"
+  "msg_historial_recuperacion_error": "Der Buchzustand konnte nicht wiederhergestellt werden: {0}",
+  "lbl_fecha_nacimiento": "Geburtsdatum:",
+  "btn_agregar_libro": "Buch hinzufugen",
+  "btn_registrar_prestamo": "Darlehen registrieren"
 }

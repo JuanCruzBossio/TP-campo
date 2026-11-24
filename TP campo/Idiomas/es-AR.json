@@ -580,5 +580,8 @@
   "msg_historial_version_ya_actual": "La version seleccionada ya es la version actual.",
   "msg_historial_confirmar_recuperacion": "¿Desea recuperar la version historica {0} del libro {1}?",
   "msg_historial_recuperacion_exitosa": "Se recupero correctamente el estado del libro {0}.",
-  "msg_historial_recuperacion_error": "No se pudo recuperar el estado del libro: {0}"
+  "msg_historial_recuperacion_error": "No se pudo recuperar el estado del libro: {0}",
+  "lbl_fecha_nacimiento": "Fecha de nacimiento:",
+  "btn_agregar_libro": "Agregar Libro",
+  "btn_registrar_prestamo": "Registrar Prestamo"
 }
